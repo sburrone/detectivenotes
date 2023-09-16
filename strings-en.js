@@ -93,3 +93,5 @@ const stringsEN = {
     skipText: "Skip",
     dustCounter: "Dust counter"
 }
+
+const letsPlayEN = "Let's play!";

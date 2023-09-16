@@ -94,3 +94,5 @@ const stringsIT = {
     skipText: "Salta",
     dustCounter: "Contatore polveri"
 }
+
+const letsPlayIT = "Gichiamo!";

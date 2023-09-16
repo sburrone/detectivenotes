@@ -11,7 +11,7 @@ $(document).ready(function () {
     } else if (forcedLang=="en") {
         userLang = "en-US";
     }
-    let strings, boards;
+    let strings, boards, letsPlay;
     let selectedBoard=0, players=[];
     let itemsArray;
     const imageData = {
@@ -31,11 +31,13 @@ $(document).ready(function () {
         case "it-IT": {
             strings = stringsIT;
             boards = boardsIT;
+            letsPlay = letsPlayIT;
             break;
         }
         default: {
             strings = stringsEN;
             boards = boardsEN;
+            letsPlay = letsPlayEN;
             break;
         }
     }
@@ -70,6 +72,7 @@ $(document).ready(function () {
     //Detect language, load strings
     let stringKeys = Object.keys(strings);
     stringKeys.forEach((key) => document.getElementById(key).innerHTML=strings[key]);
+    $("#startGame").attr("value", letsPlay);
 
     $("#newGameButton").on("click", function(){
         $("#mainMenu").css("display","none");
@@ -85,8 +88,8 @@ $(document).ready(function () {
             button.text(board.name);
             button.on("click", function(event){
                 //Cambio colori
-                $("#boardButtonContainer").find("*").css("background-color", "#274161");
-                $(event.target).css("background-color", "#D68671");
+                $("#boardButtonContainer").find("*").css("background-color", "var(--dark-blue)1");
+                $(event.target).css("background-color", "var(--red)");
 
                 selectedBoard = board.id;
                 itemsArray = boards[selectedBoard]["characters"].concat(boards[selectedBoard]["weapons"]).concat(boards[selectedBoard]["rooms"]);
@@ -255,7 +258,7 @@ $(document).ready(function () {
             if(localStorage.getItem("check"+index)) {
                 $(this).find("input").prop("checked", true);
                 $(this).closest(".table-row").find("td > a").data("locked", "true");
-                $(this).closest(".table-row").find("td, th").css("background-color","#D68671");
+                $(this).closest(".table-row").find("td, th").css("background-color","var(--red)");
             }
         })
     }
@@ -295,7 +298,7 @@ $(document).ready(function () {
         checkbox.on("change", function() {
             if($(this).is(":checked")) {
                 $(this).closest(".table-row").find("td > a").data("locked", "true");
-                $(this).closest(".table-row").find("td, th").css("background-color","#D68671");
+                $(this).closest(".table-row").find("td, th").css("background-color","var(--red)");
                 //Update symbols
                 toUpdate = $(this);
                 updateWholeRow("cross");
@@ -304,7 +307,7 @@ $(document).ready(function () {
 
             } else {
                 $(this).closest(".table-row").find("td > a").data("locked", "false");
-                $(this).closest(".table-row").find("td, th").css("background-color","white");
+                $(this).closest(".table-row").find("td, th").css("background-color","var(--white)");
                 //Update symbols
                 toUpdate = $(this);
                 updateWholeRow("reset");
@@ -337,7 +340,7 @@ $(document).ready(function () {
             $(".table-header-checkbox").each(function() {
                 $(this).attr("disabled", "disabled");
             });
-            $("#lockPersonalCards").css("background-color", "#D68671");
+            $("#lockPersonalCards").css("background-color", "var(--red)");
             $("#lockPersonalCards").text("🔒");
 
             locked = true;
@@ -345,7 +348,7 @@ $(document).ready(function () {
             $(".table-header-checkbox").each(function() {
                 $(this).removeAttr("disabled");
             });
-            $("#lockPersonalCards").css("background-color", "#274161");
+            $("#lockPersonalCards").css("background-color", "var(--dark-blue)1");
             $("#lockPersonalCards").text("🔓");
             locked = false;
         }
@@ -362,6 +365,10 @@ $(document).ready(function () {
             localStorage.setItem((""+rowName+","+i), id);
         }
     }
+
+    $("#modalBackButton").on("click", function() {
+        $("#selectionModal").toggle();
+    })
 
     $(".selection-modal-image").on("click", function() {
         const newID = $(this).attr("id");

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <head>
     <meta charset="UTF-8">
 
@@ -7,22 +8,99 @@
     <meta name="viewport" content="width=device-width, minimum scale=1, initial-scale=1, user-scalable=0">
     <script async src="https://cdn.ampproject.org/v0.js"></script>
     <title>Cluedo Detective Notes</title>
-    <meta name="description" content="Cluedo Detective Notes by @nmtb4e. Currently supports 4 boards and up to 6 players.">
+    <meta name="description"
+        content="Cluedo Detective Notes by @nmtb4e. Currently supports 4 boards and up to 6 players.">
     <meta name="google" content="nositelinkssearchbox" />
     <link rel="canonical" href="https://detectivenotes">
-    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <style amp-boilerplate>
+        body {
+            -webkit-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+            -moz-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+            -ms-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+            animation: -amp-start 8s steps(1, end) 0s 1 normal both
+        }
+
+        @-webkit-keyframes -amp-start {
+            from {
+                visibility: hidden
+            }
+
+            to {
+                visibility: visible
+            }
+        }
+
+        @-moz-keyframes -amp-start {
+            from {
+                visibility: hidden
+            }
+
+            to {
+                visibility: visible
+            }
+        }
+
+        @-ms-keyframes -amp-start {
+            from {
+                visibility: hidden
+            }
+
+            to {
+                visibility: visible
+            }
+        }
+
+        @-o-keyframes -amp-start {
+            from {
+                visibility: hidden
+            }
+
+            to {
+                visibility: visible
+            }
+        }
+
+        @keyframes -amp-start {
+            from {
+                visibility: hidden
+            }
+
+            to {
+                visibility: visible
+            }
+        }
+    </style><noscript>
+        <style amp-boilerplate>
+            body {
+                -webkit-animation: none;
+                -moz-animation: none;
+                -ms-animation: none;
+                animation: none
+            }
+        </style>
+    </noscript>
 
     <link rel="stylesheet" type="text/css" href="style.css">
-    <link href="https://fonts.googleapis.com/css?family=Rubik:900&amp;subset=latin-ext" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&family=Dela+Gothic+One&family=Rubik:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
+
 <body>
 
     <!--  MAIN MENU  -->
 
     <div id="mainMenu">
         <p id="mainTitle" class="main-title"></p>
-        <a id="continueGameButton" class="big-button"><span id="continueButton" class="big-button-title"></span><br><span id="continueButtonSubtitle" class="big-button-subtitle"></span></a>
-        <a id="newGameButton" class="big-button"><span id="beginButton" class="big-button-title"></span><br><span id="beginButtonSubtitle" class="big-button-subtitle"></span></a>
+        <a id="continueGameButton" class="big-button"><span id="continueButton"
+                class="big-button-title"></span><br><span id="continueButtonSubtitle"
+                class="big-button-subtitle"></span></a>
+        <a id="newGameButton" class="big-button"><span id="beginButton" class="big-button-title"></span><br><span
+                id="beginButtonSubtitle" class="big-button-subtitle"></span></a>
     </div>
 
 
@@ -54,7 +132,7 @@
                 <section id="playerNameContainer"></section>
                 <hr>
                 <span id="readyText" class="setup-text"></span><br>
-                <input type="submit" id="startGame" class="begin-button"></a>
+                <input type="submit" id="startGame" class="begin-button">
             </form>
         </div>
     </div>
@@ -69,8 +147,8 @@
             <div class="autocomplete-status-wrapper">
                 <section><span id="autocompleteStatusContainer"></span><span id="autocompleteStatus"></span></section>
                 <label class="switch">
-                <input type="checkbox" id="autocompleteInput" checked>
-                <span class="slider round"></span>
+                    <input type="checkbox" id="autocompleteInput" checked>
+                    <span class="slider round"></span>
                 </label>
             </div>
         </div>
@@ -111,29 +189,64 @@
     <!--  SELECTION MODAL  -->
     <div id="selectionModal" class="modal-wrapper">
         <div id="selectionModalContent" class="modal">
-            <section id="showLessSymbolsWrapper"><input type="checkbox" id="showLessSymbolsCheckbox"><span id="showLessSymbolsText" class="setup-tooltip"></span></section>
+            <section id="modalBackWrapper"><a class="setup-tooltip" id="modalBackButton"><span
+                        class="material-symbols-outlined">
+                        close
+                    </span></a></section>
+            <section id="showLessSymbolsWrapper"><input type="checkbox" id="showLessSymbolsCheckbox"><span
+                    id="showLessSymbolsText" class="setup-tooltip"></span></section>
             <section id="selectionModalBasic" class="selection-modal-wrapper">
                 <section class="selection-modal-section" id="selectionModalReset">
-                    <a class="selection-modal-image" id="reset"><section class="image-with-tooltip"><img src="assets/reset.svg" class="reset"><span id="resetText" class="setup-tooltip"></span></section></a>
+                    <a class="selection-modal-image" id="reset">
+                        <section class="image-with-tooltip"><img src="assets/reset.svg" class="reset"><span
+                                id="resetText" class="setup-tooltip"></span></section>
+                    </a>
                 </section>
                 <section class="selection-modal-section" id="selectionModalCheck">
-                    <a class="selection-modal-image" id="check"><section class="image-with-tooltip"><img src="assets/check.svg" class="check"><span id="checkFullText" class="setup-tooltip"></span></section></a>
-                    <a class="selection-modal-image" id="maybe"><section class="image-with-tooltip"><img src="assets/check.svg" class="maybe"><span id="checkMaybeText" class="setup-tooltip"></span></section></a>
+                    <a class="selection-modal-image" id="check">
+                        <section class="image-with-tooltip"><img src="assets/check.svg" class="check"><span
+                                id="checkFullText" class="setup-tooltip"></span></section>
+                    </a>
+                    <a class="selection-modal-image" id="maybe">
+                        <section class="image-with-tooltip"><img src="assets/check.svg" class="maybe"><span
+                                id="checkMaybeText" class="setup-tooltip"></span></section>
+                    </a>
                 </section>
                 <section class="selection-modal-section" id="selectionModalCross">
-                    <a class="selection-modal-image" id="cross"><section class="image-with-tooltip"><img src="assets/cross.svg" class="cross"><span id="crossFullText" class="setup-tooltip"></span></section></a>
-                    <a class="selection-modal-image" id="maybeNot"><section class="image-with-tooltip"><img src="assets/cross.svg" class="maybeNot"><span id="crossMaybeText" class="setup-tooltip"></span></section></a>
+                    <a class="selection-modal-image" id="cross">
+                        <section class="image-with-tooltip"><img src="assets/cross.svg" class="cross"><span
+                                id="crossFullText" class="setup-tooltip"></span></section>
+                    </a>
+                    <a class="selection-modal-image" id="maybeNot">
+                        <section class="image-with-tooltip"><img src="assets/cross.svg" class="maybeNot"><span
+                                id="crossMaybeText" class="setup-tooltip"></span></section>
+                    </a>
                 </section>
             </section>
             <section id="selectionModalExtended" class="selection-modal-wrapper">
                 <section class="selection-modal-section" id="selectionModalExtended1">
-                    <a class="selection-modal-image" id="star"><section class="image-with-tooltip"><img src="assets/star.svg" class="star"><span id="starText" class="setup-tooltip"></span></section></a>
-                    <a class="selection-modal-image" id="question"><section class="image-with-tooltip"><img src="assets/question.svg" class="question"><span id="questionText" class="setup-tooltip"></span></section></a>
-                    <a class="selection-modal-image" id="exclamation"><section class="image-with-tooltip"><img src="assets/exclamation.svg" class="exclamation"><span id="exclamationText" class="setup-tooltip"></span></section></a>
+                    <a class="selection-modal-image" id="star">
+                        <section class="image-with-tooltip"><img src="assets/star.svg" class="star"><span id="starText"
+                                class="setup-tooltip"></span></section>
+                    </a>
+                    <a class="selection-modal-image" id="question">
+                        <section class="image-with-tooltip"><img src="assets/question.svg" class="question"><span
+                                id="questionText" class="setup-tooltip"></span></section>
+                    </a>
+                    <a class="selection-modal-image" id="exclamation">
+                        <section class="image-with-tooltip"><img src="assets/exclamation.svg" class="exclamation"><span
+                                id="exclamationText" class="setup-tooltip"></span></section>
+                    </a>
                 </section>
                 <section class="selection-modal-section" id="selectionModalExtended2">
-                    <a class="selection-modal-image" id="flag"><section class="image-with-tooltip"><img src="assets/flag.svg" class="flag"><span id="flagText" class="setup-tooltip"></span></section></a>
-                    <a class="selection-modal-image" id="skip"><section class="image-with-tooltip"><img src="assets/skip.svg" class="skip"><span id="skipText" class="setup-tooltip"></span></section></a>
+                    <a class="selection-modal-image" id="flag">
+                        <section class="image-with-tooltip"><img src="assets/flag.svg" class="flag"><span id="flagText"
+                                class="setup-tooltip"></span></section>
+                    </a>
+                    <a class="selection-modal-image" id="skip">
+                        <section class="image-with-tooltip"><img src="assets/skip.svg" class="skip"><span id="skipText"
+                                class="setup-tooltip"></span></section>
+                    </a>
                 </section>
             </section>
         </div>
@@ -142,7 +255,7 @@
     <!--  INSTRUCTIONS MODAL  -->
     <div id="instructionsModal" class="modal-wrapper">
         <div id="instructionsModalContent" class="modal">
-            <p id="instructionsModalText" class="setup-text"></p>
+            <p id="instructionsModalText" class="setup-tooltip"></p>
             <button id="instructionsModalConfirm" class="confirmation-button"></a>
         </div>
     </div>
