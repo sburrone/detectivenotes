@@ -348,7 +348,7 @@ $(document).ready(function () {
             $(".table-header-checkbox").each(function() {
                 $(this).removeAttr("disabled");
             });
-            $("#lockPersonalCards").css("background-color", "var(--dark-blue)1");
+            $("#lockPersonalCards").css("background-color", "var(--dark-blue)");
             $("#lockPersonalCards").text("🔓");
             locked = false;
         }
