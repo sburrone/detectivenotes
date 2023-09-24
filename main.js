@@ -1,18 +1,136 @@
+import * as THREE from 'three';
+import { GLTFLoader } from 'GLTFLoader';
+import { OrbitControls } from 'OrbitControls';
+
+class AnimatedBoard {
+    constructor() {
+        this._Initialize();
+    }
+
+    _Initialize() {
+        this._threejs = new THREE.WebGLRenderer({
+            antialias: true,
+            alpha: true,
+        });
+        this._threejs.shadowMap.enabled = true;
+        this._threejs.shadowMap.type = THREE.PCFSoftShadowMap;
+        this._threejs.physicallyCorrectLights = true;
+        this._threejs.toneMapping = THREE.ACESFilmicToneMapping;
+        this._threejs.outputEncoding = THREE.sRGBEncoding;
+
+        const modelDiv = document.getElementById('model');
+        modelDiv.appendChild(this._threejs.domElement);
+
+        this._threejs.setSize(modelDiv.offsetWidth, modelDiv.offsetHeight);
+
+        window.addEventListener('resize', () => {
+            this._OnWindowResize();
+        }, false);
+
+        const fov = 60;
+        const aspect = modelDiv.offsetWidth / modelDiv.offsetHeight;
+        const near = 1.0;
+        const far = 1000.0;
+        this._camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+        this._camera.position.set(15, 15, 20);
+
+        this._scene = new THREE.Scene();
+
+        let light = new THREE.DirectionalLight(0xFFFFFF);
+        light.position.set(20, 100, 10);
+        light.target.position.set(0, 0, 0);
+        light.castShadow = true;
+        light.intensity = 5;
+        light.shadow.bias = -0.001;
+        light.shadow.mapSize.width = 2048;
+        light.shadow.mapSize.height = 2048;
+        light.shadow.camera.near = 0.1;
+        light.shadow.camera.far = 500.0;
+        light.shadow.camera.near = 0.5;
+        light.shadow.camera.far = 500.0;
+        light.shadow.camera.left = 100;
+        light.shadow.camera.right = -100;
+        light.shadow.camera.top = 100;
+        light.shadow.camera.bottom = -100;
+        this._scene.add(light);
+
+        light = new THREE.AmbientLight(0xFFFFFF);
+        this._scene.add(light);
+
+        this._controls = new OrbitControls(
+            this._camera, this._threejs.domElement);
+        this._controls.target.set(0, 10, 0);
+        this._controls.autoRotate = true;
+        this._controls.update();
+
+        const loader = new GLTFLoader();
+        loader.setPath('./3d/');
+        loader.load('scene.gltf', (gltf) => {
+            //gltf.scale.setScalar(0.1);
+            gltf.scene.scale.set(0.05, 0.05, 0.05);
+            gltf.scene.traverse(c => {
+                c.castShadow = true;
+            });
+            this._scene.add(gltf.scene);
+        });
+
+        this._RAF();
+    }
+    _OnWindowResize() {
+        this._camera.aspect = window.innerWidth / window.innerHeight;
+        this._camera.updateProjectionMatrix();
+        this._threejs.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    _Step(timeElapsed) {
+        const timeElapsedS = timeElapsed * 0.001;
+        if (this._mixers) {
+            this._mixers.map(m => m.update(timeElapsedS));
+        }
+    }
+
+    _RAF() {
+        requestAnimationFrame((t) => {
+            if (this._previousRAF === null) {
+                this._previousRAF = t;
+            }
+
+            this._RAF();
+
+            this._threejs.render(this._scene, this._camera);
+            this._Step(t - this._previousRAF);
+            this._previousRAF = t;
+        });
+    }
+}
+
+
+let _APP = null;
+
+window.addEventListener('DOMContentLoaded', () => {
+    _APP = new AnimatedBoard();
+});
+
 $(document).ready(function () {
     'use strict';
 
+
+
+
+
+    //Language
     let userLang = navigator.language || navigator.userLanguage;
     const params = new Proxy(new URLSearchParams(window.location.search), {
         get: (searchParams, prop) => searchParams.get(prop),
     });
-    let forcedLang = params.lang;
-    if(forcedLang == "it") {
+    let forcedLang = params.lang.toLowerCase();
+    if (forcedLang == "it") {
         userLang = "it-IT";
-    } else if (forcedLang=="en") {
+    } else if (forcedLang == "en") {
         userLang = "en-US";
     }
     let strings, boards, letsPlay;
-    let selectedBoard=0, players=[];
+    let selectedBoard = 0, players = [];
     let itemsArray;
     const imageData = {
         "check": "assets/check.svg",
@@ -27,7 +145,7 @@ $(document).ready(function () {
         "skip": "assets/skip.svg"
     }
 
-    switch(userLang) {
+    switch (userLang) {
         case "it-IT": {
             strings = stringsIT;
             boards = boardsIT;
@@ -41,28 +159,28 @@ $(document).ready(function () {
             break;
         }
     }
-    if(localStorage.getItem("date")!=undefined) {
+    if (localStorage.getItem("date") != undefined) {
         $("#continueGameButton").toggle();
         $("#beginButtonSubtitle").toggle();
         let recPlayers = localStorage.getItem("players");
         let recBoard = boards[parseInt(localStorage.getItem("board"))];
         let recDate = new Date(localStorage.getItem("date"));
-        let formattedDate = recDate.getFullYear()+"-"+((recDate.getMonth()+1)>10?(recDate.getMonth()+1):("0"+(recDate.getMonth()+1)))+"-"+(recDate.getDate()>10?recDate.getDate():("0"+recDate.getDate()))+" "+recDate.getHours()+":"+(recDate.getMinutes()>10?recDate.getMinutes():("0"+recDate.getMinutes()));
-        $("#continueButtonSubtitle").html(formattedDate+"<br>"+recBoard.name+"<br>"+recPlayers);
+        let formattedDate = recDate.getFullYear() + "-" + ((recDate.getMonth() + 1) > 10 ? (recDate.getMonth() + 1) : ("0" + (recDate.getMonth() + 1))) + "-" + (recDate.getDate() > 10 ? recDate.getDate() : ("0" + recDate.getDate())) + " " + recDate.getHours() + ":" + (recDate.getMinutes() > 10 ? recDate.getMinutes() : ("0" + recDate.getMinutes()));
+        $("#continueButtonSubtitle").html(formattedDate + "<br>" + recBoard.name + "<br>" + recPlayers);
 
-        $("#continueGameButton").on("click", function() {
+        $("#continueGameButton").on("click", function () {
             //Recover data
             selectedBoard = recBoard.id;
             players = recPlayers.split(",");
             itemsArray = boards[selectedBoard]["characters"].concat(boards[selectedBoard]["weapons"]).concat(boards[selectedBoard]["rooms"]);
             localStorage.setItem("date", new Date());
-            
+
             //Fill
             $("#mainMenu").css("display", "none");
-            $("#mainGame").css("display","block");
+            $("#mainGame").css("display", "block");
             fillTable();
             updateTable();
-            if(selectedBoard==5) {
+            if (selectedBoard == 5) {
                 $("#dustCounterValue").text(localStorage.getItem("dust"));
                 $(".dust-counter-box").css("display", "flex");
             }
@@ -71,22 +189,21 @@ $(document).ready(function () {
 
     //Detect language, load strings
     let stringKeys = Object.keys(strings);
-    stringKeys.forEach((key) => document.getElementById(key).innerHTML=strings[key]);
+    stringKeys.forEach((key) => document.getElementById(key).innerHTML = strings[key]);
     $("#startGame").attr("value", letsPlay);
 
-    $("#newGameButton").on("click", function(){
-        $("#mainMenu").css("display","none");
-        $("#setup").css("display","block");
+    $("#newGameButton").on("click", function () {
+        $("#mainMenu").css("display", "none");
+        $("#setup").css("display", "block");
         selectedBoard = 0;
         itemsArray = boards[selectedBoard]["characters"].concat(boards[selectedBoard]["weapons"]).concat(boards[selectedBoard]["rooms"]);
         localStorage.clear();
 
         //Populate Setup
-        for(let board of boards)
-        {
+        for (let board of boards) {
             let button = $("<button>").attr("class", "small-button");
             button.text(board.name);
-            button.on("click", function(event){
+            button.on("click", function (event) {
                 //Cambio colori
                 $("#boardButtonContainer").find("*").css("background-color", "var(--dark-blue)1");
                 $(event.target).css("background-color", "var(--red)");
@@ -115,34 +232,34 @@ $(document).ready(function () {
         //Get current name of fields, then populate
         let currentFields = $("#playerNameContainer input").length;
 
-        if(val <= currentFields) {
+        if (val <= currentFields) {
             //Remove fields
-            for(let i=currentFields; i>=val; i--) {
+            for (let i = currentFields; i >= val; i--) {
                 $("#playerNameContainer").children().last().remove();
             }
         } else {
             //Add fields
-            for(let i=currentFields; i<val-1; i++) {
+            for (let i = currentFields; i < val - 1; i++) {
                 let fieldSection = $("<section>");
                 let field = $("<input>").attr("class", "setup-name");
                 field.attr("type", "text");
                 field.attr("required", "required");
-                field.attr("name", "player"+i);
-                field.attr("pattern","[A-Za-z0-9]+");
+                field.attr("name", "player" + i);
+                field.attr("pattern", "[A-Za-z0-9]+");
                 fieldSection.append(field, $("<br>"));
                 $("#playerNameContainer").append(fieldSection);
             }
         }
     }
 
-    $("#playerNum").on("input", function() {
+    $("#playerNum").on("input", function () {
         updateFields();
     });
 
-    $("#playerNameForm").on("submit", function(event) {
+    $("#playerNameForm").on("submit", function (event) {
         event.preventDefault();
-        $("#setup").css("display","none");
-        $("#mainGame").css("display","block");
+        $("#setup").css("display", "none");
+        $("#mainGame").css("display", "block");
         $('#playerNameContainer input').each(function () {
             players.push(this.value); // "this" is the current element in the loop
         });
@@ -151,12 +268,12 @@ $(document).ready(function () {
         localStorage.setItem("board", selectedBoard);
         localStorage.setItem("players", players);
         localStorage.setItem("date", new Date());
-        for(let i=0; i<itemsArray.length; i++) {
-            for(let j=0; j<players.length; j++) {
-                localStorage.setItem((""+i+","+j), "reset");
+        for (let i = 0; i < itemsArray.length; i++) {
+            for (let j = 0; j < players.length; j++) {
+                localStorage.setItem(("" + i + "," + j), "reset");
             }
         }
-        if(selectedBoard==5) {
+        if (selectedBoard == 5) {
             localStorage.setItem("dust", 12);
             $("#dustCounterValue").text(12);
             $(".dust-counter-box").css("display", "flex");
@@ -165,21 +282,21 @@ $(document).ready(function () {
         fillTable();
     });
 
-    $("#dustCounterDown").on("click", function() {
+    $("#dustCounterDown").on("click", function () {
         let old = parseInt($("#dustCounterValue").text());
-        $("#dustCounterValue").text(old-1);
-        localStorage.setItem("dust", old-1);
+        $("#dustCounterValue").text(old - 1);
+        localStorage.setItem("dust", old - 1);
     })
 
-    $("#dustCounterUp").on("click", function() {
+    $("#dustCounterUp").on("click", function () {
         let old = parseInt($("#dustCounterValue").text());
-        $("#dustCounterValue").text(old+1);
-        localStorage.setItem("dust", old+1);
+        $("#dustCounterValue").text(old + 1);
+        localStorage.setItem("dust", old + 1);
     })
 
     function fillTable() {
         //TABLE SECTION PLAYERS
-        for(let i=0; i<players.length; i++) {
+        for (let i = 0; i < players.length; i++) {
             let cell = $("<th>").attr("class", "name-holder");
             cell.attr("scope", "col");
             cell.text(players[i]);
@@ -188,9 +305,9 @@ $(document).ready(function () {
 
         //TABLE SECTION CHARACTERS
         const characterArray = boards[selectedBoard]["characters"];
-        $("#tableHeaderCharacters").attr("colspan", players.length+2);
+        $("#tableHeaderCharacters").attr("colspan", players.length + 2);
 
-        for(let c=0; c<characterArray.length; c++) {
+        for (let c = 0; c < characterArray.length; c++) {
             let currentRow = $("<tr>").attr("class", "table-row");
 
             currentRow.append(getCheckboxCell(characterArray[c]));
@@ -200,7 +317,7 @@ $(document).ready(function () {
             header.text(characterArray[c]);
             currentRow.append(header);
 
-            for(let i=0; i<players.length; i++) {
+            for (let i = 0; i < players.length; i++) {
                 currentRow.append(getCellLink(i, characterArray[c]));
             }
             $("#tableSectionCharacters").append(currentRow);
@@ -208,9 +325,9 @@ $(document).ready(function () {
 
         //TABLE SECTION WEAPONS
         const weaponArray = boards[selectedBoard]["weapons"];
-        $("#tableHeaderWeapons").attr("colspan", players.length+2);
+        $("#tableHeaderWeapons").attr("colspan", players.length + 2);
 
-        for(let w=0; w<weaponArray.length; w++) {
+        for (let w = 0; w < weaponArray.length; w++) {
             let currentRow = $("<tr>").attr("class", "table-row");
 
             currentRow.append(getCheckboxCell(weaponArray[w]));
@@ -220,7 +337,7 @@ $(document).ready(function () {
             header.text(weaponArray[w]);
             currentRow.append(header);
 
-            for(let i=0; i<players.length; i++) {
+            for (let i = 0; i < players.length; i++) {
                 currentRow.append(getCellLink(i, weaponArray[w]));
             }
             $("#tableSectionWeapons").append(currentRow);
@@ -228,9 +345,9 @@ $(document).ready(function () {
 
         //TABLE SECTION ROOMS
         const roomArray = boards[selectedBoard]["rooms"];
-        $("#tableHeaderRooms").attr("colspan", players.length+2);
+        $("#tableHeaderRooms").attr("colspan", players.length + 2);
 
-        for(let r=0; r<roomArray.length; r++) {
+        for (let r = 0; r < roomArray.length; r++) {
             let currentRow = $("<tr>").attr("class", "table-row");
 
             currentRow.append(getCheckboxCell(roomArray[r]));
@@ -240,7 +357,7 @@ $(document).ready(function () {
             header.text(roomArray[r]);
             currentRow.append(header);
 
-            for(let i=0; i<players.length; i++) {
+            for (let i = 0; i < players.length; i++) {
                 currentRow.append(getCellLink(i, roomArray[r]));
             }
             $("#tableSectionRooms").append(currentRow);
@@ -248,17 +365,17 @@ $(document).ready(function () {
     }
 
     function updateTable() {
-        $(".cell-image-link").find("img").each(function() {
+        $(".cell-image-link").find("img").each(function () {
             let id = localStorage.getItem($(this).data("key"));
             $(this).attr("src", imageData[id]).attr("class", id);
         })
-        $("tr").find(".table-header-checkbox-cell").each(function() {
+        $("tr").find(".table-header-checkbox-cell").each(function () {
             let item = $(this).find("input").data("item");
             let index = itemsArray.indexOf(item);
-            if(localStorage.getItem("check"+index)) {
+            if (localStorage.getItem("check" + index)) {
                 $(this).find("input").prop("checked", true);
                 $(this).closest(".table-row").find("td > a").data("locked", "true");
-                $(this).closest(".table-row").find("td, th").css("background-color","var(--red)");
+                $(this).closest(".table-row").find("td, th").css("background-color", "var(--red)");
             }
         })
     }
@@ -272,9 +389,9 @@ $(document).ready(function () {
         cellLink.data("locked", "false");
         cellLink.data("player", number.toString());
         cellLink.data("item", item);
-        cellLink.on("click", function() {
+        cellLink.on("click", function () {
             //Only if data-locked: false
-            if($(this).data("locked") == "false") {
+            if ($(this).data("locked") == "false") {
                 //Call selection modal
                 oldID = $(this).find("img").attr("class");
                 $("#selectionModal").toggle();
@@ -282,9 +399,9 @@ $(document).ready(function () {
             }
         });
         let cellImage = $("<img>");
-        cellImage.attr("src","assets/reset.svg");
+        cellImage.attr("src", "assets/reset.svg");
         cellImage.attr("class", "reset");
-        cellImage.data("key", ""+itemsArray.indexOf(item)+","+number);
+        cellImage.data("key", "" + itemsArray.indexOf(item) + "," + number);
         cellLink.append(cellImage);
         cell.append(cellLink);
         return cell;
@@ -292,26 +409,26 @@ $(document).ready(function () {
 
     function getCheckboxCell(item) {
         let checkbox = $("<input>").attr("type", "checkbox");
-        checkbox.attr("id","rowCheckbox");
+        checkbox.attr("id", "rowCheckbox");
         checkbox.data("item", item);
         checkbox.attr("class", "table-header-checkbox");
-        checkbox.on("change", function() {
-            if($(this).is(":checked")) {
+        checkbox.on("change", function () {
+            if ($(this).is(":checked")) {
                 $(this).closest(".table-row").find("td > a").data("locked", "true");
-                $(this).closest(".table-row").find("td, th").css("background-color","var(--red)");
+                $(this).closest(".table-row").find("td, th").css("background-color", "var(--red)");
                 //Update symbols
                 toUpdate = $(this);
                 updateWholeRow("cross");
                 //Save checked status in LocalData
-                localStorage.setItem("check"+itemsArray.indexOf(item), true);
+                localStorage.setItem("check" + itemsArray.indexOf(item), true);
 
             } else {
                 $(this).closest(".table-row").find("td > a").data("locked", "false");
-                $(this).closest(".table-row").find("td, th").css("background-color","var(--white)");
+                $(this).closest(".table-row").find("td, th").css("background-color", "var(--white)");
                 //Update symbols
                 toUpdate = $(this);
                 updateWholeRow("reset");
-                localStorage.removeItem("check"+itemsArray.indexOf(item));
+                localStorage.removeItem("check" + itemsArray.indexOf(item));
             }
         });
 
@@ -321,23 +438,23 @@ $(document).ready(function () {
         return checkboxCell;
     }
 
-    $("#showInstructionsModal").on("click", function() {
+    $("#showInstructionsModal").on("click", function () {
         $("#instructionsModal").toggle();
     });
 
-    $("#instructionsModalConfirm").on("click", function() {
-        $("#instructionsModal").css("display","none");
+    $("#instructionsModalConfirm").on("click", function () {
+        $("#instructionsModal").css("display", "none");
     });
 
-    $("#autocompleteInput").on("input", function() {
+    $("#autocompleteInput").on("input", function () {
         $("#autocompleteStatus").text((document.getElementById("autocompleteInput").checked) ? "ON" : "OFF");
     });
 
     let locked = false;
 
-    $("#lockPersonalCards").on("click", function() {
-        if(!locked) {   //if currently unlocked, locks cards
-            $(".table-header-checkbox").each(function() {
+    $("#lockPersonalCards").on("click", function () {
+        if (!locked) {   //if currently unlocked, locks cards
+            $(".table-header-checkbox").each(function () {
                 $(this).attr("disabled", "disabled");
             });
             $("#lockPersonalCards").css("background-color", "var(--red)");
@@ -345,7 +462,7 @@ $(document).ready(function () {
 
             locked = true;
         } else {        //if currently locked, unlocks cards
-            $(".table-header-checkbox").each(function() {
+            $(".table-header-checkbox").each(function () {
                 $(this).removeAttr("disabled");
             });
             $("#lockPersonalCards").css("background-color", "var(--dark-blue)");
@@ -354,43 +471,43 @@ $(document).ready(function () {
         }
     });
 
-    $("#showLessSymbolsCheckbox").on("change", function() {
+    $("#showLessSymbolsCheckbox").on("change", function () {
         $("#selectionModalExtended").toggle();
     })
 
     function updateWholeRow(id) {
         toUpdate.closest(".table-row").find("img").attr("src", imageData[id]).attr("class", id);
         let rowName = itemsArray.indexOf(toUpdate.data("item"));
-        for(let i=0; i<players.length; i++) {
-            localStorage.setItem((""+rowName+","+i), id);
+        for (let i = 0; i < players.length; i++) {
+            localStorage.setItem(("" + rowName + "," + i), id);
         }
     }
 
-    $("#modalBackButton").on("click", function() {
+    $("#modalBackButton").on("click", function () {
         $("#selectionModal").toggle();
     })
 
-    $(".selection-modal-image").on("click", function() {
+    $(".selection-modal-image").on("click", function () {
         const newID = $(this).attr("id");
 
         $("#selectionModal").toggle();
-        
+
         //Se spunto e autocompl. ON, metti croci sulla riga
-        if(newID == "check" && document.getElementById("autocompleteInput").checked) {
+        if (newID == "check" && document.getElementById("autocompleteInput").checked) {
             updateWholeRow("cross");
         } else if (oldID == "check" && newID != "check" && document.getElementById("autocompleteInput").checked) {
             //Se tolgo spunta, metti reset
             updateWholeRow("reset");
         }
-        
+
         //Aggiorna la casella vera
         toUpdate.find("img").attr("src", imageData[newID]).attr("class", newID);
 
         //Aggiorna LocalData
         let rowName = itemsArray.indexOf(toUpdate.data("item"));
         let columnName = parseInt(toUpdate.data("player"));
-        console.log(rowName+"\t"+columnName);
-        localStorage.setItem((""+rowName+","+columnName), newID);
+        console.log(rowName + "\t" + columnName);
+        localStorage.setItem(("" + rowName + "," + columnName), newID);
         localStorage.setItem("date", new Date());
     })
 })

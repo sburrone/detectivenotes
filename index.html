@@ -95,6 +95,7 @@
     <!--  MAIN MENU  -->
 
     <div id="mainMenu">
+        <div id="model"></div>
         <p id="mainTitle" class="main-title"></p>
         <a id="continueGameButton" class="big-button"><span id="continueButton"
                 class="big-button-title"></span><br><span id="continueButtonSubtitle"
@@ -261,11 +262,17 @@
     </div>
 
 
-
-
-
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js",
+                "GLTFLoader": "https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js",
+                "OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/controls/OrbitControls.js"
+            }
+        }
+    </script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <script src="main.js"></script>
+    <script src="main.js" type="module"></script>
     <script src="strings-en.js"></script>
     <script src="strings-it.js"></script>
 </body>
