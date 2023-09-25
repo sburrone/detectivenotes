@@ -32,7 +32,7 @@ class AnimatedBoard {
         const near = 1.0;
         const far = 1000.0;
         this._camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-        this._camera.position.set(15, 15, 20);
+        this._camera.position.set(0,40, 0);
 
         this._scene = new THREE.Scene();
 
@@ -57,11 +57,16 @@ class AnimatedBoard {
         light = new THREE.AmbientLight(0xFFFFFF);
         this._scene.add(light);
 
-        this._controls = new OrbitControls(
-            this._camera, this._threejs.domElement);
+        this._controls = new OrbitControls(this._camera, this._threejs.domElement);
         this._controls.target.set(0, 10, 0);
+        this._controls.maxDistance = 80;
+        this._controls.minDistance = 1;
         this._controls.autoRotate = true;
+        this._controls.autoRotateSpeed = 2;
+        this._controls.enableDamping = true;
         this._controls.update();
+
+        this._camera.lookAt(this._scene.position);
 
         const loader = new GLTFLoader();
         loader.setPath('./3d/');
@@ -95,6 +100,8 @@ class AnimatedBoard {
                 this._previousRAF = t;
             }
 
+            this._controls.update();
+
             this._RAF();
 
             this._threejs.render(this._scene, this._camera);
@@ -107,26 +114,20 @@ class AnimatedBoard {
 
 let _APP = null;
 
-window.addEventListener('DOMContentLoaded', () => {
-    _APP = new AnimatedBoard();
-});
-
 $(document).ready(function () {
-    'use strict';
+    'us strict';
 
-
-
-
+    _APP = new AnimatedBoard();
 
     //Language
     let userLang = navigator.language || navigator.userLanguage;
     const params = new Proxy(new URLSearchParams(window.location.search), {
         get: (searchParams, prop) => searchParams.get(prop),
     });
-    let forcedLang = params.lang.toLowerCase();
-    if (forcedLang == "it") {
+    let forcedLang = params.lang;
+    if (forcedLang && forcedLang.toLowerCase() == "it") {
         userLang = "it-IT";
-    } else if (forcedLang == "en") {
+    } else if (forcedLang && forcedLang.toLowerCase() == "en") {
         userLang = "en-US";
     }
     let strings, boards, letsPlay;
