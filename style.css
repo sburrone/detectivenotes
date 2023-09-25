@@ -42,6 +42,8 @@ body {
     font-size: 80px;
     text-align: center;
     color: var(--dark-blue);
+    text-shadow: var(--white) 1px 0 50px;
+    -webkit-text-stroke: 2px var(--white);
 }
 
 .big-button {
@@ -53,6 +55,7 @@ body {
     border-radius: 500px;
     width: 300px;
     margin: 10px;
+    border: 2px solid white;
 }
 
 .big-button-title {
@@ -387,6 +390,10 @@ table {
 
     input[type=range].range::-ms-track {
         width: 95%;
+    }
+
+    .main-title {
+        font-size: 50px;
     }
 }
 

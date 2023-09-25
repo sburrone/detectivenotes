@@ -32,7 +32,7 @@ class AnimatedBoard {
         const near = 1.0;
         const far = 1000.0;
         this._camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-        this._camera.position.set(0,40, 0);
+        this._camera.position.set(0,60, 0);
 
         this._scene = new THREE.Scene();
 
@@ -163,7 +163,7 @@ $(document).ready(function () {
     if (localStorage.getItem("date") != undefined) {
         $("#continueGameButton").toggle();
         $("#beginButtonSubtitle").toggle();
-        let recPlayers = localStorage.getItem("players");
+        let recPlayers = localStorage.getItem("players").replaceAll(',',', ');
         let recBoard = boards[parseInt(localStorage.getItem("board"))];
         let recDate = new Date(localStorage.getItem("date"));
         let formattedDate = recDate.getFullYear() + "-" + ((recDate.getMonth() + 1) > 10 ? (recDate.getMonth() + 1) : ("0" + (recDate.getMonth() + 1))) + "-" + (recDate.getDate() > 10 ? recDate.getDate() : ("0" + recDate.getDate())) + " " + recDate.getHours() + ":" + (recDate.getMinutes() > 10 ? recDate.getMinutes() : ("0" + recDate.getMinutes()));
