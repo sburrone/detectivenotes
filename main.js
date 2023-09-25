@@ -206,7 +206,7 @@ $(document).ready(function () {
             button.text(board.name);
             button.on("click", function (event) {
                 //Cambio colori
-                $("#boardButtonContainer").find("*").css("background-color", "var(--dark-blue)1");
+                $("#boardButtonContainer").find("*").css("background-color", "var(--dark-blue)");
                 $(event.target).css("background-color", "var(--red)");
 
                 selectedBoard = board.id;

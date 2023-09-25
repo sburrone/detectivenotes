@@ -71,7 +71,7 @@ const stringsEN = {
     playerNameTooltip: "Keep your names short<br>Write your names counterclockwise, starting from the player on your left.",
     readyText: "Are you ready?",
     startGame: "Start Game",
-    instructionsModalText: "At the beginning of the game, you'll be given some cards.<br>Tick the box next to their name to lock them in.<br>Once you've locked in all your cards, tap the lock icon at the top of the screen.<br>Your game progress is saved automatically",
+    instructionsModalText: "At the beginning of the game, you'll be given some cards.<br>Tick the box next to their name to lock them in.<br>Once you've locked in all your cards, tap the lock icon at the top of the screen.<br>Your game progress is saved automatically.",
     instructionsModalConfirm: "Got it",
     showInstructionsModal: "Help",
     autocompleteStatusContainer: "Autocomplete is ",
