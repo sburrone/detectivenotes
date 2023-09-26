@@ -2,6 +2,20 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'GLTFLoader';
 import { OrbitControls } from 'OrbitControls';
 
+const cameraPositions = [
+    [0,60,0],
+    [10,15,10],
+    [0,0,40],
+    [40,15,40],
+    [15,50,15],
+    [15,50,50],
+    [30,30,30]
+]
+
+function getCameraPosition() {
+    return cameraPositions[Math.floor(Math.random()*cameraPositions.length)]
+}
+
 class AnimatedBoard {
     constructor() {
         this._Initialize();
@@ -32,7 +46,8 @@ class AnimatedBoard {
         const near = 1.0;
         const far = 1000.0;
         this._camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-        this._camera.position.set(0,60, 0);
+        const chosenPosition = getCameraPosition();
+        this._camera.position.set(chosenPosition[0], chosenPosition[1], chosenPosition[2]);
 
         this._scene = new THREE.Scene();
 
