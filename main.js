@@ -167,7 +167,7 @@ $(document).ready(function () {
         props: ["filter"]
     }, {
         element: [".locked", ".upperbar", ".dust-counter-box", ".small-button",
-            ".small-button .material-symbols-outlined", ".counterbutton", ".begin-button", ".main-menu-small-button", ".main-table-row>*"],
+            ".small-button .material-symbols-outlined", ".counterbutton", ".begin-button", ".main-menu-small-button", ".main-table-row>*", ".language-link"],
         props: ["background-color"]
     }, {
         element: ["input[type=\"range\"]"],
@@ -240,6 +240,7 @@ $(document).ready(function () {
 
             //Fill
             $("#mainMenu").css("display", "none");
+            clearInterval(languageInterval);
             $("#mainGame").css("display", "block");
             fillTable();
             updateTable();
@@ -257,6 +258,7 @@ $(document).ready(function () {
 
     $("#newGameButton").on("click", function () {
         $("#mainMenu").css("display", "none");
+        clearInterval(languageInterval);
         $("#setup").css("display", "block");
         selectedBoard = 0;
         itemsArray = boards[selectedBoard]["characters"].concat(boards[selectedBoard]["weapons"]).concat(boards[selectedBoard]["rooms"]);
@@ -287,6 +289,10 @@ $(document).ready(function () {
     $("#playerOrderModalLink, #orderModalBackButton").on("click", function () {
         $("#orderModal").toggle();
     });
+
+    $("#mainMenuLanguageButton, #languageModalBackButton").on("click", function () {
+        $("#languageModal").toggle();
+    })
 
     function updateRangeTooltip() {
         $("#playerNumTooltip").text($("#playerNum").val())
@@ -350,6 +356,16 @@ $(document).ready(function () {
         }
         darkMode = !current;
     }
+
+    const languageLabels = ["Switch language", "Cambia lingua"];
+    let languageIndex = 0;
+    let languageInterval = window.setInterval(function () {
+        if (languageIndex == languageLabels.length) {
+            languageIndex = 0;
+        }
+        $(".language-label").text(languageLabels[languageIndex]);
+        languageIndex++;
+    }, 2000);
 
     //Main menu buttons
     $("#mainMenuCreditsButton, #creditsModalBackButton").on("click", function () {

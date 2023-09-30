@@ -40,6 +40,10 @@
         <a id="newGameButton" class="big-button"><span id="beginButton" class="big-button-title"></span><br><span
                 id="beginButtonSubtitle" class="big-button-subtitle"></span></a>
         <div id="mainMenuButtons">
+            <button id="mainMenuLanguageButton" class="main-menu-small-button"><span id="changeLanguageText"
+                    class="language-label">Cambia lingua</span><span class="material-symbols-outlined">
+                    language
+                </span></button>
             <button id="mainMenuDarkModeButton" class="main-menu-small-button"><span
                     class="material-symbols-outlined dark-mode-label">
                     dark_mode
@@ -47,6 +51,18 @@
             <button id="mainMenuCreditsButton" class="main-menu-small-button"><span class="material-symbols-outlined">
                     info
                 </span></button>
+        </div>
+    </div>
+
+    <!--  LANGUAGE MODAL  -->
+    <div id="languageModal" class="modal-wrapper">
+        <div id="languageModalContent" class="modal">
+            <section id="modalBackWrapper"><a class="setup-tooltip" id="languageModalBackButton"><span
+                        class="material-symbols-outlined">
+                        close
+                    </span></a></section>
+            <a href="?lang=en" class="language-link">🇬🇧 English</a>
+            <a href="?lang=it" class="language-link">🇮🇹 Italiano</a>
         </div>
     </div>
 

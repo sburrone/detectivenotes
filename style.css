@@ -271,6 +271,19 @@ a:hover {
     top: 58px !important;
 }
 
+#mainMenuLanguageButton {
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+}
+
+.language-label {
+    transition: width .3s ease-in-out;
+    font-size: 20px;
+    padding: 0px 10px;
+    line-height: 32px;
+}
+
 .small-button {
     transition: .3s ease-in-out;
     color: var(--white);
@@ -442,6 +455,18 @@ button {
     justify-items: center;
 }
 
+.language-link {
+    transition: .3s ease-in-out;
+    --dark-background-color: var(--dark-blue);
+    --light-background-color: var(--light-blue);
+    background-color: var(--light-blue);
+    color: var(--white) !important;
+    padding: 10px 80px;
+    border-radius: 5000px;
+    margin: 10px;
+    font-size: 20px;
+}
+
 .reset {
     transition: .3s ease-in-out;
     --light-filter: invert(22%) sepia(94%) saturate(291%) hue-rotate(171deg) brightness(89%) contrast(96%);
@@ -571,10 +596,6 @@ table {
 
 .table-header {
     padding: 10px;
-}
-
-#tableHeaderPlayers {
-    padding-top: 20px;
 }
 
 
