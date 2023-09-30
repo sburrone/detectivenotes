@@ -246,10 +246,23 @@ a:hover {
     align-items: end;
 }
 
-#mainMenuButtons button {
+.main-menu-small-button {
     background-color: var(--light-blue);
     --dark-background-color: var(--dark-blue);
     --light-background-color: var(--light-blue);
+    padding: 8px;
+    margin: 4px;
+    text-decoration: none;
+    border: 0px;
+    text-align: center;
+    font-size: 24px;
+    border-radius: 500px;
+}
+
+.main-menu-small-button>.material-symbols-outlined {
+    padding: 4px;
+    border: 0px;
+    margin: 3px;
 }
 
 .board-button {

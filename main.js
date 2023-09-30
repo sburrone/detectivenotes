@@ -148,7 +148,7 @@ $(document).ready(function () {
         props: ["filter"]
     }, {
         element: [".locked", ".upperbar", ".dust-counter-box", ".small-button",
-            ".small-button .material-symbols-outlined", ".counterbutton", ".begin-button"],
+            ".small-button .material-symbols-outlined", ".counterbutton", ".begin-button", ".main-menu-small-button"],
         props: ["background-color"]
     }, {
         element: ["input[type=\"range\"]"],
@@ -157,38 +157,6 @@ $(document).ready(function () {
         element: [".modal a"],
         props: ["color"]
     }];
-
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        toggleDarkMode(false);
-    };
-
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-        toggleDarkMode(darkMode);
-    });
-
-    $("#darkModeToggle, #mainMenuDarkModeButton").on("click", function () {
-        toggleDarkMode(darkMode);
-    });
-
-    function toggleDarkMode(current) {
-        $("#darkModeToggleLabel").text(current ? "dark_mode" : "light_mode");
-        darkModeEnabledElements.forEach(obj => {
-            //{element,prop}
-            obj.element.forEach(element => {
-                //iterate props
-                obj.props.forEach(prop => {
-                    //change each prop
-                    const value = $(element).css("--" + (current ? "light" : "dark") + "-" + prop);
-                    $(element).css(prop, value);
-                });
-            })
-        });
-        //If cards are locked, button should change correctly.
-        if (locked) {
-            $("#lockPersonalCards, #lockPersonalCardsLabel").css("background-color", (current ? "var(--red)" : "var(--dark-red)"));
-        }
-        darkMode = !current;
-    }
 
 
     //Language
@@ -323,6 +291,38 @@ $(document).ready(function () {
                 $("#playerNameContainer").append(fieldSection);
             }
         }
+    }
+
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        toggleDarkMode(false);
+    };
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+        toggleDarkMode(darkMode);
+    });
+
+    $("#darkModeToggle, #mainMenuDarkModeButton").on("click", function () {
+        toggleDarkMode(darkMode);
+    });
+
+    function toggleDarkMode(current) {
+        $("#darkModeToggleLabel").text(current ? "dark_mode" : "light_mode");
+        darkModeEnabledElements.forEach(obj => {
+            //{element,prop}
+            obj.element.forEach(element => {
+                //iterate props
+                obj.props.forEach(prop => {
+                    //change each prop
+                    const value = $(element).css("--" + (current ? "light" : "dark") + "-" + prop);
+                    $(element).css(prop, value);
+                });
+            })
+        });
+        //If cards are locked, button should change correctly.
+        if (locked) {
+            $("#lockPersonalCards, #lockPersonalCardsLabel").css("background-color", (current ? "var(--red)" : "var(--dark-red)"));
+        }
+        darkMode = !current;
     }
 
     //Main menu buttons
