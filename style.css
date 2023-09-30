@@ -12,6 +12,7 @@ html,
 body {
     margin: 0;
     padding: 0;
+    height: 100%;
 }
 
 html {
@@ -41,6 +42,7 @@ html {
 }
 
 #mainMenu {
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -163,12 +165,18 @@ a:hover {
     justify-content: center;
     color: var(--white);
     background-color: var(--red);
+    --dark-background-color: var(--dark-red);
+    --light-background-color: var(--red);
     text-decoration: none;
     padding: 20px 30px;
     margin-top: 10px;
     border-radius: 500px;
     font-size: 24px;
     border: 0px;
+}
+
+.begin-button:hover {
+    filter: brightness(85%);
 }
 
 #beginButtonSubtitle,
@@ -228,6 +236,22 @@ a:hover {
     margin: 3px;
 }
 
+#mainMenuButtons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 95%;
+    height: 100%;
+    margin: 10px;
+    align-items: end;
+}
+
+#mainMenuButtons button {
+    background-color: var(--light-blue);
+    --dark-background-color: var(--dark-blue);
+    --light-background-color: var(--light-blue);
+}
+
 .board-button {
     font-size: 20px;
     padding: 8px;
@@ -283,6 +307,17 @@ button {
     color: var(--black);
     --dark-color: var(--white);
     --light-color: var(--black);
+}
+
+.modal a {
+    color: var(--black);
+    --light-color: var(--black);
+    --dark-color: var(--white);
+    text-decoration: none;
+}
+
+.modal a:hover {
+    filter: invert(30%);
 }
 
 #modalBackWrapper {
@@ -410,7 +445,6 @@ button {
     font: 'Circular Std Book';
     height: 40px;
     width: 40px;
-    text-decoration: none;
     border: 0px;
 }
 

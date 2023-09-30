@@ -148,11 +148,14 @@ $(document).ready(function () {
         props: ["filter"]
     }, {
         element: [".locked", ".upperbar", ".dust-counter-box", ".small-button",
-            ".small-button .material-symbols-outlined", ".counterbutton"],
+            ".small-button .material-symbols-outlined", ".counterbutton", ".begin-button"],
         props: ["background-color"]
     }, {
         element: ["input[type=\"range\"]"],
         props: ["accent-color"]
+    }, {
+        element: [".modal a"],
+        props: ["color"]
     }];
 
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -163,7 +166,7 @@ $(document).ready(function () {
         toggleDarkMode(darkMode);
     });
 
-    $("#darkModeToggle").on("click", function () {
+    $("#darkModeToggle, #mainMenuDarkModeButton").on("click", function () {
         toggleDarkMode(darkMode);
     });
 
@@ -321,6 +324,12 @@ $(document).ready(function () {
             }
         }
     }
+
+    //Main menu buttons
+    $("#mainMenuCreditsButton").on("click", function () {
+        //Open credits modal
+        $("#creditsModal").toggle();
+    });
 
     $("#playerNum").on("input", function () {
         updateFields();
@@ -557,7 +566,11 @@ $(document).ready(function () {
 
     $("#modalBackButton").on("click", function () {
         $("#selectionModal").toggle();
-    })
+    });
+
+    $("#creditsModalBackButton").on("click", function () {
+        $("#creditsModal").toggle();
+    });
 
     $(".selection-modal-image").on("click", function () {
         const newID = $(this).attr("id");
