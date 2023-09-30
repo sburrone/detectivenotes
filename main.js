@@ -2,130 +2,6 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'GLTFLoader';
 import { OrbitControls } from 'OrbitControls';
 
-const cameraPositions = [
-    [0, 60, 0],
-    [10, 15, 10],
-    [0, 0, 40],
-    [40, 15, 40],
-    [15, 50, 15],
-    [15, 50, 50],
-    [30, 30, 30]
-]
-
-function getCameraPosition() {
-    return cameraPositions[Math.floor(Math.random() * cameraPositions.length)]
-}
-
-class AnimatedBoard {
-    constructor() {
-        this._Initialize();
-    }
-
-    _Initialize() {
-        this._threejs = new THREE.WebGLRenderer({
-            antialias: true,
-            alpha: true,
-        });
-        this._threejs.shadowMap.enabled = true;
-        this._threejs.shadowMap.type = THREE.PCFSoftShadowMap;
-        this._threejs.physicallyCorrectLights = true;
-        this._threejs.toneMapping = THREE.ACESFilmicToneMapping;
-        this._threejs.outputEncoding = THREE.sRGBEncoding;
-
-        const modelDiv = document.getElementById('model');
-        modelDiv.appendChild(this._threejs.domElement);
-
-        this._threejs.setSize(modelDiv.offsetWidth, modelDiv.offsetHeight);
-
-        window.addEventListener('resize', () => {
-            this._OnWindowResize();
-        }, false);
-
-        const fov = 60;
-        const aspect = modelDiv.offsetWidth / modelDiv.offsetHeight;
-        const near = 1.0;
-        const far = 1000.0;
-        this._camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-        const chosenPosition = getCameraPosition();
-        this._camera.position.set(chosenPosition[0], chosenPosition[1], chosenPosition[2]);
-
-        this._scene = new THREE.Scene();
-
-        let light = new THREE.DirectionalLight(0xFFFFFF);
-        light.position.set(20, 100, 10);
-        light.target.position.set(0, 0, 0);
-        light.castShadow = true;
-        light.intensity = 5;
-        light.shadow.bias = -0.001;
-        light.shadow.mapSize.width = 2048;
-        light.shadow.mapSize.height = 2048;
-        light.shadow.camera.near = 0.1;
-        light.shadow.camera.far = 500.0;
-        light.shadow.camera.near = 0.5;
-        light.shadow.camera.far = 500.0;
-        light.shadow.camera.left = 100;
-        light.shadow.camera.right = -100;
-        light.shadow.camera.top = 100;
-        light.shadow.camera.bottom = -100;
-        this._scene.add(light);
-
-        light = new THREE.AmbientLight(0xFFFFFF);
-        this._scene.add(light);
-
-        this._controls = new OrbitControls(this._camera, this._threejs.domElement);
-        this._controls.target.set(0, 10, 0);
-        this._controls.maxDistance = 80;
-        this._controls.minDistance = 1;
-        this._controls.autoRotate = true;
-        this._controls.autoRotateSpeed = 2;
-        this._controls.enableDamping = true;
-        this._controls.update();
-
-        this._camera.lookAt(this._scene.position);
-
-        const loader = new GLTFLoader();
-        loader.setPath('./3d/');
-        loader.load('scene.gltf', (gltf) => {
-            //gltf.scale.setScalar(0.1);
-            gltf.scene.scale.set(0.05, 0.05, 0.05);
-            gltf.scene.traverse(c => {
-                c.castShadow = true;
-            });
-            this._scene.add(gltf.scene);
-        });
-
-        this._RAF();
-    }
-    _OnWindowResize() {
-        this._camera.aspect = window.innerWidth / window.innerHeight;
-        this._camera.updateProjectionMatrix();
-        this._threejs.setSize(window.innerWidth, window.innerHeight);
-    }
-
-    _Step(timeElapsed) {
-        const timeElapsedS = timeElapsed * 0.001;
-        if (this._mixers) {
-            this._mixers.map(m => m.update(timeElapsedS));
-        }
-    }
-
-    _RAF() {
-        requestAnimationFrame((t) => {
-            if (this._previousRAF === null) {
-                this._previousRAF = t;
-            }
-
-            this._controls.update();
-
-            this._RAF();
-
-            this._threejs.render(this._scene, this._camera);
-            this._Step(t - this._previousRAF);
-            this._previousRAF = t;
-        });
-    }
-}
-
 
 let _APP = null;
 
@@ -133,6 +9,150 @@ let locked = false;
 
 $(document).ready(function () {
     'use strict';
+
+    const cameraPositions = [
+        [0, 60, 0],
+        [10, 15, 10],
+        [0, 0, 40],
+        [40, 15, 40],
+        [15, 50, 15],
+        [15, 50, 50],
+        [30, 30, 30]
+    ]
+
+    function getCameraPosition() {
+        return cameraPositions[Math.floor(Math.random() * cameraPositions.length)]
+    }
+
+    class AnimatedBoard {
+        constructor() {
+            this._Initialize();
+        }
+
+        _Initialize() {
+            this._threejs = new THREE.WebGLRenderer({
+                antialias: true,
+                alpha: true,
+            });
+            this._threejs.shadowMap.enabled = true;
+            this._threejs.shadowMap.type = THREE.PCFSoftShadowMap;
+            this._threejs.physicallyCorrectLights = true;
+            this._threejs.toneMapping = THREE.ACESFilmicToneMapping;
+            this._threejs.outputEncoding = THREE.sRGBEncoding;
+
+            const modelDiv = document.getElementById('model');
+            modelDiv.appendChild(this._threejs.domElement);
+
+            this._threejs.setSize(modelDiv.offsetWidth, modelDiv.offsetHeight);
+
+            window.addEventListener('resize', () => {
+                this._OnWindowResize();
+            }, false);
+
+            const fov = 60;
+            const aspect = modelDiv.offsetWidth / modelDiv.offsetHeight;
+            const near = 1.0;
+            const far = 1000.0;
+            this._camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+            const chosenPosition = getCameraPosition();
+            this._camera.position.set(chosenPosition[0], chosenPosition[1], chosenPosition[2]);
+
+            this._scene = new THREE.Scene();
+
+            let light = new THREE.DirectionalLight(0xFFFFFF);
+            light.position.set(20, 100, 10);
+            light.target.position.set(0, 0, 0);
+            light.castShadow = true;
+            light.intensity = 5;
+            light.shadow.bias = -0.001;
+            light.shadow.mapSize.width = 2048;
+            light.shadow.mapSize.height = 2048;
+            light.shadow.camera.near = 0.1;
+            light.shadow.camera.far = 500.0;
+            light.shadow.camera.near = 0.5;
+            light.shadow.camera.far = 500.0;
+            light.shadow.camera.left = 100;
+            light.shadow.camera.right = -100;
+            light.shadow.camera.top = 100;
+            light.shadow.camera.bottom = -100;
+            this._scene.add(light);
+
+            light = new THREE.AmbientLight(0xFFFFFF);
+            this._scene.add(light);
+
+            this._controls = new OrbitControls(this._camera, this._threejs.domElement);
+            this._controls.target.set(0, 10, 0);
+            this._controls.maxDistance = 80;
+            this._controls.minDistance = 1;
+            this._controls.autoRotate = true;
+            this._controls.autoRotateSpeed = 2;
+            this._controls.enableDamping = true;
+            this._controls.update();
+
+            this._camera.lookAt(this._scene.position);
+
+            const loadingManager = new THREE.LoadingManager();
+
+            loadingManager.onLoad = function () {
+                doneLoading();
+            };
+
+            loadingManager.onProgress = function (url, itemsLoaded, itemsTotal) {
+                $("#progressBar").val(itemsLoaded / itemsTotal * 100);
+            };
+
+            loadingManager.onError = function (url) {
+                console.log('There was an error loading ' + url);
+                doneLoading();
+            };
+
+            const loader = new GLTFLoader(loadingManager);
+            loader.setPath('./3d/');
+            loader.load('scene.gltf', (gltf) => {
+                //gltf.scale.setScalar(0.1);
+                gltf.scene.scale.set(0.05, 0.05, 0.05);
+                gltf.scene.traverse(c => {
+                    c.castShadow = true;
+                });
+                this._scene.add(gltf.scene);
+            });
+
+            function doneLoading() {
+                $("#loadingScreen").hide();
+                $("#mainMenu").attr("display", "flex");
+            }
+
+            this._RAF();
+        }
+        _OnWindowResize() {
+            this._camera.aspect = window.innerWidth / window.innerHeight;
+            this._camera.updateProjectionMatrix();
+            this._threejs.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        _Step(timeElapsed) {
+            const timeElapsedS = timeElapsed * 0.001;
+            if (this._mixers) {
+                this._mixers.map(m => m.update(timeElapsedS));
+            }
+        }
+
+        _RAF() {
+            requestAnimationFrame((t) => {
+                if (this._previousRAF === null) {
+                    this._previousRAF = t;
+                }
+
+                this._controls.update();
+
+                this._RAF();
+
+                this._threejs.render(this._scene, this._camera);
+                this._Step(t - this._previousRAF);
+                this._previousRAF = t;
+            });
+        }
+    }
 
     _APP = new AnimatedBoard();
 
