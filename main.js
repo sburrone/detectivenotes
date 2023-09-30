@@ -144,7 +144,7 @@ $(document).ready(function () {
         element: ["html", ".content", ".modal-wrapper", ".modal"],
         props: ["background-color", "color"]
     }, {
-        element: [".reset", ".skip"],
+        element: [".reset", ".skip", ".setup-image"],
         props: ["filter"]
     }, {
         element: [".locked", ".upperbar", ".dust-counter-box", ".small-button",
@@ -156,6 +156,9 @@ $(document).ready(function () {
     }, {
         element: [".modal a"],
         props: ["color"]
+    }, {
+        element: [".setup-tooltip-modal-link"],
+        props: ["color", "text-decoration"]
     }];
 
 
@@ -262,6 +265,10 @@ $(document).ready(function () {
         updateFields();
     });
 
+    $("#playerOrderModalLink, #orderModalBackButton").on("click", function () {
+        $("#orderModal").toggle();
+    });
+
     function updateRangeTooltip() {
         $("#playerNumTooltip").text($("#playerNum").val())
     }
@@ -326,7 +333,7 @@ $(document).ready(function () {
     }
 
     //Main menu buttons
-    $("#mainMenuCreditsButton").on("click", function () {
+    $("#mainMenuCreditsButton, #creditsModalBackButton").on("click", function () {
         //Open credits modal
         $("#creditsModal").toggle();
     });
@@ -566,10 +573,6 @@ $(document).ready(function () {
 
     $("#modalBackButton").on("click", function () {
         $("#selectionModal").toggle();
-    });
-
-    $("#creditsModalBackButton").on("click", function () {
-        $("#creditsModal").toggle();
     });
 
     $(".selection-modal-image").on("click", function () {

@@ -79,13 +79,36 @@
             <span id="playerNumTooltip" class="setup-tooltip"></span>
             <hr>
             <span id="playerNameQuestion" class="setup-text"></span><br>
-            <span id="playerNameTooltip" class="setup-tooltip"></span><br>
+            <span id="playerNameTooltip" class="setup-tooltip"></span>
+            <a id="playerOrderModalLink" class="setup-tooltip-modal-link"></a><br>
             <form id="playerNameForm">
                 <section id="playerNameContainer"></section>
                 <hr>
                 <span id="readyText" class="setup-text"></span><br>
                 <input type="submit" id="startGame" class="begin-button">
             </form>
+        </div>
+    </div>
+
+    <!--  PLAYER ORDER MODAL  -->
+    <div id="orderModal" class="modal-wrapper">
+        <div id="orderModalContent" class="modal">
+            <section id="modalBackWrapper"><a class="setup-tooltip" id="orderModalBackButton"><span
+                        class="material-symbols-outlined">
+                        close
+                    </span></a></section>
+            <img src="assets/player_order.webp" class="setup-image">
+            <p id="orderModalText" class="setup-tooltip"></p>
+            <input disabled type="text" class="order-input setup-name material-symbols-outlined"
+                value="counter_1 face_6">
+            <input disabled type="text" class="order-input setup-name material-symbols-outlined"
+                value="counter_2 face_4">
+            <input disabled type="text" class="order-input setup-name material-symbols-outlined"
+                value="counter_3 face_2">
+            <input disabled type="text" class="order-input setup-name material-symbols-outlined"
+                value="counter_4 face_5">
+            <input disabled type="text" class="order-input setup-name material-symbols-outlined"
+                value="counter_5 face_3">
         </div>
     </div>
 
