@@ -163,7 +163,7 @@ $(document).ready(function () {
         element: ["html", ".content", ".modal-wrapper", ".modal"],
         props: ["background-color", "color"]
     }, {
-        element: [".reset", ".skip", ".setup-image"],
+        element: [".reset", ".skip", ".setup-image", ".invertible"],
         props: ["filter"]
     }, {
         element: [".locked", ".upperbar", ".dust-counter-box", ".small-button",
@@ -566,12 +566,8 @@ $(document).ready(function () {
         return checkboxCell;
     }
 
-    $("#showInstructionsModal").on("click", function () {
+    $("#showInstructionsModal, #instructionsModalBackButton").on("click", function () {
         $("#instructionsModal").toggle();
-    });
-
-    $("#instructionsModalConfirm").on("click", function () {
-        $("#instructionsModal").css("display", "none");
     });
 
     $("#autocompleteInput").on("input", function () {

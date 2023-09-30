@@ -271,6 +271,12 @@ a:hover {
     top: 58px !important;
 }
 
+.invertible {
+    filter: invert(0);
+    --dark-filter: invert(1);
+    --light-filter: invert(0);
+}
+
 #mainMenuLanguageButton {
     display: flex !important;
     flex-direction: row;
@@ -307,6 +313,12 @@ a:hover {
     height: 100%;
     margin: 10px;
     align-items: end;
+}
+
+.instructions-image {
+    height: 50px;
+    width: 50px;
+    margin-top: 20px;
 }
 
 .main-menu-small-button {
