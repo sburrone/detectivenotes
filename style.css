@@ -703,3 +703,8 @@ input[type="range"] {
     --dark-background-color: var(--dark-red);
     --light-background-color: var(--red);
 }
+
+button,
+a {
+    user-select: none;
+}

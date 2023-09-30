@@ -118,8 +118,7 @@ $(document).ready(function () {
             });
 
             function doneLoading() {
-                $("#loadingScreen").hide();
-                $("#mainMenu").attr("display", "flex");
+                $("#loadingScreen").fadeOut(1000);
             }
 
             this._RAF();
