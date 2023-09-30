@@ -228,7 +228,7 @@ $(document).ready(function () {
         let recPlayers = localStorage.getItem("players").replaceAll(',', ', ');
         let recBoard = boards[parseInt(localStorage.getItem("board"))];
         let recDate = new Date(localStorage.getItem("date"));
-        let formattedDate = recDate.getFullYear() + "-" + ((recDate.getMonth() + 1) > 10 ? (recDate.getMonth() + 1) : ("0" + (recDate.getMonth() + 1))) + "-" + (recDate.getDate() > 10 ? recDate.getDate() : ("0" + recDate.getDate())) + " " + recDate.getHours() + ":" + (recDate.getMinutes() > 10 ? recDate.getMinutes() : ("0" + recDate.getMinutes()));
+        let formattedDate = recDate.getFullYear() + "-" + ((recDate.getMonth() + 1) >= 10 ? (recDate.getMonth() + 1) : ("0" + (recDate.getMonth() + 1))) + "-" + (recDate.getDate() >= 10 ? recDate.getDate() : ("0" + recDate.getDate())) + " " + recDate.getHours() + ":" + (recDate.getMinutes() >= 10 ? recDate.getMinutes() : ("0" + recDate.getMinutes()));
         $("#continueButtonSubtitle").html(formattedDate + "<br>" + recBoard.name + "<br>" + recPlayers);
 
         $("#continueGameButton").on("click", function () {
