@@ -222,6 +222,10 @@ a:hover {
     --light-color: var(--black);
 }
 
+#mainGameTableWrapper {
+    top: 58px !important;
+}
+
 .small-button {
     color: var(--white);
     background-color: var(--dark-blue);
@@ -501,6 +505,20 @@ button {
 table {
     width: 100%;
     border-collapse: collapse;
+}
+
+.main-table-row>* {
+    background-color: rgb(230, 230, 230);
+    --dark-background-color: rgb(25, 25, 25);
+    --light-background-color: rgb(230, 230, 230);
+}
+
+.table-header {
+    padding: 10px;
+}
+
+#tableHeaderPlayers {
+    padding-top: 20px;
 }
 
 

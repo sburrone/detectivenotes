@@ -148,7 +148,7 @@ $(document).ready(function () {
         props: ["filter"]
     }, {
         element: [".locked", ".upperbar", ".dust-counter-box", ".small-button",
-            ".small-button .material-symbols-outlined", ".counterbutton", ".begin-button", ".main-menu-small-button"],
+            ".small-button .material-symbols-outlined", ".counterbutton", ".begin-button", ".main-menu-small-button", ".main-table-row>*"],
         props: ["background-color"]
     }, {
         element: ["input[type=\"range\"]"],
@@ -386,6 +386,8 @@ $(document).ready(function () {
             let cell = $("<th>").attr("class", "name-holder");
             cell.attr("scope", "col");
             cell.text(players[i]);
+            let color = $("#tableHeaderPlayers").css("background-color");
+            cell.css("background-color", color);
             $("#tableRowPlayers").append(cell);
         }
 
