@@ -333,7 +333,7 @@ $(document).ready(function () {
     });
 
     function toggleDarkMode(current) {
-        $("#darkModeToggleLabel").text(current ? "dark_mode" : "light_mode");
+        $(".dark-mode-label").text(current ? "dark_mode" : "light_mode");
         darkModeEnabledElements.forEach(obj => {
             //{element,prop}
             obj.element.forEach(element => {
