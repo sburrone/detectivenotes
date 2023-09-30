@@ -3,17 +3,17 @@ import { GLTFLoader } from 'GLTFLoader';
 import { OrbitControls } from 'OrbitControls';
 
 const cameraPositions = [
-    [0,60,0],
-    [10,15,10],
-    [0,0,40],
-    [40,15,40],
-    [15,50,15],
-    [15,50,50],
-    [30,30,30]
+    [0, 60, 0],
+    [10, 15, 10],
+    [0, 0, 40],
+    [40, 15, 40],
+    [15, 50, 15],
+    [15, 50, 50],
+    [30, 30, 30]
 ]
 
 function getCameraPosition() {
-    return cameraPositions[Math.floor(Math.random()*cameraPositions.length)]
+    return cameraPositions[Math.floor(Math.random() * cameraPositions.length)]
 }
 
 class AnimatedBoard {
@@ -129,10 +129,64 @@ class AnimatedBoard {
 
 let _APP = null;
 
+let locked = false;
+
 $(document).ready(function () {
-    'us strict';
+    'use strict';
 
     _APP = new AnimatedBoard();
+
+    let darkMode = false;
+
+    //Dark mode
+
+    const darkModeEnabledElements = [{
+        element: ["html", ".content", ".modal-wrapper", ".modal"],
+        props: ["background-color", "color"]
+    }, {
+        element: [".reset", ".skip"],
+        props: ["filter"]
+    }, {
+        element: [".locked", ".upperbar", ".dust-counter-box", ".small-button",
+            ".small-button .material-symbols-outlined", ".counterbutton"],
+        props: ["background-color"]
+    }, {
+        element: ["input[type=\"range\"]"],
+        props: ["accent-color"]
+    }];
+
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        toggleDarkMode(false);
+    };
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+        toggleDarkMode(darkMode);
+    });
+
+    $("#darkModeToggle").on("click", function () {
+        toggleDarkMode(darkMode);
+    });
+
+    function toggleDarkMode(current) {
+        $("#darkModeToggleLabel").text(current ? "dark_mode" : "light_mode");
+        darkModeEnabledElements.forEach(obj => {
+            //{element,prop}
+            obj.element.forEach(element => {
+                //iterate props
+                obj.props.forEach(prop => {
+                    //change each prop
+                    const value = $(element).css("--" + (current ? "light" : "dark") + "-" + prop);
+                    $(element).css(prop, value);
+                });
+            })
+        });
+        //If cards are locked, button should change correctly.
+        if (locked) {
+            $("#lockPersonalCards, #lockPersonalCardsLabel").css("background-color", (current ? "var(--red)" : "var(--dark-red)"));
+        }
+        darkMode = !current;
+    }
+
 
     //Language
     let userLang = navigator.language || navigator.userLanguage;
@@ -178,7 +232,7 @@ $(document).ready(function () {
     if (localStorage.getItem("date") != undefined) {
         $("#continueGameButton").toggle();
         $("#beginButtonSubtitle").toggle();
-        let recPlayers = localStorage.getItem("players").replaceAll(',',', ');
+        let recPlayers = localStorage.getItem("players").replaceAll(',', ', ');
         let recBoard = boards[parseInt(localStorage.getItem("board"))];
         let recDate = new Date(localStorage.getItem("date"));
         let formattedDate = recDate.getFullYear() + "-" + ((recDate.getMonth() + 1) > 10 ? (recDate.getMonth() + 1) : ("0" + (recDate.getMonth() + 1))) + "-" + (recDate.getDate() > 10 ? recDate.getDate() : ("0" + recDate.getDate())) + " " + recDate.getHours() + ":" + (recDate.getMinutes() > 10 ? recDate.getMinutes() : ("0" + recDate.getMinutes()));
@@ -216,13 +270,13 @@ $(document).ready(function () {
         localStorage.clear();
 
         //Populate Setup
-        for (let board of boards) {
-            let button = $("<button>").attr("class", "small-button");
+        boards.forEach(board => {
+            let button = $("<button>").attr("class", "small-button board-button");
             button.text(board.name);
             button.on("click", function (event) {
                 //Cambio colori
                 $("#boardButtonContainer").find("*").css("background-color", "var(--dark-blue)");
-                $(event.target).css("background-color", "var(--red)");
+                $(event.target).css("background-color", "var(--light-blue)");
 
                 selectedBoard = board.id;
                 itemsArray = boards[selectedBoard]["characters"].concat(boards[selectedBoard]["weapons"]).concat(boards[selectedBoard]["rooms"]);
@@ -232,7 +286,7 @@ $(document).ready(function () {
                 updateFields();
             });
             $("#boardButtonContainer").append(button);
-        }
+        });
 
         updateFields();
     });
@@ -391,7 +445,8 @@ $(document).ready(function () {
             if (localStorage.getItem("check" + index)) {
                 $(this).find("input").prop("checked", true);
                 $(this).closest(".table-row").find("td > a").data("locked", "true");
-                $(this).closest(".table-row").find("td, th").css("background-color", "var(--red)");
+                $(this).closest(".table-row").addClass("locked");
+                toggleDarkMode(!darkMode);
             }
         })
     }
@@ -431,7 +486,10 @@ $(document).ready(function () {
         checkbox.on("change", function () {
             if ($(this).is(":checked")) {
                 $(this).closest(".table-row").find("td > a").data("locked", "true");
-                $(this).closest(".table-row").find("td, th").css("background-color", "var(--red)");
+                $(this).closest(".table-row").addClass("locked");
+                if (darkMode) {
+                    $(this).closest(".table-row").css("background-color", "var(--dark-red");
+                }
                 //Update symbols
                 toUpdate = $(this);
                 updateWholeRow("cross");
@@ -440,7 +498,8 @@ $(document).ready(function () {
 
             } else {
                 $(this).closest(".table-row").find("td > a").data("locked", "false");
-                $(this).closest(".table-row").find("td, th").css("background-color", "var(--white)");
+                $(this).closest(".table-row").removeClass("locked");
+                $(this).closest(".table-row").css("background-color", "");
                 //Update symbols
                 toUpdate = $(this);
                 updateWholeRow("reset");
@@ -466,23 +525,20 @@ $(document).ready(function () {
         $("#autocompleteStatus").text((document.getElementById("autocompleteInput").checked) ? "ON" : "OFF");
     });
 
-    let locked = false;
-
     $("#lockPersonalCards").on("click", function () {
         if (!locked) {   //if currently unlocked, locks cards
             $(".table-header-checkbox").each(function () {
                 $(this).attr("disabled", "disabled");
             });
-            $("#lockPersonalCards").css("background-color", "var(--red)");
-            $("#lockPersonalCards").text("🔒");
-
+            $("#lockPersonalCards, #lockPersonalCardsLabel").css("background-color", (darkMode ? "var(--dark-red)" : "var(--red)"));
+            $("#lockPersonalCardsLabel").text("lock");
             locked = true;
         } else {        //if currently locked, unlocks cards
             $(".table-header-checkbox").each(function () {
                 $(this).removeAttr("disabled");
             });
-            $("#lockPersonalCards").css("background-color", "var(--dark-blue)");
-            $("#lockPersonalCards").text("🔓");
+            $("#lockPersonalCards, #lockPersonalCardsLabel").css("background-color", (darkMode ? "var(--light-blue)" : "var(--dark-blue)"));
+            $("#lockPersonalCardsLabel").text("lock_open_right");
             locked = false;
         }
     });
@@ -517,12 +573,14 @@ $(document).ready(function () {
         }
 
         //Aggiorna la casella vera
-        toUpdate.find("img").attr("src", imageData[newID]).attr("class", newID);
+        const img = $(toUpdate.find("img"));
+        $(img).removeClass($(img).attr("class"));
+        $(img).addClass(newID);
+        $(img).attr("src", imageData[newID]);
 
         //Aggiorna LocalData
         let rowName = itemsArray.indexOf(toUpdate.data("item"));
         let columnName = parseInt(toUpdate.data("player"));
-        console.log(rowName + "\t" + columnName);
         localStorage.setItem(("" + rowName + "," + columnName), newID);
         localStorage.setItem("date", new Date());
     })

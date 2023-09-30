@@ -7,8 +7,7 @@
     <link rel="manifest" href="/manifest.json">
     <meta name="viewport" content="width=device-width, minimum scale=1, initial-scale=1, user-scalable=0">
     <title>Cluedo Detective Notes</title>
-    <meta name="description"
-        content="Cluedo Detective Notes by @nmtb4e.">
+    <meta name="description" content="Cluedo Detective Notes by @nmtb4e.">
     <meta name="google" content="nositelinkssearchbox" />
     <link rel="canonical" href="https://detectivenotes">
 
@@ -75,8 +74,17 @@
 
     <div id="mainGame" class="main-game">
         <div id="mainGameUB" class="upperbar">
-            <button id="showInstructionsModal" class="small-button"></button>
-            <button id="lockPersonalCards" class="small-button">🔓</button>
+            <button id="showInstructionsModal" class="small-button"><span class="material-symbols-outlined">
+                    info
+                </span></button>
+            <button id="darkModeToggle" class="small-button"><span class="material-symbols-outlined"
+                    id="darkModeToggleLabel">
+                    dark_mode
+                </span></button>
+            <button id="lockPersonalCards" class="small-button"><span class="material-symbols-outlined"
+                    id="lockPersonalCardsLabel">
+                    lock_open_right
+                </span></button>
             <div class="autocomplete-status-wrapper">
                 <section><span id="autocompleteStatusContainer"></span><span id="autocompleteStatus"></span></section>
                 <label class="switch">

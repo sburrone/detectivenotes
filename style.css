@@ -3,13 +3,24 @@
     --white: white;
     --light-blue: #2CB6E3;
     --red: #ff9185;
+    --dark-red: #6b2a22;
     --black: black;
+    --green: #36a655;
 }
 
 html,
 body {
     margin: 0;
     padding: 0;
+}
+
+html {
+    background-color: var(--white);
+    --dark-background-color: var(--black);
+    --light-background-color: var(--white);
+    color: var(--black);
+    --dark-color: var(--white);
+    --light-color: var(--black);
 }
 
 #model {
@@ -22,11 +33,11 @@ body {
 }
 
 .material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
 }
 
 #mainMenu {
@@ -172,6 +183,8 @@ a:hover {
 
 .upperbar {
     background-color: var(--light-blue);
+    --light-background-color: var(--light-blue);
+    --dark-background-color: var(--dark-blue);
     color: var(--white);
     display: flex;
     align-items: center;
@@ -193,16 +206,37 @@ a:hover {
     top: 75px;
     z-index: 1;
     text-align: center;
+    background-color: var(--white);
+    --dark-background-color: var(--black);
+    --light-background-color: var(--white);
+    color: var(--black);
+    --dark-color: var(--white);
+    --light-color: var(--black);
 }
 
 .small-button {
     color: var(--white);
     background-color: var(--dark-blue);
+    --dark-background-color: var(--light-blue);
+    --light-background-color: var(--dark-blue);
     text-decoration: none;
     text-align: center;
-    padding: 8px 15px;
+    font-size: 24px;
+    padding: 4px;
     border-radius: 500px;
-    font: 'Circular Std Book';
+    border: 0px;
+    margin: 3px;
+}
+
+.board-button {
+    font-size: 20px;
+    padding: 8px;
+    margin: 4px;
+}
+
+.small-button .material-symbols-outlined {
+    background-color: transparent;
+    padding: 4px;
     border: 0px;
     margin: 3px;
 }
@@ -243,8 +277,12 @@ button {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: var(--white);
     background-color: rgba(255, 255, 255, 0.86);
+    --dark-background-color: rgba(0, 0, 0, 0.86);
+    --light-background-color: rgba(255, 255, 255, 0.86);
+    color: var(--black);
+    --dark-color: var(--white);
+    --light-color: var(--black);
 }
 
 #modalBackWrapper {
@@ -253,7 +291,8 @@ button {
 
 .modal {
     background-color: rgba(255, 255, 255, 0.86);
-    ;
+    --dark-background-color: rgba(0, 0, 0, 0.86);
+    --light-background-color: rgba(255, 255, 255, 0.86);
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
@@ -272,43 +311,47 @@ button {
 }
 
 .reset {
+    --light-filter: invert(22%) sepia(94%) saturate(291%) hue-rotate(171deg) brightness(89%) contrast(96%);
+    --dark-filter: invert(60%) sepia(94%) saturate(1032%) hue-rotate(159deg) brightness(94%) contrast(88%);
     filter: invert(22%) sepia(94%) saturate(291%) hue-rotate(171deg) brightness(89%) contrast(96%);
 }
 
 .check {
-    filter: invert(47%) sepia(10%) saturate(3119%) hue-rotate(84deg) brightness(114%) contrast(74%);
+    filter: invert(47%) sepia(10%) saturate(3119%) hue-rotate(84deg) brightness(114%) contrast(74%) !important;
 }
 
 .maybe {
-    filter: invert(68%) sepia(19%) saturate(541%) hue-rotate(84deg) brightness(88%) contrast(89%);
+    filter: invert(68%) sepia(19%) saturate(541%) hue-rotate(84deg) brightness(88%) contrast(89%) !important;
 }
 
 .cross {
-    filter: invert(47%) sepia(54%) saturate(682%) hue-rotate(318deg) brightness(87%) contrast(94%);
+    filter: invert(47%) sepia(54%) saturate(682%) hue-rotate(318deg) brightness(87%) contrast(94%) !important;
 }
 
 .maybeNot {
-    filter: invert(73%) sepia(7%) saturate(2139%) hue-rotate(317deg) brightness(97%) contrast(73%);
+    filter: invert(73%) sepia(7%) saturate(2139%) hue-rotate(317deg) brightness(97%) contrast(73%) !important;
 }
 
 .star {
-    filter: invert(88%) sepia(58%) saturate(1146%) hue-rotate(322deg) brightness(104%) contrast(87%);
+    filter: invert(88%) sepia(58%) saturate(1146%) hue-rotate(322deg) brightness(104%) contrast(87%) !important;
 }
 
 .question {
-    filter: invert(58%) sepia(64%) saturate(430%) hue-rotate(163deg) brightness(87%) contrast(99%);
+    filter: invert(58%) sepia(64%) saturate(430%) hue-rotate(163deg) brightness(87%) contrast(99%) !important;
 }
 
 .exclamation {
-    filter: invert(66%) sepia(20%) saturate(1480%) hue-rotate(282deg) brightness(91%) contrast(85%);
+    filter: invert(66%) sepia(20%) saturate(1480%) hue-rotate(282deg) brightness(91%) contrast(85%) !important;
 }
 
 .flag {
-    filter: invert(82%) sepia(31%) saturate(5798%) hue-rotate(328deg) brightness(100%) contrast(93%);
+    filter: invert(82%) sepia(31%) saturate(5798%) hue-rotate(328deg) brightness(100%) contrast(93%) !important;
 }
 
 .skip {
-    filter: invert(22%) sepia(41%) saturate(3708%) hue-rotate(234deg) brightness(87%) contrast(99%);
+    --dark-filter: invert(22%) sepia(41%) saturate(3708%) hue-rotate(234deg) brightness(87%) contrast(99%);
+    --light-filter: invert(27%) sepia(80%) saturate(2699%) hue-rotate(247deg) brightness(101%) contrast(92%);
+    filter: invert(27%) sepia(80%) saturate(2699%) hue-rotate(247deg) brightness(101%) contrast(92%) !important;
 }
 
 .selection-modal-image {
@@ -341,6 +384,9 @@ button {
 
 .dust-counter-box {
     background-color: var(--dark-blue);
+    --light-background-color: var(--dark-blue);
+    --dark-background-color: var(--light-blue);
+    color: var(--white);
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -350,6 +396,22 @@ button {
     z-index: 1;
     text-align: center;
     display: none;
+}
+
+.counterbutton {
+    color: white;
+    background-color: var(--light-blue);
+    --dark-background-color: var(--dark-blue);
+    --light-background-color: var(--light-blue);
+    text-decoration: none;
+    text-align: center;
+    padding: 8px;
+    border-radius: 500px;
+    font: 'Circular Std Book';
+    height: 40px;
+    width: 40px;
+    text-decoration: none;
+    border: 0px;
 }
 
 .dust-counter-wrapper {
@@ -440,7 +502,7 @@ table {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: var(--red);
+    background-color: var(--red) !important;
     -webkit-transition: .4s;
     transition: .4s;
 }
@@ -458,7 +520,7 @@ table {
 }
 
 input:checked+.slider {
-    background-color: var(--dark-blue);
+    background-color: var(--green) !important;
 }
 
 input:focus+.slider {
@@ -481,4 +543,12 @@ input:checked+.slider:before {
 
 input[type="range"] {
     accent-color: var(--dark-blue);
+    --light-accent-color: var(--dark-blue);
+    --dark-accent-color: var(--light-blue);
+}
+
+.locked {
+    background-color: var(--red);
+    --dark-background-color: var(--dark-red);
+    --light-background-color: var(--red);
 }
