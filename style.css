@@ -257,6 +257,7 @@ a:hover {
     transition: .3s ease-in-out;
     position: relative;
     top: 75px;
+    padding-bottom: 100px;
     z-index: 1;
     text-align: center;
     background-color: var(--white);
@@ -407,7 +408,6 @@ button {
     display: none;
     position: fixed;
     z-index: 10;
-    padding-top: 100px;
     left: 0;
     top: 0;
     width: 100%;
@@ -453,6 +453,10 @@ button {
     overflow-y: auto;
     overflow-x: hidden;
     max-height: 80%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .order-input {
@@ -597,6 +601,32 @@ button {
 table {
     width: 100%;
     border-collapse: collapse;
+}
+
+.sideways {
+    writing-mode: vertical-lr;
+    text-orientation: mixed;
+    padding: 10px;
+}
+
+.advanced-settings-table-entry {
+    text-align: left;
+    padding: 10px;
+}
+
+.advanced-settings-table-image {
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    width: 120px;
+    height: 120px;
+}
+
+#tableRowPlayers>*,
+.player-header {
+    vertical-align: bottom;
+    padding-top: 20px;
+    padding-bottom: 0;
 }
 
 .main-table-row>* {

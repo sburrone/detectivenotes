@@ -192,7 +192,7 @@ $(document).ready(function () {
     } else if (forcedLang && forcedLang.toLowerCase() == "en") {
         userLang = "en-US";
     }
-    let strings, boards, letsPlay;
+    let strings, boards, letsPlay, longNamesCompatibilityMode = false;
     let selectedBoard = 0, players = [];
     let itemsArray;
     const imageData = {
@@ -237,6 +237,7 @@ $(document).ready(function () {
             players = recPlayers.split(",");
             itemsArray = boards[selectedBoard]["characters"].concat(boards[selectedBoard]["weapons"]).concat(boards[selectedBoard]["rooms"]);
             localStorage.setItem("date", new Date());
+            longNamesCompatibilityMode = localStorage.getItem("longNamesCompatibilityMode");
 
             //Fill
             $("#mainMenu").css("display", "none");
@@ -367,6 +368,10 @@ $(document).ready(function () {
         languageIndex++;
     }, 2000);
 
+    $("#advancedSettingsModalBackButton, #advancedSettingsToggle").on("click", function () {
+        $("#advancedSettingsModal").toggle();
+    });
+
     //Main menu buttons
     $("#mainMenuCreditsButton, #creditsModalBackButton").on("click", function () {
         //Open credits modal
@@ -376,6 +381,10 @@ $(document).ready(function () {
     $("#playerNum").on("input", function () {
         updateFields();
     });
+
+    $("#longNamesCompatibilityMode").on("change", function () {
+        longNamesCompatibilityMode = $(this).is(":checked");
+    })
 
     $("#playerNameForm").on("submit", function (event) {
         event.preventDefault();
@@ -389,6 +398,7 @@ $(document).ready(function () {
         localStorage.setItem("board", selectedBoard);
         localStorage.setItem("players", players);
         localStorage.setItem("date", new Date());
+        localStorage.setItem("longNamesCompatibilityMode", longNamesCompatibilityMode);
         for (let i = 0; i < itemsArray.length; i++) {
             for (let j = 0; j < players.length; j++) {
                 localStorage.setItem(("" + i + "," + j), "reset");
@@ -420,7 +430,13 @@ $(document).ready(function () {
         for (let i = 0; i < players.length; i++) {
             let cell = $("<th>").attr("class", "name-holder");
             cell.attr("scope", "col");
-            cell.text(players[i]);
+            if (longNamesCompatibilityMode) {
+                const sideways = $("<span>").addClass("sideways").text(players[i]);
+                const initial = $("<span>").text(players[i].trim().charAt(0));
+                cell.append(sideways, $("<br>"), initial);
+            } else {
+                cell.text(players[i]);
+            }
             let color = $("#tableHeaderPlayers").css("background-color");
             cell.css("background-color", color);
             $("#tableRowPlayers").append(cell);

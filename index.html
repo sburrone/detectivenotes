@@ -90,7 +90,15 @@
     <!--  SETUP  -->
 
     <div id="setup" class="setup">
-        <div id="setupUB" class="upperbar"><span id="newGame" class="upperbar-title"></span></div>
+        <div id="setupUB" class="upperbar">
+            <button id="darkModeToggle" class="small-button"><span class="material-symbols-outlined dark-mode-label">
+                    dark_mode
+                </span></button>
+            <span id="newGame" class="upperbar-title"></span>
+            <button id="advancedSettingsToggle" class="small-button"><span class="material-symbols-outlined">
+                    settings
+                </span></button>
+        </div>
         <div id="setupContent" class="content">
             <span id="boardQuestion" class="setup-text"></span><br>
             <section id="boardButtonContainer"></section>
@@ -108,6 +116,34 @@
                 <span id="readyText" class="setup-text"></span><br>
                 <input type="submit" id="startGame" class="begin-button">
             </form>
+        </div>
+    </div>
+
+    <!--  ADVANCED SETTINGS MODAL  -->
+    <div id="advancedSettingsModal" class="modal-wrapper">
+        <div id="advancedSettingsModalContent" class="modal">
+            <section id="modalBackWrapper"><a class="setup-tooltip" id="advancedSettingsModalBackButton"><span
+                        class="material-symbols-outlined">
+                        close
+                    </span></a></section>
+            <p id="advancedSettingsTitle" class="setup-text"></p>
+            <table class="advanced-settings-table">
+                <tr>
+                    <td rowspan="2" class="advanced-settings-table-entry">
+                        <img src="assets/advanced_long_names.webp" class="advanced-settings-table-image invertible">
+                    </td>
+                    <td class="advanced-settings-table-entry">
+                        <input id="longNamesCompatibilityMode" type="checkbox">
+                        <label for="longNamesCompatibilityMode" id="longNamesCompatibilityModeLabel"
+                            class="setup-tooltip"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="advanced-settings-table-entry">
+                        <p id="longNamesCompatibilityModeText" class="setup-tooltip"></p>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -168,7 +204,8 @@
             <table id="mainGameTable" class="main-game-table">
                 <thead id="tableSectionPlayers" class="table-section-players">
                     <tr id="tableRowPlayers" class="main-table-row">
-                        <th id="tableHeaderPlayers" class="table-header" colspan="2"></th>
+                        <th></th>
+                        <th id="tableHeaderPlayers" class="table-header player-header"></th>
                     </tr>
                 </thead>
                 <tbody id="tableSectionCharacters">
