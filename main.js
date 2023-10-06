@@ -173,7 +173,7 @@ $(document).ready(function () {
         element: ["input[type=\"range\"]"],
         props: ["accent-color"]
     }, {
-        element: [".modal a"],
+        element: [".modal a", "#instructionsModalImage1", "#instructionsModalImage2B"],
         props: ["color"]
     }, {
         element: [".setup-tooltip-modal-link"],
@@ -547,7 +547,11 @@ $(document).ready(function () {
         return cell;
     }
 
+    const checkboxSvg = "<svg viewBox=\"0 0 35.6 35.6\"><circle class=\"background\" cx=\"17.8\" cy=\"17.8\" r=\"17.8\"></circle><circle class=\"stroke\" cx=\"17.8\" cy=\"17.8\" r=\"14.37\"></circle><polyline class=\"checked\" points=\"11.78 18.12 15.55 22.23 25.17 12.87\"></polyline></svg>";
+
     function getCheckboxCell(item) {
+        let checkboxDiv = $("<div>").addClass("checkbox-wrapper-31 checkbox-wrapper-32");
+
         let checkbox = $("<input>").attr("type", "checkbox");
         checkbox.attr("id", "rowCheckbox");
         checkbox.data("item", item);
@@ -578,7 +582,8 @@ $(document).ready(function () {
 
         let checkboxCell = $("<th>").attr("class", "table-header-checkbox-cell");
         checkboxCell.attr("scope", "row");
-        checkboxCell.html(checkbox);
+        checkboxDiv.append(checkbox, checkboxSvg);
+        checkboxCell.append(checkboxDiv);
         return checkboxCell;
     }
 
@@ -649,4 +654,37 @@ $(document).ready(function () {
         localStorage.setItem(("" + rowName + "," + columnName), newID);
         localStorage.setItem("date", new Date());
     })
+
+    //INSTRUCTIONS MODAL IMAGE
+
+    //Image 1: Cards given
+    const instructionsModalImage1 = ["shelves", "kitchen", "candle", "person", "dinner_dining", "chair"];
+    let im1Index = 0;
+    let im1Interval = window.setInterval(function () {
+        if (im1Index == instructionsModalImage1.length) {
+            im1Index = 0;
+        }
+        $("#instructionsModalImage1, #instructionsModalImage2B").text(instructionsModalImage1[im1Index]);
+        im1Index++;
+    }, 2000);
+
+    //Image 2: Check box
+    let im2Interval = window.setInterval(function () {
+        $("#fakeCheckbox").click();
+        $(".fake-table").css("background-color", ($("#fakeCheckbox").prop("checked") ?
+            (darkMode ? "var(--dark-red)" : "var(--red)")
+            : ""))
+    }, 2000);
+
+    //Image 3: Lock cards
+    let im3Locked = false;
+    let im3Interval = window.setInterval(function () {
+        im3Locked = !im3Locked;
+        //Change bg
+        $("#fakeButton").css("background-color", im3Locked ?
+            (darkMode ? "var(--dark-red)" : "var(--red)") :
+            (darkMode ? "var(--light-blue)" : "var(--dark-blue)"));
+        //Change label
+        $("#fakeButtonLabel").text(im3Locked ? "lock" : "lock_open_right");
+    }, 2000);
 })

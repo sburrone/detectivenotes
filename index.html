@@ -133,13 +133,20 @@
                         <img src="assets/advanced_long_names.webp" class="advanced-settings-table-image invertible">
                     </td>
                     <td class="advanced-settings-table-entry">
-                        <input id="longNamesCompatibilityMode" type="checkbox">
-                        <label for="longNamesCompatibilityMode" id="longNamesCompatibilityModeLabel"
-                            class="setup-tooltip"></label>
+                        <label for="longNamesCompatibilityMode" class="advanced-settings-title"
+                            id="longNamesCompatibilityModeLabel"></label>
+                    </td>
+                    <td class="advanced-settings-table-checkbox checkbox-wrapper-31">
+                        <input type="checkbox" id="longNamesCompatibilityMode" />
+                        <svg viewBox="0 0 35.6 35.6">
+                            <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
+                            <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
+                            <polyline class="checked" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
+                        </svg>
                     </td>
                 </tr>
                 <tr>
-                    <td class="advanced-settings-table-entry">
+                    <td class="advanced-settings-table-entry" colspan="2">
                         <p id="longNamesCompatibilityModeText" class="setup-tooltip"></p>
                     </td>
                 </tr>
@@ -300,14 +307,46 @@
                         class="material-symbols-outlined">
                         close
                     </span></a></section>
-            <img src="assets/instructions_cards.webp" class="instructions-image invertible">
-            <p id="instructionsModalText1" class="setup-tooltip"></p>
-            <img src="assets/instructions_tick.webp" class="instructions-image">
-            <p id="instructionsModalText2" class="setup-tooltip"></p>
-            <img src="assets/instructions_lock.webp" class="instructions-image">
-            <p id="instructionsModalText3" class="setup-tooltip"></p>
-            <img src="assets/instructions_save.svg" class="instructions-image invertible">
-            <p id="instructionsModalText4" class="setup-tooltip"></p>
+            <span class="setup-text" id="instructionsModalTitle"></span>
+            <section class="modal-section">
+                <span id="instructionsModalImage1"
+                    class="instructions-image invertible material-symbols-outlined"></span>
+                <p id="instructionsModalText1" class="setup-tooltip"></p>
+            </section>
+            <section class="modal-section">
+
+                <table id="fakeTable" class="fake-table">
+                    <tr class="table-row">
+                        <th id="fakeCheckboxCell" class="advanced-settings-table-checkbox instructions-image"
+                            scope="row">
+                            <div class="checkbox-wrapper-31 checkbox-wrapper-32">
+                                <input type="checkbox" id="fakeCheckbox" class="table-header-checkbox" />
+                                <svg viewBox="0 0 35.6 35.6">
+                                    <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
+                                    <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
+                                    <polyline class="checked" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
+                                </svg>
+                            </div>
+                        </th>
+                        <td id="fakeTableCell">
+                            <span id="instructionsModalImage2B"
+                                class="instructions-image invertible material-symbols-outlined"></span>
+                        </td>
+                    </tr>
+                </table>
+                <p id="instructionsModalText2" class="setup-tooltip"></p>
+            </section>
+            <section class="modal-section">
+                <button id="fakeButton" class="fake-button"><span class="material-symbols-outlined"
+                        id="fakeButtonLabel">
+                        lock_open_right
+                    </span></button>
+                <p id="instructionsModalText3" class="setup-tooltip"></p>
+            </section>
+            <section class="modal-section">
+                <img src="assets/instructions_save.svg" class="save-image invertible">
+                <p id="instructionsModalText4" class="setup-tooltip"></p>
+            </section>
         </div>
     </div>
 

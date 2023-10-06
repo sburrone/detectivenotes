@@ -98,7 +98,8 @@ const stringsEN = {
     creditsModalText: "Detective Notes<br>made with 🩷 by Nicholas<br><br>This project uses the <a href=\"https://sketchfab.com/3d-models/clue-board-game-843af04381cc495ca5f0a4bebadb1752\" target=\"_blank\">\"Clue (Board Game)\"</a> model by <a href=\"https://sketchfab.com/paulyanez\" target=\"_blank\">Anthony Yanez</a>, licensed under <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">CC-BY-4.0</a>.",
     advancedSettingsTitle: "Advanced settings",
     longNamesCompatibilityModeLabel: "Long names compatibility mode",
-    longNamesCompatibilityModeText: "Show player names vertically, allowing long names to be displayed without stretching the table."
+    longNamesCompatibilityModeText: "Show player names vertically, allowing long names to be displayed without stretching the table.",
+    instructionsModalTitle: "Instructions"
 }
 
 const letsPlayEN = "Let's play!";
