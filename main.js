@@ -97,6 +97,8 @@ $(document).ready(function () {
                 doneLoading();
             };
 
+            $("#skipLoading").on("click", doneLoading);
+
             loadingManager.onProgress = function (url, itemsLoaded, itemsTotal) {
                 $("#progressBar").val(itemsLoaded / itemsTotal * 100);
             };

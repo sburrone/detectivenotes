@@ -58,6 +58,11 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
+}
+
+#skipLoading {
+    margin-top: 20px;
 }
 
 progress {
@@ -68,6 +73,7 @@ progress {
     border: none;
     appearance: auto;
     -webkit-appearance: none;
+    margin-bottom: 12px;
 }
 
 ::-moz-progress-bar {

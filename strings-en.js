@@ -99,7 +99,8 @@ const stringsEN = {
     advancedSettingsTitle: "Advanced settings",
     longNamesCompatibilityModeLabel: "Long names compatibility mode",
     longNamesCompatibilityModeText: "Show player names vertically, allowing long names to be displayed without stretching the table.",
-    instructionsModalTitle: "Instructions"
+    instructionsModalTitle: "Instructions",
+    skipLoading: "Skip"
 }
 
 const letsPlayEN = "Let's play!";

@@ -100,7 +100,8 @@ const stringsIT = {
     advancedSettingsTitle: "Impostazioni avanzate",
     longNamesCompatibilityModeLabel: "Modalità di compatibilità per nomi lunghi",
     longNamesCompatibilityModeText: "Mostra i nomi dei giocatori in verticale, evitando di stringere troppo la tabella.",
-    instructionsModalTitle: "Istruzioni"
+    instructionsModalTitle: "Istruzioni",
+    skipLoading: "Salta"
 }
 
-const letsPlayIT = "Gichiamo!";
+const letsPlayIT = "Giochiamo!";
