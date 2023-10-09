@@ -279,10 +279,6 @@ a:hover {
     --light-color: var(--black);
 }
 
-#mainGameTableWrapper {
-    top: 58px !important;
-}
-
 .invertible {
     filter: invert(0);
     --dark-filter: invert(1);
@@ -642,7 +638,7 @@ table {
 .player-header {
     vertical-align: bottom;
     padding-top: 20px;
-    padding-bottom: 0;
+    padding-bottom: 20px;
 }
 
 .main-table-row>* {
@@ -934,4 +930,18 @@ a {
 
 #hideDustCounterText {
     display: none;
+}
+
+#tableRowPlayers {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+#mainGameUB {
+    position: static !important;
+}
+
+#mainGameTableWrapper {
+    top: 0px;
 }
