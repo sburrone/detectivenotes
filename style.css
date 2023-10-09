@@ -510,8 +510,6 @@ button {
 
 .reset {
     transition: .3s ease-in-out;
-    --light-filter: invert(22%) sepia(94%) saturate(291%) hue-rotate(171deg) brightness(89%) contrast(96%);
-    --dark-filter: invert(60%) sepia(94%) saturate(1032%) hue-rotate(159deg) brightness(94%) contrast(88%);
     filter: invert(22%) sepia(94%) saturate(291%) hue-rotate(171deg) brightness(89%) contrast(96%);
 }
 

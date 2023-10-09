@@ -165,7 +165,7 @@ $(document).ready(function () {
         element: ["html", ".content", ".modal-wrapper", ".modal"],
         props: ["background-color", "color"]
     }, {
-        element: [".reset", ".skip", ".setup-image", ".invertible"],
+        element: [".skip", ".setup-image", ".invertible"],
         props: ["filter"]
     }, {
         element: [".locked", ".upperbar", ".dust-counter-box", ".small-button",
@@ -603,14 +603,17 @@ $(document).ready(function () {
         return checkboxCell;
     }
 
+    //Toggle instructions modal
     $("#showInstructionsModal, #instructionsModalBackButton").on("click", function () {
         $("#instructionsModal").toggle();
     });
 
+    //Change autocomplete text
     $("#autocompleteInput").on("input", function () {
         $("#autocompleteStatus").text((document.getElementById("autocompleteInput").checked) ? "ON" : "OFF");
     });
 
+    //Lock cards
     $("#lockPersonalCards").on("click", function () {
         if (!locked) {   //if currently unlocked, locks cards
             $(".table-header-checkbox").each(function () {
@@ -629,10 +632,12 @@ $(document).ready(function () {
         }
     });
 
+    //Hide extra symbols
     $("#showLessSymbolsCheckbox").on("change", function () {
         $("#selectionModalExtended").toggle();
     })
 
+    //Autocomplete
     function updateWholeRow(id) {
         toUpdate.closest(".table-row").find("img").attr("src", imageData[id]).attr("class", id);
         let rowName = itemsArray.indexOf(toUpdate.data("item"));
@@ -641,10 +646,12 @@ $(document).ready(function () {
         }
     }
 
+    //Close back modal
     $("#modalBackButton").on("click", function () {
         $("#selectionModal").toggle();
     });
 
+    //Select image
     $(".selection-modal-image").on("click", function () {
         const newID = $(this).attr("id");
 
