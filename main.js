@@ -194,7 +194,7 @@ $(document).ready(function () {
     } else if (forcedLang && forcedLang.toLowerCase() == "en") {
         userLang = "en-US";
     }
-    let strings, boards, letsPlay, longNamesCompatibilityMode = false;
+    let strings, boards, letsPlay, longNamesCompatibilityMode = false, hideDustCounter = false;
     let selectedBoard = 0, players = [];
     let itemsArray;
     const imageData = {
@@ -248,8 +248,11 @@ $(document).ready(function () {
             fillTable();
             updateTable();
             if (selectedBoard == 5) {
+                hideDustCounter = localStorage.getItem("hideDustCounter");
                 $("#dustCounterValue").text(localStorage.getItem("dust"));
-                $(".dust-counter-box").css("display", "flex");
+                if (hideDustCounter == false) {
+                    $(".dust-counter-box").css("display", "flex");
+                }
             }
         })
     }
@@ -277,6 +280,10 @@ $(document).ready(function () {
                 $(event.target).css("background-color", "var(--light-blue)");
 
                 selectedBoard = board.id;
+                if (selectedBoard == 5) {
+                    $("#hideDustCounterText, #hideDustCounterDisabled").toggle();
+                }
+                $("#hideDustCounter").prop("disabled", (selectedBoard != 5));
                 itemsArray = boards[selectedBoard]["characters"].concat(boards[selectedBoard]["weapons"]).concat(boards[selectedBoard]["rooms"]);
                 $("#playerNum").attr("min", board.minPlayers);
                 $("#playerNum").val(3);
@@ -386,7 +393,11 @@ $(document).ready(function () {
 
     $("#longNamesCompatibilityMode").on("change", function () {
         longNamesCompatibilityMode = $(this).is(":checked");
-    })
+    });
+
+    $("#hideDustCounter").on("change", function () {
+        hideDustCounter = $(this).is(":checked");
+    });
 
     $("#playerNameForm").on("submit", function (event) {
         event.preventDefault();
@@ -407,9 +418,12 @@ $(document).ready(function () {
             }
         }
         if (selectedBoard == 5) {
+            localStorage.setItem("hideDustCounter", hideDustCounter);
             localStorage.setItem("dust", 12);
             $("#dustCounterValue").text(12);
-            $(".dust-counter-box").css("display", "flex");
+            if (hideDustCounter == false) {
+                $(".dust-counter-box").css("display", "flex");
+            }
         }
 
         fillTable();
@@ -425,14 +439,14 @@ $(document).ready(function () {
         let old = parseInt($("#dustCounterValue").text());
         $("#dustCounterValue").text(old + 1);
         localStorage.setItem("dust", old + 1);
-    })
+    });
 
     function fillTable() {
         //TABLE SECTION PLAYERS
         for (let i = 0; i < players.length; i++) {
             let cell = $("<th>").attr("class", "name-holder");
             cell.attr("scope", "col");
-            if (longNamesCompatibilityMode) {
+            if (longNamesCompatibilityMode && longNamesCompatibilityMode != 'false') {
                 const sideways = $("<span>").addClass("sideways").text(players[i]);
                 const initial = $("<span>").text(players[i].trim().charAt(0));
                 cell.append(sideways, $("<br>"), initial);

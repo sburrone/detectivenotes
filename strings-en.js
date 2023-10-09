@@ -99,6 +99,9 @@ const stringsEN = {
     advancedSettingsTitle: "Advanced settings",
     longNamesCompatibilityModeLabel: "Long names compatibility mode",
     longNamesCompatibilityModeText: "Show player names vertically, allowing long names to be displayed without stretching the table.",
+    hideDustCounterLabel: "Hide dust counter",
+    hideDustCounterText: "Hide dust counter for Harry Potter board",
+    hideDustCounterDisabled: "This option is available for the Harry Potter board only",
     instructionsModalTitle: "Instructions",
     skipLoading: "Skip"
 }

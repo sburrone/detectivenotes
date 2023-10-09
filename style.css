@@ -922,3 +922,16 @@ a {
     border-radius: 500px;
     border: 0px;
 }
+
+.hide-dust-counter-cell {
+    text-align: center;
+}
+
+.hide-dust-counter-cell>button {
+    height: 50px;
+    width: 50px;
+}
+
+#hideDustCounterText {
+    display: none;
+}

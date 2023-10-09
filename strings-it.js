@@ -100,6 +100,9 @@ const stringsIT = {
     advancedSettingsTitle: "Impostazioni avanzate",
     longNamesCompatibilityModeLabel: "Modalità di compatibilità per nomi lunghi",
     longNamesCompatibilityModeText: "Mostra i nomi dei giocatori in verticale, evitando di stringere troppo la tabella.",
+    hideDustCounterLabel: "Nascondi contatore polvere",
+    hideDustCounterText: "Nascondi il contatore della polvere per il tavolo di Harry Potter",
+    hideDustCounterDisabled: "Questa opzione è disponibile solo per il tavolo di Harry Potter",
     instructionsModalTitle: "Istruzioni",
     skipLoading: "Salta"
 }
