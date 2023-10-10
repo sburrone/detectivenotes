@@ -75,8 +75,8 @@ const stringsEN = {
     instructionsModalText2: "Tick the box next to their name to lock them in.",
     instructionsModalText3: "Once you've locked in all your cards, tap the lock icon at the top of the screen.",
     instructionsModalText4: "Your game progress is saved automatically.",
-    autocompleteStatusContainer: "Autocomplete is ",
-    autocompleteStatus: "ON",
+    //autocompleteStatusContainer: "Autocomplete is ",
+    //autocompleteStatus: "ON",
     tableHeaderPlayers: "Players",
     tableHeaderCharacters: "Suspects",
     tableHeaderWeapons: "Weapons",
@@ -101,9 +101,11 @@ const stringsEN = {
     longNamesCompatibilityModeText: "Show player names vertically, allowing long names to be displayed without stretching the table.",
     hideDustCounterLabel: "Hide dust counter",
     hideDustCounterText: "Hide dust counter for Harry Potter board",
-    hideDustCounterDisabled: "This option is available for the Harry Potter board only",
+    hideDustCounterDisabled: "This option is available for the Harry Potter board only.",
     instructionsModalTitle: "Instructions",
-    skipLoading: "Skip"
+    skipLoading: "Skip",
+    alternateInGameToolbarLabel: "Alternate ingame toolbar",
+    alternateInGameToolbarText: "Replace the classic ingame toolbar with a smaller toolbar at the bottom of the screen."
 }
 
 const letsPlayEN = "Let's play!";

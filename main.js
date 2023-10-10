@@ -194,7 +194,7 @@ $(document).ready(function () {
     } else if (forcedLang && forcedLang.toLowerCase() == "en") {
         userLang = "en-US";
     }
-    let strings, boards, letsPlay, longNamesCompatibilityMode = false, hideDustCounter = false;
+    let strings, boards, letsPlay, longNamesCompatibilityMode = false, hideDustCounter = false, alternateInGameToolbar = false, autocomplete = true;
     let selectedBoard = 0, players = [];
     let itemsArray;
     const imageData = {
@@ -224,6 +224,13 @@ $(document).ready(function () {
             break;
         }
     }
+
+    function swapUpperBar() {
+        $("#mainGameUB").hide();
+        $("#alternateToolbar").show();
+        $("#autocompleteButton, #autocompleteButtonLabel").css("background-color", "var(--green)");
+    }
+
     if (localStorage.getItem("date") != undefined) {
         $("#continueGameButton").toggle();
         $("#beginButtonSubtitle").toggle();
@@ -244,6 +251,12 @@ $(document).ready(function () {
             //Fill
             $("#mainMenu").css("display", "none");
             clearInterval(languageInterval);
+            alternateInGameToolbar = localStorage.getItem("alternateInGameToolbar");
+            if (alternateInGameToolbar && alternateInGameToolbar != 'false') {
+                //Change upperbar TODO
+                console.log("Change upperbar");
+                swapUpperBar();
+            }
             $("#mainGame").css("display", "block");
             fillTable();
             updateTable();
@@ -364,6 +377,12 @@ $(document).ready(function () {
         if (locked) {
             $("#lockPersonalCards, #lockPersonalCardsLabel").css("background-color", (current ? "var(--red)" : "var(--dark-red)"));
         }
+        //Change autocomplete  button
+        if (autocomplete) {
+            $("#autocompleteButton, #autocompleteButtonLabel").css("background-color", "var(--green)");
+        } else {
+            $("#autocompleteButton, #autocompleteButtonLabel").css("background-color", (current ? "var(--red)" : "var(--dark-red)"));
+        }
         darkMode = !current;
     }
 
@@ -399,9 +418,17 @@ $(document).ready(function () {
         hideDustCounter = $(this).is(":checked");
     });
 
+    $("#alternateInGameToolbar").on("change", function () {
+        alternateInGameToolbar = $(this).is(":checked");
+    });
+
     $("#playerNameForm").on("submit", function (event) {
         event.preventDefault();
         $("#setup").css("display", "none");
+        if (alternateInGameToolbar && alternateInGameToolbar != 'false') {
+            console.log("Change upperbar");
+            swapUpperBar();
+        }
         $("#mainGame").css("display", "block");
         $('#playerNameContainer input').each(function () {
             players.push(this.value); // "this" is the current element in the loop
@@ -425,7 +452,7 @@ $(document).ready(function () {
                 $(".dust-counter-box").css("display", "flex");
             }
         }
-
+        localStorage.setItem("alternateInGameToolbar", alternateInGameToolbar);
         fillTable();
     });
 
@@ -608,9 +635,20 @@ $(document).ready(function () {
         $("#instructionsModal").toggle();
     });
 
+    //Change autocomplete button
+    $("#autocompleteButton").on("click", function () {
+        autocomplete = !autocomplete
+        if (autocomplete) {
+            $("#autocompleteButton, #autocompleteButtonLabel").css("background-color", "var(--green)");
+        } else {
+            $("#autocompleteButton, #autocompleteButtonLabel").css("background-color", (darkMode ? "var(--dark-red)" : "var(--red)"));
+        }
+    });
+
     //Change autocomplete text
     $("#autocompleteInput").on("input", function () {
-        $("#autocompleteStatus").text((document.getElementById("autocompleteInput").checked) ? "ON" : "OFF");
+        autocomplete = $("#autocompleteInput").prop("checked");
+        $("#autocompleteStatus").text(autocomplete ? "ON" : "OFF");
     });
 
     //Lock cards
@@ -658,9 +696,9 @@ $(document).ready(function () {
         $("#selectionModal").toggle();
 
         //Se spunto e autocompl. ON, metti croci sulla riga
-        if (newID == "check" && document.getElementById("autocompleteInput").checked) {
+        if (newID == "check" && autocomplete) {
             updateWholeRow("cross");
-        } else if (oldID == "check" && newID != "check" && document.getElementById("autocompleteInput").checked) {
+        } else if (oldID == "check" && newID != "check" && autocomplete) {
             //Se tolgo spunta, metti reset
             updateWholeRow("reset");
         }

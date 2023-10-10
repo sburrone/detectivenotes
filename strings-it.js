@@ -76,8 +76,8 @@ const stringsIT = {
     instructionsModalText2: "Spunta la casella di fianco a queste carte per bloccarle.",
     instructionsModalText3: "Dopo averle bloccate tutte, tocca il lucchetto in alto.",
     instructionsModalText4: "La partita viene salvata automaticamente.",
-    autocompleteStatusContainer: "Autocompletamento ",
-    autocompleteStatus: "ON",
+    //autocompleteStatusContainer: "Autocompletamento ",
+    //autocompleteStatus: "ON",
     tableHeaderPlayers: "Giocatori",
     tableHeaderCharacters: "Sospettati",
     tableHeaderWeapons: "Armi",
@@ -104,7 +104,9 @@ const stringsIT = {
     hideDustCounterText: "Nascondi il contatore della polvere per il tavolo di Harry Potter",
     hideDustCounterDisabled: "Questa opzione è disponibile solo per il tavolo di Harry Potter",
     instructionsModalTitle: "Istruzioni",
-    skipLoading: "Salta"
+    skipLoading: "Salta",
+    alternateInGameToolbarLabel: "Menu di gioco alternativo",
+    alternateInGameToolbarText: "Sostituisci il menu della partita con un'alternativa più piccola in fondo allo schermo."
 }
 
 const letsPlayIT = "Giochiamo!";
