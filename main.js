@@ -645,12 +645,6 @@ $(document).ready(function () {
         }
     });
 
-    //Change autocomplete text
-    $("#autocompleteInput").on("input", function () {
-        autocomplete = $("#autocompleteInput").prop("checked");
-        $("#autocompleteStatus").text(autocomplete ? "ON" : "OFF");
-    });
-
     //Lock cards
     $("#lockPersonalCards").on("click", function () {
         if (!locked) {   //if currently unlocked, locks cards
