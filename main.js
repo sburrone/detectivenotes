@@ -742,10 +742,20 @@ $(document).ready(function () {
     let im3Interval = window.setInterval(function () {
         im3Locked = !im3Locked;
         //Change bg
-        $("#fakeButton").css("background-color", im3Locked ?
+        $("#fakeLockButton").css("background-color", im3Locked ?
             (darkMode ? "var(--dark-red)" : "var(--red)") :
             (darkMode ? "var(--light-blue)" : "var(--dark-blue)"));
         //Change label
-        $("#fakeButtonLabel").text(im3Locked ? "lock" : "lock_open_right");
+        $("#fakeLockButtonLabel").text(im3Locked ? "lock" : "lock_open_right");
+    }, 2000);
+
+    //Image 5: Autocomplete
+    let im5On = false;
+    let im5Interval = window.setInterval(function () {
+        im5On = !im5On;
+        //Change bg
+        $("#fakeAutocompleteButton").css("background-color", im5On ?
+            (darkMode ? "var(--dark-red)" : "var(--red)") :
+            "var(--green)");
     }, 2000);
 })

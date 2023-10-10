@@ -76,6 +76,7 @@ const stringsIT = {
     instructionsModalText2: "Spunta la casella di fianco a queste carte per bloccarle.",
     instructionsModalText3: "Dopo averle bloccate tutte, tocca il lucchetto in alto.",
     instructionsModalText4: "La partita viene salvata automaticamente.",
+    instructionsModalText5: "Con Autocompletamento, quando metti una spunta <span class=\"material-symbols-outlined\">done</span> su una carta, le croci <span class=\"material-symbols-outlined\">close</span> vengono inserite automatricamente. <br>Questa opzione è normalmente attiva, disabilitala per aggiungere le croci manualmente.",
     //autocompleteStatusContainer: "Autocompletamento ",
     //autocompleteStatus: "ON",
     tableHeaderPlayers: "Giocatori",

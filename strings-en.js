@@ -75,6 +75,7 @@ const stringsEN = {
     instructionsModalText2: "Tick the box next to their name to lock them in.",
     instructionsModalText3: "Once you've locked in all your cards, tap the lock icon at the top of the screen.",
     instructionsModalText4: "Your game progress is saved automatically.",
+    instructionsModalText5: "With Autocomplete, when you set a check <span class=\"material-symbols-outlined\">done</span> on a card, crosses <span class=\"material-symbols-outlined\">close</span> are filled in automatically.<br>This option is ON by default, disable it to add crosses manually.",
     //autocompleteStatusContainer: "Autocomplete is ",
     //autocompleteStatus: "ON",
     tableHeaderPlayers: "Players",
