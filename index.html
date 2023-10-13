@@ -133,14 +133,15 @@
                 <tr>
                     <td rowspan="2">
                         <img src="assets/settings/advanced_long_names.webp"
-                            class="advanced-settings-table-image invertible">
+                            class="advanced-settings-table-image invertible"
+                            alt="An image showing the layout of the main game table after turning on long names compatibility mode. The full player name is displayed sideways, and only the initial is displayed normally.">
                     </td>
                     <td class="advanced-settings-table-entry">
                         <label for="longNamesCompatibilityMode" class="advanced-settings-title"
                             id="longNamesCompatibilityModeLabel"></label>
                     </td>
                     <td class="advanced-settings-table-checkbox checkbox-wrapper-31">
-                        <input type="checkbox" id="longNamesCompatibilityMode" />
+                        <input type="checkbox" id="longNamesCompatibilityMode" title="Long names compatibility mode" />
                         <svg viewBox="0 0 35.6 35.6">
                             <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
                             <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
@@ -163,7 +164,7 @@
                         <label for="hideDustCounter" class="advanced-settings-title" id="hideDustCounterLabel"></label>
                     </td>
                     <td class="advanced-settings-table-checkbox checkbox-wrapper-31">
-                        <input type="checkbox" id="hideDustCounter" disabled />
+                        <input type="checkbox" id="hideDustCounter" disabled title="Hide dust counter" />
                         <svg viewBox="0 0 35.6 35.6">
                             <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
                             <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
@@ -180,14 +181,15 @@
                 <!-- ALTERNATE INGAME TOOLBAR -->
                 <tr>
                     <td rowspan="2" class="hide-dust-counter-cell advanced-settings-table-image">
-                        <img src="assets/settings/alternate_toolbar.webp" class="advanced-settings-table-image">
+                        <img src="assets/settings/alternate_toolbar.webp" class="advanced-settings-table-image"
+                            alt="An image displaying the main game table with the toolbar at the bottom of the screen.">
                     </td>
                     <td class="advanced-settings-table-entry">
                         <label for="alternateInGameToolbar" class="advanced-settings-title"
                             id="alternateInGameToolbarLabel"></label>
                     </td>
                     <td class="advanced-settings-table-checkbox checkbox-wrapper-31">
-                        <input type="checkbox" id="alternateInGameToolbar" />
+                        <input type="checkbox" id="alternateInGameToolbar" title="Alternate in-game toolbar">
                         <svg viewBox="0 0 35.6 35.6">
                             <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
                             <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
@@ -211,18 +213,19 @@
                         class="material-symbols-outlined">
                         close
                     </span></a></section>
-            <img src="assets/instructions/player_order.webp" class="setup-image">
+            <img src="assets/instructions/player_order.webp" class="setup-image"
+                alt="An image showing the order of players. The first player to type in is the one to your left, and the rest follow clockwise.">
             <p id="orderModalText" class="setup-tooltip"></p>
             <input disabled type="text" class="order-input setup-name material-symbols-outlined"
-                value="counter_1 face_6">
+                title="The first player to your left" value="counter_1 face_6">
             <input disabled type="text" class="order-input setup-name material-symbols-outlined"
-                value="counter_2 face_4">
+                title="The second player to your left" value="counter_2 face_4">
             <input disabled type="text" class="order-input setup-name material-symbols-outlined"
-                value="counter_3 face_2">
+                title="The third player to your left" value="counter_3 face_2">
             <input disabled type="text" class="order-input setup-name material-symbols-outlined"
-                value="counter_4 face_5">
+                title="The fourth player to your left" value="counter_4 face_5">
             <input disabled type="text" class="order-input setup-name material-symbols-outlined"
-                value="counter_5 face_3">
+                title="The fifth player to your left" value="counter_5 face_3">
         </div>
     </div>
 
@@ -308,59 +311,59 @@
                         class="material-symbols-outlined">
                         close
                     </span></a></section>
-            <section id="showLessSymbolsWrapper"><input type="checkbox" id="showLessSymbolsCheckbox"><span
-                    id="showLessSymbolsText" class="setup-tooltip"></span></section>
+            <section id="showLessSymbolsWrapper"><input type="checkbox" id="showLessSymbolsCheckbox"
+                    title="Show less symbols"><span id="showLessSymbolsText" class="setup-tooltip"></span></section>
             <section id="selectionModalBasic" class="selection-modal-wrapper">
                 <section class="selection-modal-section" id="selectionModalReset">
                     <a class="selection-modal-image" id="reset">
-                        <section class="image-with-tooltip"><img src="assets/icons/reset.svg" class="reset"><span
-                                id="resetText" class="setup-tooltip"></span></section>
+                        <section class="image-with-tooltip"><img alt="Reset" src="assets/icons/reset.svg"
+                                class="reset"><span id="resetText" class="setup-tooltip"></span></section>
                     </a>
                 </section>
                 <section class="selection-modal-section" id="selectionModalCheck">
                     <a class="selection-modal-image" id="check">
-                        <section class="image-with-tooltip"><img src="assets/icons/check.svg" class="check"><span
-                                id="checkFullText" class="setup-tooltip"></span></section>
+                        <section class="image-with-tooltip"><img alt="Check" src="assets/icons/check.svg"
+                                class="check"><span id="checkFullText" class="setup-tooltip"></span></section>
                     </a>
                     <a class="selection-modal-image" id="maybe">
-                        <section class="image-with-tooltip"><img src="assets/icons/check.svg" class="maybe"><span
-                                id="checkMaybeText" class="setup-tooltip"></span></section>
+                        <section class="image-with-tooltip"><img alt="Maybe yes" src="assets/icons/check.svg"
+                                class="maybe"><span id="checkMaybeText" class="setup-tooltip"></span></section>
                     </a>
                 </section>
                 <section class="selection-modal-section" id="selectionModalCross">
                     <a class="selection-modal-image" id="cross">
-                        <section class="image-with-tooltip"><img src="assets/icons/cross.svg" class="cross"><span
-                                id="crossFullText" class="setup-tooltip"></span></section>
+                        <section class="image-with-tooltip"><img alt="No" src="assets/icons/cross.svg"
+                                class="cross"><span id="crossFullText" class="setup-tooltip"></span></section>
                     </a>
                     <a class="selection-modal-image" id="maybeNot">
-                        <section class="image-with-tooltip"><img src="assets/icons/cross.svg" class="maybeNot"><span
-                                id="crossMaybeText" class="setup-tooltip"></span></section>
+                        <section class="image-with-tooltip"><img alt="Maybe not" src="assets/icons/cross.svg"
+                                class="maybeNot"><span id="crossMaybeText" class="setup-tooltip"></span></section>
                     </a>
                 </section>
             </section>
             <section id="selectionModalExtended" class="selection-modal-wrapper">
                 <section class="selection-modal-section" id="selectionModalExtended1">
                     <a class="selection-modal-image" id="star">
-                        <section class="image-with-tooltip"><img src="assets/icons/star.svg" class="star"><span
-                                id="starText" class="setup-tooltip"></span></section>
+                        <section class="image-with-tooltip"><img alt="Star" src="assets/icons/star.svg"
+                                class="star"><span id="starText" class="setup-tooltip"></span></section>
                     </a>
                     <a class="selection-modal-image" id="question">
-                        <section class="image-with-tooltip"><img src="assets/icons/question.svg" class="question"><span
-                                id="questionText" class="setup-tooltip"></span></section>
+                        <section class="image-with-tooltip"><img alt="Question" src="assets/icons/question.svg"
+                                class="question"><span id="questionText" class="setup-tooltip"></span></section>
                     </a>
                     <a class="selection-modal-image" id="exclamation">
-                        <section class="image-with-tooltip"><img src="assets/icons/exclamation.svg"
+                        <section class="image-with-tooltip"><img alt="Exclamation" src="assets/icons/exclamation.svg"
                                 class="exclamation"><span id="exclamationText" class="setup-tooltip"></span></section>
                     </a>
                 </section>
                 <section class="selection-modal-section" id="selectionModalExtended2">
                     <a class="selection-modal-image" id="flag">
-                        <section class="image-with-tooltip"><img src="assets/icons/flag.svg" class="flag"><span
-                                id="flagText" class="setup-tooltip"></span></section>
+                        <section class="image-with-tooltip"><img alt="Flag" src="assets/icons/flag.svg"
+                                class="flag"><span id="flagText" class="setup-tooltip"></span></section>
                     </a>
                     <a class="selection-modal-image" id="skip">
-                        <section class="image-with-tooltip"><img src="assets/icons/skip.svg" class="skip"><span
-                                id="skipText" class="setup-tooltip"></span></section>
+                        <section class="image-with-tooltip"><img alt="Skip" src="assets/icons/skip.svg"
+                                class="skip"><span id="skipText" class="setup-tooltip"></span></section>
                     </a>
                 </section>
             </section>
@@ -387,7 +390,8 @@
                         <th id="fakeCheckboxCell" class="advanced-settings-table-checkbox instructions-image"
                             scope="row">
                             <div class="checkbox-wrapper-31 checkbox-wrapper-32">
-                                <input type="checkbox" id="fakeCheckbox" class="table-header-checkbox" />
+                                <input type="checkbox" id="fakeCheckbox" class="table-header-checkbox"
+                                    title="Instructions checkbox" />
                                 <svg viewBox="0 0 35.6 35.6">
                                     <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
                                     <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
@@ -418,7 +422,7 @@
                 <p id="instructionsModalText5" class="setup-tooltip"></p>
             </section>
             <section class="modal-section">
-                <img src="assets/instructions/instructions_save.svg" class="save-image invertible">
+                <img src="assets/instructions/instructions_save.svg" class="save-image invertible" alt="Save icon">
                 <p id="instructionsModalText4" class="setup-tooltip"></p>
             </section>
         </div>
