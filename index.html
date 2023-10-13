@@ -5,12 +5,11 @@
 
     <meta name="theme-color" content="#2CB6E3" />
     <link rel="manifest" href="/manifest.json">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=0">
+    <link rel="apple-touch-icon" href="assets/app-icon.webp">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cluedo Detective Notes</title>
     <meta name="description" content="Cluedo Detective Notes by @nmtb4e.">
     <meta name="google" content="nositelinkssearchbox" />
-    <link rel="canonical" href="https://detectivenotes">
-
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -105,8 +104,9 @@
             <section id="boardButtonContainer"></section>
             <hr>
             <span id="playerNumQuestion" class="setup-text"></span><br>
-            <input type="range" id="playerNum" min="2" max="6" step="1" value="3" class="range"><br>
-            <span id="playerNumTooltip" class="setup-tooltip"></span>
+            <input title="Number of players" type="range" id="playerNum" min="2" max="6" step="1" value="3"
+                class="range"><br>
+            <label for="playerNum" id="playerNumTooltip" class="setup-tooltip"></label>
             <hr>
             <span id="playerNameQuestion" class="setup-text"></span><br>
             <span id="playerNameTooltip" class="setup-tooltip"></span>
