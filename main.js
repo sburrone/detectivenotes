@@ -378,7 +378,7 @@ $(document).ready(function () {
         });
         //If cards are locked, button should change correctly.
         if (locked) {
-            $("#lockPersonalCards, #lockPersonalCardsLabel").css("background-color", (current ? "var(--red)" : "var(--dark-red)"));
+            $("#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel").css("background-color", (current ? "var(--red)" : "var(--dark-red)"));
         }
         //Change autocomplete  button
         if (autocomplete) {
@@ -571,6 +571,17 @@ $(document).ready(function () {
         })
     }
 
+    //Only show vertical long names at the top
+    $(window).on("scroll", function () {
+        if (longNamesCompatibilityMode) {
+            if (window.scrollY == 0) {
+                $(".sideways").show(300);
+            } else {
+                $(".sideways").hide(300);
+            }
+        }
+    });
+
     let toUpdate = undefined, oldID = undefined;
 
     function getCellLink(number, item) {
@@ -654,20 +665,20 @@ $(document).ready(function () {
     });
 
     //Lock cards
-    $("#lockPersonalCards").on("click", function () {
+    $("#lockPersonalCards, #lockPersonalCardsAlt").on("click", function () {
         if (!locked) {   //if currently unlocked, locks cards
             $(".table-header-checkbox").each(function () {
                 $(this).attr("disabled", "disabled");
             });
-            $("#lockPersonalCards, #lockPersonalCardsLabel").css("background-color", (darkMode ? "var(--dark-red)" : "var(--red)"));
-            $("#lockPersonalCardsLabel").text("lock");
+            $("#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel").css("background-color", (darkMode ? "var(--dark-red)" : "var(--red)"));
+            $("#lockPersonalCardsLabel, #lockPersonalCardsAltLabel").text("lock");
             locked = true;
         } else {        //if currently locked, unlocks cards
             $(".table-header-checkbox").each(function () {
                 $(this).removeAttr("disabled");
             });
-            $("#lockPersonalCards, #lockPersonalCardsLabel").css("background-color", (darkMode ? "var(--light-blue)" : "var(--dark-blue)"));
-            $("#lockPersonalCardsLabel").text("lock_open_right");
+            $("#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel").css("background-color", (darkMode ? "var(--light-blue)" : "var(--dark-blue)"));
+            $("#lockPersonalCardsLabel, #lockPersonalCardsAltLabel").text("lock_open_right");
             locked = false;
         }
     });
