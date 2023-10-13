@@ -347,7 +347,7 @@ a:hover {
 
 .board-button {
     font-size: 20px;
-    padding: 8px;
+    padding: 8px 16px;
     margin: 4px;
 }
 
@@ -368,6 +368,7 @@ button {
 }
 
 .main-game {
+    height: 100%;
     display: none;
 }
 
@@ -418,6 +419,7 @@ button {
     text-decoration: underline var(--light-blue);
     --dark-text-decoration: underline var(--dark-blue);
     --light-text-decoration: underline var(--light-blue);
+    white-space: nowrap;
 }
 
 .setup-name {
@@ -841,6 +843,7 @@ a {
     opacity: 0;
     -appearance: none;
     -webkit-appearance: none;
+    appearance: none;
 }
 
 .checkbox-wrapper-31 input[type=checkbox]:hover {
@@ -949,4 +952,24 @@ a {
     position: sticky;
     bottom: 0;
     display: none;
+    padding-top: 8px !important;
+}
+
+.in-game-upperbar {
+    justify-content: center !important;
+}
+
+.in-game-upperbar>.small-button {
+    margin-right: 8px !important;
+    margin-left: 8px !important;
+}
+
+.selected {
+    background-color: var(--red) !important;
+    --dark-background-color: var(--dark-red) !important;
+    --light-dark-background-color: var(--red) !important;
+}
+
+#setupContent {
+    padding: 0px 20px;
 }

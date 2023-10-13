@@ -286,11 +286,14 @@ $(document).ready(function () {
         //Populate Setup
         boards.forEach(board => {
             let button = $("<button>").attr("class", "small-button board-button");
+            button.css("background-color", darkMode ? "var(--dark-blue)" : "var(--light-blue)");
             button.text(board.name);
             button.on("click", function (event) {
                 //Cambio colori
-                $("#boardButtonContainer").find("*").css("background-color", "var(--dark-blue)");
-                $(event.target).css("background-color", "var(--light-blue)");
+                $("#boardButtonContainer").find("*").css("background-color", darkMode ? "var(--dark-blue)" : "var(--light-blue)");
+                $("#boardButtonContainer").find("*").data("selected", "false");
+                $(event.target).data("selected", "true");
+                $(event.target).css("background-color", darkMode ? "var(--dark-red)" : "var(--red)");
 
                 selectedBoard = board.id;
                 if (selectedBoard == 5) {
@@ -382,6 +385,11 @@ $(document).ready(function () {
             $("#autocompleteButton, #autocompleteButtonLabel").css("background-color", "var(--green)");
         } else {
             $("#autocompleteButton, #autocompleteButtonLabel").css("background-color", (current ? "var(--red)" : "var(--dark-red)"));
+        }
+        //Change setup selected board button
+        $(".board-button").css("background-color", (current ? "var(--light-blue)" : "var(--dark-blue)"))
+        if (selectedBoard) {
+            $("#boardButtonContainer").children().eq(selectedBoard).css("background-color", (current ? "var(--red)" : "var(--dark-red)"));
         }
         darkMode = !current;
     }
