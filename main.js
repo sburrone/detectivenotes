@@ -190,6 +190,7 @@ $(document).ready(function () {
     });
     let forcedLang = params.lang;
     if (forcedLang && forcedLang.toLowerCase() == "it") {
+        $("html").attr("lang", "it");
         userLang = "it-IT";
     } else if (forcedLang && forcedLang.toLowerCase() == "en") {
         userLang = "en-US";
