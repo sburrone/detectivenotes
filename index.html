@@ -5,7 +5,7 @@
 
     <meta name="theme-color" content="#2CB6E3" />
     <link rel="manifest" href="/manifest.json">
-    <meta name="viewport" content="width=device-width, minimum scale=1, initial-scale=1, user-scalable=0">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=0">
     <title>Cluedo Detective Notes</title>
     <meta name="description" content="Cluedo Detective Notes by @nmtb4e.">
     <meta name="google" content="nositelinkssearchbox" />
@@ -132,7 +132,8 @@
                 <!-- LONG NAMES COMPATIBILITY MODE -->
                 <tr>
                     <td rowspan="2">
-                        <img src="assets/advanced_long_names.webp" class="advanced-settings-table-image invertible">
+                        <img src="assets/settings/advanced_long_names.webp"
+                            class="advanced-settings-table-image invertible">
                     </td>
                     <td class="advanced-settings-table-entry">
                         <label for="longNamesCompatibilityMode" class="advanced-settings-title"
@@ -179,7 +180,7 @@
                 <!-- ALTERNATE INGAME TOOLBAR -->
                 <tr>
                     <td rowspan="2" class="hide-dust-counter-cell advanced-settings-table-image">
-                        <img src="assets/alternate_toolbar.webp" class="advanced-settings-table-image">
+                        <img src="assets/settings/alternate_toolbar.webp" class="advanced-settings-table-image">
                     </td>
                     <td class="advanced-settings-table-entry">
                         <label for="alternateInGameToolbar" class="advanced-settings-title"
@@ -210,7 +211,7 @@
                         class="material-symbols-outlined">
                         close
                     </span></a></section>
-            <img src="assets/player_order.webp" class="setup-image">
+            <img src="assets/instructions/player_order.webp" class="setup-image">
             <p id="orderModalText" class="setup-tooltip"></p>
             <input disabled type="text" class="order-input setup-name material-symbols-outlined"
                 value="counter_1 face_6">
@@ -312,27 +313,27 @@
             <section id="selectionModalBasic" class="selection-modal-wrapper">
                 <section class="selection-modal-section" id="selectionModalReset">
                     <a class="selection-modal-image" id="reset">
-                        <section class="image-with-tooltip"><img src="assets/reset.svg" class="reset"><span
+                        <section class="image-with-tooltip"><img src="assets/icons/reset.svg" class="reset"><span
                                 id="resetText" class="setup-tooltip"></span></section>
                     </a>
                 </section>
                 <section class="selection-modal-section" id="selectionModalCheck">
                     <a class="selection-modal-image" id="check">
-                        <section class="image-with-tooltip"><img src="assets/check.svg" class="check"><span
+                        <section class="image-with-tooltip"><img src="assets/icons/check.svg" class="check"><span
                                 id="checkFullText" class="setup-tooltip"></span></section>
                     </a>
                     <a class="selection-modal-image" id="maybe">
-                        <section class="image-with-tooltip"><img src="assets/check.svg" class="maybe"><span
+                        <section class="image-with-tooltip"><img src="assets/icons/check.svg" class="maybe"><span
                                 id="checkMaybeText" class="setup-tooltip"></span></section>
                     </a>
                 </section>
                 <section class="selection-modal-section" id="selectionModalCross">
                     <a class="selection-modal-image" id="cross">
-                        <section class="image-with-tooltip"><img src="assets/cross.svg" class="cross"><span
+                        <section class="image-with-tooltip"><img src="assets/icons/cross.svg" class="cross"><span
                                 id="crossFullText" class="setup-tooltip"></span></section>
                     </a>
                     <a class="selection-modal-image" id="maybeNot">
-                        <section class="image-with-tooltip"><img src="assets/cross.svg" class="maybeNot"><span
+                        <section class="image-with-tooltip"><img src="assets/icons/cross.svg" class="maybeNot"><span
                                 id="crossMaybeText" class="setup-tooltip"></span></section>
                     </a>
                 </section>
@@ -340,26 +341,26 @@
             <section id="selectionModalExtended" class="selection-modal-wrapper">
                 <section class="selection-modal-section" id="selectionModalExtended1">
                     <a class="selection-modal-image" id="star">
-                        <section class="image-with-tooltip"><img src="assets/star.svg" class="star"><span id="starText"
-                                class="setup-tooltip"></span></section>
+                        <section class="image-with-tooltip"><img src="assets/icons/star.svg" class="star"><span
+                                id="starText" class="setup-tooltip"></span></section>
                     </a>
                     <a class="selection-modal-image" id="question">
-                        <section class="image-with-tooltip"><img src="assets/question.svg" class="question"><span
+                        <section class="image-with-tooltip"><img src="assets/icons/question.svg" class="question"><span
                                 id="questionText" class="setup-tooltip"></span></section>
                     </a>
                     <a class="selection-modal-image" id="exclamation">
-                        <section class="image-with-tooltip"><img src="assets/exclamation.svg" class="exclamation"><span
-                                id="exclamationText" class="setup-tooltip"></span></section>
+                        <section class="image-with-tooltip"><img src="assets/icons/exclamation.svg"
+                                class="exclamation"><span id="exclamationText" class="setup-tooltip"></span></section>
                     </a>
                 </section>
                 <section class="selection-modal-section" id="selectionModalExtended2">
                     <a class="selection-modal-image" id="flag">
-                        <section class="image-with-tooltip"><img src="assets/flag.svg" class="flag"><span id="flagText"
-                                class="setup-tooltip"></span></section>
+                        <section class="image-with-tooltip"><img src="assets/icons/flag.svg" class="flag"><span
+                                id="flagText" class="setup-tooltip"></span></section>
                     </a>
                     <a class="selection-modal-image" id="skip">
-                        <section class="image-with-tooltip"><img src="assets/skip.svg" class="skip"><span id="skipText"
-                                class="setup-tooltip"></span></section>
+                        <section class="image-with-tooltip"><img src="assets/icons/skip.svg" class="skip"><span
+                                id="skipText" class="setup-tooltip"></span></section>
                     </a>
                 </section>
             </section>
@@ -417,7 +418,7 @@
                 <p id="instructionsModalText5" class="setup-tooltip"></p>
             </section>
             <section class="modal-section">
-                <img src="assets/instructions_save.svg" class="save-image invertible">
+                <img src="assets/instructions/instructions_save.svg" class="save-image invertible">
                 <p id="instructionsModalText4" class="setup-tooltip"></p>
             </section>
         </div>
