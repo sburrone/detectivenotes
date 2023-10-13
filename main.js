@@ -198,16 +198,16 @@ $(document).ready(function () {
     let selectedBoard = 0, players = [];
     let itemsArray;
     const imageData = {
-        "check": "assets/check.svg",
-        "maybe": "assets/check.svg",
-        "cross": "assets/cross.svg",
-        "maybeNot": "assets/cross.svg",
-        "reset": "assets/reset.svg",
-        "star": "assets/star.svg",
-        "question": "assets/question.svg",
-        "exclamation": "assets/exclamation.svg",
-        "flag": "assets/flag.svg",
-        "skip": "assets/skip.svg"
+        "check": "assets/icons/check.svg",
+        "maybe": "assets/icons/check.svg",
+        "cross": "assets/icons/cross.svg",
+        "maybeNot": "assets/icons/cross.svg",
+        "reset": "assets/icons/reset.svg",
+        "star": "assets/icons/star.svg",
+        "question": "assets/icons/question.svg",
+        "exclamation": "assets/icons/exclamation.svg",
+        "flag": "assets/icons/flag.svg",
+        "skip": "assets/icons/skip.svg"
     }
 
     switch (userLang) {
@@ -601,7 +601,7 @@ $(document).ready(function () {
             }
         });
         let cellImage = $("<img>");
-        cellImage.attr("src", "assets/reset.svg");
+        cellImage.attr("src", "assets/icons/reset.svg");
         cellImage.attr("class", "reset");
         cellImage.data("key", "" + itemsArray.indexOf(item) + "," + number);
         cellLink.append(cellImage);
