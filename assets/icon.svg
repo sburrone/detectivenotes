@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <style bx:fonts="Dela Gothic One">@import url(https://fonts.googleapis.com/css2?family=Dela+Gothic+One%3Aital%2Cwght%400%2C400&amp;display=swap);</style>
+  </defs>
+  <ellipse style="stroke: rgb(39, 65, 97); stroke-width: 16px; fill: rgb(44, 182, 227); paint-order: fill;" cx="250" cy="250" rx="234" ry="231"/>
+  <text style="fill: rgb(39, 65, 97); font-family: 'Dela Gothic One'; font-size: 300px; letter-spacing: -30.4px; text-transform: lowercase; white-space: pre;" x="45.346" y="349.721">dn</text>
+</svg>

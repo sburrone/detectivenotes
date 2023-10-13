@@ -271,6 +271,23 @@ $(document).ready(function () {
         })
     }
 
+    //Install button
+    let deferredPrompt;
+
+    window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        console.log(deferredPrompt);
+        console.log("Fired");
+    });
+
+    $("#installButton").on("click", async () => {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice();
+        console.log("Slay! " + outcome);
+        deferredPrompt = null;
+    });
+
     //Detect language, load strings
     let stringKeys = Object.keys(strings);
     stringKeys.forEach((key) => document.getElementById(key).innerHTML = strings[key]);
