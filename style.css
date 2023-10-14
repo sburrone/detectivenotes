@@ -592,11 +592,10 @@ button {
     align-items: center;
     justify-content: center;
     position: relative;
-    top: 60px;
     padding: 10px;
-    z-index: 1;
     text-align: center;
     display: none;
+    z-index: 5;
 }
 
 .counterbutton {
@@ -681,6 +680,12 @@ table {
 
     .main-title {
         font-size: 50px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    #changeLanguageText {
+        display: none;
     }
 }
 
@@ -972,4 +977,10 @@ a {
 
 #setupContent {
     padding: 0px 20px;
+}
+
+.dust-counter-button {
+    height: 46px;
+    width: 46px;
+    vertical-align: top;
 }

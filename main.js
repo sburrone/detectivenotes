@@ -229,7 +229,12 @@ $(document).ready(function () {
     function swapUpperBar() {
         $("#mainGameUB").hide();
         $("#alternateToolbar").show();
-        $("#autocompleteButton, #autocompleteButtonLabel").css("background-color", "var(--green)");
+        if (selectedBoard == 5 && !hideDustCounter) {
+            $("#dustCounterBox").detach().insertBefore("#alternateToolbar");
+            $("#dustCounterBox").css("position", "sticky");
+            $("#dustCounterBox").css("bottom", "68px");
+        }
+        $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", "var(--green)");
     }
 
     if (localStorage.getItem("date") != undefined) {
@@ -254,8 +259,6 @@ $(document).ready(function () {
             clearInterval(languageInterval);
             alternateInGameToolbar = localStorage.getItem("alternateInGameToolbar");
             if (alternateInGameToolbar && alternateInGameToolbar != 'false') {
-                //Change upperbar TODO
-                console.log("Change upperbar");
                 swapUpperBar();
             }
             $("#mainGame").css("display", "block");
@@ -263,9 +266,11 @@ $(document).ready(function () {
             updateTable();
             if (selectedBoard == 5) {
                 hideDustCounter = localStorage.getItem("hideDustCounter");
-                $("#dustCounterValue").text(localStorage.getItem("dust"));
-                if (hideDustCounter == false) {
+                $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(localStorage.getItem("dust"));
+                if (hideDustCounter == false || hideDustCounter == 'false') {
                     $(".dust-counter-box").css("display", "flex");
+                } else {
+                    $(".dust-counter-button").hide();
                 }
             }
         })
@@ -397,9 +402,9 @@ $(document).ready(function () {
         }
         //Change autocomplete  button
         if (autocomplete) {
-            $("#autocompleteButton, #autocompleteButtonLabel").css("background-color", "var(--green)");
+            $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", "var(--green)");
         } else {
-            $("#autocompleteButton, #autocompleteButtonLabel").css("background-color", (current ? "var(--red)" : "var(--dark-red)"));
+            $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", (current ? "var(--red)" : "var(--dark-red)"));
         }
         //Change setup selected board button
         $(".board-button").css("background-color", (current ? "var(--light-blue)" : "var(--dark-blue)"))
@@ -449,7 +454,6 @@ $(document).ready(function () {
         event.preventDefault();
         $("#setup").css("display", "none");
         if (alternateInGameToolbar && alternateInGameToolbar != 'false') {
-            console.log("Change upperbar");
             swapUpperBar();
         }
         $("#mainGame").css("display", "block");
@@ -470,25 +474,32 @@ $(document).ready(function () {
         if (selectedBoard == 5) {
             localStorage.setItem("hideDustCounter", hideDustCounter);
             localStorage.setItem("dust", 12);
-            $("#dustCounterValue").text(12);
+            $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(12);
             if (hideDustCounter == false) {
                 $(".dust-counter-box").css("display", "flex");
+            } else {
+                $(".dust-counter-button").hide();
             }
         }
         localStorage.setItem("alternateInGameToolbar", alternateInGameToolbar);
         fillTable();
     });
 
-    $("#dustCounterDown").on("click", function () {
+    $("#dustCounterDown, #dustCounterAltDown").on("click", function () {
         let old = parseInt($("#dustCounterValue").text());
-        $("#dustCounterValue").text(old - 1);
+        $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(old - 1);
         localStorage.setItem("dust", old - 1);
     })
 
-    $("#dustCounterUp").on("click", function () {
+    $("#dustCounterUp, #dustCounterAltDown").on("click", function () {
         let old = parseInt($("#dustCounterValue").text());
-        $("#dustCounterValue").text(old + 1);
+        $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(old + 1);
         localStorage.setItem("dust", old + 1);
+    });
+
+    $("#dustCounterButton, #dustCounterAltButton").on("click", function () {
+        const cur = $("#dustCounterBox").css("display") == "none";
+        $("#dustCounterBox").css("display", cur ? "flex" : "none");
     });
 
     function fillTable() {
@@ -670,12 +681,12 @@ $(document).ready(function () {
     });
 
     //Change autocomplete button
-    $("#autocompleteButton").on("click", function () {
+    $("#autocompleteButton, #autocompleteButtonAlt").on("click", function () {
         autocomplete = !autocomplete
         if (autocomplete) {
-            $("#autocompleteButton, #autocompleteButtonLabel").css("background-color", "var(--green)");
+            $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", "var(--green)");
         } else {
-            $("#autocompleteButton, #autocompleteButtonLabel").css("background-color", (darkMode ? "var(--dark-red)" : "var(--red)"));
+            $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", (darkMode ? "var(--dark-red)" : "var(--red)"));
         }
     });
 
