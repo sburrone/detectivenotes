@@ -984,3 +984,7 @@ a {
     width: 46px;
     vertical-align: top;
 }
+
+.autocomplete-button {
+    background-color: var(--green);
+}

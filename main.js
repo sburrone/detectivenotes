@@ -284,7 +284,10 @@ $(document).ready(function () {
                 } else {
                     $(".dust-counter-button").hide();
                 }
-            }
+            };
+            if (selectedBoard != 5 || hideDustCounter != false) {
+                $(".dust-counter-button").hide();
+            };
         })
     }
 
@@ -482,9 +485,10 @@ $(document).ready(function () {
             $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(12);
             if (hideDustCounter == false) {
                 $(".dust-counter-box").css("display", "flex");
-            } else {
-                $(".dust-counter-button").hide();
             }
+        }
+        if (selectedBoard != 5 || hideDustCounter != false) {
+            $(".dust-counter-button").hide();
         }
         localStorage.setItem("alternateInGameToolbar", alternateInGameToolbar);
         fillTable();
