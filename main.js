@@ -1,6 +1,6 @@
-import * as THREE from 'three';
-import { GLTFLoader } from 'GLTFLoader';
-import { OrbitControls } from 'OrbitControls';
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js';
+import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js';
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/controls/OrbitControls.js';
 
 
 let _APP = null;
