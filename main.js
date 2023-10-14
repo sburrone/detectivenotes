@@ -277,14 +277,11 @@ $(document).ready(function () {
     window.addEventListener("beforeinstallprompt", (e) => {
         e.preventDefault();
         deferredPrompt = e;
-        console.log(deferredPrompt);
-        console.log("Fired");
     });
 
     $("#installButton").on("click", async () => {
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice();
-        console.log("Slay! " + outcome);
         deferredPrompt = null;
     });
 
