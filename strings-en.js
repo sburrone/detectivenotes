@@ -1,4 +1,4 @@
-const boardsEN = [
+export const boardsEN = [
     {
         id: 0,
         name: "Classic",
@@ -55,7 +55,7 @@ const boardsEN = [
     },
 ];
 
-const stringsEN = {
+export const stringsEN = {
     mainTitle: "detective<br>notes",
     beginButton: "Start",
     beginButtonSubtitle: "Any saved game will be deleted",
@@ -109,4 +109,4 @@ const stringsEN = {
     alternateInGameToolbarText: "Replace the classic ingame toolbar with a smaller toolbar at the bottom of the screen."
 }
 
-const letsPlayEN = "Let's play!";
+export const letsPlayEN = "Let's play!";

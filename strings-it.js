@@ -1,4 +1,4 @@
-const boardsIT = [
+export const boardsIT = [
     {
         id: 0,
         name: "Classico",
@@ -56,7 +56,7 @@ const boardsIT = [
 ];
 
 
-const stringsIT = {
+export const stringsIT = {
     mainTitle: "detective<br>notes",
     beginButton: "Inizia",
     beginButtonSubtitle: "La partita salvata verrà eliminata",
@@ -110,4 +110,4 @@ const stringsIT = {
     alternateInGameToolbarText: "Sostituisci il menu della partita con un'alternativa più piccola in fondo allo schermo."
 }
 
-const letsPlayIT = "Giochiamo!";
+export const letsPlayIT = "Giochiamo!";
