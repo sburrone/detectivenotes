@@ -228,6 +228,11 @@ $(document).ready(function () {
         }
     }
 
+    //Detect language, load strings
+    let stringKeys = Object.keys(strings);
+    stringKeys.forEach((key) => document.getElementById(key).innerHTML = strings[key]);
+    $("#startGame").attr("value", letsPlay);
+
     const languageLabels = ["Switch language", "Cambia lingua"];
     let languageIndex = 0;
     let languageInterval = window.setInterval(function () {
@@ -304,11 +309,6 @@ $(document).ready(function () {
         const { outcome } = await deferredPrompt.userChoice();
         deferredPrompt = null;
     });
-
-    //Detect language, load strings
-    let stringKeys = Object.keys(strings);
-    stringKeys.forEach((key) => document.getElementById(key).innerHTML = strings[key]);
-    $("#startGame").attr("value", letsPlay);
 
     $("#newGameButton").on("click", function () {
         $("#mainMenu").css("display", "none");
