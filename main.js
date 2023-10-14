@@ -228,6 +228,16 @@ $(document).ready(function () {
         }
     }
 
+    const languageLabels = ["Switch language", "Cambia lingua"];
+    let languageIndex = 0;
+    let languageInterval = window.setInterval(function () {
+        if (languageIndex == languageLabels.length) {
+            languageIndex = 0;
+        }
+        $(".language-label").text(languageLabels[languageIndex]);
+        languageIndex++;
+    }, 2000);
+
     function swapUpperBar() {
         $("#mainGameUB").hide();
         $("#alternateToolbar").show();
@@ -415,16 +425,6 @@ $(document).ready(function () {
         }
         darkMode = !current;
     }
-
-    const languageLabels = ["Switch language", "Cambia lingua"];
-    let languageIndex = 0;
-    let languageInterval = window.setInterval(function () {
-        if (languageIndex == languageLabels.length) {
-            languageIndex = 0;
-        }
-        $(".language-label").text(languageLabels[languageIndex]);
-        languageIndex++;
-    }, 2000);
 
     $("#advancedSettingsModalBackButton, #advancedSettingsToggle").on("click", function () {
         $("#advancedSettingsModal").toggle();
