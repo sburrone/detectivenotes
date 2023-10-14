@@ -383,13 +383,16 @@ $(document).ready(function () {
         }
     }
 
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        toggleDarkMode(false);
-    };
+    if (window.matchMedia('(prefers-color-scheme)').media !== 'not all') {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            toggleDarkMode(false);
+        };
 
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-        toggleDarkMode(darkMode);
-    });
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            toggleDarkMode(darkMode);
+        });
+
+    }
 
     $("#darkModeToggle, #mainMenuDarkModeButton").on("click", function () {
         toggleDarkMode(darkMode);
