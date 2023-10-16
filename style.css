@@ -462,6 +462,8 @@ button {
 }
 
 #modalBackWrapper {
+    position: sticky;
+    top: 0;
     margin-left: auto;
 }
 

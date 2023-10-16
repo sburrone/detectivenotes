@@ -286,12 +286,15 @@ $(document).ready(function () {
                 $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(localStorage.getItem("dust"))
                 if (!hideDustCounter) {
                     $(".dust-counter-box").css("display", "flex")
+                    $("#instructionsModalSection6").show()
                 } else {
                     $(".dust-counter-button").hide()
+                    $("#instructionsModalSection6").hide()
                 }
             }
             if (selectedBoard != 5 || hideDustCounter) {
                 $(".dust-counter-button").hide()
+                $("#instructionsModalSection6").hide()
             }
         })
     }
@@ -485,10 +488,12 @@ $(document).ready(function () {
             $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(12)
             if (!hideDustCounter) {
                 $(".dust-counter-box").css("display", "flex")
+                $("#instructionsModalSection6").show()
             }
         }
         if (selectedBoard != 5 || hideDustCounter) {
             $(".dust-counter-button").hide()
+            $("#instructionsModalSection6").hide()
         }
         localStorage.setItem("alternateInGameToolbar", alternateInGameToolbar)
         fillTable()
@@ -806,5 +811,4 @@ $(document).ready(function () {
             (darkMode ? "var(--dark-red)" : "var(--red)") :
             "var(--green)")
     }, 2000)
-
 })

@@ -76,6 +76,7 @@ export const stringsEN = {
     instructionsModalText3: "Once you've locked in all your cards, tap the lock icon at the top of the screen.",
     instructionsModalText4: "Your game progress is saved automatically.",
     instructionsModalText5: "With Autocomplete, when you set a check <span class=\"material-symbols-outlined\">done</span> on a card, crosses <span class=\"material-symbols-outlined\">close</span> are filled in automatically.<br>This option is ON by default, disable it to add crosses manually.",
+    instructionsModalText6: "On the Harry Potter board, keep track of how much dust you have with this counter. Tap it to increase and decrease how much dust you have.",
     //autocompleteStatusContainer: "Autocomplete is ",
     //autocompleteStatus: "ON",
     tableHeaderPlayers: "Players",
