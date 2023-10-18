@@ -17,6 +17,7 @@ body {
     padding: 0;
     height: 100%;
     transition: .3s ease-in-out;
+    overflow-x: hidden;
 }
 
 html {
@@ -251,13 +252,15 @@ a:hover {
     align-items: center;
     text-align: center;
     justify-content: space-evenly;
-    height: 60px;
+    height: auto;
     width: 100%;
     position: fixed;
     z-index: 4;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 8px;
+    white-space: nowrap;
 }
-
-
 
 .upperbar-title {
     font-size: 26px;
@@ -277,6 +280,7 @@ a:hover {
     color: var(--black);
     --dark-color: var(--white);
     --light-color: var(--black);
+    overflow-y: auto;
 }
 
 .invertible {
@@ -598,6 +602,9 @@ button {
     text-align: center;
     display: none;
     z-index: 5;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: auto;
 }
 
 .counterbutton {
@@ -959,7 +966,6 @@ a {
     position: sticky;
     bottom: 0;
     display: none;
-    padding-top: 8px !important;
 }
 
 .in-game-upperbar {
