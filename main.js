@@ -299,19 +299,24 @@ $(document).ready(function () {
         })
     }
 
-    //Install button
-    let deferredPrompt
+    //Install button (don't show if already in PWA)
+    if (!(params.source == "pwa" || window.matchMedia('(display-mode: standalone)').matches)) {
 
-    window.addEventListener("beforeinstallprompt", (e) => {
-        e.preventDefault()
-        deferredPrompt = e
-    })
+        let deferredPrompt
 
-    $("#installButton").on("click", async () => {
-        deferredPrompt.prompt()
-        const { outcome } = await deferredPrompt.userChoice()
-        deferredPrompt = null
-    })
+        window.addEventListener("beforeinstallprompt", (e) => {
+            e.preventDefault()
+            deferredPrompt = e
+        })
+
+        $("#installButton").on("click", async () => {
+            deferredPrompt.prompt()
+            const { outcome } = await deferredPrompt.userChoice()
+            deferredPrompt = null
+        })
+    } else {
+        $("#installButton").hide();
+    }
 
     $("#newGameButton").on("click", function () {
         $("#mainMenu").css("display", "none")
