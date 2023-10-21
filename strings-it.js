@@ -108,7 +108,7 @@ export const stringsIT = {
     instructionsModalTitle: "Istruzioni",
     skipLoading: "Salta",
     alternateInGameToolbarLabel: "Menu di gioco alternativo",
-    alternateInGameToolbarText: "Sostituisci il menu della partita con un'alternativa più piccola in fondo allo schermo."
+    alternateInGameToolbarText: "Sposta il menu di gioco in fondo allo schermo."
 }
 
 export const letsPlayIT = "Giochiamo!";

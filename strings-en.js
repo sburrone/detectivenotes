@@ -107,7 +107,7 @@ export const stringsEN = {
     instructionsModalTitle: "Instructions",
     skipLoading: "Skip",
     alternateInGameToolbarLabel: "Alternate ingame toolbar",
-    alternateInGameToolbarText: "Replace the classic ingame toolbar with a smaller toolbar at the bottom of the screen."
+    alternateInGameToolbarText: "Move the ingame toolbar to the bottom of the screen."
 }
 
 export const letsPlayEN = "Let's play!";
