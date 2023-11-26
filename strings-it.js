@@ -108,7 +108,13 @@ export const stringsIT = {
     instructionsModalTitle: "Istruzioni",
     skipLoading: "Salta",
     alternateInGameToolbarLabel: "Menu di gioco alternativo",
-    alternateInGameToolbarText: "Sposta il menu di gioco in fondo allo schermo."
+    alternateInGameToolbarText: "Sposta il menu di gioco in fondo allo schermo.",
+    customizeBoardButton: "Tavolo personalizzato",
+    saveBoardButton: "Salva tavolo",
+    customBoardHeaderName: "Nome tavolo",
+    customBoardHeaderCharacters: "Sospetti",
+    customBoardHeaderWeapons: "Armi",
+    customBoardHeaderRooms: "Stanze"
 }
 
 export const letsPlayIT = "Giochiamo!";

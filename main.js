@@ -171,7 +171,7 @@ $(document).ready(function () {
         props: ["filter"]
     }, {
         element: [".locked", ".upperbar", ".dust-counter-box", ".small-button",
-            ".small-button .material-symbols-outlined", ".counterbutton", ".begin-button", ".main-menu-small-button", ".main-table-row>*", ".language-link"],
+            ".counterbutton", ".begin-button", ".main-menu-small-button", ".main-table-row>*", ".language-link"],
         props: ["background-color"]
     }, {
         element: ["input[type=\"range\"]"],
@@ -333,10 +333,11 @@ $(document).ready(function () {
             button.text(board.name)
             button.on("click", function (event) {
                 //Cambio colori
-                $("#boardButtonContainer").find("*").css("background-color", darkMode ? "var(--dark-blue)" : "var(--light-blue)")
-                $("#boardButtonContainer").find("*").data("selected", "false")
+                $("#customizeBoardContainer, #boardButtonContainer").find("*").css("background-color", darkMode ? "var(--dark-blue)" : "var(--light-blue)")
+                $("#customizeBoardContainer, #boardButtonContainer").find("*").data("selected", "false")
                 $(event.target).data("selected", "true")
                 $(event.target).css("background-color", darkMode ? "var(--dark-red)" : "var(--red)")
+                $("#customizeBoardForm").hide()
 
                 selectedBoard = board.id
                 if (selectedBoard == 5) {
@@ -355,12 +356,27 @@ $(document).ready(function () {
         updateFields()
     })
 
+    $("#customizeBoardButton").on("click", function (event) {
+        //Cambio colori
+        $("#customizeBoardContainer, #boardButtonContainer").find("*").css("background-color", darkMode ? "var(--dark-blue)" : "var(--light-blue)")
+        $("#customizeBoardContainer, #boardButtonContainer").find("*").data("selected", "false")
+        $(event.target).data("selected", "true")
+        $(event.target).css("background-color", darkMode ? "var(--dark-red)" : "var(--red)")
+        selectedBoard = "custom"
+        $("#hideDustCounter").prop("disabled", true)
+        $("#customBoardModal").show()
+    })
+
     $("#playerOrderModalLink, #orderModalBackButton").on("click", function () {
         $("#orderModal").toggle()
     })
 
     $("#mainMenuLanguageButton, #languageModalBackButton").on("click", function () {
         $("#languageModal").toggle()
+    })
+
+    $(".modal-back-button").on("click", function () {
+        $(".modal-wrapper").hide()
     })
 
     function updateRangeTooltip() {
@@ -393,6 +409,47 @@ $(document).ready(function () {
             }
         }
     }
+
+    //Custom Board
+    $("#addCharacterToCustomBoardButton").on("click", function () {
+        addFieldToSection("Characters")
+    })
+
+    $("#addWeaponToCustomBoardButton").on("click", function () {
+        addFieldToSection("Weapons")
+    })
+
+    $("#addRoomToCustomBoardButton").on("click", function () {
+        addFieldToSection("Rooms")
+    })
+
+    let customBoardSizes = {
+        Characters: 0,
+        Weapons: 0,
+        Rooms: 0
+    }
+
+    function addFieldToSection(container) {
+        const id = "custom" + container + customBoardSizes[container]
+        customBoardSizes[container]++
+
+        const row = $("<tr>").attr("id", id + "Row")
+
+        const numberCell = $("<th>").text(customBoardSizes[container])
+        const input = $("<input>").attr("class", "setup-name").attr("type", "text").attr("name", id).attr("pattern", "[A-Za-z0-9]+").attr("id", id)
+        const deleteButton = $("<button>").attr("class", "small-button board-button material-symbols-outlined").text("delete").attr("id", "delete" + id).on("click", function () {
+            $("#" + id + "Row").remove()
+            customBoardSizes[container]--
+        })
+        const inputCell = $("<td>").html(input)
+        const deleteButtonCell = $("<td>").html(deleteButton)
+
+        row.append(numberCell, inputCell, deleteButtonCell)
+        row.insertBefore($("#add" + container + "ToCustomBoardRow"))
+    }
+
+
+    //Dark mode
 
     if (window.matchMedia('(prefers-color-scheme)').media !== 'not all') {
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {

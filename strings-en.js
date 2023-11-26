@@ -107,7 +107,13 @@ export const stringsEN = {
     instructionsModalTitle: "Instructions",
     skipLoading: "Skip",
     alternateInGameToolbarLabel: "Alternate ingame toolbar",
-    alternateInGameToolbarText: "Move the ingame toolbar to the bottom of the screen."
+    alternateInGameToolbarText: "Move the ingame toolbar to the bottom of the screen.",
+    customizeBoardButton: "Custom board",
+    saveBoardButton: "Save board",
+    customBoardHeaderName: "Board name",
+    customBoardHeaderCharacters: "Suspects",
+    customBoardHeaderWeapons: "Weapons",
+    customBoardHeaderRooms: "Rooms"
 }
 
 export const letsPlayEN = "Let's play!";

@@ -15,7 +15,8 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Rubik:wght@300;400;600&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Bai+Jamjuree:wght@300;400;600&family=Inter:wght@300;400;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -124,6 +125,10 @@
         <div id="setupContent" class="content">
             <span id="boardQuestion" class="setup-text"></span><br>
             <section id="boardButtonContainer"></section>
+            <section id="customizeBoardContainer">
+                <button title="Customize Board button" id="customizeBoardButton"
+                    class="small-button board-button"></button>
+            </section>
             <hr>
             <span id="playerNumQuestion" class="setup-text"></span><br>
             <input title="Number of players" type="range" id="playerNum" min="2" max="6" step="1" value="3"
@@ -142,6 +147,83 @@
         </div>
     </div>
 
+
+
+    <!--  CUSTOM BOARD MODAL  -->
+
+    <div id="customBoardModal" class="modal-wrapper">
+        <div id="customBoardModalContent" class="modal">
+            <section id="modalBackWrapper"><a class="setup-tooltip modal-back-button"
+                    id="customBoardModalBackButton"><span class="material-symbols-outlined">
+                        close
+                    </span></a></section>
+
+            <!--  Customize Board Form  -->
+            <table id="customBoardTable">
+                <thead id="customBoardTableSectionName">
+                    <tr>
+                        <th colspan="3">
+                            <span class="material-symbols-outlined">casino</span>
+                            <span id="customBoardHeaderName" class="custom-board-table-header"></span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <input class="setup-name" type="text" name="customBoardName" pattern="[A-Za-z0-9]+" ,
+                                id="customBoardName" />
+                        </td>
+                    </tr>
+                </thead>
+                <tbody id="customBoardTableSectionCharacters">
+                    <tr>
+                        <th>
+                            <span class="material-symbols-outlined">person</span>
+                            <span id="customBoardHeaderCharacters" class="custom-board-table-header"></span>
+                        </th>
+                    </tr>
+                    <tr id="addCharacterToCustomBoardRow">
+                        <td>
+                            <button id="addCharacterToCustomBoardButton" title="Add suspect"
+                                class="small-button material-symbols-outlined">add_circle</button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody id="customBoardTableSectionWeapons">
+                    <tr>
+                        <th>
+                            <span class="material-symbols-outlined">syringe</span>
+                            <span id="customBoardHeaderWeapons" class="custom-board-table-header"></span>
+                        </th>
+                    </tr>
+                    <tr id="addWeaponToCustomBoardRow">
+                        <td>
+                            <button id="addWeaponToCustomBoardButton" title="Add weapon"
+                                class="small-button material-symbols-outlined">add_circle</button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody id="customBoardTableSectionRooms">
+                    <tr>
+                        <th>
+                            <span class="material-symbols-outlined">house</span>
+                            <span id="customBoardHeaderRooms" class="custom-board-table-header"></span>
+                        </th>
+                    </tr>
+                    <tr id="addRoomToCustomBoardRow">
+                        <td>
+                            <button id="addRoomToCustomBoardButton" title="Add room"
+                                class="small-button material-symbols-outlined">add_circle</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr>
+            <button id="saveBoardButton" class="begin-button" title="Save board"></button>
+
+
+        </div>
+    </div>
 
 
 
