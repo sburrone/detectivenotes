@@ -9,7 +9,7 @@ let _APP = null
 
 let locked = false
 
-$(document).ready(() => {
+$(document).ready(function () {
     'use strict'
 
     const cameraPositions = [
@@ -95,7 +95,7 @@ $(document).ready(() => {
 
             const loadingManager = new THREE.LoadingManager()
 
-            loadingManager.onLoad = () => {
+            loadingManager.onLoad = function () {
                 doneLoading()
             }
 
@@ -235,7 +235,7 @@ $(document).ready(() => {
 
     const languageLabels = ["Switch language", "Cambia lingua"]
     let languageIndex = 0
-    let languageInterval = window.setInterval(() => {
+    let languageInterval = window.setInterval(function () {
         if (languageIndex == languageLabels.length) {
             languageIndex = 0
         }
@@ -263,7 +263,7 @@ $(document).ready(() => {
         let formattedDate = recDate.getFullYear() + "-" + ((recDate.getMonth() + 1) >= 10 ? (recDate.getMonth() + 1) : ("0" + (recDate.getMonth() + 1))) + "-" + (recDate.getDate() >= 10 ? recDate.getDate() : ("0" + recDate.getDate())) + " " + recDate.getHours() + ":" + (recDate.getMinutes() >= 10 ? recDate.getMinutes() : ("0" + recDate.getMinutes()))
         $("#continueButtonSubtitle").html(formattedDate + "<br>" + recBoard.name + "<br>" + recPlayers)
 
-        $("#continueGameButton").on("click", () => {
+        $("#continueGameButton").on("click", function () {
             //Recover data
             selectedBoard = recBoard.id
             players = recPlayers.split(",")
@@ -318,7 +318,7 @@ $(document).ready(() => {
         $("#installButton").hide();
     }
 
-    $("#newGameButton").on("click", () => {
+    $("#newGameButton").on("click", function () {
         $("#mainMenu").css("display", "none")
         clearInterval(languageInterval)
         $("#setup").css("display", "block")
@@ -355,11 +355,11 @@ $(document).ready(() => {
         updateFields()
     })
 
-    $("#playerOrderModalLink, #orderModalBackButton").on("click", () => {
+    $("#playerOrderModalLink, #orderModalBackButton").on("click", function () {
         $("#orderModal").toggle()
     })
 
-    $("#mainMenuLanguageButton, #languageModalBackButton").on("click", () => {
+    $("#mainMenuLanguageButton, #languageModalBackButton").on("click", function () {
         $("#languageModal").toggle()
     })
 
@@ -405,7 +405,7 @@ $(document).ready(() => {
 
     }
 
-    $("#darkModeToggle, #mainMenuDarkModeButton").on("click", () => {
+    $("#darkModeToggle, #mainMenuDarkModeButton").on("click", function () {
         toggleDarkMode(darkMode)
     })
 
@@ -440,29 +440,29 @@ $(document).ready(() => {
         darkMode = !current
     }
 
-    $("#advancedSettingsModalBackButton, #advancedSettingsToggle").on("click", () => {
+    $("#advancedSettingsModalBackButton, #advancedSettingsToggle").on("click", function () {
         $("#advancedSettingsModal").toggle()
     })
 
     //Main menu buttons
-    $("#mainMenuCreditsButton, #creditsModalBackButton").on("click", () => {
+    $("#mainMenuCreditsButton, #creditsModalBackButton").on("click", function () {
         //Open credits modal
         $("#creditsModal").toggle()
     })
 
-    $("#playerNum").on("input", () => {
+    $("#playerNum").on("input", function () {
         updateFields()
     })
 
-    $("#longNamesCompatibilityMode").on("change", () => {
+    $("#longNamesCompatibilityMode").on("change", function () {
         longNamesCompatibilityMode = $(this).is(":checked")
     })
 
-    $("#hideDustCounter").on("change", () => {
+    $("#hideDustCounter").on("change", function () {
         hideDustCounter = $(this).is(":checked")
     })
 
-    $("#alternateInGameToolbar").on("change", () => {
+    $("#alternateInGameToolbar").on("change", function () {
         alternateInGameToolbar = $(this).is(":checked")
     })
 
@@ -473,7 +473,7 @@ $(document).ready(() => {
             swapUpperBar()
         }
         $("#mainGame").css("display", "block")
-        $('#playerNameContainer input').each(() => {
+        $('#playerNameContainer input').each(function () {
             players.push(this.value) // "this" is the current element in the loop
         })
 
@@ -504,19 +504,19 @@ $(document).ready(() => {
         fillTable()
     })
 
-    $("#dustCounterDown, #dustCounterAltDown").on("click", () => {
+    $("#dustCounterDown, #dustCounterAltDown").on("click", function () {
         let old = parseInt($("#dustCounterValue").text())
         $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(old - 1)
         localStorage.setItem("dust", old - 1)
     })
 
-    $("#dustCounterUp, #dustCounterAltDown").on("click", () => {
+    $("#dustCounterUp, #dustCounterAltDown").on("click", function () {
         let old = parseInt($("#dustCounterValue").text())
         $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(old + 1)
         localStorage.setItem("dust", old + 1)
     })
 
-    $("#dustCounterButton, #dustCounterAltButton").on("click", () => {
+    $("#dustCounterButton, #dustCounterAltButton").on("click", function () {
         const cur = $("#dustCounterBox").css("display") == "none"
         $("#dustCounterBox").css("display", cur ? "flex" : "none")
     })
@@ -600,11 +600,11 @@ $(document).ready(() => {
     }
 
     function updateTable() {
-        $(".cell-image-link").find("img").each(() => {
+        $(".cell-image-link").find("img").each(function () {
             let id = localStorage.getItem($(this).data("key"))
             $(this).attr("src", imageData[id]).attr("class", id)
         })
-        $("tr").find(".table-header-checkbox-cell").each(() => {
+        $("tr").find(".table-header-checkbox-cell").each(function () {
             let item = $(this).find("input").data("item")
             let index = itemsArray.indexOf(item)
             if (localStorage.getItem("check" + index)) {
@@ -617,9 +617,9 @@ $(document).ready(() => {
     }
 
     //Only show vertical long names at the top
-    $("body").on("scroll", () => {
+    $(window).on("scroll", function () {
         if (longNamesCompatibilityMode) {
-            if ($("body").scrollTop() == 0) {
+            if (window.scrollY == 0) {
                 $(".sideways").show(300)
             } else {
                 $(".sideways").hide(300)
@@ -636,7 +636,7 @@ $(document).ready(() => {
         cellLink.data("locked", "false")
         cellLink.data("player", number.toString())
         cellLink.data("item", item)
-        cellLink.on("click", () => {
+        cellLink.on("click", function () {
             //Only if data-locked: false
             if ($(this).data("locked") == "false") {
                 //Call selection modal
@@ -663,7 +663,7 @@ $(document).ready(() => {
         checkbox.attr("id", "rowCheckbox")
         checkbox.data("item", item)
         checkbox.attr("class", "table-header-checkbox")
-        checkbox.on("change", () => {
+        checkbox.on("change", function () {
             if ($(this).is(":checked")) {
                 $(this).closest(".table-row").find("td > a").data("locked", "true")
                 $(this).closest(".table-row").addClass("locked")
@@ -695,12 +695,12 @@ $(document).ready(() => {
     }
 
     //Toggle instructions modal
-    $("#showInstructionsModal, #instructionsModalBackButton").on("click", () => {
+    $("#showInstructionsModal, #instructionsModalBackButton").on("click", function () {
         $("#instructionsModal").toggle()
     })
 
     //Change autocomplete button
-    $("#autocompleteButton, #autocompleteButtonAlt").on("click", () => {
+    $("#autocompleteButton, #autocompleteButtonAlt").on("click", function () {
         autocomplete = !autocomplete
         if (autocomplete) {
             $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", "var(--green)")
@@ -710,16 +710,16 @@ $(document).ready(() => {
     })
 
     //Lock cards
-    $("#lockPersonalCards, #lockPersonalCardsAlt").on("click", () => {
+    $("#lockPersonalCards, #lockPersonalCardsAlt").on("click", function () {
         if (!locked) {   //if currently unlocked, locks cards
-            $(".table-header-checkbox").each(() => {
+            $(".table-header-checkbox").each(function () {
                 $(this).attr("disabled", "disabled")
             })
             $("#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel").css("background-color", (darkMode ? "var(--dark-red)" : "var(--red)"))
             $("#lockPersonalCardsLabel, #lockPersonalCardsAltLabel").text("lock")
             locked = true
         } else {        //if currently locked, unlocks cards
-            $(".table-header-checkbox").each(() => {
+            $(".table-header-checkbox").each(function () {
                 $(this).removeAttr("disabled")
             })
             $("#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel").css("background-color", (darkMode ? "var(--light-blue)" : "var(--dark-blue)"))
@@ -729,7 +729,7 @@ $(document).ready(() => {
     })
 
     //Hide extra symbols
-    $("#showLessSymbolsCheckbox").on("change", () => {
+    $("#showLessSymbolsCheckbox").on("change", function () {
         $("#selectionModalExtended").toggle()
     })
 
@@ -743,12 +743,12 @@ $(document).ready(() => {
     }
 
     //Close back modal
-    $("#modalBackButton").on("click", () => {
+    $("#modalBackButton").on("click", function () {
         $("#selectionModal").toggle()
     })
 
     //Select image
-    $(".selection-modal-image").on("click", () => {
+    $(".selection-modal-image").on("click", function () {
         const newID = $(this).attr("id")
 
         $("#selectionModal").toggle()
@@ -779,7 +779,7 @@ $(document).ready(() => {
     //Image 1: Cards given
     const instructionsModalImage1 = ["shelves", "kitchen", "candle", "person", "dinner_dining", "chair"]
     let im1Index = 0
-    let im1Interval = window.setInterval(() => {
+    let im1Interval = window.setInterval(function () {
         if (im1Index == instructionsModalImage1.length) {
             im1Index = 0
         }
@@ -788,7 +788,7 @@ $(document).ready(() => {
     }, 2000)
 
     //Image 2: Check box
-    let im2Interval = window.setInterval(() => {
+    let im2Interval = window.setInterval(function () {
         $("#fakeCheckbox").click()
         $(".fake-table").css("background-color", ($("#fakeCheckbox").prop("checked") ?
             (darkMode ? "var(--dark-red)" : "var(--red)")
@@ -797,7 +797,7 @@ $(document).ready(() => {
 
     //Image 3: Lock cards
     let im3Locked = false
-    let im3Interval = window.setInterval(() => {
+    let im3Interval = window.setInterval(function () {
         im3Locked = !im3Locked
         //Change bg
         $("#fakeLockButton").css("background-color", im3Locked ?
@@ -809,7 +809,7 @@ $(document).ready(() => {
 
     //Image 5: Autocomplete
     let im5On = false
-    let im5Interval = window.setInterval(() => {
+    let im5Interval = window.setInterval(function () {
         im5On = !im5On
         //Change bg
         $("#fakeAutocompleteButton").css("background-color", im5On ?
