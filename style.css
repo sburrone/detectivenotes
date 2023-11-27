@@ -18,6 +18,7 @@ body {
     height: 100%;
     transition: .3s ease-in-out;
     overflow-x: hidden;
+    overflow-y: auto;
 }
 
 html {
@@ -280,7 +281,6 @@ a:hover {
     color: var(--black);
     --dark-color: var(--white);
     --light-color: var(--black);
-    overflow-y: auto;
 }
 
 .invertible {
