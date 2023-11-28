@@ -864,12 +864,11 @@ a {
 
 #instructionsModalImage1,
 #instructionsModalImage2B {
-    border: 6px solid var(--black);
+    border: 6px solid var(--current-black);
     padding: 5px;
     border-radius: 12px;
     vertical-align: middle;
     font-size: 40px;
-    color: var(--current-black) !important;
 }
 
 .fake-table {
