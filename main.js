@@ -478,32 +478,6 @@ $(document).ready(function () {
             document.documentElement.style.setProperty(string, newColor)
         })
         darkMode = !current
-        /*darkModeEnabledElements.forEach(obj => {
-            //{element,prop}
-            obj.element.forEach(element => {
-                //iterate props
-                obj.props.forEach(prop => {
-                    //change each prop
-                    const value = $(element).css("--" + (current ? "light" : "dark") + "-" + prop)
-                    $(element).css(prop, value)
-                })
-            })
-        })
-        //If cards are locked, button should change correctly.
-        if (locked) {
-            $("#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel").css("background-color", (current ? "var(--red)" : "var(--dark-red)"))
-        }
-        //Change autocomplete  button
-        if (autocomplete) {
-            $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", "var(--green)")
-        } else {
-            $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", (current ? "var(--red)" : "var(--dark-red)"))
-        }
-        //Change setup selected board button
-        $(".board-button").css("background-color", (current ? "var(--light-blue)" : "var(--dark-blue)"))
-        if (selectedBoard) {
-            $("#boardButtonContainer").children().eq(selectedBoard).css("background-color", (current ? "var(--red)" : "var(--dark-red)"))
-        }*/
     }
 
     $("#advancedSettingsModalBackButton, #advancedSettingsToggle").on("click", function () {
