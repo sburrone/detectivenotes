@@ -163,27 +163,85 @@ $(document).ready(function () {
 
     //Dark mode
 
-    const darkModeEnabledElements = [{
-        element: ["html", ".content", ".modal-wrapper", ".modal"],
-        props: ["background-color", "color"]
-    }, {
-        element: [".skip", ".setup-image", ".invertible"],
-        props: ["filter"]
-    }, {
-        element: [".locked", ".upperbar", ".dust-counter-box", ".small-button",
-            ".small-button .material-symbols-outlined", ".counterbutton", ".begin-button", ".main-menu-small-button", ".main-table-row>*", ".language-link"],
-        props: ["background-color"]
-    }, {
-        element: ["input[type=\"range\"]"],
-        props: ["accent-color"]
-    }, {
-        element: [".modal a", "#instructionsModalImage1", "#instructionsModalImage2B"],
-        props: ["color"]
-    }, {
-        element: [".setup-tooltip-modal-link"],
-        props: ["color", "text-decoration"]
-    }]
+    const colors = {
+        darkBlue: "#274161",
+        white: "white",
+        lightBlue: "#2CB6E3",
+        lightRed: "#ff9185",
+        darkRed: "#6b2a22",
+        black: "black",
+        green: "#36a655",
+        grey: "#ccc",
+        darkGrey: "rgb(25, 25, 25)",
+        lightGrey: "rgb(230, 230, 230)",
+        lightSemitransparentWhite: "rgba(255, 255, 255, 0.86)",
+        darkSemitransparentWhite: "rgba(0, 0, 0, 0.86)",
+        darkInvertFilter: "invert(1)",
+        lightInvertFilter: "invert(0)"
+    }
 
+    const currentColors = {
+        darkBlue: {
+            current: 'std',
+            std: colors.darkBlue,
+            alt: colors.lightBlue
+        },
+        lightBlue: {
+            current: 'std',
+            std: colors.lightBlue,
+            alt: colors.darkBlue
+        },
+        darkRed: {
+            current: 'std',
+            std: colors.darkRed,
+            alt: colors.lightRed
+        },
+        lightRed: {
+            current: 'std',
+            std: colors.lightRed,
+            alt: colors.darkRed
+        },
+        white: {
+            current: 'std',
+            std: colors.white,
+            alt: colors.black
+        },
+        black: {
+            current: 'std',
+            std: colors.black,
+            alt: colors.white
+        },
+        darkGrey: {
+            current: 'std',
+            std: colors.darkGrey,
+            alt: colors.lightGrey
+        },
+        lightGrey: {
+            current: 'std',
+            std: colors.lightGrey,
+            alt: colors.darkGrey
+        },
+        lightSemitransparentWhite: {
+            current: 'std',
+            std: colors.lightSemitransparentWhite,
+            alt: colors.darkSemitransparentWhite
+        },
+        darkSemitransparentWhite: {
+            current: 'std',
+            std: colors.darkSemitransparentWhite,
+            alt: colors.lightSemitransparentWhite
+        },
+        darkInvertFilter: {
+            current: 'std',
+            std: colors.darkInvertFilter,
+            alt: colors.lightInvertFilter
+        },
+        lightInvertFilter: {
+            current: 'std',
+            std: colors.lightInvertFilter,
+            alt: colors.darkInvertFilter
+        }
+    }
 
     //Language
     let userLang = navigator.language || navigator.userLanguage
@@ -329,14 +387,14 @@ $(document).ready(function () {
         //Populate Setup
         boards.forEach(board => {
             let button = $("<button>").attr("class", "small-button board-button")
-            button.css("background-color", darkMode ? "var(--dark-blue)" : "var(--light-blue)")
+            //button.css("background-color", darkMode ? "var(--dark-blue)" : "var(--light-blue)")
             button.text(board.name)
             button.on("click", function (event) {
                 //Cambio colori
-                $("#boardButtonContainer").find("*").css("background-color", darkMode ? "var(--dark-blue)" : "var(--light-blue)")
+                //$("#boardButtonContainer").find("*").css("background-color", darkMode ? "var(--dark-blue)" : "var(--light-blue)")
                 $("#boardButtonContainer").find("*").data("selected", "false")
                 $(event.target).data("selected", "true")
-                $(event.target).css("background-color", darkMode ? "var(--dark-red)" : "var(--red)")
+                //$(event.target).css("background-color", darkMode ? "var(--dark-red)" : "var(--red)")
 
                 selectedBoard = board.id
                 if (selectedBoard == 5) {
@@ -411,7 +469,16 @@ $(document).ready(function () {
 
     function toggleDarkMode(current) {
         $(".dark-mode-label").text(current ? "dark_mode" : "light_mode")
-        darkModeEnabledElements.forEach(obj => {
+        // !current is new darkMode
+        Object.keys(currentColors).forEach(key => {
+            const colorObject = currentColors[key]
+            colorObject.current = current ? 'std' : 'alt'
+            const string = '--current-' + key
+            const newColor = current ? colorObject.std : colorObject.alt
+            document.documentElement.style.setProperty(string, newColor)
+        })
+        darkMode = !current
+        /*darkModeEnabledElements.forEach(obj => {
             //{element,prop}
             obj.element.forEach(element => {
                 //iterate props
@@ -436,8 +503,7 @@ $(document).ready(function () {
         $(".board-button").css("background-color", (current ? "var(--light-blue)" : "var(--dark-blue)"))
         if (selectedBoard) {
             $("#boardButtonContainer").children().eq(selectedBoard).css("background-color", (current ? "var(--red)" : "var(--dark-red)"))
-        }
-        darkMode = !current
+        }*/
     }
 
     $("#advancedSettingsModalBackButton, #advancedSettingsToggle").on("click", function () {
@@ -533,8 +599,7 @@ $(document).ready(function () {
             } else {
                 cell.text(players[i])
             }
-            let color = $("#tableHeaderPlayers").css("background-color")
-            cell.css("background-color", color)
+            cell.css("background-color", "var(--current-lightGrey")
             $("#tableRowPlayers").append(cell)
         }
 
@@ -667,9 +732,7 @@ $(document).ready(function () {
             if ($(this).is(":checked")) {
                 $(this).closest(".table-row").find("td > a").data("locked", "true")
                 $(this).closest(".table-row").addClass("locked")
-                if (darkMode) {
-                    $(this).closest(".table-row").css("background-color", "var(--dark-red")
-                }
+                $(this).closest(".table-row").css("background-color", "var(--current-lightRed)")
                 //Update symbols
                 toUpdate = $(this)
                 updateWholeRow("cross")
@@ -705,7 +768,7 @@ $(document).ready(function () {
         if (autocomplete) {
             $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", "var(--green)")
         } else {
-            $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", (darkMode ? "var(--dark-red)" : "var(--red)"))
+            $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", "var(--current-lightRed)")
         }
     })
 
@@ -715,14 +778,14 @@ $(document).ready(function () {
             $(".table-header-checkbox").each(function () {
                 $(this).attr("disabled", "disabled")
             })
-            $("#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel").css("background-color", (darkMode ? "var(--dark-red)" : "var(--red)"))
+            $("#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel").css("background-color", "var(--current-lightRed)")
             $("#lockPersonalCardsLabel, #lockPersonalCardsAltLabel").text("lock")
             locked = true
         } else {        //if currently locked, unlocks cards
             $(".table-header-checkbox").each(function () {
                 $(this).removeAttr("disabled")
             })
-            $("#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel").css("background-color", (darkMode ? "var(--light-blue)" : "var(--dark-blue)"))
+            $("#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel").css("background-color", "var(--current-darkBlue)")
             $("#lockPersonalCardsLabel, #lockPersonalCardsAltLabel").text("lock_open_right")
             locked = false
         }
@@ -791,7 +854,7 @@ $(document).ready(function () {
     let im2Interval = window.setInterval(function () {
         $("#fakeCheckbox").click()
         $(".fake-table").css("background-color", ($("#fakeCheckbox").prop("checked") ?
-            (darkMode ? "var(--dark-red)" : "var(--red)")
+            "var(--current-lightRed)"
             : ""))
     }, 2000)
 
@@ -801,8 +864,8 @@ $(document).ready(function () {
         im3Locked = !im3Locked
         //Change bg
         $("#fakeLockButton").css("background-color", im3Locked ?
-            (darkMode ? "var(--dark-red)" : "var(--red)") :
-            (darkMode ? "var(--light-blue)" : "var(--dark-blue)"))
+            "var(--current-lightRed)" :
+            "var(--current-darkBlue)")
         //Change label
         $("#fakeLockButtonLabel").text(im3Locked ? "lock" : "lock_open_right")
     }, 2000)
@@ -813,7 +876,6 @@ $(document).ready(function () {
         im5On = !im5On
         //Change bg
         $("#fakeAutocompleteButton").css("background-color", im5On ?
-            (darkMode ? "var(--dark-red)" : "var(--red)") :
-            "var(--green)")
+            "var(--current-lightRed)" : "var(--green)")
     }, 2000)
 })
