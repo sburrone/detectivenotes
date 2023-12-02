@@ -286,6 +286,94 @@ $(document).ready(function () {
         }
     }
 
+    let game = {
+        /*date: Date.now(),
+        players: [],
+        dustCounter: 0,
+        board: 0,           // -1 sarà il tavolo personalizzato
+        customBoard: {},    // ignoralo se board !== -1
+        table: [
+            {
+                row: "Character 1",     // characters[0] === "Character 1"
+                items: ["reset", "cross"]
+            }
+        ]*/
+    }
+
+    let settings = {
+        longNamesCompatibilityMode: false,
+        alternateInGameToolbar: false,
+        hideDustCounter: false,
+        autocomplete: true
+    }
+
+    function saveGame() {
+        game.date = Date.now()
+        localStorage.setItem("game", JSON.stringify(game))
+    }
+
+    function saveSetting(key, val) {
+        settings[key] = val
+        saveSettings() //Testato!
+    }
+
+    function saveGameSetup(board, players) {
+        game.board = board
+        game.players = players
+        saveGame()
+    }
+
+    function saveItem(row, player, item) {
+        game.table[row].items[player] = item
+        saveGame()
+    }
+
+    function setupTable() {
+        console.log('chiamata a setuptable')
+        game.table = []
+        if (game.board === 5) {
+            game.dustCounter = 12
+        }
+        boards[game.board].characters.forEach(character => {
+            game.table.push({ row: character, locked: false, items: Array(game.players.length).fill('reset') })
+        })
+        boards[game.board].weapons.forEach(weapon => {
+            game.table.push({ row: weapon, locked: false, items: Array(game.players.length).fill('reset') })
+        })
+        boards[game.board].rooms.forEach(room => {
+            game.table.push({ row: room, locked: false, items: Array(game.players.length).fill('reset') })
+        })
+        saveGame()
+    }
+
+    const dustCounterIncrease = function () {
+        if (game.board === 5) {
+            game.dustCounter++
+            saveGame()
+        }
+        return game.dustCounter
+    }
+
+    const dustCounterDecrease = function () {
+        if (game.board === 5) {
+            game.dustCounter--
+            saveGame()
+        }
+        return game.dustCounter
+    }
+
+    function saveSettings() {
+        localStorage.setItem("settings", JSON.stringify(settings)) //Testato!
+    }
+
+    function loadGame() {
+        game = JSON.parse(localStorage.getItem("game"))
+    }
+
+    function loadSettings() {
+        settings = JSON.parse(localStorage.getItem("settings")) //Testato!
+    }
+
     //Detect language, load strings
     let stringKeys = Object.keys(strings)
     stringKeys.forEach((key) => document.getElementById(key).innerHTML = strings[key])
@@ -552,28 +640,35 @@ $(document).ready(function () {
 
     $("#longNamesCompatibilityMode").on("change", function () {
         longNamesCompatibilityMode = $(this).is(":checked")
+        saveSetting("longNamesCompatibilityMode", $(this).is(":checked"))
     })
 
     $("#hideDustCounter").on("change", function () {
         hideDustCounter = $(this).is(":checked")
+        saveSetting("hideDustCounter", $(this).is(":checked"))
     })
 
     $("#alternateInGameToolbar").on("change", function () {
         alternateInGameToolbar = $(this).is(":checked")
+        saveSetting("alternateInGameToolbar", $(this).is(":checked"))
     })
 
     $("#playerNameForm").on("submit", function (event) {
         event.preventDefault()
         $("#setup").css("display", "none")
-        if (alternateInGameToolbar) {
+        if (settings.alternateInGameToolbar || alternateInGameToolbar) {
             swapUpperBar()
         }
         $("#mainGame").css("display", "block")
+        const playerArray = []
         $('#playerNameContainer input').each(function () {
-            players.push(this.value) // "this" is the current element in the loop
+            players.push(this.value)
+            playerArray.push(this.value) // "this" is the current element in the loop
         })
 
         //Save data
+        saveGameSetup(selectedBoard, playerArray)
+        setupTable()
         localStorage.setItem("board", selectedBoard)
         localStorage.setItem("players", players)
         localStorage.setItem("date", new Date())
@@ -602,13 +697,13 @@ $(document).ready(function () {
 
     $("#dustCounterDown, #dustCounterAltDown").on("click", function () {
         let old = parseInt($("#dustCounterValue").text())
-        $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(old - 1)
+        $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(dustCounterDecrease())
         localStorage.setItem("dust", old - 1)
     })
 
     $("#dustCounterUp, #dustCounterAltDown").on("click", function () {
         let old = parseInt($("#dustCounterValue").text())
-        $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(old + 1)
+        $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(dustCounterIncrease())
         localStorage.setItem("dust", old + 1)
     })
 
@@ -832,6 +927,7 @@ $(document).ready(function () {
         let rowName = itemsArray.indexOf(toUpdate.data("item"))
         for (let i = 0; i < players.length; i++) {
             localStorage.setItem(("" + rowName + "," + i), id)
+            saveItem(rowName, i, id)
         }
     }
 
@@ -863,6 +959,7 @@ $(document).ready(function () {
         //Aggiorna LocalData
         let rowName = itemsArray.indexOf(toUpdate.data("item"))
         let columnName = parseInt(toUpdate.data("player"))
+        saveItem(rowName, columnName, newID)
         localStorage.setItem(("" + rowName + "," + columnName), newID)
         localStorage.setItem("date", new Date())
     })
