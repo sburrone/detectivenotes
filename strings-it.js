@@ -117,6 +117,6 @@ export const stringsIT = {
     customBoardHeaderRooms: "Stanze"*/
 }
 
-export const incompatibleTextIT = "È stata trovata una partita salvata con una versione precedente dell'app. Inizia una nuova partita."
+export const incompatibleTextIT = "La partita salvata non è compatibile con questa versione dell'app, non posso continuare la partita."
 
 export const letsPlayIT = "Giochiamo!";

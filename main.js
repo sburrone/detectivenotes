@@ -123,6 +123,7 @@ $(document).ready(function () {
 
             function doneLoading() {
                 $("#loadingScreen").fadeOut(1000)
+                checkIncompatibleSave()
             }
 
             this._RAF()
@@ -429,12 +430,14 @@ $(document).ready(function () {
     loadSettings()
     loadGame()
 
-    if (localStorage.getItem("date")) {
-        //Trovato salvataggio vecchio. Cancella tutto.
-        $("#continueGameButton").toggle()
-        $("#continueGameButton").attr("disabled", "true")
-        $("#beginButtonSubtitle").toggle()
-        $("#beginButtonSubtitle").text(incompatibleText)
+    function checkIncompatibleSave() {
+        if (localStorage.getItem("date")) {
+            //Trovato salvataggio vecchio. Cancella tutto.
+            $("#continueGameButton").attr("disabled", "true")
+            $("#continueGameButton").css("filter", "grayscale(0.75)")
+            $("#continueGameButton").toggle()
+            $("#continueButtonSubtitle").text(incompatibleText)
+        }
     }
 
     if (game.date && !localStorage.getItem("date")) {

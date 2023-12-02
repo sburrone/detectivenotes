@@ -116,6 +116,6 @@ export const stringsEN = {
     customBoardHeaderRooms: "Rooms"*/
 }
 
-export const incompatibleTextEN = "Incompatible save found, start a new game."
+export const incompatibleTextEN = "This saved game is incompatible with this version of the app, cannot resume."
 
 export const letsPlayEN = "Let's play!";
