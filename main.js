@@ -1,8 +1,8 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js'
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js'
 import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/controls/OrbitControls.js'
-import { stringsEN, boardsEN, letsPlayEN } from './strings-en.js'
-import { stringsIT, boardsIT, letsPlayIT } from './strings-it.js'
+import { stringsEN, boardsEN, letsPlayEN, incompatibleTextEN } from './strings-en.js'
+import { stringsIT, boardsIT, letsPlayIT, incompatibleTextIT } from './strings-it.js'
 
 
 let _APP = null
@@ -255,8 +255,7 @@ $(document).ready(function () {
     } else if (forcedLang && forcedLang.toLowerCase() == "en") {
         userLang = "en-US"
     }
-    let strings, boards, letsPlay, longNamesCompatibilityMode = false, hideDustCounter = false, alternateInGameToolbar = false, autocomplete = true
-    let selectedBoard = 0, players = []
+    let strings, boards, letsPlay, incompatibleText
     let itemsArray
     const imageData = {
         "check": "assets/icons/check.svg",
@@ -276,29 +275,33 @@ $(document).ready(function () {
             strings = stringsIT
             boards = boardsIT
             letsPlay = letsPlayIT
+            incompatibleText = incompatibleTextIT
             break
         }
         default: {
             strings = stringsEN
             boards = boardsEN
             letsPlay = letsPlayEN
+            incompatibleText = incompatibleTextEN
             break
         }
     }
 
-    let game = {
-        /*date: Date.now(),
+    let game = {}
+
+    /*date: Date.now(),
         players: [],
         dustCounter: 0,
         board: 0,           // -1 sarà il tavolo personalizzato
         customBoard: {},    // ignoralo se board !== -1
+        locked: false,
         table: [
             {
                 row: "Character 1",     // characters[0] === "Character 1"
+                locked: false,
                 items: ["reset", "cross"]
             }
         ]*/
-    }
 
     let settings = {
         longNamesCompatibilityMode: false,
@@ -320,29 +323,47 @@ $(document).ready(function () {
     function saveGameSetup(board, players) {
         game.board = board
         game.players = players
+        game.locked = false
         saveGame()
     }
 
     function saveItem(row, player, item) {
-        game.table[row].items[player] = item
+        console.log('called si', row, player)
+        getFilteredTable()[row].items[player] = item
+        saveGame()
+    }
+
+    function toggleLockRow(row, force) {
+        getFilteredTable()[row].locked = force || !getFilteredTable()[row].locked
         saveGame()
     }
 
     function setupTable() {
-        console.log('chiamata a setuptable')
         game.table = []
         if (game.board === 5) {
             game.dustCounter = 12
         }
+        game.table.push({ divider: true, name: 'Characters' })
         boards[game.board].characters.forEach(character => {
-            game.table.push({ row: character, locked: false, items: Array(game.players.length).fill('reset') })
+            game.table.push({ row: character, section: 'Characters', locked: false, items: Array(game.players.length).fill('reset') })
         })
+        game.table.push({ divider: true, name: 'Weapons' })
         boards[game.board].weapons.forEach(weapon => {
-            game.table.push({ row: weapon, locked: false, items: Array(game.players.length).fill('reset') })
+            game.table.push({ row: weapon, section: 'Weapons', locked: false, items: Array(game.players.length).fill('reset') })
         })
+        game.table.push({ divider: true, name: 'Rooms' })
         boards[game.board].rooms.forEach(room => {
-            game.table.push({ row: room, locked: false, items: Array(game.players.length).fill('reset') })
+            game.table.push({ row: room, section: 'Rooms', locked: false, items: Array(game.players.length).fill('reset') })
         })
+        saveGame()
+    }
+
+    const getFilteredTable = function () {
+        return game.table.filter(el => !el.divider)
+    }
+
+    function toggleLockGlobal(force) {
+        game.locked = force || !game.locked
         saveGame()
     }
 
@@ -367,11 +388,16 @@ $(document).ready(function () {
     }
 
     function loadGame() {
-        game = JSON.parse(localStorage.getItem("game"))
+        game = JSON.parse(localStorage.getItem("game")) || {}
     }
 
     function loadSettings() {
-        settings = JSON.parse(localStorage.getItem("settings")) //Testato!
+        settings = JSON.parse(localStorage.getItem("settings")) || {
+            longNamesCompatibilityMode: false,
+            alternateInGameToolbar: false,
+            hideDustCounter: false,
+            autocomplete: true
+        }
     }
 
     //Detect language, load strings
@@ -392,7 +418,7 @@ $(document).ready(function () {
     function swapUpperBar() {
         $("#mainGameUB").hide()
         $("#alternateToolbar").show()
-        if (selectedBoard == 5 && !hideDustCounter) {
+        if (game.board === 5 && !settings.hideDustCounter) {
             $("#dustCounterBox").detach().insertBefore("#alternateToolbar")
             $("#dustCounterBox").css("position", "sticky")
             $("#dustCounterBox").css("bottom", "68px")
@@ -400,37 +426,40 @@ $(document).ready(function () {
         $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", "var(--green)")
     }
 
-    if (localStorage.getItem("date") != undefined) {
+    loadSettings()
+    loadGame()
+
+    if (localStorage.getItem("date")) {
+        //Trovato salvataggio vecchio. Cancella tutto.
+        $("#continueGameButton").toggle()
+        $("#continueGameButton").attr("disabled", "true")
+        $("#beginButtonSubtitle").toggle()
+        $("#beginButtonSubtitle").text(incompatibleText)
+    }
+
+    if (game.date && !localStorage.getItem("date")) {
         $("#continueGameButton").toggle()
         $("#beginButtonSubtitle").toggle()
-        let recPlayers = localStorage.getItem("players").replaceAll(',', ', ')
-        let recBoard = boards[parseInt(localStorage.getItem("board"))]
-        let recDate = new Date(localStorage.getItem("date"))
-        let formattedDate = recDate.getFullYear() + "-" + ((recDate.getMonth() + 1) >= 10 ? (recDate.getMonth() + 1) : ("0" + (recDate.getMonth() + 1))) + "-" + (recDate.getDate() >= 10 ? recDate.getDate() : ("0" + recDate.getDate())) + " " + recDate.getHours() + ":" + (recDate.getMinutes() >= 10 ? recDate.getMinutes() : ("0" + recDate.getMinutes()))
-        $("#continueButtonSubtitle").html(formattedDate + "<br>" + recBoard.name + "<br>" + recPlayers)
+        let formattedPlayers = game.players.toString().replaceAll(',', ', ')
+        let rawDate = new Date(game.date)
+        let formattedDate = rawDate.getFullYear() + "-" + ((rawDate.getMonth() + 1) >= 10 ? (rawDate.getMonth() + 1) : ("0" + (rawDate.getMonth() + 1))) + "-" + (rawDate.getDate() >= 10 ? rawDate.getDate() : ("0" + rawDate.getDate())) + " " + rawDate.getHours() + ":" + (rawDate.getMinutes() >= 10 ? rawDate.getMinutes() : ("0" + rawDate.getMinutes()))
+        $("#continueButtonSubtitle").html(formattedDate + "<br>" + boards[game.board].name + "<br>" + formattedPlayers)
 
         $("#continueGameButton").on("click", function () {
-            //Recover data
-            selectedBoard = recBoard.id
-            players = recPlayers.split(",")
-            itemsArray = boards[selectedBoard]["characters"].concat(boards[selectedBoard]["weapons"]).concat(boards[selectedBoard]["rooms"])
-            localStorage.setItem("date", new Date())
-            longNamesCompatibilityMode = localStorage.getItem("longNamesCompatibilityMode") == "true"
-
+            //Valorizza itemsArray
+            itemsArray = boards[game.board]["characters"].concat(boards[game.board]["weapons"]).concat(boards[game.board]["rooms"])
             //Fill
             $("#mainMenu").css("display", "none")
             clearInterval(languageInterval)
-            alternateInGameToolbar = localStorage.getItem("alternateInGameToolbar") == "true"
-            if (alternateInGameToolbar) {
+            if (settings.alternateInGameToolbar) {
                 swapUpperBar()
             }
             $("#mainGame").css("display", "block")
             fillTable()
             updateTable()
-            if (selectedBoard == 5) {
-                hideDustCounter = localStorage.getItem("hideDustCounter") == "true"
-                $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(localStorage.getItem("dust"))
-                if (!hideDustCounter) {
+            if (game.board === 5) {
+                $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(game.dustCounter)
+                if (!settings.hideDustCounter) {
                     $(".dust-counter-box").css("display", "flex")
                     $("#instructionsModalSection6").show()
                 } else {
@@ -438,12 +467,16 @@ $(document).ready(function () {
                     $("#instructionsModalSection6").hide()
                 }
             }
-            if (selectedBoard != 5 || hideDustCounter) {
+            if (game.board !== 5 || settings.hideDustCounter) {
                 $(".dust-counter-button").hide()
                 $("#instructionsModalSection6").hide()
             }
         })
     }
+
+    $(".debugButton").on("click", function () {
+        console.log(game, settings)
+    })
 
     //Install button (don't show if already in PWA)
     if (!(params.source == "pwa" || window.matchMedia('(display-mode: standalone)').matches)) {
@@ -468,28 +501,28 @@ $(document).ready(function () {
         $("#mainMenu").css("display", "none")
         clearInterval(languageInterval)
         $("#setup").css("display", "block")
-        selectedBoard = 0
-        itemsArray = boards[selectedBoard]["characters"].concat(boards[selectedBoard]["weapons"]).concat(boards[selectedBoard]["rooms"])
-        localStorage.clear()
+        game.board = 0
+        itemsArray = boards[game.board]["characters"].concat(boards[game.board]["weapons"]).concat(boards[game.board]["rooms"])
+        localStorage.removeItem("game")
 
         //Populate Setup
         boards.forEach(board => {
             let button = $("<button>").attr("class", "small-button board-button")
-            //button.css("background-color", darkMode ? "var(--dark-blue)" : "var(--light-blue)")
+            button.css("background-color", "var(--current-lightBlue)")
             button.text(board.name)
             button.on("click", function (event) {
                 //Cambio colori
-                //$("#boardButtonContainer").find("*").css("background-color", darkMode ? "var(--dark-blue)" : "var(--light-blue)")
+                $("#boardButtonContainer").find("*").css("background-color", "var(--current-lightBlue)")
                 $("#boardButtonContainer").find("*").data("selected", "false")
                 $(event.target).data("selected", "true")
-                //$(event.target).css("background-color", darkMode ? "var(--dark-red)" : "var(--red)")
+                $(event.target).css("background-color", "var(--current-lightRed)")
 
-                selectedBoard = board.id
-                if (selectedBoard == 5) {
+                game.board = board.id
+                if (game.board == 5) {
                     $("#hideDustCounterText, #hideDustCounterDisabled").toggle()
                 }
-                $("#hideDustCounter").prop("disabled", (selectedBoard != 5))
-                itemsArray = boards[selectedBoard]["characters"].concat(boards[selectedBoard]["weapons"]).concat(boards[selectedBoard]["rooms"])
+                $("#hideDustCounter").prop("disabled", (game.board != 5))
+                itemsArray = boards[game.board]["characters"].concat(boards[game.board]["weapons"]).concat(boards[game.board]["rooms"])
                 $("#playerNum").attr("min", board.minPlayers)
                 $("#playerNum").val(3)
                 updateRangeTooltip()
@@ -639,37 +672,33 @@ $(document).ready(function () {
     })
 
     $("#longNamesCompatibilityMode").on("change", function () {
-        longNamesCompatibilityMode = $(this).is(":checked")
         saveSetting("longNamesCompatibilityMode", $(this).is(":checked"))
     })
 
     $("#hideDustCounter").on("change", function () {
-        hideDustCounter = $(this).is(":checked")
         saveSetting("hideDustCounter", $(this).is(":checked"))
     })
 
     $("#alternateInGameToolbar").on("change", function () {
-        alternateInGameToolbar = $(this).is(":checked")
         saveSetting("alternateInGameToolbar", $(this).is(":checked"))
     })
 
     $("#playerNameForm").on("submit", function (event) {
         event.preventDefault()
         $("#setup").css("display", "none")
-        if (settings.alternateInGameToolbar || alternateInGameToolbar) {
+        if (settings.alternateInGameToolbar) {
             swapUpperBar()
         }
         $("#mainGame").css("display", "block")
         const playerArray = []
         $('#playerNameContainer input').each(function () {
-            players.push(this.value)
             playerArray.push(this.value) // "this" is the current element in the loop
         })
 
         //Save data
-        saveGameSetup(selectedBoard, playerArray)
+        saveGameSetup(game.board, playerArray)
         setupTable()
-        localStorage.setItem("board", selectedBoard)
+        /*localStorage.setItem("board", selectedBoard)
         localStorage.setItem("players", players)
         localStorage.setItem("date", new Date())
         localStorage.setItem("longNamesCompatibilityMode", longNamesCompatibilityMode)
@@ -691,20 +720,23 @@ $(document).ready(function () {
             $(".dust-counter-button").hide()
             $("#instructionsModalSection6").hide()
         }
-        localStorage.setItem("alternateInGameToolbar", alternateInGameToolbar)
+        localStorage.setItem("alternateInGameToolbar", alternateInGameToolbar)*/
+        if (game.board === 5 && !settings.hideDustCounter) {
+            $(".dust-counter-box").css("display", "flex")
+            $("#instructionsModalSection6").show()
+        } else {
+            $(".dust-counter-button").hide()
+            $("#instructionsModalSection6").hide()
+        }
         fillTable()
     })
 
     $("#dustCounterDown, #dustCounterAltDown").on("click", function () {
-        let old = parseInt($("#dustCounterValue").text())
         $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(dustCounterDecrease())
-        localStorage.setItem("dust", old - 1)
     })
 
     $("#dustCounterUp, #dustCounterAltDown").on("click", function () {
-        let old = parseInt($("#dustCounterValue").text())
         $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(dustCounterIncrease())
-        localStorage.setItem("dust", old + 1)
     })
 
     $("#dustCounterButton, #dustCounterAltButton").on("click", function () {
@@ -714,10 +746,10 @@ $(document).ready(function () {
 
     function fillTable() {
         //TABLE SECTION PLAYERS
-        for (let i = 0; i < players.length; i++) {
+        /*for (let i = 0; i < game.players.length; i++) {
             let cell = $("<th>").attr("class", "name-holder")
             cell.attr("scope", "col")
-            if (longNamesCompatibilityMode) {
+            if (settings.longNamesCompatibilityMode) {
                 const sideways = $("<span>").addClass("sideways").text(players[i])
                 const initial = $("<span>").text(players[i].trim().charAt(0))
                 cell.append(sideways, $("<br>"), initial)
@@ -726,10 +758,48 @@ $(document).ready(function () {
             }
             cell.css("background-color", "var(--current-lightGrey")
             $("#tableRowPlayers").append(cell)
-        }
+        }*/
+        game.players.forEach(player => {
+            let cell = $("<th>").attr("class", "name-holder")
+            cell.attr("scope", "col")
+            if (settings.longNamesCompatibilityMode) {
+                const sideways = $("<span>").addClass("sideways").text(player)
+                const initial = $("<span>").text(player.trim().charAt(0))
+                cell.append(sideways, $("<br>"), initial)
+            } else {
+                cell.text(player)
+            }
+            cell.css("background-color", "var(--current-lightGrey")
+            $("#tableRowPlayers").append(cell)
+        })
 
-        //TABLE SECTION CHARACTERS
-        const characterArray = boards[selectedBoard]["characters"]
+        game.table.forEach((item, itemIndex) => {
+            /*
+                item (divider) = {divider: true, name: ''}
+                item = {row, section, locked, items}
+            */
+            if (item.divider) {
+                $("#tableHeader" + item.name).attr("colspan", game.players.length + 2)
+            } else {
+                let currentRow = $("<tr>").attr("class", "table-row")
+
+                currentRow.append(getCheckboxCell(item.row))
+
+                let header = $("<td>").attr("class", "table-header")
+                header.attr("scope", "row")
+                header.text(item.row)
+                currentRow.append(header)
+
+                game.players.forEach((player, index) => {
+                    currentRow.append(getCellLink(index, item.row))
+                })
+
+                $("#tableSection" + item.section).append(currentRow)
+            }
+        })
+
+        /*/TABLE SECTION CHARACTERS
+        const characterArray = boards[game.board]["characters"]
         $("#tableHeaderCharacters").attr("colspan", players.length + 2)
 
         for (let c = 0; c < characterArray.length; c++) {
@@ -749,7 +819,7 @@ $(document).ready(function () {
         }
 
         //TABLE SECTION WEAPONS
-        const weaponArray = boards[selectedBoard]["weapons"]
+        const weaponArray = boards[game.board]["weapons"]
         $("#tableHeaderWeapons").attr("colspan", players.length + 2)
 
         for (let w = 0; w < weaponArray.length; w++) {
@@ -769,7 +839,7 @@ $(document).ready(function () {
         }
 
         //TABLE SECTION ROOMS
-        const roomArray = boards[selectedBoard]["rooms"]
+        const roomArray = boards[game.board]["rooms"]
         $("#tableHeaderRooms").attr("colspan", players.length + 2)
 
         for (let r = 0; r < roomArray.length; r++) {
@@ -786,29 +856,34 @@ $(document).ready(function () {
                 currentRow.append(getCellLink(i, roomArray[r]))
             }
             $("#tableSectionRooms").append(currentRow)
-        }
+        }*/
+        saveGame()
     }
 
     function updateTable() {
+        let table = getFilteredTable()
+        //controlla se la casella è spuntata
         $(".cell-image-link").find("img").each(function () {
-            let id = localStorage.getItem($(this).data("key"))
-            $(this).attr("src", imageData[id]).attr("class", id)
+            let id = $(this).data("key").split(',') // id: i,j è itemsArray[i] players[j]
+            let icon = table[id[0]].items[id[1]]
+            $(this).attr("src", imageData[icon]).attr("class", icon)
         })
+        //controlla se la riga è spuntata
         $("tr").find(".table-header-checkbox-cell").each(function () {
             let item = $(this).find("input").data("item")
             let index = itemsArray.indexOf(item)
-            if (localStorage.getItem("check" + index)) {
+            if (table[index].locked) {
                 $(this).find("input").prop("checked", true)
                 $(this).closest(".table-row").find("td > a").data("locked", "true")
                 $(this).closest(".table-row").addClass("locked")
-                toggleDarkMode(!darkMode)
+                //toggleDarkMode(!darkMode)
             }
         })
     }
 
     //Only show vertical long names at the top
     $(window).on("scroll", function () {
-        if (longNamesCompatibilityMode) {
+        if (settings.longNamesCompatibilityMode) {
             if (window.scrollY == 0) {
                 $(".sideways").show(300)
             } else {
@@ -854,6 +929,7 @@ $(document).ready(function () {
         checkbox.data("item", item)
         checkbox.attr("class", "table-header-checkbox")
         checkbox.on("change", function () {
+            toggleLockRow(itemsArray.indexOf(item), $(this).is(":checked"))
             if ($(this).is(":checked")) {
                 $(this).closest(".table-row").find("td > a").data("locked", "true")
                 $(this).closest(".table-row").addClass("locked")
@@ -861,8 +937,6 @@ $(document).ready(function () {
                 //Update symbols
                 toUpdate = $(this)
                 updateWholeRow("cross")
-                //Save checked status in LocalData
-                localStorage.setItem("check" + itemsArray.indexOf(item), true)
 
             } else {
                 $(this).closest(".table-row").find("td > a").data("locked", "false")
@@ -871,7 +945,6 @@ $(document).ready(function () {
                 //Update symbols
                 toUpdate = $(this)
                 updateWholeRow("reset")
-                localStorage.removeItem("check" + itemsArray.indexOf(item))
             }
         })
 
@@ -889,8 +962,8 @@ $(document).ready(function () {
 
     //Change autocomplete button
     $("#autocompleteButton, #autocompleteButtonAlt").on("click", function () {
-        autocomplete = !autocomplete
-        if (autocomplete) {
+        saveSetting("autocomplete", !settings.autocomplete)
+        if (settings.autocomplete) {
             $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", "var(--green)")
         } else {
             $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", "var(--current-lightRed)")
@@ -899,21 +972,20 @@ $(document).ready(function () {
 
     //Lock cards
     $("#lockPersonalCards, #lockPersonalCardsAlt").on("click", function () {
-        if (!locked) {   //if currently unlocked, locks cards
+        if (!game.locked) {   //if currently unlocked, locks cards
             $(".table-header-checkbox").each(function () {
                 $(this).attr("disabled", "disabled")
             })
             $("#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel").css("background-color", "var(--current-lightRed)")
             $("#lockPersonalCardsLabel, #lockPersonalCardsAltLabel").text("lock")
-            locked = true
         } else {        //if currently locked, unlocks cards
             $(".table-header-checkbox").each(function () {
                 $(this).removeAttr("disabled")
             })
             $("#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel").css("background-color", "var(--current-darkBlue)")
             $("#lockPersonalCardsLabel, #lockPersonalCardsAltLabel").text("lock_open_right")
-            locked = false
         }
+        toggleLockGlobal()
     })
 
     //Hide extra symbols
@@ -925,10 +997,9 @@ $(document).ready(function () {
     function updateWholeRow(id) {
         toUpdate.closest(".table-row").find("img").attr("src", imageData[id]).attr("class", id)
         let rowName = itemsArray.indexOf(toUpdate.data("item"))
-        for (let i = 0; i < players.length; i++) {
-            localStorage.setItem(("" + rowName + "," + i), id)
+        game.players.forEach((player, i) => {
             saveItem(rowName, i, id)
-        }
+        })
     }
 
     //Close back modal
@@ -943,9 +1014,9 @@ $(document).ready(function () {
         $("#selectionModal").toggle()
 
         //Se spunto e autocompl. ON, metti croci sulla riga
-        if (newID == "check" && autocomplete) {
+        if (newID == "check" && settings.autocomplete) {
             updateWholeRow("cross")
-        } else if (oldID == "check" && newID != "check" && autocomplete) {
+        } else if (oldID == "check" && newID != "check" && settings.autocomplete) {
             //Se tolgo spunta, metti reset
             updateWholeRow("reset")
         }
@@ -960,8 +1031,6 @@ $(document).ready(function () {
         let rowName = itemsArray.indexOf(toUpdate.data("item"))
         let columnName = parseInt(toUpdate.data("player"))
         saveItem(rowName, columnName, newID)
-        localStorage.setItem(("" + rowName + "," + columnName), newID)
-        localStorage.setItem("date", new Date())
     })
 
     //INSTRUCTIONS MODAL IMAGE

@@ -108,7 +108,7 @@ export const stringsIT = {
     instructionsModalTitle: "Istruzioni",
     skipLoading: "Salta",
     alternateInGameToolbarLabel: "Menu di gioco alternativo",
-    alternateInGameToolbarText: "Sposta il menu di gioco in fondo allo schermo.",
+    alternateInGameToolbarText: "Sposta il menu di gioco in fondo allo schermo."
     /*customizeBoardButton: "Tavolo personalizzato",
     saveBoardButton: "Salva tavolo",
     customBoardHeaderName: "Nome tavolo",
@@ -116,5 +116,7 @@ export const stringsIT = {
     customBoardHeaderWeapons: "Armi",
     customBoardHeaderRooms: "Stanze"*/
 }
+
+export const incompatibleTextIT = "È stata trovata una partita salvata con una versione precedente dell'app. Inizia una nuova partita."
 
 export const letsPlayIT = "Giochiamo!";
