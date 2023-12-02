@@ -108,12 +108,12 @@ export const stringsEN = {
     skipLoading: "Skip",
     alternateInGameToolbarLabel: "Alternate ingame toolbar",
     alternateInGameToolbarText: "Move the ingame toolbar to the bottom of the screen.",
-    customizeBoardButton: "Custom board",
+    /*customizeBoardButton: "Custom board",
     saveBoardButton: "Save board",
     customBoardHeaderName: "Board name",
     customBoardHeaderCharacters: "Suspects",
     customBoardHeaderWeapons: "Weapons",
-    customBoardHeaderRooms: "Rooms"
+    customBoardHeaderRooms: "Rooms"*/
 }
 
 export const letsPlayEN = "Let's play!";

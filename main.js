@@ -413,7 +413,7 @@ $(document).ready(function () {
         updateFields()
     })
 
-    $("#customizeBoardButton").on("click", function (event) {
+    /*$("#customizeBoardButton").on("click", function (event) {
         //Cambio colori
         $("#customizeBoardContainer, #boardButtonContainer").find("*").css("background-color", darkMode ? "var(--dark-blue)" : "var(--light-blue)")
         $("#customizeBoardContainer, #boardButtonContainer").find("*").data("selected", "false")
@@ -422,7 +422,7 @@ $(document).ready(function () {
         selectedBoard = "custom"
         $("#hideDustCounter").prop("disabled", true)
         $("#customBoardModal").show()
-    })
+    })*/
 
     $("#playerOrderModalLink, #orderModalBackButton").on("click", function () {
         $("#orderModal").toggle()
@@ -468,7 +468,7 @@ $(document).ready(function () {
     }
 
     //Custom Board
-    $("#addCharacterToCustomBoardButton").on("click", function () {
+    /*$("#addCharacterToCustomBoardButton").on("click", function () {
         addFieldToSection("Characters")
     })
 
@@ -503,7 +503,7 @@ $(document).ready(function () {
 
         row.append(numberCell, inputCell, deleteButtonCell)
         row.insertBefore($("#add" + container + "ToCustomBoardRow"))
-    }
+    }*/
 
 
     //Dark mode
