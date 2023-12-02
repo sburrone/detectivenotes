@@ -1,14 +1,33 @@
 :root {
     --dark-blue: #274161;
+    --light-white: white;
+    --dark-white: black;
     --white: white;
     --light-blue: #2CB6E3;
-    --red: #ff9185;
+    --light-red: #ff9185;
     --dark-red: #6b2a22;
     --black: black;
     --green: #36a655;
     --grey: #ccc;
     --dark-grey: rgb(25, 25, 25);
     --light-grey: rgb(230, 230, 230);
+    --light-semitransparent-white: rgba(255, 255, 255, 0.86);
+    --dark-semitransparent-white: rgba(0, 0, 0, 0.86);
+
+
+    --current-lightBlue: var(--light-blue);
+    --current-darkBlue: var(--dark-blue);
+    --current-lightRed: var(--light-red);
+    --current-darkRed: var(--dark-red);
+    --current-lightGrey: var(--light-grey);
+    --current-darkGrey: var(--dark-grey);
+    --current-white: var(--white);
+    --current-black: var(--black);
+    --current-lightSemitransparentWhite: var(--light-semitransparent-white);
+
+    --dark-invert-filter: invert(1);
+    --light-invert-filter: invert(0);
+    --current-lightInvertFilter: var(--light-invert-filter);
 }
 
 html,
@@ -18,16 +37,13 @@ body {
     height: 100%;
     transition: .3s ease-in-out;
     overflow-x: hidden;
+    overflow-y: auto;
 }
 
 html {
     transition: .3s ease-in-out;
-    background-color: var(--white);
-    --dark-background-color: var(--black);
-    --light-background-color: var(--white);
-    color: var(--black);
-    --dark-color: var(--white);
-    --light-color: var(--black);
+    background-color: var(--current-white);
+    color: var(--current-black);
 }
 
 #model {
@@ -217,9 +233,7 @@ a:hover {
     align-items: center;
     justify-content: center;
     color: var(--white);
-    background-color: var(--red);
-    --dark-background-color: var(--dark-red);
-    --light-background-color: var(--red);
+    background-color: var(--current-lightRed);
     text-decoration: none;
     padding: 20px 30px;
     margin-top: 10px;
@@ -244,9 +258,7 @@ a:hover {
 
 .upperbar {
     transition: .3s ease-in-out;
-    background-color: var(--light-blue);
-    --light-background-color: var(--light-blue);
-    --dark-background-color: var(--dark-blue);
+    background-color: var(--current-lightBlue);
     color: var(--white);
     display: flex;
     align-items: center;
@@ -274,19 +286,12 @@ a:hover {
     padding-bottom: 100px;
     z-index: 1;
     text-align: center;
-    background-color: var(--white);
-    --dark-background-color: var(--black);
-    --light-background-color: var(--white);
-    color: var(--black);
-    --dark-color: var(--white);
-    --light-color: var(--black);
-    overflow-y: auto;
+    background-color: var(--current-white);
+    color: var(--current-black);
 }
 
 .invertible {
-    filter: invert(0);
-    --dark-filter: invert(1);
-    --light-filter: invert(0);
+    filter: var(--current-lightInvertFilter);
 }
 
 #mainMenuLanguageButton {
@@ -305,9 +310,7 @@ a:hover {
 .small-button {
     transition: .3s ease-in-out;
     color: var(--white);
-    background-color: var(--dark-blue);
-    --dark-background-color: var(--light-blue);
-    --light-background-color: var(--dark-blue);
+    background-color: var(--current-darkBlue);
     text-decoration: none;
     text-align: center;
     font-size: 24px;
@@ -330,9 +333,7 @@ a:hover {
 
 .main-menu-small-button {
     transition: .3s ease-in-out;
-    background-color: var(--light-blue);
-    --dark-background-color: var(--dark-blue);
-    --light-background-color: var(--light-blue);
+    background-color: var(--current-lightBlue);
     color: var(--white);
     padding: 8px;
     margin: 4px;
@@ -385,9 +386,7 @@ button {
     width: 90%;
     max-width: 600px;
     height: auto;
-    filter: invert(0);
-    --dark-filter: invert(1);
-    --light-filter: invert(0);
+    filter: var(--current-lightInvertFilter);
 }
 
 .advanced-settings-title {
@@ -421,12 +420,8 @@ button {
 .setup-tooltip-modal-link {
     transition: .3s ease-in-out;
     font-size: 18px;
-    color: var(--dark-blue);
-    --light-color: var(--dark-blue);
-    --dark-color: var(--light-blue);
-    text-decoration: underline var(--light-blue);
-    --dark-text-decoration: underline var(--dark-blue);
-    --light-text-decoration: underline var(--light-blue);
+    color: var(--current-darkBlue);
+    text-decoration: underline var(--current-lightBlue);
     white-space: nowrap;
 }
 
@@ -449,19 +444,13 @@ button {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(255, 255, 255, 0.86);
-    --dark-background-color: rgba(0, 0, 0, 0.86);
-    --light-background-color: rgba(255, 255, 255, 0.86);
-    color: var(--black);
-    --dark-color: var(--white);
-    --light-color: var(--black);
+    background-color: var(--current-lightSemitransparentWhite);
+    color: var(--current-black);
 }
 
 .modal a {
     transition: .3s ease-in-out;
-    color: var(--black);
-    --light-color: var(--black);
-    --dark-color: var(--white);
+    color: var(--current-black);
     text-decoration: none;
 }
 
@@ -477,9 +466,7 @@ button {
 
 .modal {
     transition: .3s ease-in-out;
-    background-color: rgba(255, 255, 255, 0.86);
-    --dark-background-color: rgba(0, 0, 0, 0.86);
-    --light-background-color: rgba(255, 255, 255, 0.86);
+    background-color: var(--current-lightSemitransparentWhite);
     margin: auto;
     padding: 20px;
     border: 1px solid var(--grey);
@@ -511,9 +498,7 @@ button {
 
 .language-link {
     transition: .3s ease-in-out;
-    --dark-background-color: var(--dark-blue);
-    --light-background-color: var(--light-blue);
-    background-color: var(--light-blue);
+    background-color: var(--current-lightBlue);
     color: var(--white) !important;
     padding: 10px 80px;
     border-radius: 5000px;
@@ -594,9 +579,7 @@ button {
 
 .dust-counter-box {
     transition: .3s ease-in-out;
-    background-color: var(--dark-blue);
-    --light-background-color: var(--dark-blue);
-    --dark-background-color: var(--light-blue);
+    background-color: var(--current-darkBlue);
     color: var(--white);
     flex-direction: row;
     align-items: center;
@@ -614,9 +597,7 @@ button {
 .counterbutton {
     transition: .3s ease-in-out;
     color: white;
-    background-color: var(--light-blue);
-    --dark-background-color: var(--dark-blue);
-    --light-background-color: var(--light-blue);
+    background-color: var(--current-lightBlue);
     text-decoration: none;
     text-align: center;
     padding: 8px;
@@ -656,9 +637,7 @@ table {
 
 .main-table-row>* {
     transition: .3s ease-in-out;
-    background-color: var(--light-grey);
-    --dark-background-color: var(--dark-grey);
-    --light-background-color: var(--light-grey);
+    background-color: var(--current-lightGrey);
 }
 
 .table-header {
@@ -786,16 +765,12 @@ input:checked+.slider:before {
 
 input[type="range"] {
     transition: .3s ease-in-out;
-    accent-color: var(--dark-blue);
-    --light-accent-color: var(--dark-blue);
-    --dark-accent-color: var(--light-blue);
+    accent-color: var(--current-darkBlue);
 }
 
 .locked {
     transition: .3s ease-in-out;
-    background-color: var(--red);
-    --dark-background-color: var(--dark-red);
-    --light-background-color: var(--red);
+    background-color: var(--current-lightRed);
 }
 
 button,
@@ -822,9 +797,7 @@ a {
 }
 
 .checkbox-wrapper-31 .background {
-    fill: var(--light-grey);
-    --dark-fill: var(--dark-grey);
-    --light-fill: var(--light-grey);
+    fill: var(--current-lightGrey);
     transition: ease all 0.6s;
 }
 
@@ -895,14 +868,11 @@ a {
 
 #instructionsModalImage1,
 #instructionsModalImage2B {
-    border: 6px solid var(--black);
+    border: 6px solid var(--current-black);
     padding: 5px;
     border-radius: 12px;
     vertical-align: middle;
     font-size: 40px;
-    color: var(--black) !important;
-    --dark-color: var(--white) !important;
-    --light-color: var(--black) !important;
 }
 
 .fake-table {
@@ -982,9 +952,7 @@ a {
 }
 
 .selected {
-    background-color: var(--red) !important;
-    --dark-background-color: var(--dark-red) !important;
-    --light-dark-background-color: var(--red) !important;
+    background-color: var(--current-lightRed) !important;
 }
 
 #setupContent {
