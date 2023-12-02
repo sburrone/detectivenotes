@@ -329,7 +329,6 @@ $(document).ready(function () {
     }
 
     function saveItem(row, player, item) {
-        console.log('called si', row, player)
         getFilteredTable()[row].items[player] = item
         saveGame()
     }
