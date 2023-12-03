@@ -108,13 +108,13 @@ export const stringsIT = {
     instructionsModalTitle: "Istruzioni",
     skipLoading: "Salta",
     alternateInGameToolbarLabel: "Menu di gioco alternativo",
-    alternateInGameToolbarText: "Sposta il menu di gioco in fondo allo schermo."
-    /*customizeBoardButton: "Tavolo personalizzato",
+    alternateInGameToolbarText: "Sposta il menu di gioco in fondo allo schermo.",
+    customizeBoardButton: "Tavolo personalizzato",
     saveBoardButton: "Salva tavolo",
     customBoardHeaderName: "Nome tavolo",
     customBoardHeaderCharacters: "Sospetti",
     customBoardHeaderWeapons: "Armi",
-    customBoardHeaderRooms: "Stanze"*/
+    customBoardHeaderRooms: "Stanze"
 }
 
 export const incompatibleTextIT = "La partita salvata non è compatibile con questa versione dell'app, non posso continuare la partita."
