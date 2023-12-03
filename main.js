@@ -317,6 +317,7 @@ $(document).ready(function () {
     }
 
     function saveSetting(key, val) {
+        console.log('Saving', key, val)
         settings[key] = val
         saveSettings() //Testato!
     }
@@ -695,8 +696,12 @@ $(document).ready(function () {
 
         //Salva le impostazioni dalla tabella
         saveSetting("longNamesCompatibilityMode", $("#longNamesCompatibilityMode").is(":checked"))
-        saveSetting("hideDustCounter", $("#longNamesCompatibilityMode").is(":checked"))
+        saveSetting("hideDustCounter", $("#hideDustCounter").is(":checked"))
         saveSetting("alternateInGameToolbar", $("#alternateInGameToolbar").is(":checked"))
+
+        toggleGlobalLockButton(game.locked)
+        toggleAutocompleteButton(settings.autocomplete)
+        saveGame()
 
         $("#setup").css("display", "none")
         if (settings.alternateInGameToolbar) {
@@ -778,12 +783,9 @@ $(document).ready(function () {
 
     function updateTable() {
         //aggiorna header
-        if (game.locked) {
-            toggleGlobalLockButton(true)
-        }
-        if (settings.autocomplete) {
-            toggleAutocompleteButton()
-        }
+        toggleGlobalLockButton(game.locked)
+        toggleAutocompleteButton(settings.autocomplete)
+        saveGame()
 
         let table = getFilteredTable()
         //controlla se la casella è spuntata
@@ -800,7 +802,6 @@ $(document).ready(function () {
                 $(this).find("input").prop("checked", true)
                 $(this).closest(".table-row").find("td > a").data("locked", "true")
                 $(this).closest(".table-row").addClass("locked")
-                //toggleDarkMode(!darkMode)
             }
         })
     }
@@ -890,12 +891,13 @@ $(document).ready(function () {
     })
 
     function toggleAutocompleteButton(force) {
-        saveSetting("autocomplete", !settings.autocomplete)
-        if (force || settings.autocomplete) {
+        let shouldTurnOn = (force === undefined) ? !settings.autocomplete : force
+        if (shouldTurnOn) {
             $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", "var(--green)")
         } else {
             $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", "var(--current-lightRed)")
         }
+        saveSetting("autocomplete", shouldTurnOn)
     }
 
 
@@ -905,7 +907,9 @@ $(document).ready(function () {
     })
 
     function toggleGlobalLockButton(force) {
-        if (force || !game.locked) {   //if currently unlocked, locks cards
+        console.log('toggleGlobalLockButton', force)
+        let shouldLock = (force === undefined) ? !game.locked : force
+        if (shouldLock) {   //if currently unlocked, locks cards
             $(".table-header-checkbox").each(function () {
                 $(this).attr("disabled", "disabled")
             })
@@ -918,7 +922,7 @@ $(document).ready(function () {
             $("#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel").css("background-color", "var(--current-darkBlue)")
             $("#lockPersonalCardsLabel, #lockPersonalCardsAltLabel").text("lock_open_right")
         }
-        toggleLockGlobal()
+        toggleLockGlobal(shouldLock)
     }
 
     //Hide extra symbols
