@@ -317,7 +317,6 @@ $(document).ready(function () {
     }
 
     function saveSetting(key, val) {
-        console.log('Saving', key, val)
         settings[key] = val
         saveSettings() //Testato!
     }
@@ -907,7 +906,6 @@ $(document).ready(function () {
     })
 
     function toggleGlobalLockButton(force) {
-        console.log('toggleGlobalLockButton', force)
         let shouldLock = (force === undefined) ? !game.locked : force
         if (shouldLock) {   //if currently unlocked, locks cards
             $(".table-header-checkbox").each(function () {
