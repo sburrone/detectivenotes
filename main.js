@@ -692,6 +692,12 @@ $(document).ready(function () {
 
     $("#playerNameForm").on("submit", function (event) {
         event.preventDefault()
+
+        //Salva le impostazioni dalla tabella
+        saveSetting("longNamesCompatibilityMode", $("#longNamesCompatibilityMode").is(":checked"))
+        saveSetting("hideDustCounter", $("#longNamesCompatibilityMode").is(":checked"))
+        saveSetting("alternateInGameToolbar", $("#alternateInGameToolbar").is(":checked"))
+
         $("#setup").css("display", "none")
         if (settings.alternateInGameToolbar) {
             swapUpperBar()
