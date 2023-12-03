@@ -70,7 +70,7 @@ export const stringsIT = {
     playerNameQuestion: "Come si chiamano?",
     playerNumTooltip: "3",
     playerNameTooltip: "Cerca di usare nomi corti, e scrivili in ordine.",
-    readyText: "Pronti?",
+    readyText: "Prontə?",
     startGame: "Inizia partita",
     instructionsModalText1: "All'inizio della partita ti verranno date delle carte.",
     instructionsModalText2: "Spunta la casella di fianco a queste carte per bloccarle.",

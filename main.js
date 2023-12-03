@@ -500,6 +500,11 @@ $(document).ready(function () {
     }
 
     $("#newGameButton").on("click", function () {
+        //Rimuovi salvataggi non compatibili
+        if (localStorage.getItem("date")) {
+            localStorage.clear()
+        }
+
         $("#mainMenu").css("display", "none")
         clearInterval(languageInterval)
         $("#setup").css("display", "block")
@@ -700,29 +705,6 @@ $(document).ready(function () {
         //Save data
         saveGameSetup(game.board, playerArray)
         setupTable()
-        /*localStorage.setItem("board", selectedBoard)
-        localStorage.setItem("players", players)
-        localStorage.setItem("date", new Date())
-        localStorage.setItem("longNamesCompatibilityMode", longNamesCompatibilityMode)
-        for (let i = 0; i < itemsArray.length; i++) {
-            for (let j = 0; j < players.length; j++) {
-                localStorage.setItem(("" + i + "," + j), "reset")
-            }
-        }
-        if (selectedBoard == 5) {
-            localStorage.setItem("hideDustCounter", hideDustCounter)
-            localStorage.setItem("dust", 12)
-            $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(12)
-            if (!hideDustCounter) {
-                $(".dust-counter-box").css("display", "flex")
-                $("#instructionsModalSection6").show()
-            }
-        }
-        if (selectedBoard != 5 || hideDustCounter) {
-            $(".dust-counter-button").hide()
-            $("#instructionsModalSection6").hide()
-        }
-        localStorage.setItem("alternateInGameToolbar", alternateInGameToolbar)*/
         if (game.board === 5 && !settings.hideDustCounter) {
             $(".dust-counter-box").css("display", "flex")
             $("#instructionsModalSection6").show()
@@ -747,20 +729,6 @@ $(document).ready(function () {
     })
 
     function fillTable() {
-        //TABLE SECTION PLAYERS
-        /*for (let i = 0; i < game.players.length; i++) {
-            let cell = $("<th>").attr("class", "name-holder")
-            cell.attr("scope", "col")
-            if (settings.longNamesCompatibilityMode) {
-                const sideways = $("<span>").addClass("sideways").text(players[i])
-                const initial = $("<span>").text(players[i].trim().charAt(0))
-                cell.append(sideways, $("<br>"), initial)
-            } else {
-                cell.text(players[i])
-            }
-            cell.css("background-color", "var(--current-lightGrey")
-            $("#tableRowPlayers").append(cell)
-        }*/
         game.players.forEach(player => {
             let cell = $("<th>").attr("class", "name-holder")
             cell.attr("scope", "col")
@@ -799,70 +767,18 @@ $(document).ready(function () {
                 $("#tableSection" + item.section).append(currentRow)
             }
         })
-
-        /*/TABLE SECTION CHARACTERS
-        const characterArray = boards[game.board]["characters"]
-        $("#tableHeaderCharacters").attr("colspan", players.length + 2)
-
-        for (let c = 0; c < characterArray.length; c++) {
-            let currentRow = $("<tr>").attr("class", "table-row")
-
-            currentRow.append(getCheckboxCell(characterArray[c]))
-
-            let header = $("<td>").attr("class", "table-header")
-            header.attr("scope", "row")
-            header.text(characterArray[c])
-            currentRow.append(header)
-
-            for (let i = 0; i < players.length; i++) {
-                currentRow.append(getCellLink(i, characterArray[c]))
-            }
-            $("#tableSectionCharacters").append(currentRow)
-        }
-
-        //TABLE SECTION WEAPONS
-        const weaponArray = boards[game.board]["weapons"]
-        $("#tableHeaderWeapons").attr("colspan", players.length + 2)
-
-        for (let w = 0; w < weaponArray.length; w++) {
-            let currentRow = $("<tr>").attr("class", "table-row")
-
-            currentRow.append(getCheckboxCell(weaponArray[w]))
-
-            let header = $("<td>").attr("class", "table-header")
-            header.attr("scope", "row")
-            header.text(weaponArray[w])
-            currentRow.append(header)
-
-            for (let i = 0; i < players.length; i++) {
-                currentRow.append(getCellLink(i, weaponArray[w]))
-            }
-            $("#tableSectionWeapons").append(currentRow)
-        }
-
-        //TABLE SECTION ROOMS
-        const roomArray = boards[game.board]["rooms"]
-        $("#tableHeaderRooms").attr("colspan", players.length + 2)
-
-        for (let r = 0; r < roomArray.length; r++) {
-            let currentRow = $("<tr>").attr("class", "table-row")
-
-            currentRow.append(getCheckboxCell(roomArray[r]))
-
-            let header = $("<td>").attr("class", "table-header")
-            header.attr("scope", "row")
-            header.text(roomArray[r])
-            currentRow.append(header)
-
-            for (let i = 0; i < players.length; i++) {
-                currentRow.append(getCellLink(i, roomArray[r]))
-            }
-            $("#tableSectionRooms").append(currentRow)
-        }*/
         saveGame()
     }
 
     function updateTable() {
+        //aggiorna header
+        if (game.locked) {
+            toggleGlobalLockButton(true)
+        }
+        if (settings.autocomplete) {
+            toggleAutocompleteButton()
+        }
+
         let table = getFilteredTable()
         //controlla se la casella è spuntata
         $(".cell-image-link").find("img").each(function () {
@@ -964,17 +880,26 @@ $(document).ready(function () {
 
     //Change autocomplete button
     $("#autocompleteButton, #autocompleteButtonAlt").on("click", function () {
+        toggleAutocompleteButton()
+    })
+
+    function toggleAutocompleteButton(force) {
         saveSetting("autocomplete", !settings.autocomplete)
-        if (settings.autocomplete) {
+        if (force || settings.autocomplete) {
             $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", "var(--green)")
         } else {
             $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", "var(--current-lightRed)")
         }
-    })
+    }
+
 
     //Lock cards
     $("#lockPersonalCards, #lockPersonalCardsAlt").on("click", function () {
-        if (!game.locked) {   //if currently unlocked, locks cards
+        toggleGlobalLockButton()
+    })
+
+    function toggleGlobalLockButton(force) {
+        if (force || !game.locked) {   //if currently unlocked, locks cards
             $(".table-header-checkbox").each(function () {
                 $(this).attr("disabled", "disabled")
             })
@@ -988,7 +913,7 @@ $(document).ready(function () {
             $("#lockPersonalCardsLabel, #lockPersonalCardsAltLabel").text("lock_open_right")
         }
         toggleLockGlobal()
-    })
+    }
 
     //Hide extra symbols
     $("#showLessSymbolsCheckbox").on("change", function () {
