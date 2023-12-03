@@ -610,8 +610,6 @@ $(document).ready(function () {
         }
         game.customBoard = { name: customBoardName, characters: customCharacters, weapons: customWeapons, rooms: customRooms }
         itemsArray = customCharacters + customWeapons + customRooms
-        $("#customizeBoardButtonSubtitle").text(customBoardName)
-        $("#customizeBoardContainer").find("*").css("background-color", "var(--current-lightRed)")
     }
 
     $("#customizeBoardButton").on("click", function (event) {
@@ -657,10 +655,24 @@ $(document).ready(function () {
     }
 
     $("#saveBoardButton, #customBoardModalBackButton").on("click", function () {
-        $("#customBoardModal").hide()
         updateCustomBoard()
+        $("#customizeBoardButtonSubtitle").text(customBoardName)
+        $("#customizeBoardContainer").find("*").css("background-color", "var(--current-lightRed)")
+        $("#customBoardModal").hide()
     })
 
+    $("#exportBoardButton").on("click", function () {
+        //Salva
+        updateCustomBoard()
+        //Scarica
+        let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(game.customBoard));
+        let downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", game.customBoard.name + ".json");
+        document.body.appendChild(downloadAnchorNode); // required for firefox
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+    })
 
     //Dark mode
 

@@ -114,7 +114,8 @@ export const stringsIT = {
     customBoardHeaderName: "Nome tavolo",
     customBoardHeaderCharacters: "Sospetti",
     customBoardHeaderWeapons: "Armi",
-    customBoardHeaderRooms: "Stanze"
+    customBoardHeaderRooms: "Stanze",
+    exportBoardButton: "Esporta tavolo"
 }
 
 export const incompatibleTextIT = "La partita salvata non è compatibile con questa versione dell'app, non posso continuare la partita."

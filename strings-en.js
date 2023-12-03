@@ -113,7 +113,8 @@ export const stringsEN = {
     customBoardHeaderName: "Board name",
     customBoardHeaderCharacters: "Suspects",
     customBoardHeaderWeapons: "Weapons",
-    customBoardHeaderRooms: "Rooms"
+    customBoardHeaderRooms: "Rooms",
+    exportBoardButton: "Export board"
 }
 
 export const incompatibleTextEN = "This saved game is incompatible with this version of the app, cannot resume."
