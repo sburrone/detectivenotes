@@ -126,8 +126,9 @@
             <span id="boardQuestion" class="setup-text"></span><br>
             <section id="boardButtonContainer"></section>
             <section id="customizeBoardContainer">
-                <button title="Customize Board button" id="customizeBoardButton"
-                    class="small-button board-button"></button>
+                <button title="Customize Board button" id="customizeBoardButton" class="small-button board-button"><span
+                        id="customizeBoardButtonText"></span><br><span id="customizeBoardButtonSubtitle"
+                        class="setup-tooltip"></span></button>
             </section>
             <hr>
             <span id="playerNumQuestion" class="setup-text"></span><br>
@@ -168,7 +169,7 @@
                         </th>
                     </tr>
                     <tr>
-                        <td colspan="3">
+                        <td colspan="3" class="custom-table-add">
                             <input title="Board name" class="setup-name" type="text" name="customBoardName"
                                 pattern="[A-Za-z0-9]+" , id="customBoardName" />
                         </td>
@@ -176,45 +177,48 @@
                 </thead>
                 <tbody id="customBoardTableSectionCharacters">
                     <tr>
-                        <th>
+                        <th colspan="3" class="custom-table-header">
                             <span class="material-symbols-outlined">person</span>
                             <span id="customBoardHeaderCharacters" class="custom-board-table-header"></span>
                         </th>
                     </tr>
-                    <tr id="addCharacterToCustomBoardRow">
-                        <td>
-                            <button id="addCharacterToCustomBoardButton" title="Add suspect"
-                                class="small-button material-symbols-outlined">add_circle</button>
-                        </td>
-                    </tr>
+                <tbody id="customBoardCharacters"></tbody>
+                <tr id="addCharacterToCustomBoardRow">
+                    <td colspan="3" class="custom-table-add">
+                        <button id="addCharacterToCustomBoardButton" title="Add suspect"
+                            class="small-button material-symbols-outlined">add_circle</button>
+                    </td>
+                </tr>
                 </tbody>
                 <tbody id="customBoardTableSectionWeapons">
                     <tr>
-                        <th>
+                        <th colspan="3" class="custom-table-header">
                             <span class="material-symbols-outlined">syringe</span>
                             <span id="customBoardHeaderWeapons" class="custom-board-table-header"></span>
                         </th>
                     </tr>
-                    <tr id="addWeaponToCustomBoardRow">
-                        <td>
-                            <button id="addWeaponToCustomBoardButton" title="Add weapon"
-                                class="small-button material-symbols-outlined">add_circle</button>
-                        </td>
-                    </tr>
+                <tbody id="customBoardWeapons"></tbody>
+                <tr id="addWeaponToCustomBoardRow">
+                    <td colspan="3" class="custom-table-add">
+                        <button id="addWeaponToCustomBoardButton" title="Add weapon"
+                            class="small-button material-symbols-outlined">add_circle</button>
+                    </td>
+                </tr>
                 </tbody>
                 <tbody id="customBoardTableSectionRooms">
-                    <tr>
-                        <th>
+                    <tr class="custom-table-header">
+                        <th colspan="3" class="custom-table-header">
                             <span class="material-symbols-outlined">house</span>
                             <span id="customBoardHeaderRooms" class="custom-board-table-header"></span>
                         </th>
                     </tr>
-                    <tr id="addRoomToCustomBoardRow">
-                        <td>
-                            <button id="addRoomToCustomBoardButton" title="Add room"
-                                class="small-button material-symbols-outlined">add_circle</button>
-                        </td>
-                    </tr>
+                <tbody id="customBoardRooms"></tbody>
+                <tr id="addRoomToCustomBoardRow">
+                    <td colspan="3" class="custom-table-add">
+                        <button id="addRoomToCustomBoardButton" title="Add room"
+                            class="small-button material-symbols-outlined">add_circle</button>
+                    </td>
+                </tr>
                 </tbody>
             </table>
 

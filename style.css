@@ -354,6 +354,7 @@ a:hover {
     font-size: 20px;
     padding: 8px 16px;
     margin: 4px;
+    background-color: var(--current-lightBlue);
 }
 
 .small-button>span {
@@ -615,6 +616,24 @@ button {
     margin-right: 20px;
     width: 150px;
     color: var(--white);
+}
+
+.custom-table-num,
+.custom-table-del {
+    width: 15%;
+}
+
+.custom-table-input {
+    width: 70%
+}
+
+.custom-table-header {
+    border-top: 2px solid var(--current-lightGrey);
+    padding-top: 10px;
+}
+
+.custom-table-add {
+    padding-bottom: 10px;
 }
 
 table {

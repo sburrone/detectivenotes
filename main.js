@@ -343,16 +343,17 @@ $(document).ready(function () {
         if (game.board === 5) {
             game.dustCounter = 12
         }
+        let board = game.board == -1 ? game.customBoard : boards[game.board]
         game.table.push({ divider: true, name: 'Characters' })
-        boards[game.board].characters.forEach(character => {
+        board.characters.forEach(character => {
             game.table.push({ row: character, section: 'Characters', locked: false, items: Array(game.players.length).fill('reset') })
         })
         game.table.push({ divider: true, name: 'Weapons' })
-        boards[game.board].weapons.forEach(weapon => {
+        board.weapons.forEach(weapon => {
             game.table.push({ row: weapon, section: 'Weapons', locked: false, items: Array(game.players.length).fill('reset') })
         })
         game.table.push({ divider: true, name: 'Rooms' })
-        boards[game.board].rooms.forEach(room => {
+        board.rooms.forEach(room => {
             game.table.push({ row: room, section: 'Rooms', locked: false, items: Array(game.players.length).fill('reset') })
         })
         saveGame()
@@ -445,11 +446,12 @@ $(document).ready(function () {
         let formattedPlayers = game.players.toString().replaceAll(',', ', ')
         let rawDate = new Date(game.date)
         let formattedDate = rawDate.getFullYear() + "-" + ((rawDate.getMonth() + 1) >= 10 ? (rawDate.getMonth() + 1) : ("0" + (rawDate.getMonth() + 1))) + "-" + (rawDate.getDate() >= 10 ? rawDate.getDate() : ("0" + rawDate.getDate())) + " " + rawDate.getHours() + ":" + (rawDate.getMinutes() >= 10 ? rawDate.getMinutes() : ("0" + rawDate.getMinutes()))
-        $("#continueButtonSubtitle").html(formattedDate + "<br>" + boards[game.board].name + "<br>" + formattedPlayers)
+        let board = game.board == -1 ? game.customBoard : boards[game.board]
+        $("#continueButtonSubtitle").html(formattedDate + "<br>" + board.name + "<br>" + formattedPlayers)
 
         $("#continueGameButton").on("click", function () {
             //Valorizza itemsArray
-            itemsArray = boards[game.board]["characters"].concat(boards[game.board]["weapons"]).concat(boards[game.board]["rooms"])
+            itemsArray = board["characters"].concat(board["weapons"]).concat(board["rooms"])
             //Fill
             $("#mainMenu").css("display", "none")
             clearInterval(languageInterval)
@@ -515,25 +517,10 @@ $(document).ready(function () {
         //Populate Setup
         boards.forEach(board => {
             let button = $("<button>").attr("class", "small-button board-button")
-            button.css("background-color", "var(--current-lightBlue)")
+            //button.css("background-color", "var(--current-lightBlue)")
             button.text(board.name)
             button.on("click", function (event) {
-                //Cambio colori
-                $("#boardButtonContainer").find("*").css("background-color", "var(--current-lightBlue)")
-                $("#boardButtonContainer").find("*").data("selected", "false")
-                $(event.target).data("selected", "true")
-                $(event.target).css("background-color", "var(--current-lightRed)")
-
-                game.board = board.id
-                if (game.board == 5) {
-                    $("#hideDustCounterText, #hideDustCounterDisabled").toggle()
-                }
-                $("#hideDustCounter").prop("disabled", (game.board != 5))
-                itemsArray = boards[game.board]["characters"].concat(boards[game.board]["weapons"]).concat(boards[game.board]["rooms"])
-                $("#playerNum").attr("min", board.minPlayers)
-                $("#playerNum").val(3)
-                updateRangeTooltip()
-                updateFields()
+                selectBoard(board.id, board.minPlayers, event)
             })
             $("#boardButtonContainer").append(button)
         })
@@ -552,6 +539,27 @@ $(document).ready(function () {
     $(".modal-back-button").on("click", function () {
         $(".modal-wrapper").hide()
     })
+
+    function selectBoard(id, minPlayers, event) {
+        //Cambio colori
+        $("#boardButtonContainer, #customizeBoardContainer").find("*").css("background-color", "var(--current-lightBlue)")
+        $("#boardButtonContainer").find("*").data("selected", "false")
+        $(event.target).data("selected", "true")
+        $(event.target).css("background-color", "var(--current-lightRed)")
+
+        game.board = id
+        if (game.board == 5) {
+            $("#hideDustCounterText, #hideDustCounterDisabled").toggle()
+        }
+        $("#hideDustCounter").prop("disabled", (game.board != 5))
+        if (game.board != -1) {
+            itemsArray = boards[game.board]["characters"].concat(boards[game.board]["weapons"]).concat(boards[game.board]["rooms"])
+        }
+        $("#playerNum").attr("min", minPlayers)
+        $("#playerNum").val(3)
+        updateRangeTooltip()
+        updateFields()
+    }
 
     function updateRangeTooltip() {
         $("#playerNumTooltip").text($("#playerNum").val())
@@ -585,14 +593,29 @@ $(document).ready(function () {
     }
 
     //Custom Board
+    function updateCustomBoard() {
+        let customBoardName = $("#customBoardName").val()
+        //FIll itemsArray with values from the form
+        let customCharacters = []
+        for (let i = 0; i < customBoardSizes.Characters; i++) {
+            customCharacters.push($("#customCharacters" + i).val())
+        }
+        let customWeapons = []
+        for (let i = 0; i < customBoardSizes.Weapons; i++) {
+            customWeapons.push($("#customWeapons" + i).val())
+        }
+        let customRooms = []
+        for (let i = 0; i < customBoardSizes.Rooms; i++) {
+            customRooms.push($("#customRooms" + i).val())
+        }
+        game.customBoard = { name: customBoardName, characters: customCharacters, weapons: customWeapons, rooms: customRooms }
+        itemsArray = customCharacters + customWeapons + customRooms
+        $("#customizeBoardButtonSubtitle").text(customBoardName)
+        $("#customizeBoardContainer").find("*").css("background-color", "var(--current-lightRed)")
+    }
+
     $("#customizeBoardButton").on("click", function (event) {
-        //Cambio colori
-        $("#customizeBoardContainer, #boardButtonContainer").find("*").css("background-color", darkMode ? "var(--dark-blue)" : "var(--light-blue)")
-        $("#customizeBoardContainer, #boardButtonContainer").find("*").data("selected", "false")
-        $(event.target).data("selected", "true")
-        $(event.target).css("background-color", darkMode ? "var(--dark-red)" : "var(--red)")
-        selectedBoard = "custom"
-        $("#hideDustCounter").prop("disabled", true)
+        selectBoard(-1, 2, event)
         $("#customBoardModal").show()
     })
 
@@ -620,18 +643,23 @@ $(document).ready(function () {
 
         const row = $("<tr>").attr("id", id + "Row")
 
-        const numberCell = $("<th>").text(customBoardSizes[container])
+        const numberCell = $("<th>").text(customBoardSizes[container]).addClass("custom-table-num")
         const input = $("<input>").attr("class", "setup-name").attr("type", "text").attr("name", id).attr("pattern", "[A-Za-z0-9]+").attr("id", id)
         const deleteButton = $("<button>").attr("class", "small-button board-button material-symbols-outlined").text("delete").attr("id", "delete" + id).on("click", function () {
             $("#" + id + "Row").remove()
             customBoardSizes[container]--
         })
-        const inputCell = $("<td>").html(input)
-        const deleteButtonCell = $("<td>").html(deleteButton)
+        const inputCell = $("<td>").html(input).addClass("custom-table-input")
+        const deleteButtonCell = $("<td>").html(deleteButton).addClass("custom-table-del")
 
         row.append(numberCell, inputCell, deleteButtonCell)
-        row.insertBefore($("#add" + container + "ToCustomBoardRow"))
+        $("#customBoard" + container).append(row)
     }
+
+    $("#saveBoardButton, #customBoardModalBackButton").on("click", function () {
+        $("#customBoardModal").hide()
+        updateCustomBoard()
+    })
 
 
     //Dark mode

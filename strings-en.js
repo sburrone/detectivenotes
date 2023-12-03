@@ -108,7 +108,7 @@ export const stringsEN = {
     skipLoading: "Skip",
     alternateInGameToolbarLabel: "Alternate ingame toolbar",
     alternateInGameToolbarText: "Move the ingame toolbar to the bottom of the screen.",
-    customizeBoardButton: "Custom board",
+    customizeBoardButtonText: "Custom board",
     saveBoardButton: "Save board",
     customBoardHeaderName: "Board name",
     customBoardHeaderCharacters: "Suspects",
