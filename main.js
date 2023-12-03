@@ -800,9 +800,9 @@ $(document).ready(function () {
     }
 
     //Only show vertical long names at the top
-    $(window).on("scroll", function () {
+    $("body").on("scroll", function () {
         if (settings.longNamesCompatibilityMode) {
-            if (window.scrollY == 0) {
+            if ($("body").scrollTop() == 0) {
                 $(".sideways").show(300)
             } else {
                 $(".sideways").hide(300)
