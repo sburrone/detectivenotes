@@ -656,7 +656,7 @@ $(document).ready(function () {
 
     $("#saveBoardButton, #customBoardModalBackButton").on("click", function () {
         updateCustomBoard()
-        $("#customizeBoardButtonSubtitle").text(customBoardName)
+        $("#customizeBoardButtonSubtitle").text(game.customBoard.name)
         $("#customizeBoardContainer").find("*").css("background-color", "var(--current-lightRed)")
         $("#customBoardModal").hide()
     })
