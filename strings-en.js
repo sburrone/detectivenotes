@@ -108,13 +108,16 @@ export const stringsEN = {
     skipLoading: "Skip",
     alternateInGameToolbarLabel: "Alternate ingame toolbar",
     alternateInGameToolbarText: "Move the ingame toolbar to the bottom of the screen.",
-    customizeBoardButtonText: "Custom board",
+    customizeBoardButton: "New board",
     saveBoardButton: "Save board",
     customBoardHeaderName: "Board name",
     customBoardHeaderCharacters: "Suspects",
     customBoardHeaderWeapons: "Weapons",
     customBoardHeaderRooms: "Rooms",
-    exportBoardButton: "Export board"
+    exportBoardButton: "Export board",
+    importBoardButton: "Import board",
+    customBoardQuestion: "Which custom board are you using?",
+    customBoardSavedQuestion: "Or use one of these saved boards"
 }
 
 export const incompatibleTextEN = "This saved game is incompatible with this version of the app, cannot resume."

@@ -290,11 +290,13 @@ $(document).ready(function () {
 
     let game = {}
 
+    const CUSTOM_BOARD_THRESHOLD = 100 //board.id = 110 diventa customBoards[110-100 = 10]
+
     /*date: Date.now(),
         players: [],
         dustCounter: 0,
         board: 0,           // -1 sarà il tavolo personalizzato
-        customBoard: {},    // ignoralo se board !== -1
+        customBoards: [{}],    // ignoralo se board !== -1
         locked: false,
         table: [
             {
@@ -343,7 +345,7 @@ $(document).ready(function () {
         if (game.board === 5) {
             game.dustCounter = 12
         }
-        let board = game.board == -1 ? game.customBoard : boards[game.board]
+        let board = game.board >= CUSTOM_BOARD_THRESHOLD ? game.customBoards[game.board - CUSTOM_BOARD_THRESHOLD] : boards[game.board]
         game.table.push({ divider: true, name: 'Characters' })
         board.characters.forEach(character => {
             game.table.push({ row: character, section: 'Characters', locked: false, items: Array(game.players.length).fill('reset') })
@@ -446,7 +448,7 @@ $(document).ready(function () {
         let formattedPlayers = game.players.toString().replaceAll(',', ', ')
         let rawDate = new Date(game.date)
         let formattedDate = rawDate.getFullYear() + "-" + ((rawDate.getMonth() + 1) >= 10 ? (rawDate.getMonth() + 1) : ("0" + (rawDate.getMonth() + 1))) + "-" + (rawDate.getDate() >= 10 ? rawDate.getDate() : ("0" + rawDate.getDate())) + " " + rawDate.getHours() + ":" + (rawDate.getMinutes() >= 10 ? rawDate.getMinutes() : ("0" + rawDate.getMinutes()))
-        let board = game.board == -1 ? game.customBoard : boards[game.board]
+        let board = game.board >= CUSTOM_BOARD_THRESHOLD ? game.customBoards[game.board - CUSTOM_BOARD_THRESHOLD] : boards[game.board]
         $("#continueButtonSubtitle").html(formattedDate + "<br>" + board.name + "<br>" + formattedPlayers)
 
         $("#continueGameButton").on("click", function () {
@@ -608,14 +610,64 @@ $(document).ready(function () {
         for (let i = 0; i < customBoardSizes.Rooms; i++) {
             customRooms.push($("#customRooms" + i).val())
         }
-        game.customBoard = { name: customBoardName, characters: customCharacters, weapons: customWeapons, rooms: customRooms }
+        game.customBoards.push({ name: customBoardName, characters: customCharacters, weapons: customWeapons, rooms: customRooms })
         itemsArray = customCharacters + customWeapons + customRooms
     }
 
     $("#customizeBoardButton").on("click", function (event) {
-        selectBoard(-1, 2, event)
+        //Popola customBoardLoadSection
+        /*
+        Name 1
+        S 1 | W 2 | R 3         S W R sono emoji
+        Use | Edit | Exp | Del
+        */
+        const emojiSpan = $("<span class='material-symbols-outlined'>")
+
+        game.customBoards.forEach((customBoard, index) => {
+            const tbody = $("<tbody id='customBoardLoad" + index + "Body'>")
+            const trName = $("<tr id='customBoardLoad" + index + "Name'>").html($("<td colspan='3'>").text(customBoard.name))
+
+            const tdCharacters = $("<td id='customBoardLoad" + index + "Characters'>").html($(emojiSpan).clone().text("person") + " " + customBoard.characters.length)
+            const tdWeapons = $("<td id='customBoardLoad" + index + "Weapons'>").html($(emojiSpan).clone().text("syringe") + " " + customBoard.weapons.length)
+            const tdRooms = $("<td id='customBoardLoad" + index + "Rooms'>").html($(emojiSpan).clone().text("house") + " " + customBoard.rooms.length)
+            const trItems = $("<tr id='customBoardLoad" + index + "Items'>").html(tdCharacters + tdWeapons + tdRooms)
+
+            const useButton = $("<button id='customBoardLoad" + index + "Use'>").html($(emojiSpan).clone().text("play_arrow")).on("click", function () {
+                chooseCustomBoard(index)
+            })
+            const editButton = $("<button id='customBoardLoad" + index + "Edit'>").html($(emojiSpan).clone().text("edit")).on("click", function () {
+                editCustomBoard(index)
+            })
+            const exportButton = $("<button id='customBoardLoad" + index + "Export'>").html($(emojiSpan).clone().text("download")).on("click", function () {
+                exportCustomBoard(index)
+            })
+            const deleteButton = $("<button id='customBoardLoad" + index + "Delete'>").html($(emojiSpan).clone().text("delete")).on("click", function () {
+                deleteCustomBoard(index)
+            })
+            const trButtons = $("<tr id='customBoardLoad" + index + "Buttons'>").html(useButton, editButton, exportButton, deleteButton)
+
+            tbody.html(trName, trItems, trButtons)
+        })
+
+        //Mostra modale
         $("#customBoardModal").show()
     })
+
+    function chooseCustomBoard(id) {
+        //todo implementa
+    }
+
+    function editCustomBoard(id) {
+        //todo impl
+    }
+
+    function exportCustomBoard(id) {
+        //todo impl
+    }
+
+    function deleteCustomBoard(id) {
+        //todo impl
+    }
 
     $("#addCharacterToCustomBoardButton").on("click", function () {
         addFieldToSection("Characters")
@@ -656,19 +708,19 @@ $(document).ready(function () {
 
     $("#saveBoardButton, #customBoardModalBackButton").on("click", function () {
         updateCustomBoard()
-        $("#customizeBoardButtonSubtitle").text(game.customBoard.name)
+        //$("#customizeBoardButtonSubtitle").text(game.customBoard.name) TODO SISTEMA
         $("#customizeBoardContainer").find("*").css("background-color", "var(--current-lightRed)")
         $("#customBoardModal").hide()
     })
 
-    $("#exportBoardButton").on("click", function () {
+    $("#exportBoardButton").on("click", function () { //todo sistema
         //Salva
         updateCustomBoard()
         //Scarica
-        let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(game.customBoard));
+        let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(game.customBoards));
         let downloadAnchorNode = document.createElement('a');
         downloadAnchorNode.setAttribute("href", dataStr);
-        downloadAnchorNode.setAttribute("download", game.customBoard.name + ".json");
+        downloadAnchorNode.setAttribute("download", game.customBoards + ".json");
         document.body.appendChild(downloadAnchorNode); // required for firefox
         downloadAnchorNode.click();
         downloadAnchorNode.remove();

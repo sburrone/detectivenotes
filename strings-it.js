@@ -109,13 +109,16 @@ export const stringsIT = {
     skipLoading: "Salta",
     alternateInGameToolbarLabel: "Menu di gioco alternativo",
     alternateInGameToolbarText: "Sposta il menu di gioco in fondo allo schermo.",
-    customizeBoardButtonText: "Tavolo personalizzato",
+    customizeBoardButton: "Tavolo personalizzato",
     saveBoardButton: "Salva tavolo",
     customBoardHeaderName: "Nome tavolo",
     customBoardHeaderCharacters: "Sospetti",
     customBoardHeaderWeapons: "Armi",
     customBoardHeaderRooms: "Stanze",
-    exportBoardButton: "Esporta tavolo"
+    exportBoardButton: "Esporta tavolo",
+    importBoardButton: "Importa tavolo",
+    customBoardQuestion: "Quale tavolo personalizzato stai usando?",
+    customBoardSavedQuestion: "Oppure usa uno dei tavoli salvati"
 }
 
 export const incompatibleTextIT = "La partita salvata non è compatibile con questa versione dell'app, non posso continuare la partita."

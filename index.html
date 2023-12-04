@@ -149,11 +149,26 @@
     </div>
 
 
-
-    <!--  CUSTOM BOARD MODAL -->
+    <!--  CUSTOM BOARD LOAD MENU  -->
 
     <div id="customBoardModal" class="modal-wrapper">
-        <div id="customBoardModalContent" class="modal">
+        <div id="customBoardModalContent" class="content">
+            <span id="customBoardQuestion" class="setup-text"></span>
+            <section id="customBoardAddSection">
+                <button title="New Custom Board" id="customizeBoardButton" class="small-button board-button"></button>
+                <button title="Import Custom Board" id="importBoardButton" class="small-button board-button"></button>
+            </section>
+            <hr>
+            <span id="customBoardSavedQuestion" class="setup-text"></span>
+            <table id="customBoardLoadSection"></table>
+        </div>
+    </div>
+
+
+    <!--  NEW CUSTOM BOARD MODAL -->
+
+    <div id="addCustomBoardModal" class="modal-wrapper">
+        <div id="addCustomBoardModalContent" class="modal">
             <section id="modalBackWrapper"><a class="setup-tooltip modal-back-button"
                     id="customBoardModalBackButton"><span class="material-symbols-outlined">
                         close
