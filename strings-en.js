@@ -108,7 +108,7 @@ export const stringsEN = {
     skipLoading: "Skip",
     alternateInGameToolbarLabel: "Alternate ingame toolbar",
     alternateInGameToolbarText: "Move the ingame toolbar to the bottom of the screen.",
-    customizeBoardButton: "New board",
+    customizeBoardButtonText: "Custom board",
     saveBoardButton: "Save board",
     customBoardHeaderName: "Board name",
     customBoardHeaderCharacters: "Suspects",
@@ -117,9 +117,17 @@ export const stringsEN = {
     exportBoardButton: "Export board",
     importBoardButton: "Import board",
     customBoardQuestion: "Which custom board are you using?",
-    customBoardSavedQuestion: "Or use one of these saved boards"
+    customBoardSavedQuestion: "Or use one of these saved boards",
+    newBoardButton: "New board"
 }
 
 export const incompatibleTextEN = "This saved game is incompatible with this version of the app, cannot resume."
+
+export const customBoardButtonsEN = {
+    play: "Use this board",
+    edit: "Edit",
+    export: "Export",
+    delete: "Delete"
+}
 
 export const letsPlayEN = "Let's play!";

@@ -636,6 +636,23 @@ button {
     padding-bottom: 10px;
 }
 
+.custom-board-body td {
+    padding: 4px;
+}
+
+.custom-board-body {
+    border-bottom: 2px solid var(--current-darkGrey);
+}
+
+.custom-board-name-row td {
+    padding-top: 8px;
+}
+
+.custom-board-button-cell button {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;

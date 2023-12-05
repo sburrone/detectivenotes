@@ -1,8 +1,8 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js'
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js'
 import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/controls/OrbitControls.js'
-import { stringsEN, boardsEN, letsPlayEN, incompatibleTextEN } from './strings-en.js'
-import { stringsIT, boardsIT, letsPlayIT, incompatibleTextIT } from './strings-it.js'
+import { stringsEN, boardsEN, letsPlayEN, incompatibleTextEN, customBoardButtonsEN } from './strings-en.js'
+import { stringsIT, boardsIT, letsPlayIT, incompatibleTextIT, customBoardButtonsIT } from './strings-it.js'
 
 
 let _APP = null
@@ -256,7 +256,7 @@ $(document).ready(function () {
     } else if (forcedLang && forcedLang.toLowerCase() == "en") {
         userLang = "en-US"
     }
-    let strings, boards, letsPlay, incompatibleText
+    let strings, boards, letsPlay, incompatibleText, customBoardButtons
     let itemsArray
     const imageData = {
         "check": "assets/icons/check.svg",
@@ -277,6 +277,7 @@ $(document).ready(function () {
             boards = boardsIT
             letsPlay = letsPlayIT
             incompatibleText = incompatibleTextIT
+            customBoardButtons = customBoardButtonsIT
             break
         }
         default: {
@@ -284,6 +285,7 @@ $(document).ready(function () {
             boards = boardsEN
             letsPlay = letsPlayEN
             incompatibleText = incompatibleTextEN
+            customBoardButtons = customBoardButtonsEN
             break
         }
     }
@@ -345,7 +347,7 @@ $(document).ready(function () {
         if (game.board === 5) {
             game.dustCounter = 12
         }
-        let board = game.board >= CUSTOM_BOARD_THRESHOLD ? game.customBoards[game.board - CUSTOM_BOARD_THRESHOLD] : boards[game.board]
+        let board = game.board >= CUSTOM_BOARD_THRESHOLD ? settings.customBoards[game.board - CUSTOM_BOARD_THRESHOLD] : boards[game.board]
         game.table.push({ divider: true, name: 'Characters' })
         board.characters.forEach(character => {
             game.table.push({ row: character, section: 'Characters', locked: false, items: Array(game.players.length).fill('reset') })
@@ -448,7 +450,7 @@ $(document).ready(function () {
         let formattedPlayers = game.players.toString().replaceAll(',', ', ')
         let rawDate = new Date(game.date)
         let formattedDate = rawDate.getFullYear() + "-" + ((rawDate.getMonth() + 1) >= 10 ? (rawDate.getMonth() + 1) : ("0" + (rawDate.getMonth() + 1))) + "-" + (rawDate.getDate() >= 10 ? rawDate.getDate() : ("0" + rawDate.getDate())) + " " + rawDate.getHours() + ":" + (rawDate.getMinutes() >= 10 ? rawDate.getMinutes() : ("0" + rawDate.getMinutes()))
-        let board = game.board >= CUSTOM_BOARD_THRESHOLD ? game.customBoards[game.board - CUSTOM_BOARD_THRESHOLD] : boards[game.board]
+        let board = game.board >= CUSTOM_BOARD_THRESHOLD ? settings.customBoards[game.board - CUSTOM_BOARD_THRESHOLD] : boards[game.board]
         $("#continueButtonSubtitle").html(formattedDate + "<br>" + board.name + "<br>" + formattedPlayers)
 
         $("#continueGameButton").on("click", function () {
@@ -546,15 +548,17 @@ $(document).ready(function () {
         //Cambio colori
         $("#boardButtonContainer, #customizeBoardContainer").find("*").css("background-color", "var(--current-lightBlue)")
         $("#boardButtonContainer").find("*").data("selected", "false")
-        $(event.target).data("selected", "true")
-        $(event.target).css("background-color", "var(--current-lightRed)")
+        if (event) {
+            $(event.target).data("selected", "true")
+            $(event.target).css("background-color", "var(--current-lightRed)")
+        }
 
         game.board = id
         if (game.board == 5) {
             $("#hideDustCounterText, #hideDustCounterDisabled").toggle()
         }
         $("#hideDustCounter").prop("disabled", (game.board != 5))
-        if (game.board != -1) {
+        if (game.board < CUSTOM_BOARD_THRESHOLD) {
             itemsArray = boards[game.board]["characters"].concat(boards[game.board]["weapons"]).concat(boards[game.board]["rooms"])
         }
         $("#playerNum").attr("min", minPlayers)
@@ -595,9 +599,9 @@ $(document).ready(function () {
     }
 
     //Custom Board
-    function updateCustomBoard() {
-        let customBoardName = $("#customBoardName").val()
+    function buildCustomBoard() {
         //FIll itemsArray with values from the form
+        let customBoardName = $("#customBoardName").val()
         let customCharacters = []
         for (let i = 0; i < customBoardSizes.Characters; i++) {
             customCharacters.push($("#customCharacters" + i).val())
@@ -610,8 +614,12 @@ $(document).ready(function () {
         for (let i = 0; i < customBoardSizes.Rooms; i++) {
             customRooms.push($("#customRooms" + i).val())
         }
-        game.customBoards.push({ name: customBoardName, characters: customCharacters, weapons: customWeapons, rooms: customRooms })
-        itemsArray = customCharacters + customWeapons + customRooms
+        if (!settings.customBoards) {
+            settings.customBoards = []
+        }
+        settings.customBoards.push({ name: customBoardName, characters: customCharacters, weapons: customWeapons, rooms: customRooms })
+        console.log(settings)
+        saveSettings()
     }
 
     $("#customizeBoardButton").on("click", function (event) {
@@ -621,44 +629,71 @@ $(document).ready(function () {
         S 1 | W 2 | R 3         S W R sono emoji
         Use | Edit | Exp | Del
         */
-        const emojiSpan = $("<span class='material-symbols-outlined'>")
-
-        game.customBoards.forEach((customBoard, index) => {
-            const tbody = $("<tbody id='customBoardLoad" + index + "Body'>")
-            const trName = $("<tr id='customBoardLoad" + index + "Name'>").html($("<td colspan='3'>").text(customBoard.name))
-
-            const tdCharacters = $("<td id='customBoardLoad" + index + "Characters'>").html($(emojiSpan).clone().text("person") + " " + customBoard.characters.length)
-            const tdWeapons = $("<td id='customBoardLoad" + index + "Weapons'>").html($(emojiSpan).clone().text("syringe") + " " + customBoard.weapons.length)
-            const tdRooms = $("<td id='customBoardLoad" + index + "Rooms'>").html($(emojiSpan).clone().text("house") + " " + customBoard.rooms.length)
-            const trItems = $("<tr id='customBoardLoad" + index + "Items'>").html(tdCharacters + tdWeapons + tdRooms)
-
-            const useButton = $("<button id='customBoardLoad" + index + "Use'>").html($(emojiSpan).clone().text("play_arrow")).on("click", function () {
-                chooseCustomBoard(index)
-            })
-            const editButton = $("<button id='customBoardLoad" + index + "Edit'>").html($(emojiSpan).clone().text("edit")).on("click", function () {
-                editCustomBoard(index)
-            })
-            const exportButton = $("<button id='customBoardLoad" + index + "Export'>").html($(emojiSpan).clone().text("download")).on("click", function () {
-                exportCustomBoard(index)
-            })
-            const deleteButton = $("<button id='customBoardLoad" + index + "Delete'>").html($(emojiSpan).clone().text("delete")).on("click", function () {
-                deleteCustomBoard(index)
-            })
-            const trButtons = $("<tr id='customBoardLoad" + index + "Buttons'>").html(useButton, editButton, exportButton, deleteButton)
-
-            tbody.html(trName, trItems, trButtons)
-        })
-
+        updateCustomBoardList()
         //Mostra modale
         $("#customBoardModal").show()
     })
 
+    function updateCustomBoardList() {
+        const emojiSpan = $("<span class='material-symbols-outlined'>")
+        if (settings.customBoards) {
+            $("#customBoardLoadSection").empty()
+            settings.customBoards.forEach((customBoard, index) => {
+                $("#customBoardExistingSection").show()
+                const tbody = $("<tbody class='custom-board-body' id='customBoardLoad" + index + "Body'>")
+                const trName = $("<tr class='custom-board-name-row' id='customBoardLoad" + index + "Name'>").html($("<td colspan='3'>").text(customBoard.name))
+
+                const tdCharacters = $("<td id='customBoardLoad" + index + "Characters'>").append($(emojiSpan).clone().text("person"), " ", customBoard.characters.length)
+                const tdWeapons = $("<td id='customBoardLoad" + index + "Weapons'>").append($(emojiSpan).clone().text("syringe"), " ", customBoard.weapons.length)
+                const tdRooms = $("<td id='customBoardLoad" + index + "Rooms'>").append($(emojiSpan).clone().text("house"), " ", customBoard.rooms.length)
+                const trItems = $("<tr id='customBoardLoad" + index + "Items'>").append($(tdCharacters), $(tdWeapons), $(tdRooms))
+
+                const useButton = $("<button class='small-button material-symbols-outlined' id='customBoardLoad" + index + "Use'>").text("play_arrow").attr("title", customBoardButtons.play).on("click", function () {
+                    chooseCustomBoard(index)
+                })
+                const editButton = $("<button class='small-button material-symbols-outlined' id='customBoardLoad" + index + "Edit'>").text("edit").attr("title", customBoardButtons.edit).on("click", function () {
+                    editCustomBoard(index)
+                })
+                const exportButton = $("<button class='small-button material-symbols-outlined' id='customBoardLoad" + index + "Export'>").text("download").attr("title", customBoardButtons.export).on("click", function () {
+                    exportCustomBoard(index)
+                })
+                const deleteButton = $("<button class='small-button material-symbols-outlined' id='customBoardLoad" + index + "Delete'>").text("delete").attr("title", customBoardButtons.delete).on("click", function () {
+                    deleteCustomBoard(index)
+                })
+                const trButtons = $("<tr id='customBoardLoad" + index + "Buttons'>").append($("<td class='custom-board-button-cell' colspan='3'>").append($(useButton), $(editButton), $(exportButton), $(deleteButton)))
+
+                $(tbody).append($(trName), $(trItems), $(trButtons))
+                $("#customBoardLoadSection").append($(tbody))
+            })
+        } else {
+            $("#customBoardExistingSection").hide()
+        }
+    }
+
+    $("#newBoardButton").on("click", function () {
+        $(".modal-wrapper").hide()
+        $("#newBoardModal").show()
+    })
+
     function chooseCustomBoard(id) {
-        //todo implementa
+        itemsArray = settings.customBoards[id]["characters"].concat(settings.customBoards[id]["weapons"]).concat(settings.customBoards[id]["rooms"])
+        selectBoard(CUSTOM_BOARD_THRESHOLD + id, 2)
+        $("#customizeBoardButtonSubtitle").show()
+        $("#customizeBoardButtonSubtitle").text(settings.customBoards[id].name)
+        $("#customizeBoardButton").data("selected", "true")
+        $("#customizeBoardButton, #customizeBoardButton > *").css("background-color", "var(--current-lightRed)")
+        $(".modal-wrapper").hide()
     }
 
     function editCustomBoard(id) {
-        //todo impl
+        //popola i campi
+        const boardToEdit = settings.customBoards[id]
+        $("#customBoardName").val(boardToEdit.name)
+        boardToEdit.characters.forEach(character => addFieldToSection('Characters', character))
+        boardToEdit.weapons.forEach(weapon => addFieldToSection('Weapons', weapon))
+        boardToEdit.rooms.forEach(room => addFieldToSection('Rooms', room))
+        $(".modal-wrapper").hide()
+        $("#newBoardModal").show()
     }
 
     function exportCustomBoard(id) {
@@ -687,7 +722,7 @@ $(document).ready(function () {
         Rooms: 0
     }
 
-    function addFieldToSection(container) {
+    function addFieldToSection(container, text) {
         const id = "custom" + container + customBoardSizes[container]
         customBoardSizes[container]++
 
@@ -695,6 +730,9 @@ $(document).ready(function () {
 
         const numberCell = $("<th>").text(customBoardSizes[container]).addClass("custom-table-num")
         const input = $("<input>").attr("class", "setup-name").attr("type", "text").attr("name", id).attr("pattern", "[A-Za-z0-9]+").attr("id", id)
+        if (text) {
+            $(input).val(text)
+        }
         const deleteButton = $("<button>").attr("class", "small-button board-button material-symbols-outlined").text("delete").attr("id", "delete" + id).on("click", function () {
             $("#" + id + "Row").remove()
             customBoardSizes[container]--
@@ -707,20 +745,20 @@ $(document).ready(function () {
     }
 
     $("#saveBoardButton, #customBoardModalBackButton").on("click", function () {
-        updateCustomBoard()
-        //$("#customizeBoardButtonSubtitle").text(game.customBoard.name) TODO SISTEMA
-        $("#customizeBoardContainer").find("*").css("background-color", "var(--current-lightRed)")
-        $("#customBoardModal").hide()
+        buildCustomBoard()
+        $(".modal-wrapper").hide()
+        $("#customBoardModal").show()
+        updateCustomBoardList()
     })
 
     $("#exportBoardButton").on("click", function () { //todo sistema
         //Salva
-        updateCustomBoard()
+        buildCustomBoard()
         //Scarica
-        let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(game.customBoards));
+        let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(settings.customBoards)); //todo sistema
         let downloadAnchorNode = document.createElement('a');
         downloadAnchorNode.setAttribute("href", dataStr);
-        downloadAnchorNode.setAttribute("download", game.customBoards + ".json");
+        downloadAnchorNode.setAttribute("download", settings.customBoards + ".json");
         document.body.appendChild(downloadAnchorNode); // required for firefox
         downloadAnchorNode.click();
         downloadAnchorNode.remove();
