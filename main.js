@@ -296,20 +296,6 @@ $(document).ready(function () {
 
     const CUSTOM_BOARD_THRESHOLD = 100 //board.id = 110 diventa customBoards[110-100 = 10]
 
-    /*date: Date.now(),
-        players: [],
-        dustCounter: 0,
-        board: 0,           // -1 sarà il tavolo personalizzato
-        customBoards: [{}],    // ignoralo se board !== -1
-        locked: false,
-        table: [
-            {
-                row: "Character 1",     // characters[0] === "Character 1"
-                locked: false,
-                items: ["reset", "cross"]
-            }
-        ]*/
-
     let settings = {
         longNamesCompatibilityMode: false,
         alternateInGameToolbar: false,
@@ -410,7 +396,7 @@ $(document).ready(function () {
     //Detect language, load strings
     let stringKeys = Object.keys(strings)
     stringKeys.forEach((key) => {
-        console.log(key)
+        //console.log(key)
         document.getElementById(key).innerHTML = strings[key]
     })
     $("#startGame").attr("value", letsPlay)
@@ -610,7 +596,6 @@ $(document).ready(function () {
 
     //Custom Board
     const buildCustomBoard = () => {
-        console.log('Custom Board Sizes', customBoardSizes)
         //FIll itemsArray with values from the form
         let customBoardName = $("#customBoardName").val()
         let customCharacters = []
@@ -645,17 +630,10 @@ $(document).ready(function () {
         } else if (!(board.rooms && board.rooms.length > 0)) {
             res = boardValidationErrors.rooms
         }
-        console.log(res)
         return res
     }
 
     $("#customizeBoardButton").on("click", function (event) {
-        //Popola customBoardLoadSection
-        /*
-        Name 1
-        S 1 | W 2 | R 3         S W R sono emoji
-        Use | Edit | Exp | Del
-        */
         updateCustomBoardList()
         $("#customBoardModal").show()
     })
@@ -754,7 +732,6 @@ $(document).ready(function () {
         $("#customBoardCharacters").empty()
         $("#customBoardWeapons").empty()
         $("#customBoardRooms").empty()
-        console.log('edit custom board', boardToEdit)
         boardToEdit.characters.forEach(character => addFieldToSection('Characters', character))
         boardToEdit.weapons.forEach(weapon => addFieldToSection('Weapons', weapon))
         boardToEdit.rooms.forEach(room => addFieldToSection('Rooms', room))
@@ -813,7 +790,6 @@ $(document).ready(function () {
 
     function addFieldToSection(container, text) {
         const id = "custom" + container + customBoardSizes[container]
-        console.log('Adding field', container, text, id)
         customBoardSizes[container]++
 
         const row = $("<tr>").attr("id", id + "Row")
@@ -825,9 +801,7 @@ $(document).ready(function () {
         }
         const deleteButton = $("<button>").attr("class", "small-button board-button material-symbols-outlined").text("delete").attr("id", "delete" + id).on("click", function () {
             $("#" + id + "Row").remove()
-            console.log('customboardsizes before', customBoardSizes)
             customBoardSizes[container]--
-            console.log('customboardsizes after', customBoardSizes)
         })
         const inputCell = $("<td>").html(input).addClass("custom-table-input")
         const deleteButtonCell = $("<td>").html(deleteButton).addClass("custom-table-del")
@@ -842,12 +816,9 @@ $(document).ready(function () {
         if (!validation) {
             $("#boardValidationFailedMessage").hide()
             if ($("#saveBoardButton").data("editing") === "false") {
-                //new
                 settings.customBoards.push(boardToSave)
             } else {
-                //editing
                 const id = $("#saveBoardButton").data("editing")
-                console.log("data editing", id)
                 settings.customBoards[id] = boardToSave
             }
             saveSettings()
@@ -878,11 +849,9 @@ $(document).ready(function () {
 
     $("#fileInput").on("change", function (e) {
         $("#chooseBoardsToImportTable").empty()
-        console.log(e.target.files[0].name)
         const reader = new FileReader()
         reader.onload = function (event) {
             parsedFile = JSON.parse(event.target.result)
-            console.log(parsedFile)
             if (validateFile(parsedFile)) {
                 $("#chooseBoardsToImportSection").show()
                 //Popola la sezione di scelta dei tavoli
@@ -905,7 +874,6 @@ $(document).ready(function () {
                 return
             }
         })
-        console.log('Validated', file, ret)
         return ret
     }
 
