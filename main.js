@@ -697,7 +697,7 @@ $(document).ready(function () {
     const emojiSpan = $("<span class='material-symbols-outlined'>")
 
     function updateCustomBoardList() {
-        if (settings.customBoards.length > 0) {
+        if (settings.customBoards && settings.customBoards.length > 0) {
             $("#customBoardLoadSection").empty()
             settings.customBoards.forEach((customBoard, index) => {
                 $("#customBoardLoadSection").append($(getBoardListElement(customBoard, index, "customBoardLoad" + index, true, false)))
