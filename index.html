@@ -101,10 +101,13 @@
 
     <!--  CHECK SAVED GAME  -->
 
-    <div id="resumePrompt" class="modal-wrapper">
-        <p id="resumePromptText" class="setup-text"></p>
-        <a id="genericYes" class="confirmation-button"></a>
-        <a id="genericNo" class="confirmation-button"></a>
+    <div id="confirmationModal" class="modal-wrapper">
+        <div id="confirmationModalContent" class="modal">
+            <p id="confirmationPromptTitle" class="setup-text"></p>
+            <p id="confirmationPromptSubtitle" class="setup-tooltip"></p>
+            <a id="genericYes" class="small-button board-button"></a>
+            <a id="genericNo" class="small-button board-button"></a>
+        </div>
     </div>
 
 
@@ -157,10 +160,12 @@
                     id="customBoardModalBackButton"><span class="material-symbols-outlined">
                         close
                     </span></a></section>
-            <span id="customBoardQuestion" class="setup-text"></span>
+            <p id="customBoardQuestion" class="setup-text"></p>
             <section id="customBoardAddSection">
                 <button title="New Custom Board" id="newBoardButton" class="small-button board-button"></button>
+                <hr>
                 <button title="Import Custom Board" id="importBoardButton" class="small-button board-button"></button>
+                <button title="Export All Boards" id="exportAllBoardsButton" class="small-button board-button"></button>
             </section>
             <section id="customBoardExistingSection">
                 <hr>
@@ -245,11 +250,36 @@
             </table>
 
             <hr>
-            <button id="exportBoardButton" class="small-button board-button" title="Export board"></button>
-            <hr>
+            <span clas="setup-tooltip hidden" id="boardValidationFailedMessage"></span>
             <button id="saveBoardButton" class="begin-button" title="Save board"></button>
 
 
+        </div>
+    </div>
+
+
+    <!--  IMPORT BOARD MODAL  -->
+
+    <div id="importBoardModal" class="modal-wrapper">
+        <div id="importBoardModalContent" class="modal">
+            <section id="modalBackWrapper"><a class="setup-tooltip" id="importBoardModalBackButton"><span
+                        class="material-symbols-outlined">
+                        close
+                    </span></a></section>
+            <section id="fileInputSection">
+                <p id="importBoardTitle" class="setup-text"></p>
+                <label for="fileInput" class="file-input">
+                    <span id="fileInputButton" class="small-button board-button" title="Choose file"></span>
+                </label>
+                <input type="file" id="fileInput" class="hidden" accept=".board" title="Import board">
+            </section>
+            <section id="chooseBoardsToImportSection">
+                <hr>
+                <p id="chooseBoardsToImportTitle" class="setup-text"></p>
+                <table id="chooseBoardsToImportTable"></table>
+                <button id="finalizeImportButton" class="begin-button" title="Import boards"></button>
+            </section>
+            <p id="fileValidationFailed" class="setup-tooltip"></p>
         </div>
     </div>
 
@@ -310,7 +340,7 @@
                 </tr>
                 <tr>
                     <td class="advanced-settings-table-entry" colspan="2">
-                        <p id="hideDustCounterText" class="setup-tooltip"></p>
+                        <p id="hideDustCounterText" class="setup-tooltip hidden"></p>
                         <p id="hideDustCounterDisabled" class="setup-tooltip"></p>
                     </td>
                 </tr>
@@ -586,6 +616,7 @@
 
 
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script src="main.js" type="module"></script>
 </body>
 

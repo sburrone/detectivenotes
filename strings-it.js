@@ -61,7 +61,6 @@ export const stringsIT = {
     beginButton: "Inizia",
     beginButtonSubtitle: "La partita salvata verrà eliminata",
     continueButton: "Continua",
-    resumePromptText: "Ho trovato una partita salvata.<br>Vuoi continuarla?",
     genericYes: "Sì",
     genericNo: "No",
     newGame: "Nuova partita",
@@ -115,11 +114,16 @@ export const stringsIT = {
     customBoardHeaderCharacters: "Sospetti",
     customBoardHeaderWeapons: "Armi",
     customBoardHeaderRooms: "Stanze",
-    exportBoardButton: "Esporta tavolo",
-    importBoardButton: "Importa tavolo",
+    importBoardButton: "Importa tavoli",
+    exportAllBoardsButton: "Esporta tavoli",
     customBoardQuestion: "Quale tavolo personalizzato stai usando?",
     customBoardSavedQuestion: "Oppure usa uno dei tavoli salvati",
-    newBoardButton: "Nuovo tavolo"
+    newBoardButton: "Nuovo tavolo",
+    importBoardTitle: "Importa tavoli",
+    chooseBoardsToImportTitle: "Scegli i tavoli da importare",
+    fileValidationFailed: "Il file che hai scelto non è valido. Riprova.",
+    finalizeImportButton: "Importa selezionati",
+    fileInputButton: "Scegli il file"
 }
 
 export const incompatibleTextIT = "La partita salvata non è compatibile con questa versione dell'app, non posso continuare la partita."
@@ -128,7 +132,18 @@ export const customBoardButtonsIT = {
     play: "Usa questo tavolo",
     edit: "Modifica",
     export: "Esporta",
-    delete: "Elimina"
+    delete: "Elimina",
+    confirmationTitle: "Elimino il tavolo?",
+    confirmationSubtitle: "L'azione è irreversibile!"
+}
+
+export const boardValidationErrorsIT = {
+    duplicate: "Esiste già un tavolo uguale a questo.",
+    name: "Non hai dato un nome.",
+    characters: "Mancano i sospetti.",
+    weapons: "Mancano le armi.",
+    rooms: "Mancano le stanze.",
+    generic: "Tavolo non valido"
 }
 
 export const letsPlayIT = "Giochiamo!";

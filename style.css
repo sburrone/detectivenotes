@@ -507,6 +507,19 @@ button {
     font-size: 20px;
 }
 
+.hidden {
+    display: none;
+}
+
+.file-input {
+    margin-bottom: 10px;
+}
+
+.custom-board-body th,
+.custom-board-body td {
+    transition: .3s ease-in-out;
+}
+
 .reset {
     transition: .3s ease-in-out;
     filter: invert(22%) sepia(94%) saturate(291%) hue-rotate(171deg) brightness(89%) contrast(96%);
@@ -952,10 +965,6 @@ a {
 .hide-dust-counter-cell>button {
     height: 50px;
     width: 50px;
-}
-
-#hideDustCounterText {
-    display: none;
 }
 
 #tableRowPlayers {

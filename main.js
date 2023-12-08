@@ -1,8 +1,8 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js'
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js'
 import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/controls/OrbitControls.js'
-import { stringsEN, boardsEN, letsPlayEN, incompatibleTextEN, customBoardButtonsEN } from './strings-en.js'
-import { stringsIT, boardsIT, letsPlayIT, incompatibleTextIT, customBoardButtonsIT } from './strings-it.js'
+import { stringsEN, boardsEN, letsPlayEN, incompatibleTextEN, customBoardButtonsEN, boardValidationErrorsEN } from './strings-en.js'
+import { stringsIT, boardsIT, letsPlayIT, incompatibleTextIT, customBoardButtonsIT, boardValidationErrorsIT } from './strings-it.js'
 
 
 let _APP = null
@@ -256,7 +256,7 @@ $(document).ready(function () {
     } else if (forcedLang && forcedLang.toLowerCase() == "en") {
         userLang = "en-US"
     }
-    let strings, boards, letsPlay, incompatibleText, customBoardButtons
+    let strings, boards, letsPlay, incompatibleText, customBoardButtons, boardValidationErrors
     let itemsArray
     const imageData = {
         "check": "assets/icons/check.svg",
@@ -278,6 +278,7 @@ $(document).ready(function () {
             letsPlay = letsPlayIT
             incompatibleText = incompatibleTextIT
             customBoardButtons = customBoardButtonsIT
+            boardValidationErrors = boardValidationErrorsIT
             break
         }
         default: {
@@ -286,6 +287,7 @@ $(document).ready(function () {
             letsPlay = letsPlayEN
             incompatibleText = incompatibleTextEN
             customBoardButtons = customBoardButtonsEN
+            boardValidationErrors = boardValidationErrorsEN
             break
         }
     }
@@ -407,7 +409,10 @@ $(document).ready(function () {
 
     //Detect language, load strings
     let stringKeys = Object.keys(strings)
-    stringKeys.forEach((key) => document.getElementById(key).innerHTML = strings[key])
+    stringKeys.forEach((key) => {
+        console.log(key)
+        document.getElementById(key).innerHTML = strings[key]
+    })
     $("#startGame").attr("value", letsPlay)
 
     const languageLabels = ["Switch language", "Cambia lingua"]
@@ -541,7 +546,7 @@ $(document).ready(function () {
     })
 
     $(".modal-back-button").on("click", function () {
-        $(".modal-wrapper").hide()
+        hideAndShowModal()
     })
 
     function selectBoard(id, minPlayers, event) {
@@ -598,8 +603,14 @@ $(document).ready(function () {
         }
     }
 
+    function hideAndShowModal(selectorToShow) {
+        $(".modal-wrapper").hide()
+        selectorToShow && $(selectorToShow).show()
+    }
+
     //Custom Board
-    function buildCustomBoard() {
+    const buildCustomBoard = () => {
+        console.log('Custom Board Sizes', customBoardSizes)
         //FIll itemsArray with values from the form
         let customBoardName = $("#customBoardName").val()
         let customCharacters = []
@@ -617,9 +628,25 @@ $(document).ready(function () {
         if (!settings.customBoards) {
             settings.customBoards = []
         }
-        settings.customBoards.push({ name: customBoardName, characters: customCharacters, weapons: customWeapons, rooms: customRooms })
-        console.log(settings)
-        saveSettings()
+        const boardToSave = { name: customBoardName, characters: customCharacters, weapons: customWeapons, rooms: customRooms }
+        return boardToSave
+    }
+
+    const validateBoard = (board) => {
+        let res = undefined
+        if (_.find(settings.customBoards, el => _.isEqual(el, board))) {
+            res = boardValidationErrors.duplicate
+        } else if (!board.name) {
+            res = boardValidationErrors.name
+        } else if (!(board.characters && board.characters.length > 0)) {
+            res = boardValidationErrors.characters
+        } else if (!(board.weapons && board.weapons.length > 0)) {
+            res = boardValidationErrors.weapons
+        } else if (!(board.rooms && board.rooms.length > 0)) {
+            res = boardValidationErrors.rooms
+        }
+        console.log(res)
+        return res
     }
 
     $("#customizeBoardButton").on("click", function (event) {
@@ -630,49 +657,82 @@ $(document).ready(function () {
         Use | Edit | Exp | Del
         */
         updateCustomBoardList()
-        //Mostra modale
         $("#customBoardModal").show()
     })
 
+    const getBoardListElement = (board, index, elementId, addButtons, addCheckbox) => {
+
+        const tbody = $("<tbody class='custom-board-body' id='" + elementId + "Body'>")
+        const tdName = $("<td colspan='3'>").text(board.name)
+        const trName = $("<tr class='custom-board-name-row' id='" + elementId + "Name'>")
+        if (addCheckbox) {
+            let checkboxDiv = $("<div>").addClass("checkbox-wrapper-31 checkbox-wrapper-32")
+
+            let checkbox = $("<input>").attr("type", "checkbox")
+            checkbox.attr("id", elementId + "Checkbox")
+            checkbox.attr("class", "table-header-checkbox board-import-checkbox")
+            checkbox.on("change", function () {
+                if ($(this).is(":checked")) {
+                    $("#" + elementId + 'Body td, #' + elementId + 'Body th').css("background-color", "var(--current-lightBlue")
+                } else {
+                    $("#" + elementId + 'Body td, #' + elementId + 'Body th').css("background-color", "")
+                }
+            })
+
+            let checkboxCell = $("<th rowspan='2'>").attr("class", "table-header-checkbox-cell")
+            checkboxCell.attr("scope", "row")
+            checkboxDiv.append(checkbox, checkboxSvg)
+            checkboxCell.append(checkboxDiv)
+            $(trName).append($(checkboxCell))
+        }
+        $(trName).append($(tdName))
+
+        const tdCharacters = $("<td id='" + elementId + "Characters'>").append($(emojiSpan).clone().text("person"), " ", board.characters.length)
+        const tdWeapons = $("<td id='" + elementId + "Weapons'>").append($(emojiSpan).clone().text("syringe"), " ", board.weapons.length)
+        const tdRooms = $("<td id='" + elementId + "Rooms'>").append($(emojiSpan).clone().text("house"), " ", board.rooms.length)
+        const trItems = $("<tr id='" + elementId + "Items'>").append($(tdCharacters), $(tdWeapons), $(tdRooms))
+
+        $(tbody).append($(trName), $(trItems))
+
+        if (addButtons) {
+
+            const useButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Use'>").text("play_arrow").attr("title", customBoardButtons.play).on("click", function () {
+                chooseCustomBoard(index)
+            })
+            const editButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Edit'>").text("edit").attr("title", customBoardButtons.edit).on("click", function () {
+                editCustomBoard(index)
+            })
+            const exportButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Export'>").text("download").attr("title", customBoardButtons.export).on("click", function () {
+                exportCustomBoard(index)
+            })
+            const deleteButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Delete'>").text("delete").attr("title", customBoardButtons.delete).on("click", function () {
+                deleteCustomBoard(index)
+            })
+            const trButtons = $("<tr id='" + elementId + "Buttons'>").append($("<td class='custom-board-button-cell' colspan='3'>").append($(useButton), $(editButton), $(exportButton), $(deleteButton)))
+            $(tbody).append($(trButtons))
+
+        }
+
+        return tbody
+    }
+
+    const emojiSpan = $("<span class='material-symbols-outlined'>")
+
     function updateCustomBoardList() {
-        const emojiSpan = $("<span class='material-symbols-outlined'>")
-        if (settings.customBoards) {
+        if (settings.customBoards.length > 0) {
             $("#customBoardLoadSection").empty()
             settings.customBoards.forEach((customBoard, index) => {
-                $("#customBoardExistingSection").show()
-                const tbody = $("<tbody class='custom-board-body' id='customBoardLoad" + index + "Body'>")
-                const trName = $("<tr class='custom-board-name-row' id='customBoardLoad" + index + "Name'>").html($("<td colspan='3'>").text(customBoard.name))
-
-                const tdCharacters = $("<td id='customBoardLoad" + index + "Characters'>").append($(emojiSpan).clone().text("person"), " ", customBoard.characters.length)
-                const tdWeapons = $("<td id='customBoardLoad" + index + "Weapons'>").append($(emojiSpan).clone().text("syringe"), " ", customBoard.weapons.length)
-                const tdRooms = $("<td id='customBoardLoad" + index + "Rooms'>").append($(emojiSpan).clone().text("house"), " ", customBoard.rooms.length)
-                const trItems = $("<tr id='customBoardLoad" + index + "Items'>").append($(tdCharacters), $(tdWeapons), $(tdRooms))
-
-                const useButton = $("<button class='small-button material-symbols-outlined' id='customBoardLoad" + index + "Use'>").text("play_arrow").attr("title", customBoardButtons.play).on("click", function () {
-                    chooseCustomBoard(index)
-                })
-                const editButton = $("<button class='small-button material-symbols-outlined' id='customBoardLoad" + index + "Edit'>").text("edit").attr("title", customBoardButtons.edit).on("click", function () {
-                    editCustomBoard(index)
-                })
-                const exportButton = $("<button class='small-button material-symbols-outlined' id='customBoardLoad" + index + "Export'>").text("download").attr("title", customBoardButtons.export).on("click", function () {
-                    exportCustomBoard(index)
-                })
-                const deleteButton = $("<button class='small-button material-symbols-outlined' id='customBoardLoad" + index + "Delete'>").text("delete").attr("title", customBoardButtons.delete).on("click", function () {
-                    deleteCustomBoard(index)
-                })
-                const trButtons = $("<tr id='customBoardLoad" + index + "Buttons'>").append($("<td class='custom-board-button-cell' colspan='3'>").append($(useButton), $(editButton), $(exportButton), $(deleteButton)))
-
-                $(tbody).append($(trName), $(trItems), $(trButtons))
-                $("#customBoardLoadSection").append($(tbody))
+                $("#customBoardLoadSection").append($(getBoardListElement(customBoard, index, "customBoardLoad" + index, true, false)))
             })
+            $("#customBoardExistingSection").show()
         } else {
             $("#customBoardExistingSection").hide()
         }
     }
 
     $("#newBoardButton").on("click", function () {
-        $(".modal-wrapper").hide()
-        $("#newBoardModal").show()
+        $("#saveBoardButton").data("editing", "false")
+        hideAndShowModal("#newBoardModal")
     })
 
     function chooseCustomBoard(id) {
@@ -682,26 +742,55 @@ $(document).ready(function () {
         $("#customizeBoardButtonSubtitle").text(settings.customBoards[id].name)
         $("#customizeBoardButton").data("selected", "true")
         $("#customizeBoardButton, #customizeBoardButton > *").css("background-color", "var(--current-lightRed)")
-        $(".modal-wrapper").hide()
+        hideAndShowModal("#customizeBoardButtonSubtitle")
     }
 
     function editCustomBoard(id) {
-        //popola i campi
         const boardToEdit = settings.customBoards[id]
+        customBoardSizes.Characters = 0
+        customBoardSizes.Weapons = 0
+        customBoardSizes.Rooms = 0
         $("#customBoardName").val(boardToEdit.name)
+        $("#customBoardCharacters").empty()
+        $("#customBoardWeapons").empty()
+        $("#customBoardRooms").empty()
+        console.log('edit custom board', boardToEdit)
         boardToEdit.characters.forEach(character => addFieldToSection('Characters', character))
         boardToEdit.weapons.forEach(weapon => addFieldToSection('Weapons', weapon))
         boardToEdit.rooms.forEach(room => addFieldToSection('Rooms', room))
-        $(".modal-wrapper").hide()
-        $("#newBoardModal").show()
+        $("#saveBoardButton").data("editing", id)
+        hideAndShowModal("#newBoardModal")
     }
 
+    $("#exportAllBoardsButton").on("click", function () {
+        exportCustomBoard()
+    })
+
     function exportCustomBoard(id) {
-        //todo impl
+        let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(id ? settings.customBoards[id] : settings.customBoards)); //todo sistema
+        let downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", (id ? settings.customBoards[id].name : "Detective Notes Boards") + ".board");
+        document.body.appendChild(downloadAnchorNode); // required for firefox
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
     }
 
     function deleteCustomBoard(id) {
-        //todo impl
+        $("#confirmationPromptTitle").text(customBoardButtons.confirmationTitle)
+        $("#confirmationPromptSubtitle").text(customBoardButtons.confirmationSubtitle)
+        $("#genericYes").on("click", function () {
+            id === 0 ? settings.customBoards.shift() : settings.customBoards.splice(id, 1)
+            saveSettings()
+            updateCustomBoardList()
+            hideAndShowModal("#customBoardModal")
+            $("#genericYes").off("click")
+        })
+        $("#genericNo").on("click", function () {
+            hideAndShowModal("#customBoardModal")
+            $("#genericNo").off("click")
+        })
+        hideAndShowModal("#confirmationModal")
     }
 
     $("#addCharacterToCustomBoardButton").on("click", function () {
@@ -724,6 +813,7 @@ $(document).ready(function () {
 
     function addFieldToSection(container, text) {
         const id = "custom" + container + customBoardSizes[container]
+        console.log('Adding field', container, text, id)
         customBoardSizes[container]++
 
         const row = $("<tr>").attr("id", id + "Row")
@@ -735,7 +825,9 @@ $(document).ready(function () {
         }
         const deleteButton = $("<button>").attr("class", "small-button board-button material-symbols-outlined").text("delete").attr("id", "delete" + id).on("click", function () {
             $("#" + id + "Row").remove()
+            console.log('customboardsizes before', customBoardSizes)
             customBoardSizes[container]--
+            console.log('customboardsizes after', customBoardSizes)
         })
         const inputCell = $("<td>").html(input).addClass("custom-table-input")
         const deleteButtonCell = $("<td>").html(deleteButton).addClass("custom-table-del")
@@ -744,24 +836,95 @@ $(document).ready(function () {
         $("#customBoard" + container).append(row)
     }
 
-    $("#saveBoardButton, #customBoardModalBackButton").on("click", function () {
-        buildCustomBoard()
-        $(".modal-wrapper").hide()
-        $("#customBoardModal").show()
-        updateCustomBoardList()
+    $("#saveBoardButton").on("click", function () {
+        const boardToSave = buildCustomBoard()
+        const validation = validateBoard(boardToSave)
+        if (!validation) {
+            $("#boardValidationFailedMessage").hide()
+            if ($("#saveBoardButton").data("editing") === "false") {
+                //new
+                settings.customBoards.push(boardToSave)
+            } else {
+                //editing
+                const id = $("#saveBoardButton").data("editing")
+                console.log("data editing", id)
+                settings.customBoards[id] = boardToSave
+            }
+            saveSettings()
+            updateCustomBoardList()
+            hideAndShowModal("#customBoardModal")
+        } else {
+            $("#boardValidationFailedMessage").text(validation)
+            $("#boardValidationFailedMessage").show()
+        }
     })
 
-    $("#exportBoardButton").on("click", function () { //todo sistema
-        //Salva
-        buildCustomBoard()
-        //Scarica
-        let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(settings.customBoards)); //todo sistema
-        let downloadAnchorNode = document.createElement('a');
-        downloadAnchorNode.setAttribute("href", dataStr);
-        downloadAnchorNode.setAttribute("download", settings.customBoards + ".json");
-        document.body.appendChild(downloadAnchorNode); // required for firefox
-        downloadAnchorNode.click();
-        downloadAnchorNode.remove();
+    $("#newBoardModalBackButton").on("click", function () {
+        hideAndShowModal("#customBoardModal")
+    })
+
+
+    $("#customBoardModalBackButton").on("click", function () {
+        hideAndShowModal()
+    })
+
+    $("#importBoardButton").on("click", function () {
+        $("#fileValidationFailed").hide()
+        $("#chooseBoardsToImportSection").hide()
+        hideAndShowModal("#importBoardModal")
+    })
+
+    let parsedFile
+
+    $("#fileInput").on("change", function (e) {
+        $("#chooseBoardsToImportTable").empty()
+        console.log(e.target.files[0].name)
+        const reader = new FileReader()
+        reader.onload = function (event) {
+            parsedFile = JSON.parse(event.target.result)
+            console.log(parsedFile)
+            if (validateFile(parsedFile)) {
+                $("#chooseBoardsToImportSection").show()
+                //Popola la sezione di scelta dei tavoli
+                parsedFile.forEach((board, index) => {
+                    $("#chooseBoardsToImportTable").append($(getBoardListElement(board, index, "customBoardInput" + index, false, true)))
+                })
+            } else {
+                $("#chooseBoardsToImportSection").hide()
+                $("#fileValidationFailed").show()
+            }
+        }
+        reader.readAsText(e.target.files[0])
+    })
+
+    const validateFile = (file) => {
+        let ret = true
+        file.forEach(board => {
+            ret = !!(board.name && board.characters && board.weapons && board.rooms)
+            if (!ret) {
+                return
+            }
+        })
+        console.log('Validated', file, ret)
+        return ret
+    }
+
+    $("#finalizeImportButton").on("click", function () {
+        if ($(".board-import-checkbox").length !== 0) {
+            $(".board-import-checkbox").each(function (index) {
+                if ($(this).is(":checked")) {
+                    settings.customBoards.push(parsedFile[index])
+                }
+            })
+            $("#fileInput").val(null)
+            saveSettings()
+            updateCustomBoardList()
+            hideAndShowModal("#customBoardModal")
+        }
+    })
+
+    $("#importBoardModalBackButton").on("click", function () {
+        hideAndShowModal("#customBoardModal")
     })
 
     //Dark mode

@@ -60,7 +60,6 @@ export const stringsEN = {
     beginButton: "Start",
     beginButtonSubtitle: "Any saved game will be deleted",
     continueButton: "Continue",
-    resumePromptText: "There's a game saved on this device.<br>Would you like to restore it?",
     genericYes: "Yes",
     genericNo: "No",
     newGame: "New Game",
@@ -114,11 +113,16 @@ export const stringsEN = {
     customBoardHeaderCharacters: "Suspects",
     customBoardHeaderWeapons: "Weapons",
     customBoardHeaderRooms: "Rooms",
-    exportBoardButton: "Export board",
-    importBoardButton: "Import board",
+    importBoardButton: "Import boards",
+    exportAllBoardsButton: "Export boards",
     customBoardQuestion: "Which custom board are you using?",
     customBoardSavedQuestion: "Or use one of these saved boards",
-    newBoardButton: "New board"
+    newBoardButton: "New board",
+    importBoardTitle: "Import boards",
+    chooseBoardsToImportTitle: "Choose which boards to import",
+    fileValidationFailed: "The file you chose is not valid. Try again.",
+    finalizeImportButton: "Import selected",
+    fileInputButton: "Choose file"
 }
 
 export const incompatibleTextEN = "This saved game is incompatible with this version of the app, cannot resume."
@@ -127,7 +131,18 @@ export const customBoardButtonsEN = {
     play: "Use this board",
     edit: "Edit",
     export: "Export",
-    delete: "Delete"
+    delete: "Delete",
+    confirmationTitle: "Delete board?",
+    confirmationSubtitle: "This cannot be undone!"
+}
+
+export const boardValidationErrorsEN = {
+    duplicate: "There's another board like this.",
+    name: "You haven't given a name.",
+    characters: "There are no suspects.",
+    weapons: "There are no weapons.",
+    rooms: "There are no rooms.",
+    generic: "Board not valid"
 }
 
 export const letsPlayEN = "Let's play!";
