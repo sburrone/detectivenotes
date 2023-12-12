@@ -638,10 +638,43 @@ $(document).ready(function () {
         $("#customBoardModal").show()
     })
 
-    const getBoardListElement = (board, index, elementId, addButtons, addCheckbox) => {
+    const getListFromArray = (array, id, ulClass, liClass) => {
+        const ret = $("<ul>")
+        id && $(ret).attr("id", id)
+        ulClass && $(ret).attr("class", ulClass)
+        array.forEach((item, index) => {
+            const li = $("<li>").text(item)
+            id && $(li).attr("id", id + "List" + index)
+            liClass && $(li).attr("class", liClass)
+            $(ret).append($(li))
+        })
+        return ret
+    }
+
+    const getBoardListElement = (board, index, elementId, addButtons, addCheckbox, expandable) => {
 
         const tbody = $("<tbody class='custom-board-body' id='" + elementId + "Body'>")
-        const tdName = $("<td colspan='3'>").text(board.name)
+        const spanName = $("<span>").text(board.name)
+        const tdName = $("<td colspan='3'>").append($(spanName))
+        let trItemsExpanded
+        if (expandable) {
+            const expandButton = $("<a class='material-symbols-outlined' id='" + elementId + "ExpandButton'>").text("expand_more").on("click", function () {
+                const currentButton = $("#" + elementId + "ExpandButton")
+                $(currentButton).text($(currentButton).text() == "expand_more" ? "expand_less" : "expand_more")
+                $("#" + elementId + 'Items').toggle()
+                $("#" + elementId + 'ItemsExpanded').toggle()
+            })
+            const charactersExpandedHeader = $("<div>").append($(emojiSpan).clone().text("person"), " ", customBoardButtons.characters)
+            const charactersExpandedList = $("<div class='items-expanded-div'>").append($(getListFromArray(board.characters)))
+            const weaponsExpandedHeader = $("<div>").append($(emojiSpan).clone().text("syringe"), " ", customBoardButtons.weapons)
+            const weaponsExpandedList = $("<div class='items-expanded-div'>").append($(getListFromArray(board.weapons)))
+            const roomsExpandedHeader = $("<div>").append($(emojiSpan).clone().text("house"), " ", customBoardButtons.rooms)
+            const roomsExpandedList = $("<div class='items-expanded-div'>").append($(getListFromArray(board.rooms)))
+            const cell = $("<td class='items-expanded-cell' colspan='3' id='" + elementId + "ItemsExpandedList'>").append($(charactersExpandedHeader), $(charactersExpandedList), $(weaponsExpandedHeader), $(weaponsExpandedList), $(roomsExpandedHeader), $(roomsExpandedList))
+
+            trItemsExpanded = $("<tr id='" + elementId + "ItemsExpanded'>").append($(cell))
+            $(tdName).append($(expandButton))
+        }
         const trName = $("<tr class='custom-board-name-row' id='" + elementId + "Name'>")
         if (addCheckbox) {
             let checkboxDiv = $("<div>").addClass("checkbox-wrapper-31 checkbox-wrapper-32")
@@ -672,6 +705,11 @@ $(document).ready(function () {
 
         $(tbody).append($(trName), $(trItems))
 
+        if (expandable) {
+            $(trItemsExpanded).hide()
+            $(tbody).append($(trItemsExpanded))
+        }
+
         if (addButtons) {
 
             const useButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Use'>").text("play_arrow").attr("title", customBoardButtons.play).on("click", function () {
@@ -700,7 +738,7 @@ $(document).ready(function () {
         if (settings.customBoards && settings.customBoards.length > 0) {
             $("#customBoardLoadSection").empty()
             settings.customBoards.forEach((customBoard, index) => {
-                $("#customBoardLoadSection").append($(getBoardListElement(customBoard, index, "customBoardLoad" + index, true, false)))
+                $("#customBoardLoadSection").append($(getBoardListElement(customBoard, index, "customBoardLoad" + index, true, false, true)))
             })
             $("#customBoardExistingSection").show()
         } else {
@@ -865,7 +903,7 @@ $(document).ready(function () {
                 $("#chooseBoardsToImportSection").show()
                 //Popola la sezione di scelta dei tavoli
                 parsedFile.forEach((board, index) => {
-                    $("#chooseBoardsToImportTable").append($(getBoardListElement(board, index, "customBoardInput" + index, false, true)))
+                    $("#chooseBoardsToImportTable").append($(getBoardListElement(board, index, "customBoardInput" + index, false, true, true)))
                 })
             } else {
                 $("#chooseBoardsToImportSection").hide()

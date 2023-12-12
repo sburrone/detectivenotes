@@ -133,7 +133,10 @@ export const customBoardButtonsEN = {
     export: "Export",
     delete: "Delete",
     confirmationTitle: "Delete board?",
-    confirmationSubtitle: "This cannot be undone!"
+    confirmationSubtitle: "This cannot be undone!",
+    characters: "Suspects",
+    weapons: "Weapons",
+    rooms: "Rooms"
 }
 
 export const boardValidationErrorsEN = {

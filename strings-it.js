@@ -134,7 +134,10 @@ export const customBoardButtonsIT = {
     export: "Esporta",
     delete: "Elimina",
     confirmationTitle: "Elimino il tavolo?",
-    confirmationSubtitle: "L'azione è irreversibile!"
+    confirmationSubtitle: "L'azione è irreversibile!",
+    characters: "Sospetti",
+    weapons: "Armi",
+    rooms: "Stanze"
 }
 
 export const boardValidationErrorsIT = {
