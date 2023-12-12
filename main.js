@@ -802,12 +802,21 @@ $(document).ready(function () {
         const deleteButton = $("<button>").attr("class", "small-button board-button material-symbols-outlined").text("delete").attr("id", "delete" + id).on("click", function () {
             $("#" + id + "Row").remove()
             customBoardSizes[container]--
+            updateCustomBoardNumberCells()
         })
         const inputCell = $("<td>").html(input).addClass("custom-table-input")
         const deleteButtonCell = $("<td>").html(deleteButton).addClass("custom-table-del")
 
         row.append(numberCell, inputCell, deleteButtonCell)
         $("#customBoard" + container).append(row)
+    }
+
+    function updateCustomBoardNumberCells() {
+        Object.keys(customBoardSizes).forEach(container => {
+            $("#customBoard" + container).find(".custom-table-num").each(function (index) {
+                $(this).text(index + 1)
+            })
+        })
     }
 
     $("#saveBoardButton").on("click", function () {
