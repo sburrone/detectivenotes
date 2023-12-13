@@ -55,7 +55,7 @@ export const boardsEN = [
     },
 ];
 
-export const stringsEN = {
+export const idStringsEN = {
     mainTitle: "detective<br>notes",
     beginButton: "Start",
     beginButtonSubtitle: "Any saved game will be deleted",
@@ -127,7 +127,7 @@ export const stringsEN = {
 
 export const incompatibleTextEN = "This saved game is incompatible with this version of the app, cannot resume."
 
-export const customBoardButtonsEN = {
+export const titleStringsEN = {
     play: "Use this board",
     edit: "Edit",
     export: "Export",
@@ -139,13 +139,17 @@ export const customBoardButtonsEN = {
     rooms: "Rooms"
 }
 
-export const boardValidationErrorsEN = {
-    duplicate: "There's another board like this.",
-    name: "You haven't given a name.",
-    characters: "There are no suspects.",
-    weapons: "There are no weapons.",
-    rooms: "There are no rooms.",
-    generic: "Board not valid"
+export const manualStringsEN = {
+    boardValidation: {
+        duplicate: "There's another board like this.",
+        name: "You haven't given a name.",
+        characters: "There are no suspects.",
+        weapons: "There are no weapons.",
+        rooms: "There are no rooms.",
+        generic: "Board not valid"
+    },
+    incompatibleText: "This saved game is incompatible with this version of the app, cannot resume.",
+    letsPlay: "Let's play!"
 }
 
 export const letsPlayEN = "Let's play!";

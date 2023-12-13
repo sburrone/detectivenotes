@@ -56,7 +56,7 @@ export const boardsIT = [
 ];
 
 
-export const stringsIT = {
+export const idStringsIT = {
     mainTitle: "detective<br>notes",
     beginButton: "Inizia",
     beginButtonSubtitle: "La partita salvata verrà eliminata",
@@ -128,7 +128,7 @@ export const stringsIT = {
 
 export const incompatibleTextIT = "La partita salvata non è compatibile con questa versione dell'app, non posso continuare la partita."
 
-export const customBoardButtonsIT = {
+export const titleStringsIT = {
     play: "Usa questo tavolo",
     edit: "Modifica",
     export: "Esporta",
@@ -140,13 +140,17 @@ export const customBoardButtonsIT = {
     rooms: "Stanze"
 }
 
-export const boardValidationErrorsIT = {
-    duplicate: "Esiste già un tavolo uguale a questo.",
-    name: "Non hai dato un nome.",
-    characters: "Mancano i sospetti.",
-    weapons: "Mancano le armi.",
-    rooms: "Mancano le stanze.",
-    generic: "Tavolo non valido"
+export const manualStringsIT = {
+    boardValidation: {
+        duplicate: "Esiste già un tavolo uguale a questo.",
+        name: "Non hai dato un nome.",
+        characters: "Mancano i sospetti.",
+        weapons: "Mancano le armi.",
+        rooms: "Mancano le stanze.",
+        generic: "Tavolo non valido"
+    },
+    incompatibleText: "La partita salvata non è compatibile con questa versione dell'app, non posso continuare la partita.",
+    letsPlay: "Giochiamo!"
 }
 
 export const letsPlayIT = "Giochiamo!";
