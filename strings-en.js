@@ -126,6 +126,31 @@ export const idStringsEN = {
 }
 
 export const titleStringsEN = {
+    customizeBoardButton: "Customize Board",
+    playerNum: "Number of players",
+    newBoardButton: "New Custom Board",
+    importBoardButton: "Import Custom Boards",
+    exportAllBoardsButton: "Export All Boards",
+    customBoardName: "Board name",
+    addCharacterToCustomBoardButton: "Add suspect",
+    addWeaponToCustomBoardButton: "Add weapon",
+    addRoomToCustomBoardButton: "Add room",
+    saveBoardButton: "Save board",
+    fileInputButton: "Choose file",
+    fileInput: "Import board",
+    finalizeImportButton: "Import boards",
+    longNamesCompatibilityMode: "Long names compatibility mode",
+    hideDustCounter: "Hide dust counter",
+    alternateInGameToolbar: "Alternate in -game toolbar",
+    playerOrder1: "The first player to your left",
+    playerOrder2: "The second player to your left",
+    playerOrder3: "The third player to your left",
+    playerOrder4: "The fourth player to your left",
+    playerOrder5: "The fifth player to your left",
+    dustCounterButton: "Dust counter",
+    dustCounterAltButton: "Dust counter",
+    showLessSymbolsCheckbox: "Show less symbols",
+    fakeCheckbox: "Instructions checkbox"
 }
 
 export const manualStringsEN = {

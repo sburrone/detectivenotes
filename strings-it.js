@@ -101,8 +101,8 @@ export const idStringsIT = {
     advancedSettingsTitle: "Impostazioni avanzate",
     longNamesCompatibilityModeLabel: "Modalità di compatibilità per nomi lunghi",
     longNamesCompatibilityModeText: "Mostra i nomi dei giocatori in verticale, evitando di stringere troppo la tabella.",
-    hideDustCounterLabel: "Nascondi contatore polvere",
-    hideDustCounterText: "Nascondi il contatore della polvere per il tavolo di Harry Potter",
+    hideDustCounterLabel: "Nascondi contatore polveri",
+    hideDustCounterText: "Nascondi il contatore delle polveri per il tavolo di Harry Potter",
     hideDustCounterDisabled: "Questa opzione è disponibile solo per il tavolo di Harry Potter",
     instructionsModalTitle: "Istruzioni",
     skipLoading: "Salta",
@@ -127,9 +127,31 @@ export const idStringsIT = {
 }
 
 export const titleStringsIT = {
-
-
-
+    customizeBoardButton: "Personalizza tavolo",
+    playerNum: "Numero di giocatori",
+    newBoardButton: "Nuovo tavolo personalizzato",
+    importBoardButton: "Importa tavoli personalizzati",
+    exportAllBoardsButton: "Esporta tutti i tavoli",
+    customBoardName: "Nome tavolo",
+    addCharacterToCustomBoardButton: "Aggiungi sospetto",
+    addWeaponToCustomBoardButton: "Aggiungi arma",
+    addRoomToCustomBoardButton: "Aggiungi stanza",
+    saveBoardButton: "Salva tavolo",
+    fileInputButton: "Scegli file",
+    fileInput: "Importa tavoli",
+    finalizeImportButton: "Importa tavoli",
+    longNamesCompatibilityMode: "Modalità di compatibilità per nomi lunghi",
+    hideDustCounter: "Nascondi contatore polveri",
+    alternateInGameToolbar: "Menu di gioco alternativo",
+    playerOrder1: "Il primo giocatore alla tua sinistra",
+    playerOrder2: "Il secondo giocatore alla tua sinistra",
+    playerOrder3: "Il terzo giocatore alla tua sinistra",
+    playerOrder4: "Il quarto giocatore alla tua sinistra",
+    playerOrder5: "Il quinto giocatore alla tua sinistra",
+    dustCounterButton: "Contatore polveri",
+    dustCounterAltButton: "Contatore polveri",
+    showLessSymbolsCheckbox: "Mostra meno simboli",
+    fakeCheckbox: "Spunta istruzioni"
 }
 
 export const manualStringsIT = {

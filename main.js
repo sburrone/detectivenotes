@@ -392,8 +392,13 @@ $(document).ready(function () {
     //Detect language, load strings
     let stringKeys = Object.keys(idStrings)
     stringKeys.forEach((key) => {
-        //console.log(key)
+        //console.log('string',key)
         document.getElementById(key).innerHTML = idStrings[key]
+    })
+    let titleKeys = Object.keys(titleStrings)
+    titleKeys.forEach((key) => {
+        //console.log('title',key)
+        document.getElementById(key).title = titleStrings[key]
     })
     $("#startGame").attr("value", manualStrings.letsPlay)
 
