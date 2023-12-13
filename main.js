@@ -793,8 +793,8 @@ $(document).ready(function () {
     }
 
     function deleteCustomBoard(id) {
-        $("#confirmationPromptTitle").text(manualStrings.confirmationTitle)
-        $("#confirmationPromptSubtitle").text(manualStrings.confirmationSubtitle)
+        $("#confirmationPromptTitle").text(manualStrings.customBoardDeleteModal.confirmationTitle)
+        $("#confirmationPromptSubtitle").text(manualStrings.customBoardDeleteModal.confirmationSubtitle)
         $("#genericYes").on("click", function () {
             id === 0 ? settings.customBoards.shift() : settings.customBoards.splice(id, 1)
             saveSettings()
