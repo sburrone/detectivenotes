@@ -97,7 +97,7 @@ export const idStringsIT = {
     dustCounter: "Contatore polveri",
     playerOrderModalLink: "Quale ordine?",
     orderModalText: "Il gioco si muove in senso orario.<br>Scrivi i nomi dei giocatori in senso orario, partendo da chi si siede alla tua sinistra.",
-    creditsModalText: "Detective Notes<br>Versione 3.3<br>fatto con 🩷 da Nicholas<br><br>Questo progetto utilizza il modello <a href=\"https://sketchfab.com/3d-models/clue-board-game-843af04381cc495ca5f0a4bebadb1752\" target=\"_blank\">\"Clue (Board Game)\"</a> di <a href=\"https://sketchfab.com/paulyanez\" target=\"_blank\">Anthony Yanez</a>, utilizzato sotto licenza <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">CC-BY-4.0</a>.",
+    creditsModalText: "Detective Notes<br>Versione 3.4<br>fatto con 🩷 da Nicholas<br><br>Questo progetto utilizza il modello <a href=\"https://sketchfab.com/3d-models/clue-board-game-843af04381cc495ca5f0a4bebadb1752\" target=\"_blank\">\"Clue (Board Game)\"</a> di <a href=\"https://sketchfab.com/paulyanez\" target=\"_blank\">Anthony Yanez</a>, utilizzato sotto licenza <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">CC-BY-4.0</a>.",
     advancedSettingsTitle: "Impostazioni avanzate",
     longNamesCompatibilityModeLabel: "Modalità di compatibilità per nomi lunghi",
     longNamesCompatibilityModeText: "Mostra i nomi dei giocatori in verticale, evitando di stringere troppo la tabella.",
@@ -126,8 +126,6 @@ export const idStringsIT = {
     fileInputButton: "Scegli il file"
 }
 
-export const incompatibleTextIT = "La partita salvata non è compatibile con questa versione dell'app, non posso continuare la partita."
-
 export const titleStringsIT = {
     play: "Usa questo tavolo",
     edit: "Modifica",
@@ -152,5 +150,3 @@ export const manualStringsIT = {
     incompatibleText: "La partita salvata non è compatibile con questa versione dell'app, non posso continuare la partita.",
     letsPlay: "Giochiamo!"
 }
-
-export const letsPlayIT = "Giochiamo!";
