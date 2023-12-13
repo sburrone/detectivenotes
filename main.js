@@ -1,8 +1,8 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js'
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js'
 import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/controls/OrbitControls.js'
-import { stringsEN, boardsEN, letsPlayEN, incompatibleTextEN, customBoardButtonsEN, boardValidationErrorsEN } from './strings-en.js'
-import { stringsIT, boardsIT, letsPlayIT, incompatibleTextIT, customBoardButtonsIT, boardValidationErrorsIT } from './strings-it.js'
+import { idStringsEN, boardsEN, titleStringsEN, manualStringsEN } from './strings-en.js'
+import { idStringsIT, boardsIT, titleStringsIT, manualStringsIT } from './strings-it.js'
 
 
 let _APP = null
@@ -256,7 +256,7 @@ $(document).ready(function () {
     } else if (forcedLang && forcedLang.toLowerCase() == "en") {
         userLang = "en-US"
     }
-    let strings, boards, letsPlay, incompatibleText, customBoardButtons, boardValidationErrors
+    let idStrings, boards, titleStrings, manualStrings
     let itemsArray
     const imageData = {
         "check": "assets/icons/check.svg",
@@ -273,21 +273,17 @@ $(document).ready(function () {
 
     switch (userLang) {
         case "it-IT": {
-            strings = stringsIT
+            idStrings = idStringsIT
             boards = boardsIT
-            letsPlay = letsPlayIT
-            incompatibleText = incompatibleTextIT
-            customBoardButtons = customBoardButtonsIT
-            boardValidationErrors = boardValidationErrorsIT
+            titleStrings = titleStringsIT
+            manualStrings = manualStringsIT
             break
         }
         default: {
-            strings = stringsEN
+            idStrings = idStringsEN
             boards = boardsEN
-            letsPlay = letsPlayEN
-            incompatibleText = incompatibleTextEN
-            customBoardButtons = customBoardButtonsEN
-            boardValidationErrors = boardValidationErrorsEN
+            titleStrings = titleStringsEN
+            manualStrings = manualStringsEN
             break
         }
     }
@@ -394,12 +390,17 @@ $(document).ready(function () {
     }
 
     //Detect language, load strings
-    let stringKeys = Object.keys(strings)
+    let stringKeys = Object.keys(idStrings)
     stringKeys.forEach((key) => {
-        //console.log(key)
-        document.getElementById(key).innerHTML = strings[key]
+        //console.log('string',key)
+        document.getElementById(key).innerHTML = idStrings[key]
     })
-    $("#startGame").attr("value", letsPlay)
+    let titleKeys = Object.keys(titleStrings)
+    titleKeys.forEach((key) => {
+        //console.log('title',key)
+        document.getElementById(key).title = titleStrings[key]
+    })
+    $("#startGame").attr("value", manualStrings.letsPlay)
 
     const languageLabels = ["Switch language", "Cambia lingua"]
     let languageIndex = 0
@@ -431,7 +432,7 @@ $(document).ready(function () {
             $("#continueGameButton").attr("disabled", "true")
             $("#continueGameButton").css("filter", "grayscale(0.75)")
             $("#continueGameButton").toggle()
-            $("#continueButtonSubtitle").text(incompatibleText)
+            $("#continueButtonSubtitle").text(manualStrings.incompatibleText)
         }
     }
 
@@ -620,15 +621,15 @@ $(document).ready(function () {
     const validateBoard = (board) => {
         let res = undefined
         if (_.find(settings.customBoards, el => _.isEqual(el, board))) {
-            res = boardValidationErrors.duplicate
+            res = manualStrings.boardValidation.duplicate
         } else if (!board.name) {
-            res = boardValidationErrors.name
+            res = manualStrings.boardValidation.name
         } else if (!(board.characters && board.characters.length > 0)) {
-            res = boardValidationErrors.characters
+            res = manualStrings.boardValidation.characters
         } else if (!(board.weapons && board.weapons.length > 0)) {
-            res = boardValidationErrors.weapons
+            res = manualStrings.boardValidation.weapons
         } else if (!(board.rooms && board.rooms.length > 0)) {
-            res = boardValidationErrors.rooms
+            res = manualStrings.boardValidation.rooms
         }
         return res
     }
@@ -664,11 +665,11 @@ $(document).ready(function () {
                 $("#" + elementId + 'Items').toggle()
                 $("#" + elementId + 'ItemsExpanded').toggle()
             })
-            const charactersExpandedHeader = $("<div>").append($(emojiSpan).clone().text("person"), " ", customBoardButtons.characters)
+            const charactersExpandedHeader = $("<div>").append($(emojiSpan).clone().text("person"), " ", manualStrings.customBoardTitles.characters)
             const charactersExpandedList = $("<div class='items-expanded-div'>").append($(getListFromArray(board.characters)))
-            const weaponsExpandedHeader = $("<div>").append($(emojiSpan).clone().text("syringe"), " ", customBoardButtons.weapons)
+            const weaponsExpandedHeader = $("<div>").append($(emojiSpan).clone().text("syringe"), " ", manualStrings.customBoardTitles.weapons)
             const weaponsExpandedList = $("<div class='items-expanded-div'>").append($(getListFromArray(board.weapons)))
-            const roomsExpandedHeader = $("<div>").append($(emojiSpan).clone().text("house"), " ", customBoardButtons.rooms)
+            const roomsExpandedHeader = $("<div>").append($(emojiSpan).clone().text("house"), " ", manualStrings.customBoardTitles.rooms)
             const roomsExpandedList = $("<div class='items-expanded-div'>").append($(getListFromArray(board.rooms)))
             const cell = $("<td class='items-expanded-cell' colspan='3' id='" + elementId + "ItemsExpandedList'>").append($(charactersExpandedHeader), $(charactersExpandedList), $(weaponsExpandedHeader), $(weaponsExpandedList), $(roomsExpandedHeader), $(roomsExpandedList))
 
@@ -712,16 +713,16 @@ $(document).ready(function () {
 
         if (addButtons) {
 
-            const useButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Use'>").text("play_arrow").attr("title", customBoardButtons.play).on("click", function () {
+            const useButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Use'>").text("play_arrow").attr("title", manualStrings.customBoardTitles.play).on("click", function () {
                 chooseCustomBoard(index)
             })
-            const editButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Edit'>").text("edit").attr("title", customBoardButtons.edit).on("click", function () {
+            const editButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Edit'>").text("edit").attr("title", manualStrings.customBoardTitles.edit).on("click", function () {
                 editCustomBoard(index)
             })
-            const exportButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Export'>").text("download").attr("title", customBoardButtons.export).on("click", function () {
+            const exportButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Export'>").text("download").attr("title", manualStrings.customBoardTitles.export).on("click", function () {
                 exportCustomBoard(index)
             })
-            const deleteButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Delete'>").text("delete").attr("title", customBoardButtons.delete).on("click", function () {
+            const deleteButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Delete'>").text("delete").attr("title", manualStrings.customBoardTitles.delete).on("click", function () {
                 deleteCustomBoard(index)
             })
             const trButtons = $("<tr id='" + elementId + "Buttons'>").append($("<td class='custom-board-button-cell' colspan='3'>").append($(useButton), $(editButton), $(exportButton), $(deleteButton)))
@@ -792,8 +793,8 @@ $(document).ready(function () {
     }
 
     function deleteCustomBoard(id) {
-        $("#confirmationPromptTitle").text(customBoardButtons.confirmationTitle)
-        $("#confirmationPromptSubtitle").text(customBoardButtons.confirmationSubtitle)
+        $("#confirmationPromptTitle").text(manualStrings.customBoardDeleteModal.confirmationTitle)
+        $("#confirmationPromptSubtitle").text(manualStrings.customBoardDeleteModal.confirmationSubtitle)
         $("#genericYes").on("click", function () {
             id === 0 ? settings.customBoards.shift() : settings.customBoards.splice(id, 1)
             saveSettings()

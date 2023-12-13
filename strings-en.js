@@ -55,7 +55,7 @@ export const boardsEN = [
     },
 ];
 
-export const stringsEN = {
+export const idStringsEN = {
     mainTitle: "detective<br>notes",
     beginButton: "Start",
     beginButtonSubtitle: "Any saved game will be deleted",
@@ -96,7 +96,7 @@ export const stringsEN = {
     dustCounter: "Dust counter",
     playerOrderModalLink: "What order?",
     orderModalText: "The game moves clockwise.<br>Write the player's names clockwise, starting from the player to your left.",
-    creditsModalText: "Detective Notes<br>Version 3.3<br>made with 🩷 by Nicholas<br><br>This project uses the <a href=\"https://sketchfab.com/3d-models/clue-board-game-843af04381cc495ca5f0a4bebadb1752\" target=\"_blank\">\"Clue (Board Game)\"</a> model by <a href=\"https://sketchfab.com/paulyanez\" target=\"_blank\">Anthony Yanez</a>, licensed under <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">CC-BY-4.0</a>.",
+    creditsModalText: "Detective Notes<br>Version 3.4<br>made with 🩷 by Nicholas<br><br>This project uses the <a href=\"https://sketchfab.com/3d-models/clue-board-game-843af04381cc495ca5f0a4bebadb1752\" target=\"_blank\">\"Clue (Board Game)\"</a> model by <a href=\"https://sketchfab.com/paulyanez\" target=\"_blank\">Anthony Yanez</a>, licensed under <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">CC-BY-4.0</a>.",
     advancedSettingsTitle: "Advanced settings",
     longNamesCompatibilityModeLabel: "Long names compatibility mode",
     longNamesCompatibilityModeText: "Show player names vertically, allowing long names to be displayed without stretching the table.",
@@ -125,27 +125,56 @@ export const stringsEN = {
     fileInputButton: "Choose file"
 }
 
-export const incompatibleTextEN = "This saved game is incompatible with this version of the app, cannot resume."
-
-export const customBoardButtonsEN = {
-    play: "Use this board",
-    edit: "Edit",
-    export: "Export",
-    delete: "Delete",
-    confirmationTitle: "Delete board?",
-    confirmationSubtitle: "This cannot be undone!",
-    characters: "Suspects",
-    weapons: "Weapons",
-    rooms: "Rooms"
+export const titleStringsEN = {
+    customizeBoardButton: "Customize Board",
+    playerNum: "Number of players",
+    newBoardButton: "New Custom Board",
+    importBoardButton: "Import Custom Boards",
+    exportAllBoardsButton: "Export All Boards",
+    customBoardName: "Board name",
+    addCharacterToCustomBoardButton: "Add suspect",
+    addWeaponToCustomBoardButton: "Add weapon",
+    addRoomToCustomBoardButton: "Add room",
+    saveBoardButton: "Save board",
+    fileInputButton: "Choose file",
+    fileInput: "Import board",
+    finalizeImportButton: "Import boards",
+    longNamesCompatibilityMode: "Long names compatibility mode",
+    hideDustCounter: "Hide dust counter",
+    alternateInGameToolbar: "Alternate in -game toolbar",
+    playerOrder1: "The first player to your left",
+    playerOrder2: "The second player to your left",
+    playerOrder3: "The third player to your left",
+    playerOrder4: "The fourth player to your left",
+    playerOrder5: "The fifth player to your left",
+    dustCounterButton: "Dust counter",
+    dustCounterAltButton: "Dust counter",
+    showLessSymbolsCheckbox: "Show less symbols",
+    fakeCheckbox: "Instructions checkbox"
 }
 
-export const boardValidationErrorsEN = {
-    duplicate: "There's another board like this.",
-    name: "You haven't given a name.",
-    characters: "There are no suspects.",
-    weapons: "There are no weapons.",
-    rooms: "There are no rooms.",
-    generic: "Board not valid"
+export const manualStringsEN = {
+    boardValidation: {
+        duplicate: "There's another board like this.",
+        name: "You haven't given a name.",
+        characters: "There are no suspects.",
+        weapons: "There are no weapons.",
+        rooms: "There are no rooms.",
+        generic: "Board not valid"
+    },
+    customBoardTitles: {
+        play: "Use this board",
+        edit: "Edit",
+        export: "Export",
+        delete: "Delete",
+        characters: "Suspects",
+        weapons: "Weapons",
+        rooms: "Rooms"
+    },
+    customBoardDeleteModal: {
+        confirmationTitle: "Delete board?",
+        confirmationSubtitle: "This cannot be undone!"
+    },
+    incompatibleText: "This saved game is incompatible with this version of the app, cannot resume.",
+    letsPlay: "Let's play!"
 }
-
-export const letsPlayEN = "Let's play!";

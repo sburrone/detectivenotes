@@ -212,7 +212,7 @@
                 <tbody id="customBoardCharacters"></tbody>
                 <tr id="addCharacterToCustomBoardRow">
                     <td colspan="3" class="custom-table-add">
-                        <button id="addCharacterToCustomBoardButton" title="Add suspect"
+                        <button id="addCharacterToCustomBoardButton" title="Add suspect" type="button"
                             class="small-button material-symbols-outlined">add_circle</button>
                     </td>
                 </tr>
@@ -227,7 +227,7 @@
                 <tbody id="customBoardWeapons"></tbody>
                 <tr id="addWeaponToCustomBoardRow">
                     <td colspan="3" class="custom-table-add">
-                        <button id="addWeaponToCustomBoardButton" title="Add weapon"
+                        <button id="addWeaponToCustomBoardButton" title="Add weapon" type="button"
                             class="small-button material-symbols-outlined">add_circle</button>
                     </td>
                 </tr>
@@ -242,7 +242,7 @@
                 <tbody id="customBoardRooms"></tbody>
                 <tr id="addRoomToCustomBoardRow">
                     <td colspan="3" class="custom-table-add">
-                        <button id="addRoomToCustomBoardButton" title="Add room"
+                        <button id="addRoomToCustomBoardButton" title="Add room" type="button"
                             class="small-button material-symbols-outlined">add_circle</button>
                     </td>
                 </tr>
@@ -251,7 +251,7 @@
 
             <hr>
             <span clas="setup-tooltip hidden" id="boardValidationFailedMessage"></span>
-            <button id="saveBoardButton" class="begin-button" title="Save board"></button>
+            <button id="saveBoardButton" class="begin-button" title="Save board" type="button"></button>
 
 
         </div>
@@ -385,15 +385,15 @@
             <img src="assets/instructions/player_order.webp" class="setup-image"
                 alt="An image showing the order of players. The first player to type in is the one to your left, and the rest follow clockwise.">
             <p id="orderModalText" class="setup-tooltip"></p>
-            <input disabled type="text" class="order-input setup-name material-symbols-outlined"
+            <input disabled type="text" class="order-input setup-name material-symbols-outlined" id="playerOrder1"
                 title="The first player to your left" value="counter_1 face_6">
-            <input disabled type="text" class="order-input setup-name material-symbols-outlined"
+            <input disabled type="text" class="order-input setup-name material-symbols-outlined" id="playerOrder2"
                 title="The second player to your left" value="counter_2 face_4">
-            <input disabled type="text" class="order-input setup-name material-symbols-outlined"
+            <input disabled type="text" class="order-input setup-name material-symbols-outlined" id="playerOrder3"
                 title="The third player to your left" value="counter_3 face_2">
-            <input disabled type="text" class="order-input setup-name material-symbols-outlined"
+            <input disabled type="text" class="order-input setup-name material-symbols-outlined" id="playerOrder4"
                 title="The fourth player to your left" value="counter_4 face_5">
-            <input disabled type="text" class="order-input setup-name material-symbols-outlined"
+            <input disabled type="text" class="order-input setup-name material-symbols-outlined" id="playerOrder5"
                 title="The fifth player to your left" value="counter_5 face_3">
         </div>
     </div>

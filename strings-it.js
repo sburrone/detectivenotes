@@ -56,7 +56,7 @@ export const boardsIT = [
 ];
 
 
-export const stringsIT = {
+export const idStringsIT = {
     mainTitle: "detective<br>notes",
     beginButton: "Inizia",
     beginButtonSubtitle: "La partita salvata verrà eliminata",
@@ -97,12 +97,12 @@ export const stringsIT = {
     dustCounter: "Contatore polveri",
     playerOrderModalLink: "Quale ordine?",
     orderModalText: "Il gioco si muove in senso orario.<br>Scrivi i nomi dei giocatori in senso orario, partendo da chi si siede alla tua sinistra.",
-    creditsModalText: "Detective Notes<br>Versione 3.3<br>fatto con 🩷 da Nicholas<br><br>Questo progetto utilizza il modello <a href=\"https://sketchfab.com/3d-models/clue-board-game-843af04381cc495ca5f0a4bebadb1752\" target=\"_blank\">\"Clue (Board Game)\"</a> di <a href=\"https://sketchfab.com/paulyanez\" target=\"_blank\">Anthony Yanez</a>, utilizzato sotto licenza <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">CC-BY-4.0</a>.",
+    creditsModalText: "Detective Notes<br>Versione 3.4<br>fatto con 🩷 da Nicholas<br><br>Questo progetto utilizza il modello <a href=\"https://sketchfab.com/3d-models/clue-board-game-843af04381cc495ca5f0a4bebadb1752\" target=\"_blank\">\"Clue (Board Game)\"</a> di <a href=\"https://sketchfab.com/paulyanez\" target=\"_blank\">Anthony Yanez</a>, utilizzato sotto licenza <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">CC-BY-4.0</a>.",
     advancedSettingsTitle: "Impostazioni avanzate",
     longNamesCompatibilityModeLabel: "Modalità di compatibilità per nomi lunghi",
     longNamesCompatibilityModeText: "Mostra i nomi dei giocatori in verticale, evitando di stringere troppo la tabella.",
-    hideDustCounterLabel: "Nascondi contatore polvere",
-    hideDustCounterText: "Nascondi il contatore della polvere per il tavolo di Harry Potter",
+    hideDustCounterLabel: "Nascondi contatore polveri",
+    hideDustCounterText: "Nascondi il contatore delle polveri per il tavolo di Harry Potter",
     hideDustCounterDisabled: "Questa opzione è disponibile solo per il tavolo di Harry Potter",
     instructionsModalTitle: "Istruzioni",
     skipLoading: "Salta",
@@ -126,27 +126,56 @@ export const stringsIT = {
     fileInputButton: "Scegli il file"
 }
 
-export const incompatibleTextIT = "La partita salvata non è compatibile con questa versione dell'app, non posso continuare la partita."
-
-export const customBoardButtonsIT = {
-    play: "Usa questo tavolo",
-    edit: "Modifica",
-    export: "Esporta",
-    delete: "Elimina",
-    confirmationTitle: "Elimino il tavolo?",
-    confirmationSubtitle: "L'azione è irreversibile!",
-    characters: "Sospetti",
-    weapons: "Armi",
-    rooms: "Stanze"
+export const titleStringsIT = {
+    customizeBoardButton: "Personalizza tavolo",
+    playerNum: "Numero di giocatori",
+    newBoardButton: "Nuovo tavolo personalizzato",
+    importBoardButton: "Importa tavoli personalizzati",
+    exportAllBoardsButton: "Esporta tutti i tavoli",
+    customBoardName: "Nome tavolo",
+    addCharacterToCustomBoardButton: "Aggiungi sospetto",
+    addWeaponToCustomBoardButton: "Aggiungi arma",
+    addRoomToCustomBoardButton: "Aggiungi stanza",
+    saveBoardButton: "Salva tavolo",
+    fileInputButton: "Scegli file",
+    fileInput: "Importa tavoli",
+    finalizeImportButton: "Importa tavoli",
+    longNamesCompatibilityMode: "Modalità di compatibilità per nomi lunghi",
+    hideDustCounter: "Nascondi contatore polveri",
+    alternateInGameToolbar: "Menu di gioco alternativo",
+    playerOrder1: "Il primo giocatore alla tua sinistra",
+    playerOrder2: "Il secondo giocatore alla tua sinistra",
+    playerOrder3: "Il terzo giocatore alla tua sinistra",
+    playerOrder4: "Il quarto giocatore alla tua sinistra",
+    playerOrder5: "Il quinto giocatore alla tua sinistra",
+    dustCounterButton: "Contatore polveri",
+    dustCounterAltButton: "Contatore polveri",
+    showLessSymbolsCheckbox: "Mostra meno simboli",
+    fakeCheckbox: "Spunta istruzioni"
 }
 
-export const boardValidationErrorsIT = {
-    duplicate: "Esiste già un tavolo uguale a questo.",
-    name: "Non hai dato un nome.",
-    characters: "Mancano i sospetti.",
-    weapons: "Mancano le armi.",
-    rooms: "Mancano le stanze.",
-    generic: "Tavolo non valido"
+export const manualStringsIT = {
+    boardValidation: {
+        duplicate: "Esiste già un tavolo uguale a questo.",
+        name: "Non hai dato un nome.",
+        characters: "Mancano i sospetti.",
+        weapons: "Mancano le armi.",
+        rooms: "Mancano le stanze.",
+        generic: "Tavolo non valido"
+    },
+    customBoardTitles: {
+        play: "Usa questo tavolo",
+        edit: "Modifica",
+        export: "Esporta",
+        delete: "Elimina",
+        characters: "Sospetti",
+        weapons: "Armi",
+        rooms: "Stanze"
+    },
+    customBoardDeleteModal: {
+        confirmationTitle: "Elimino il tavolo?",
+        confirmationSubtitle: "L'azione è irreversibile!"
+    },
+    incompatibleText: "La partita salvata non è compatibile con questa versione dell'app, non posso continuare la partita.",
+    letsPlay: "Giochiamo!"
 }
-
-export const letsPlayIT = "Giochiamo!";
