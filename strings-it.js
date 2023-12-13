@@ -127,15 +127,9 @@ export const idStringsIT = {
 }
 
 export const titleStringsIT = {
-    play: "Usa questo tavolo",
-    edit: "Modifica",
-    export: "Esporta",
-    delete: "Elimina",
-    confirmationTitle: "Elimino il tavolo?",
-    confirmationSubtitle: "L'azione è irreversibile!",
-    characters: "Sospetti",
-    weapons: "Armi",
-    rooms: "Stanze"
+
+
+
 }
 
 export const manualStringsIT = {
@@ -146,6 +140,19 @@ export const manualStringsIT = {
         weapons: "Mancano le armi.",
         rooms: "Mancano le stanze.",
         generic: "Tavolo non valido"
+    },
+    customBoardTitles: {
+        play: "Usa questo tavolo",
+        edit: "Modifica",
+        export: "Esporta",
+        delete: "Elimina",
+        characters: "Sospetti",
+        weapons: "Armi",
+        rooms: "Stanze"
+    },
+    customBoardDeleteModal: {
+        confirmationTitle: "Elimino il tavolo?",
+        confirmationSubtitle: "L'azione è irreversibile!"
     },
     incompatibleText: "La partita salvata non è compatibile con questa versione dell'app, non posso continuare la partita.",
     letsPlay: "Giochiamo!"

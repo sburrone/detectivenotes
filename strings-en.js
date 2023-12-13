@@ -126,15 +126,6 @@ export const idStringsEN = {
 }
 
 export const titleStringsEN = {
-    play: "Use this board",
-    edit: "Edit",
-    export: "Export",
-    delete: "Delete",
-    confirmationTitle: "Delete board?",
-    confirmationSubtitle: "This cannot be undone!",
-    characters: "Suspects",
-    weapons: "Weapons",
-    rooms: "Rooms"
 }
 
 export const manualStringsEN = {
@@ -145,6 +136,19 @@ export const manualStringsEN = {
         weapons: "There are no weapons.",
         rooms: "There are no rooms.",
         generic: "Board not valid"
+    },
+    customBoardTitles: {
+        play: "Use this board",
+        edit: "Edit",
+        export: "Export",
+        delete: "Delete",
+        characters: "Suspects",
+        weapons: "Weapons",
+        rooms: "Rooms"
+    },
+    customBoardDeleteModal: {
+        confirmationTitle: "Delete board?",
+        confirmationSubtitle: "This cannot be undone!"
     },
     incompatibleText: "This saved game is incompatible with this version of the app, cannot resume.",
     letsPlay: "Let's play!"

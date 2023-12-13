@@ -660,11 +660,11 @@ $(document).ready(function () {
                 $("#" + elementId + 'Items').toggle()
                 $("#" + elementId + 'ItemsExpanded').toggle()
             })
-            const charactersExpandedHeader = $("<div>").append($(emojiSpan).clone().text("person"), " ", titleStrings.characters)
+            const charactersExpandedHeader = $("<div>").append($(emojiSpan).clone().text("person"), " ", manualStrings.customBoardTitles.characters)
             const charactersExpandedList = $("<div class='items-expanded-div'>").append($(getListFromArray(board.characters)))
-            const weaponsExpandedHeader = $("<div>").append($(emojiSpan).clone().text("syringe"), " ", titleStrings.weapons)
+            const weaponsExpandedHeader = $("<div>").append($(emojiSpan).clone().text("syringe"), " ", manualStrings.customBoardTitles.weapons)
             const weaponsExpandedList = $("<div class='items-expanded-div'>").append($(getListFromArray(board.weapons)))
-            const roomsExpandedHeader = $("<div>").append($(emojiSpan).clone().text("house"), " ", titleStrings.rooms)
+            const roomsExpandedHeader = $("<div>").append($(emojiSpan).clone().text("house"), " ", manualStrings.customBoardTitles.rooms)
             const roomsExpandedList = $("<div class='items-expanded-div'>").append($(getListFromArray(board.rooms)))
             const cell = $("<td class='items-expanded-cell' colspan='3' id='" + elementId + "ItemsExpandedList'>").append($(charactersExpandedHeader), $(charactersExpandedList), $(weaponsExpandedHeader), $(weaponsExpandedList), $(roomsExpandedHeader), $(roomsExpandedList))
 
@@ -708,16 +708,16 @@ $(document).ready(function () {
 
         if (addButtons) {
 
-            const useButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Use'>").text("play_arrow").attr("title", titleStrings.play).on("click", function () {
+            const useButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Use'>").text("play_arrow").attr("title", manualStrings.customBoardTitles.play).on("click", function () {
                 chooseCustomBoard(index)
             })
-            const editButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Edit'>").text("edit").attr("title", titleStrings.edit).on("click", function () {
+            const editButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Edit'>").text("edit").attr("title", manualStrings.customBoardTitles.edit).on("click", function () {
                 editCustomBoard(index)
             })
-            const exportButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Export'>").text("download").attr("title", titleStrings.export).on("click", function () {
+            const exportButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Export'>").text("download").attr("title", manualStrings.customBoardTitles.export).on("click", function () {
                 exportCustomBoard(index)
             })
-            const deleteButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Delete'>").text("delete").attr("title", titleStrings.delete).on("click", function () {
+            const deleteButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Delete'>").text("delete").attr("title", manualStrings.customBoardTitles.delete).on("click", function () {
                 deleteCustomBoard(index)
             })
             const trButtons = $("<tr id='" + elementId + "Buttons'>").append($("<td class='custom-board-button-cell' colspan='3'>").append($(useButton), $(editButton), $(exportButton), $(deleteButton)))
@@ -788,8 +788,8 @@ $(document).ready(function () {
     }
 
     function deleteCustomBoard(id) {
-        $("#confirmationPromptTitle").text(titleStrings.confirmationTitle)
-        $("#confirmationPromptSubtitle").text(titleStrings.confirmationSubtitle)
+        $("#confirmationPromptTitle").text(manualStrings.confirmationTitle)
+        $("#confirmationPromptSubtitle").text(manualStrings.confirmationSubtitle)
         $("#genericYes").on("click", function () {
             id === 0 ? settings.customBoards.shift() : settings.customBoards.splice(id, 1)
             saveSettings()
