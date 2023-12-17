@@ -122,7 +122,8 @@ export const idStringsEN = {
     chooseBoardsToImportTitle: "Choose which boards to import",
     fileValidationFailed: "The file you chose is not valid. Try again.",
     finalizeImportButton: "Import selected",
-    fileInputButton: "Choose file"
+    fileInputButton: "Choose file",
+    assistantModalTitle: "Assistant"
 }
 
 export const titleStringsEN = {

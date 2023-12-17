@@ -123,7 +123,8 @@ export const idStringsIT = {
     chooseBoardsToImportTitle: "Scegli i tavoli da importare",
     fileValidationFailed: "Il file che hai scelto non è valido. Riprova.",
     finalizeImportButton: "Importa selezionati",
-    fileInputButton: "Scegli il file"
+    fileInputButton: "Scegli il file",
+    assistantModalTitle: "Assistente"
 }
 
 export const titleStringsIT = {

@@ -1318,4 +1318,11 @@ $(document).ready(function () {
         $("#fakeAutocompleteButton").css("background-color", im5On ?
             "var(--current-lightRed)" : "var(--green)")
     }, 2000)
+
+
+    // Assistant
+
+    $("#assistantButton").on("click", function () {
+        hideAndShowModal("#assistantModal")
+    })
 })
