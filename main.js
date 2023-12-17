@@ -1324,5 +1324,51 @@ $(document).ready(function () {
 
     $("#assistantButton").on("click", function () {
         hideAndShowModal("#assistantModal")
+        clearAssistantForm()
+        populateAssistantForm()
+    })
+
+    const assistantFormPlayersIDs = ["WhoAsked", "WhoAnswered"]
+    const assistantFormItemsIDs = ["WhichCharacter", "WhichWeapon", "WhichRoom"]
+
+    function clearAssistantForm() {
+        assistantFormPlayersIDs.forEach(id => $("#assistant" + id + "Select").empty())
+        assistantFormItemsIDs.forEach(id => $("#assistant" + id + "Select").empty())
+        $("#assistantWhatAskedSelect").empty()
+    }
+
+    function populateAssistantForm() {
+        assistantFormPlayersIDs.forEach(id => {
+            $("#assistant" + id + "Select").append($("<option value='player" + id + "Myself'>").text(manualStrings.me))
+            game.players.forEach((player, index) => {
+                const option = $("<option value='player" + id + index + "'>").text(player)
+                $("#assistant" + id + "Select").append($(option))
+            })
+        })
+        $("#assistantWhoAnsweredSelect option[value='playerWhoAnsweredMyself']").attr("disabled", "disabled")
+        let assistantFormItemIndex = -1
+        game.table.forEach((tableElement, tableIndex) => {
+            tableElement.row && $("#assistant" + assistantFormItemsIDs[assistantFormItemIndex] + "Select").append($("<option value='item" + tableIndex + "'>").text(tableElement.row))
+            tableElement.divider && assistantFormItemIndex++
+        })
+        $("#assistantWhoAnsweredSelect").append($("<option value='playerWhoAnsweredNobody'>").text(manualStrings.nobody))
+    }
+
+    $("#assistantWhoAskedSelect").on("change", function () {
+        const selectedId = $("#assistantWhoAskedSelect").find(":selected").val()
+        $("#assistantWhoAnsweredSelect").find("*").removeAttr("disabled")
+        $("#assistantWhoAnsweredSelect option[value='" + selectedId.replace("WhoAsked", "WhoAnswered") + "']").attr("disabled", "disabled")
+    })
+
+    $("#assistantForm").on("submit", function (e) {
+        e.preventDefault()
+        //Validate
+
+        //Elaborate
+
+
+        saveGame()
+        //Close
+        hideAndShowModal()
     })
 })

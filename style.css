@@ -394,6 +394,12 @@ a:hover {
     background-color: var(--current-lightBlue);
 }
 
+.alt-button {
+    font-size: 22px;
+    padding: 8px 16px;
+    margin: 4px;
+}
+
 .small-button>span {
     vertical-align: middle;
 }
@@ -564,6 +570,7 @@ button {
 
 .file-input {
     margin-bottom: 10px;
+    padding-bottom: 10px;
 }
 
 .custom-board-body th,
@@ -1068,4 +1075,18 @@ a {
 .material-symbols-outlined,
 .material-icons-outlined {
     vertical-align: bottom;
+}
+
+.select {
+    font-size: 18px;
+    padding: 10px;
+    width: 250px;
+    max-width: 80%;
+    margin-bottom: 20px;
+}
+
+.modal-header {
+    font-size: 24px;
+    margin: 20px 5px;
+    vertical-align: middle;
 }

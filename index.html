@@ -612,13 +612,57 @@
 
     <!--  ASSISTANT MODAL  -->
     <div id="assistantModal" class="modal-wrapper full-screen-modal">
-        <section id="modalBackWrapper"><a class="modal-back-button material-icons-outlined"
-                id="assistantModalBackButton">
-                close</a></section>
-        <section class="modal-section">
-            <span class="material-icons-outlined">auto_awesome</span>
-            <span id="assistantModalTitle" class="setup-text"></span>
-        </section>
+        <form id="assistantForm">
+            <section id="modalBackWrapper"><a class="modal-back-button material-icons-outlined"
+                    id="assistantModalBackButton">
+                    close</a></section>
+            <section class="modal-section assistant-section">
+                <span class="material-icons-outlined modal-header">auto_awesome</span>
+                <span id="assistantModalTitle" class="setup-text modal-header"></span>
+            </section>
+            <section class="modal-section assistant-section">
+                <label for="assistantWhoAskedSelect" id="assistantWhoAskedQuestion" class="setup-text"></label><br>
+                <select title="assistantWhoAskedSelect" id="assistantWhoAskedSelect"
+                    class="small-button board-button select">
+                </select>
+            </section>
+            <section class="modal-section assistant-section">
+                <section for="assistantWhatAskedSelect" id="assistantWhatAskedQuestion" class="setup-text file-input">
+                </section>
+                <label for="assistantWhichCharacterSelect" id="assistantWhichCharacterQuestion" class="setup-tooltip">
+                    <span class="material-symbols-outlined">person</span>
+                    <span id="assistantWhichCharacterLabel" class="setup-tooltip"></span>
+                </label><br>
+                <select title="assistantWhichCharacterSelect" id="assistantWhichCharacterSelect"
+                    class="small-button board-button select">
+                </select><br>
+                <label for="assistantWhichWeaponSelect" id="assistantWhichWeaponQuestion" class="setup-tooltip">
+                    <span class="material-symbols-outlined">syringe</span>
+                    <span id="assistantWhichWeaponLabel" class="setup-tooltip"></span>
+                </label><br>
+                <select title="assistantWhichWeaponSelect" id="assistantWhichWeaponSelect"
+                    class="small-button board-button select">
+                </select><br>
+                <label for="assistantWhichRoomSelect" id="assistantWhichRoomQuestion" class="setup-tooltip">
+                    <span class="material-symbols-outlined">house</span>
+                    <span id="assistantWhichRoomLabel" class="setup-tooltip"></span>
+                </label><br>
+                <select title="assistantWhichRoomSelect" id="assistantWhichRoomSelect"
+                    class="small-button board-button select">
+                </select>
+            </section>
+            <section class="modal-section assistant-section">
+                <label for="assistantWhoAnsweredSelect" id="assistantWhoAnsweredQuestion"
+                    class="setup-text"></label><br>
+                <select title="assistantWhoAnsweredSelect" id="assistantWhoAnsweredSelect"
+                    class="small-button board-button select">
+                </select>
+            </section>
+            <section class="modal-section assistant-section">
+                <button type="submit" title="assistantConfirmButton" id="assistantConfirmButton"
+                    class="small-button alt-button"></span>
+            </section>
+        </form>
     </div>
 
 

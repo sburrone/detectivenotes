@@ -124,7 +124,14 @@ export const idStringsIT = {
     fileValidationFailed: "Il file che hai scelto non è valido. Riprova.",
     finalizeImportButton: "Importa selezionati",
     fileInputButton: "Scegli il file",
-    assistantModalTitle: "Assistente"
+    assistantModalTitle: "Assistente",
+    assistantWhoAskedQuestion: "Chi ha fatto la domanda?",
+    assistantWhatAskedQuestion: "Qual era la sua ipotesi?",
+    assistantWhoAnsweredQuestion: "Chi ha mostrato una carta?",
+    assistantConfirmButton: "Conferma",
+    assistantWhichCharacterLabel: "Sospettato",
+    assistantWhichWeaponLabel: "Arma",
+    assistantWhichRoomLabel: "Stanza"
 }
 
 export const titleStringsIT = {
@@ -152,7 +159,8 @@ export const titleStringsIT = {
     dustCounterButton: "Contatore polveri",
     dustCounterAltButton: "Contatore polveri",
     showLessSymbolsCheckbox: "Mostra meno simboli",
-    fakeCheckbox: "Spunta istruzioni"
+    fakeCheckbox: "Spunta istruzioni",
+    assistantConfirmButton: "Conferma"
 }
 
 export const manualStringsIT = {
@@ -178,5 +186,7 @@ export const manualStringsIT = {
         confirmationSubtitle: "L'azione è irreversibile!"
     },
     incompatibleText: "La partita salvata non è compatibile con questa versione dell'app, non posso continuare la partita.",
-    letsPlay: "Giochiamo!"
+    letsPlay: "Giochiamo!",
+    me: "Me stesso",
+    nobody: "Nessuno"
 }

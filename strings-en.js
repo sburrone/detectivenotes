@@ -123,7 +123,11 @@ export const idStringsEN = {
     fileValidationFailed: "The file you chose is not valid. Try again.",
     finalizeImportButton: "Import selected",
     fileInputButton: "Choose file",
-    assistantModalTitle: "Assistant"
+    assistantModalTitle: "Assistant",
+    assistantWhoAskedQuestion: "Who made a guess?",
+    assistantWhatAskedQuestion: "What guess was it?",
+    assistantWhoAnsweredQuestion: "Did anyone show a card?",
+    assistantConfirmButton: "Confirm"
 }
 
 export const titleStringsEN = {
@@ -151,7 +155,11 @@ export const titleStringsEN = {
     dustCounterButton: "Dust counter",
     dustCounterAltButton: "Dust counter",
     showLessSymbolsCheckbox: "Show less symbols",
-    fakeCheckbox: "Instructions checkbox"
+    fakeCheckbox: "Instructions checkbox",
+    assistantConfirmButton: "Confirm",
+    assistantWhichCharacterLabel: "Suspect",
+    assistantWhichWeaponLabel: "Weapon",
+    assistantWhichRoomLabel: "Room"
 }
 
 export const manualStringsEN = {
@@ -177,5 +185,7 @@ export const manualStringsEN = {
         confirmationSubtitle: "This cannot be undone!"
     },
     incompatibleText: "This saved game is incompatible with this version of the app, cannot resume.",
-    letsPlay: "Let's play!"
+    letsPlay: "Let's play!",
+    me: "Myself",
+    nobody: "No one"
 }
