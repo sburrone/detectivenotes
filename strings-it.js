@@ -131,7 +131,8 @@ export const idStringsIT = {
     assistantConfirmButton: "Conferma",
     assistantWhichCharacterLabel: "Sospettato",
     assistantWhichWeaponLabel: "Arma",
-    assistantWhichRoomLabel: "Stanza"
+    assistantWhichRoomLabel: "Stanza",
+    assistantConfirmError: "Il giocatore che ha fatto la domanda non può essere lo stesso che ha mostrato la carta."
 }
 
 export const titleStringsIT = {
@@ -187,6 +188,6 @@ export const manualStringsIT = {
     },
     incompatibleText: "La partita salvata non è compatibile con questa versione dell'app, non posso continuare la partita.",
     letsPlay: "Giochiamo!",
-    me: "Me stesso",
+    me: "Me stessə",
     nobody: "Nessuno"
 }

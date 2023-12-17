@@ -1147,7 +1147,9 @@ $(document).ready(function () {
         cellImage.attr("src", "assets/icons/reset.svg")
         cellImage.attr("class", "reset")
         cellImage.data("key", "" + itemsArray.indexOf(item) + "," + number)
-        cellLink.append(cellImage)
+        cellImage.attr("id", "cellImg" + number + "_" + item)
+        let cellNumber = $("<span id='cellNumber" + number + "_" + item + "' class='cell-number'>").data("player", number.toString()).data("item", item)
+        cellLink.append(cellImage, cellNumber)
         cell.append(cellLink)
         return cell
     }
@@ -1246,11 +1248,6 @@ $(document).ready(function () {
         })
     }
 
-    //Close back modal
-    $("#modalBackButton").on("click", function () {
-        $("#selectionModal").toggle()
-    })
-
     //Select image
     $(".selection-modal-image").on("click", function () {
         const newID = $(this).attr("id")
@@ -1270,6 +1267,11 @@ $(document).ready(function () {
         $(img).removeClass($(img).attr("class"))
         $(img).addClass(newID)
         $(img).attr("src", imageData[newID])
+
+        //I numeri vengono usati solo sui forse.
+        if (newID === "maybe") {
+            $(toUpdate).find("span").text("")
+        }
 
         //Aggiorna LocalData
         let rowName = itemsArray.indexOf(toUpdate.data("item"))
@@ -1335,6 +1337,7 @@ $(document).ready(function () {
         assistantFormPlayersIDs.forEach(id => $("#assistant" + id + "Select").empty())
         assistantFormItemsIDs.forEach(id => $("#assistant" + id + "Select").empty())
         $("#assistantWhatAskedSelect").empty()
+        $("#assistantConfirmError").hide()
     }
 
     function populateAssistantForm() {
@@ -1346,10 +1349,13 @@ $(document).ready(function () {
             })
         })
         $("#assistantWhoAnsweredSelect option[value='playerWhoAnsweredMyself']").attr("disabled", "disabled")
-        let assistantFormItemIndex = -1
-        game.table.forEach((tableElement, tableIndex) => {
-            tableElement.row && $("#assistant" + assistantFormItemsIDs[assistantFormItemIndex] + "Select").append($("<option value='item" + tableIndex + "'>").text(tableElement.row))
-            tableElement.divider && assistantFormItemIndex++
+        let assistantFormItemSection = -1, assistantFormItemIndex = 0
+        game.table.forEach((tableElement) => {
+            if (tableElement.row) {
+                $("#assistant" + assistantFormItemsIDs[assistantFormItemSection] + "Select").append($("<option value='item" + assistantFormItemIndex + "'>").text(tableElement.row))
+                assistantFormItemIndex++
+            }
+            tableElement.divider && assistantFormItemSection++
         })
         $("#assistantWhoAnsweredSelect").append($("<option value='playerWhoAnsweredNobody'>").text(manualStrings.nobody))
     }
@@ -1362,13 +1368,38 @@ $(document).ready(function () {
 
     $("#assistantForm").on("submit", function (e) {
         e.preventDefault()
-        //Validate
-
         //Elaborate
+        /*
+            Valida:
+            WhoAsked e WhoAnswered non possono essere uguali.
+
+            Elabora:
+            Sovrascrivi i reset e i forse no con croci per i giocatori tra WhoAsked e WhoAnswered.
+            Sovrascrivi i reset con forse sì per WhoAnswered.
+            Aumenta di uno i forse sì per WhoAnsered.
+
+            In futuro:
+            Tieni traccia di quante carte ogni giocatore ha e segna la spunta se è l'unica opzione.
+        */
+        const whoAsked = $("#assistantWhoAskedSelect").find(":selected").val()
+        const whichCharacter = $("#assistantWhichCharacterSelect").find(":selected").val()
+        const whichWeapon = $("#assistantWhichWeaponSelect").find(":selected").val()
+        const whichRoom = $("#assistantWhichRoomSelect").find(":selected").val()
+        const whoAnswered = $("#assistantWhoAnsweredSelect").find(":selected").val()
+        console.log(whoAsked, whichCharacter, whichWeapon, whichRoom, whoAnswered)
+
+        //Valida
+        if (whoAsked.replace("WhoAsked", "") === whoAnswered.replace("WhoAnswered", "")) {
+            $("#assistantConfirmError").show()
+            return
+        }
+        $("#assistantConfirmError").hide()
+
+        //Elabora
+
 
 
         saveGame()
-        //Close
         hideAndShowModal()
     })
 })

@@ -127,7 +127,8 @@ export const idStringsEN = {
     assistantWhoAskedQuestion: "Who made a guess?",
     assistantWhatAskedQuestion: "What guess was it?",
     assistantWhoAnsweredQuestion: "Did anyone show a card?",
-    assistantConfirmButton: "Confirm"
+    assistantConfirmButton: "Confirm",
+    assistantConfirmError: "The player that asked the question cannot be the same one that showed the card."
 }
 
 export const titleStringsEN = {
