@@ -128,7 +128,12 @@ export const idStringsEN = {
     assistantWhatAskedQuestion: "What guess was it?",
     assistantWhoAnsweredQuestion: "Did anyone show a card?",
     assistantConfirmButton: "Confirm",
-    assistantConfirmError: "The player that asked the question cannot be the same one that showed the card."
+    assistantWhichCharacterLabel: "Suspect",
+    assistantWhichWeaponLabel: "Weapon",
+    assistantWhichRoomLabel: "Room",
+    assistantConfirmError: "The player that asked the question cannot be the same one that showed the card.",
+    forceAssistantUpdateLabel: "Force assistant update",
+    forceAssistantUpdateText: "When OFF, the assistant can only overwrite empty cells automatically. When ON, it overwrites all of them."
 }
 
 export const titleStringsEN = {

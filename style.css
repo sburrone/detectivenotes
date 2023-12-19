@@ -458,6 +458,10 @@ button {
     padding: 10px;
 }
 
+.advanced-settings-table-image>.material-icons-outlined {
+    font-size: 36px;
+}
+
 .setup-tooltip {
     font-size: 18px;
 }

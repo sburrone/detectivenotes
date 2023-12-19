@@ -973,12 +973,12 @@ $(document).ready(function () {
         darkMode = !current
     }
 
-    $("#advancedSettingsModalBackButton, #advancedSettingsToggle").on("click", function () {
+    $("#advancedSettingsToggle").on("click", function () {
         $("#advancedSettingsModal").toggle()
     })
 
     //Main menu buttons
-    $("#mainMenuCreditsButton, #creditsModalBackButton").on("click", function () {
+    $("#mainMenuCreditsButton").on("click", function () {
         //Open credits modal
         $("#creditsModal").toggle()
     })
@@ -997,6 +997,10 @@ $(document).ready(function () {
 
     $("#alternateInGameToolbar").on("change", function () {
         saveSetting("alternateInGameToolbar", $(this).is(":checked"))
+    })
+
+    $("#forceAssistantUpdate").on("change", function () {
+        saveSetting("forceAssistantUpdate", $(this).is(":checked"))
     })
 
     $("#playerNameForm").on("submit", function (event) {
@@ -1147,7 +1151,7 @@ $(document).ready(function () {
         cellImage.attr("src", "assets/icons/reset.svg")
         cellImage.attr("class", "reset")
         cellImage.data("key", "" + itemsArray.indexOf(item) + "," + number)
-        cellImage.attr("id", "cellImg" + number + "_" + item)
+        cellImage.attr("id", "cellImg" + number + "_" + itemsArray.indexOf(item))
         let cellNumber = $("<span id='cellNumber" + number + "_" + item + "' class='cell-number'>").data("player", number.toString()).data("item", item)
         cellLink.append(cellImage, cellNumber)
         cell.append(cellLink)
@@ -1349,13 +1353,8 @@ $(document).ready(function () {
             })
         })
         $("#assistantWhoAnsweredSelect option[value='playerWhoAnsweredMyself']").attr("disabled", "disabled")
-        let assistantFormItemSection = -1, assistantFormItemIndex = 0
-        game.table.forEach((tableElement) => {
-            if (tableElement.row) {
-                $("#assistant" + assistantFormItemsIDs[assistantFormItemSection] + "Select").append($("<option value='item" + assistantFormItemIndex + "'>").text(tableElement.row))
-                assistantFormItemIndex++
-            }
-            tableElement.divider && assistantFormItemSection++
+        getFilteredTable().forEach((tableElement, tableIndex) => {
+            $("#assistantWhich" + tableElement.section.slice(0, -1) + "Select").append($("<option value='item" + tableIndex + "'>").text(tableElement.row))
         })
         $("#assistantWhoAnsweredSelect").append($("<option value='playerWhoAnsweredNobody'>").text(manualStrings.nobody))
     }
@@ -1376,28 +1375,73 @@ $(document).ready(function () {
             Elabora:
             Sovrascrivi i reset e i forse no con croci per i giocatori tra WhoAsked e WhoAnswered.
             Sovrascrivi i reset con forse sì per WhoAnswered.
-            Aumenta di uno i forse sì per WhoAnsered.
-
+            
             In futuro:
+            Aumenta di uno i forse sì per WhoAnsered.
             Tieni traccia di quante carte ogni giocatore ha e segna la spunta se è l'unica opzione.
         */
-        const whoAsked = $("#assistantWhoAskedSelect").find(":selected").val()
-        const whichCharacter = $("#assistantWhichCharacterSelect").find(":selected").val()
-        const whichWeapon = $("#assistantWhichWeaponSelect").find(":selected").val()
-        const whichRoom = $("#assistantWhichRoomSelect").find(":selected").val()
-        const whoAnswered = $("#assistantWhoAnsweredSelect").find(":selected").val()
-        console.log(whoAsked, whichCharacter, whichWeapon, whichRoom, whoAnswered)
+        let whoAsked = $("#assistantWhoAskedSelect").find(":selected").val().replace("playerWhoAsked", "")
+        whoAsked = whoAsked !== "Myself" ? Number.parseInt(whoAsked) : -1
+        const whichCharacter = Number.parseInt($("#assistantWhichCharacterSelect").find(":selected").val().replace("item", ""))
+        const whichWeapon = Number.parseInt($("#assistantWhichWeaponSelect").find(":selected").val().replace("item", ""))
+        const whichRoom = Number.parseInt($("#assistantWhichRoomSelect").find(":selected").val().replace("item", ""))
+        const whichItems = [whichCharacter, whichWeapon, whichRoom]
+        let whoAnswered = $("#assistantWhoAnsweredSelect").find(":selected").val().replace("playerWhoAnswered", "")
+        if (whoAnswered === "Myself") {
+            whoAnswered = -1
+        } else if (whoAnswered === "Nobody") {
+            whoAnswered = game.players.length
+        } else {
+            whoAnswered = Number.parseInt(whoAnswered)
+        }
 
         //Valida
-        if (whoAsked.replace("WhoAsked", "") === whoAnswered.replace("WhoAnswered", "")) {
+        if (whoAsked === whoAnswered) {
+            //Normalmente dovrei dare errore in caso io WhoAnswered = nessuno, ma possiedo alcune delle carte nell'ipotesi.
             $("#assistantConfirmError").show()
             return
         }
         $("#assistantConfirmError").hide()
 
         //Elabora
+        whichItems.forEach(item => {
+            if (!getFilteredTable()[item].locked) {
+                if (whoAsked < whoAnswered) {
+                    for (let i = whoAsked + 1; i < whoAnswered; i++) {
+                        if (getFilteredTable()[item].items[i] === "reset" || settings.forceAssistantUpdate) {
+                            getFilteredTable()[item].items[i] = "cross"
+                            $("#cellImg" + i + "_" + item).removeClass($("#cellImg" + i + "_" + item).attr("class"))
+                            $("#cellImg" + i + "_" + item).addClass("cross")
+                            $("#cellImg" + i + "_" + item).attr("src", imageData.cross)
+                        }
+                    }
+                } else {
+                    for (let i = whoAsked + 1; i < game.players.length; i++) {
+                        if (getFilteredTable()[item].items[i] === "reset" || settings.forceAssistantUpdate) {
+                            getFilteredTable()[item].items[i] = "cross"
+                            $("#cellImg" + i + "_" + item).removeClass($("#cellImg" + i + "_" + item).attr("class"))
+                            $("#cellImg" + i + "_" + item).addClass("cross")
+                            $("#cellImg" + i + "_" + item).attr("src", imageData.cross)
+                        }
+                    }
+                    for (let i = 0; i < whoAnswered; i++) {
+                        if (getFilteredTable()[item].items[i] === "reset" || settings.forceAssistantUpdate) {
+                            getFilteredTable()[item].items[i] = "cross"
+                            $("#cellImg" + i + "_" + item).removeClass($("#cellImg" + i + "_" + item).attr("class"))
+                            $("#cellImg" + i + "_" + item).addClass("cross")
+                            $("#cellImg" + i + "_" + item).attr("src", imageData.cross)
+                        }
+                    }
+                }
 
-
+                if (whoAnswered !== -1 && whoAnswered < game.players.length && (getFilteredTable()[item].items[whoAnswered] === "reset" || settings.forceAssistantUpdate)) {
+                    getFilteredTable()[item].items[whoAnswered] = "maybe"
+                    $("#cellImg" + whoAnswered + "_" + item).removeClass($("#cellImg" + whoAnswered + "_" + item).attr("class"))
+                    $("#cellImg" + whoAnswered + "_" + item).addClass("maybe")
+                    $("#cellImg" + whoAnswered + "_" + item).attr("src", imageData.maybe)
+                }
+            }
+        })
 
         saveGame()
         hideAndShowModal()
