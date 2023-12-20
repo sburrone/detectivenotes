@@ -1,4 +1,4 @@
-export const versionNumber = 4.0
+export const versionNumber = 4.1
 
 export const boardsEN = [
     {

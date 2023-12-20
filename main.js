@@ -250,10 +250,10 @@ $(document).ready(function () {
         get: (searchParams, prop) => searchParams.get(prop),
     })
     let forcedLang = params.lang
-    if (forcedLang && forcedLang.toLowerCase() == "it") {
+    if ((forcedLang && forcedLang.toLowerCase() == "it") || (!forcedLang && userLang.includes("it"))) {
         $("html").attr("lang", "it")
         userLang = "it-IT"
-    } else if (forcedLang && forcedLang.toLowerCase() == "en") {
+    } else if ((forcedLang && forcedLang.toLowerCase() == "en") || (!forcedLang && userLang.includes("en"))) {
         userLang = "en-US"
     }
     let idStrings, boards, titleStrings, manualStrings
