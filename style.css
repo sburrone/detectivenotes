@@ -1094,3 +1094,27 @@ a {
     margin: 20px 5px;
     vertical-align: middle;
 }
+
+.cell-image-link {
+    position: relative;
+}
+
+.cell-image-link {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+}
+
+.cell-image-link>* {
+    grid-column-start: 1;
+    grid-row-start: 1;
+}
+
+.cell-number {
+    text-shadow: 1px 1px 0 var(--current-white),
+        -1px 1px 0 var(--current-white),
+        -1px -1px 0 var(--current-white),
+        1px -1px 0 var(--current-white);
+    ;
+    transform: translate(10px, 10px);
+}

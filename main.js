@@ -1152,7 +1152,7 @@ $(document).ready(function () {
         cellImage.attr("class", "reset")
         cellImage.data("key", "" + itemsArray.indexOf(item) + "," + number)
         cellImage.attr("id", "cellImg" + number + "_" + itemsArray.indexOf(item))
-        let cellNumber = $("<span id='cellNumber" + number + "_" + item + "' class='cell-number'>").data("player", number.toString()).data("item", item)
+        let cellNumber = $("<span id='cellNumber" + number + "_" + itemsArray.indexOf(item) + "' class='cell-number'>").data("player", number.toString()).data("item", itemsArray.indexOf(item))
         cellLink.append(cellImage, cellNumber)
         cell.append(cellLink)
         return cell
@@ -1375,9 +1375,10 @@ $(document).ready(function () {
             Elabora:
             Sovrascrivi i reset e i forse no con croci per i giocatori tra WhoAsked e WhoAnswered.
             Sovrascrivi i reset con forse sì per WhoAnswered.
+            Aumenta di uno i forse sì per WhoAnsered.
             
             In futuro:
-            Aumenta di uno i forse sì per WhoAnsered.
+            Memorizza i WhoAnswered
             Tieni traccia di quante carte ogni giocatore ha e segna la spunta se è l'unica opzione.
         */
         let whoAsked = $("#assistantWhoAskedSelect").find(":selected").val().replace("playerWhoAsked", "")
@@ -1435,7 +1436,15 @@ $(document).ready(function () {
                 }
 
                 if (whoAnswered !== -1 && whoAnswered < game.players.length && (getFilteredTable()[item].items[whoAnswered] === "reset" || settings.forceAssistantUpdate)) {
-                    getFilteredTable()[item].items[whoAnswered] = "maybe"
+                    if (getFilteredTable()[item].items[whoAnswered] === "maybe") {
+                        let cur = $("#cellNumber" + whoAnswered + "_" + item).text()
+                        let tot = cur ? Number.parseInt(cur) + 1 : 1
+                        console.log(cur, tot)
+                        $("#cellNumber" + whoAnswered + "_" + item).css("display", tot < 2 ? "none" : "block")
+                        $("#cellNumber" + whoAnswered + "_" + item).text(tot)
+                    } else {
+                        getFilteredTable()[item].items[whoAnswered] = "maybe"
+                    }
                     $("#cellImg" + whoAnswered + "_" + item).removeClass($("#cellImg" + whoAnswered + "_" + item).attr("class"))
                     $("#cellImg" + whoAnswered + "_" + item).addClass("maybe")
                     $("#cellImg" + whoAnswered + "_" + item).attr("src", imageData.maybe)
