@@ -318,6 +318,9 @@ $(document).ready(function () {
 
     function saveItem(row, player, item) {
         getFilteredTable()[row].items[player] = item
+        if (item !== "maybe") {
+            getFilteredTable()[row].maybeCounter[player] = 0
+        }
         saveGame()
     }
 
@@ -1252,6 +1255,9 @@ $(document).ready(function () {
     //Autocomplete
     function updateWholeRow(id) {
         toUpdate.closest(".table-row").find("img").attr("src", imageData[id]).attr("class", id)
+        if (id !== "maybe") {
+            toUpdate.closest(".table-row").find("span").text("0").hide()
+        }
         let rowName = itemsArray.indexOf(toUpdate.data("item"))
         game.players.forEach((player, i) => {
             saveItem(rowName, i, id)
@@ -1279,8 +1285,8 @@ $(document).ready(function () {
         $(img).attr("src", imageData[newID])
 
         //I numeri vengono usati solo sui forse.
-        if (newID === "maybe") {
-            $(toUpdate).find("span").text("")
+        if (newID !== "maybe") {
+            $(toUpdate).find("span").hide()
         }
 
         //Aggiorna LocalData
@@ -1443,12 +1449,9 @@ $(document).ready(function () {
 
                 if (whoAnswered !== -1 && whoAnswered < game.players.length && (getFilteredTable()[item].items[whoAnswered] === "reset" || settings.forceAssistantUpdate)) {
                     if (getFilteredTable()[item].items[whoAnswered] === "maybe") {
-                        let cur = $("#cellNumber" + whoAnswered + "_" + item).text()
-                        let tot = cur ? Number.parseInt(cur) + 1 : 1
-                        console.log(cur, tot)
-                        $("#cellNumber" + whoAnswered + "_" + item).css("display", tot < 2 ? "none" : "block")
-                        $("#cellNumber" + whoAnswered + "_" + item).text(tot)
-                        getFilteredTable()[item].maybeCounter[whoAnswered] = tot
+                        getFilteredTable()[item].maybeCounter[whoAnswered]++
+                        $("#cellNumber" + whoAnswered + "_" + item).css("display", getFilteredTable()[item].maybeCounter[whoAnswered] < 2 ? "none" : "block")
+                        $("#cellNumber" + whoAnswered + "_" + item).text(getFilteredTable()[item].maybeCounter[whoAnswered])
                     } else {
                         getFilteredTable()[item].items[whoAnswered] = "maybe"
                         getFilteredTable()[item].maybeCounter[whoAnswered] = 1
