@@ -64,6 +64,32 @@ html {
         'opsz' 24
 }
 
+.material-icons-outlined {
+    font-family: 'Material Icons Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+}
+
 #loadingScreen {
     position: absolute;
     left: 50%;
@@ -344,7 +370,8 @@ a:hover {
     border-radius: 500px;
 }
 
-.main-menu-small-button>.material-symbols-outlined {
+.main-menu-small-button>.material-symbols-outlined,
+.main-menu-small-button>.material-icons-outlined {
     padding: 4px;
     border: 0px;
     margin: 3px;
@@ -367,11 +394,18 @@ a:hover {
     background-color: var(--current-lightBlue);
 }
 
+.alt-button {
+    font-size: 22px;
+    padding: 8px 16px;
+    margin: 4px;
+}
+
 .small-button>span {
     vertical-align: middle;
 }
 
-.small-button .material-symbols-outlined {
+.small-button .material-symbols-outlined,
+.small-button .material-icons-outlined {
     background-color: transparent;
     padding: 4px;
     border: 0px;
@@ -424,6 +458,10 @@ button {
     padding: 10px;
 }
 
+.advanced-settings-table-image>.material-icons-outlined {
+    font-size: 36px;
+}
+
 .setup-tooltip {
     font-size: 18px;
 }
@@ -457,6 +495,8 @@ button {
     overflow: auto;
     background-color: var(--current-lightSemitransparentWhite);
     color: var(--current-black);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
 }
 
 .modal a {
@@ -477,7 +517,6 @@ button {
 
 .modal {
     transition: .3s ease-in-out;
-    background-color: var(--current-lightSemitransparentWhite);
     margin: auto;
     padding: 20px;
     border: 1px solid var(--grey);
@@ -493,6 +532,18 @@ button {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.full-screen-modal {
+    padding-top: 20px;
+    width: 100%;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .order-input {
@@ -523,6 +574,7 @@ button {
 
 .file-input {
     margin-bottom: 10px;
+    padding-bottom: 10px;
 }
 
 .custom-board-body th,
@@ -1024,6 +1076,45 @@ a {
     background-color: var(--green);
 }
 
-.material-symbols-outlined {
+.material-symbols-outlined,
+.material-icons-outlined {
     vertical-align: bottom;
+}
+
+.select {
+    font-size: 18px;
+    padding: 10px;
+    width: 250px;
+    max-width: 80%;
+    margin-bottom: 20px;
+}
+
+.modal-header {
+    font-size: 24px;
+    margin: 20px 5px;
+    vertical-align: middle;
+}
+
+.cell-image-link {
+    position: relative;
+}
+
+.cell-image-link {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+}
+
+.cell-image-link>* {
+    grid-column-start: 1;
+    grid-row-start: 1;
+}
+
+.cell-number {
+    text-shadow: 1px 1px 0 var(--current-white),
+        -1px 1px 0 var(--current-white),
+        -1px -1px 0 var(--current-white),
+        1px -1px 0 var(--current-white);
+    ;
+    transform: translate(10px, 10px);
 }

@@ -1,3 +1,5 @@
+import { versionNumber } from './strings-en.js'
+
 export const boardsIT = [
     {
         id: 0,
@@ -97,7 +99,7 @@ export const idStringsIT = {
     dustCounter: "Contatore polveri",
     playerOrderModalLink: "Quale ordine?",
     orderModalText: "Il gioco si muove in senso orario.<br>Scrivi i nomi dei giocatori in senso orario, partendo da chi si siede alla tua sinistra.",
-    creditsModalText: "Detective Notes<br>Versione 3.4<br>fatto con 🩷 da Nicholas<br><br>Questo progetto utilizza il modello <a href=\"https://sketchfab.com/3d-models/clue-board-game-843af04381cc495ca5f0a4bebadb1752\" target=\"_blank\">\"Clue (Board Game)\"</a> di <a href=\"https://sketchfab.com/paulyanez\" target=\"_blank\">Anthony Yanez</a>, utilizzato sotto licenza <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">CC-BY-4.0</a>.",
+    creditsModalText: "Detective Notes<br>Versione " + versionNumber + "<br>fatto con 🩷 da Nicholas<br><br>Questo progetto utilizza il modello <a href=\"https://sketchfab.com/3d-models/clue-board-game-843af04381cc495ca5f0a4bebadb1752\" target=\"_blank\">\"Clue (Board Game)\"</a> di <a href=\"https://sketchfab.com/paulyanez\" target=\"_blank\">Anthony Yanez</a>, utilizzato sotto licenza <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">CC-BY-4.0</a>.",
     advancedSettingsTitle: "Impostazioni avanzate",
     longNamesCompatibilityModeLabel: "Modalità di compatibilità per nomi lunghi",
     longNamesCompatibilityModeText: "Mostra i nomi dei giocatori in verticale, evitando di stringere troppo la tabella.",
@@ -123,7 +125,18 @@ export const idStringsIT = {
     chooseBoardsToImportTitle: "Scegli i tavoli da importare",
     fileValidationFailed: "Il file che hai scelto non è valido. Riprova.",
     finalizeImportButton: "Importa selezionati",
-    fileInputButton: "Scegli il file"
+    fileInputButton: "Scegli il file",
+    assistantModalTitle: "Assistente",
+    assistantWhoAskedQuestion: "Chi ha fatto la domanda?",
+    assistantWhatAskedQuestion: "Qual era la sua ipotesi?",
+    assistantWhoAnsweredQuestion: "Chi ha mostrato una carta?",
+    assistantConfirmButton: "Conferma",
+    assistantWhichCharacterLabel: "Sospettato",
+    assistantWhichWeaponLabel: "Arma",
+    assistantWhichRoomLabel: "Stanza",
+    assistantConfirmError: "Il giocatore che ha fatto la domanda non può essere lo stesso che ha mostrato la carta.",
+    forceAssistantUpdateLabel: "Forza aggiornamento da assistente",
+    forceAssistantUpdateText: "Se spento, l'assistente sovrascrive automaticamente solo i riquadri vuoti della tabella. Se attivo, li sovrascrive tutti."
 }
 
 export const titleStringsIT = {
@@ -151,7 +164,8 @@ export const titleStringsIT = {
     dustCounterButton: "Contatore polveri",
     dustCounterAltButton: "Contatore polveri",
     showLessSymbolsCheckbox: "Mostra meno simboli",
-    fakeCheckbox: "Spunta istruzioni"
+    fakeCheckbox: "Spunta istruzioni",
+    assistantConfirmButton: "Conferma"
 }
 
 export const manualStringsIT = {
@@ -177,5 +191,7 @@ export const manualStringsIT = {
         confirmationSubtitle: "L'azione è irreversibile!"
     },
     incompatibleText: "La partita salvata non è compatibile con questa versione dell'app, non posso continuare la partita.",
-    letsPlay: "Giochiamo!"
+    letsPlay: "Giochiamo!",
+    me: "Me stessə",
+    nobody: "Nessuno"
 }

@@ -1,3 +1,5 @@
+export const versionNumber = 4.0
+
 export const boardsEN = [
     {
         id: 0,
@@ -96,7 +98,7 @@ export const idStringsEN = {
     dustCounter: "Dust counter",
     playerOrderModalLink: "What order?",
     orderModalText: "The game moves clockwise.<br>Write the player's names clockwise, starting from the player to your left.",
-    creditsModalText: "Detective Notes<br>Version 3.4<br>made with 🩷 by Nicholas<br><br>This project uses the <a href=\"https://sketchfab.com/3d-models/clue-board-game-843af04381cc495ca5f0a4bebadb1752\" target=\"_blank\">\"Clue (Board Game)\"</a> model by <a href=\"https://sketchfab.com/paulyanez\" target=\"_blank\">Anthony Yanez</a>, licensed under <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">CC-BY-4.0</a>.",
+    creditsModalText: "Detective Notes<br>Version " + versionNumber + "<br>made with 🩷 by Nicholas<br><br>This project uses the <a href=\"https://sketchfab.com/3d-models/clue-board-game-843af04381cc495ca5f0a4bebadb1752\" target=\"_blank\">\"Clue (Board Game)\"</a> model by <a href=\"https://sketchfab.com/paulyanez\" target=\"_blank\">Anthony Yanez</a>, licensed under <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">CC-BY-4.0</a>.",
     advancedSettingsTitle: "Advanced settings",
     longNamesCompatibilityModeLabel: "Long names compatibility mode",
     longNamesCompatibilityModeText: "Show player names vertically, allowing long names to be displayed without stretching the table.",
@@ -122,7 +124,18 @@ export const idStringsEN = {
     chooseBoardsToImportTitle: "Choose which boards to import",
     fileValidationFailed: "The file you chose is not valid. Try again.",
     finalizeImportButton: "Import selected",
-    fileInputButton: "Choose file"
+    fileInputButton: "Choose file",
+    assistantModalTitle: "Assistant",
+    assistantWhoAskedQuestion: "Who made a guess?",
+    assistantWhatAskedQuestion: "What guess was it?",
+    assistantWhoAnsweredQuestion: "Did anyone show a card?",
+    assistantConfirmButton: "Confirm",
+    assistantWhichCharacterLabel: "Suspect",
+    assistantWhichWeaponLabel: "Weapon",
+    assistantWhichRoomLabel: "Room",
+    assistantConfirmError: "The player that asked the question cannot be the same one that showed the card.",
+    forceAssistantUpdateLabel: "Force assistant update",
+    forceAssistantUpdateText: "When OFF, the assistant can only overwrite empty cells automatically. When ON, it overwrites all of them."
 }
 
 export const titleStringsEN = {
@@ -150,7 +163,11 @@ export const titleStringsEN = {
     dustCounterButton: "Dust counter",
     dustCounterAltButton: "Dust counter",
     showLessSymbolsCheckbox: "Show less symbols",
-    fakeCheckbox: "Instructions checkbox"
+    fakeCheckbox: "Instructions checkbox",
+    assistantConfirmButton: "Confirm",
+    assistantWhichCharacterLabel: "Suspect",
+    assistantWhichWeaponLabel: "Weapon",
+    assistantWhichRoomLabel: "Room"
 }
 
 export const manualStringsEN = {
@@ -176,5 +193,7 @@ export const manualStringsEN = {
         confirmationSubtitle: "This cannot be undone!"
     },
     incompatibleText: "This saved game is incompatible with this version of the app, cannot resume.",
-    letsPlay: "Let's play!"
+    letsPlay: "Let's play!",
+    me: "Myself",
+    nobody: "No one"
 }

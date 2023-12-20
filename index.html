@@ -20,6 +20,7 @@
         rel="stylesheet">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 </head>
 
 <body>
@@ -72,10 +73,9 @@
 
     <div id="languageModal" class="modal-wrapper">
         <div id="languageModalContent" class="modal">
-            <section id="modalBackWrapper"><a class="setup-tooltip" id="languageModalBackButton"><span
-                        class="material-symbols-outlined">
-                        close
-                    </span></a></section>
+            <section id="modalBackWrapper"><a class="modal-back-button material-symbols-outlined"
+                    id="languageModalBackButton">
+                    close</a></section>
             <a href="?lang=en" class="language-link">🇬🇧 English</a>
             <a href="?lang=it" class="language-link">🇮🇹 Italiano</a>
         </div>
@@ -88,10 +88,9 @@
 
     <div id="creditsModal" class="modal-wrapper">
         <div id="creditsModalContent" class="modal">
-            <section id="modalBackWrapper"><a class="setup-tooltip" id="creditsModalBackButton"><span
-                        class="material-symbols-outlined">
-                        close
-                    </span></a></section>
+            <section id="modalBackWrapper"><a class="modal-back-button material-symbols-outlined"
+                    id="creditsModalBackButton">
+                    close</a></section>
             <p id="creditsModalText" class="setup-tooltip"></p>
         </div>
     </div>
@@ -156,10 +155,9 @@
 
     <div id="customBoardModal" class="modal-wrapper">
         <div id="customBoardModalContent" class="modal">
-            <section id="modalBackWrapper"><a class="setup-tooltip modal-back-button"
-                    id="customBoardModalBackButton"><span class="material-symbols-outlined">
-                        close
-                    </span></a></section>
+            <section id="modalBackWrapper"><a class="modal-back-button material-symbols-outlined"
+                    id="customBoardModalBackButton">
+                    close</a></section>
             <p id="customBoardQuestion" class="setup-text"></p>
             <section id="customBoardAddSection">
                 <button title="New Custom Board" id="newBoardButton" class="small-button board-button"></button>
@@ -181,10 +179,9 @@
 
     <div id="newBoardModal" class="modal-wrapper">
         <div id="newBoardModalContent" class="modal">
-            <section id="modalBackWrapper"><a class="setup-tooltip modal-back-button" id="newBoardModalBackButton"><span
-                        class="material-symbols-outlined">
-                        close
-                    </span></a></section>
+            <section id="modalBackWrapper"><a class="modal-back-button material-symbols-outlined"
+                    id="newBoardModalBackButton">
+                    close</a></section>
 
             <!--  Customize Board Form  -->
             <table id="customBoardTable">
@@ -262,10 +259,9 @@
 
     <div id="importBoardModal" class="modal-wrapper">
         <div id="importBoardModalContent" class="modal">
-            <section id="modalBackWrapper"><a class="setup-tooltip" id="importBoardModalBackButton"><span
-                        class="material-symbols-outlined">
-                        close
-                    </span></a></section>
+            <section id="modalBackWrapper"><a class="modal-back-button material-symbols-outlined"
+                    id="importBoardModalBackButton">
+                    close</a></section>
             <section id="fileInputSection">
                 <p id="importBoardTitle" class="setup-text"></p>
                 <label for="fileInput" class="file-input">
@@ -288,10 +284,9 @@
 
     <div id="advancedSettingsModal" class="modal-wrapper">
         <div id="advancedSettingsModalContent" class="modal">
-            <section id="modalBackWrapper"><a class="setup-tooltip" id="advancedSettingsModalBackButton"><span
-                        class="material-symbols-outlined">
-                        close
-                    </span></a></section>
+            <section id="modalBackWrapper"><a class="modal-back-button material-symbols-outlined"
+                    id="advancedSettingsModalBackButton">
+                    close</a></section>
             <p id="advancedSettingsTitle" class="setup-text"></p>
             <table class="advanced-settings-table">
                 <!-- LONG NAMES COMPATIBILITY MODE -->
@@ -367,6 +362,30 @@
                         <p id="alternateInGameToolbarText" class="setup-tooltip"></p>
                     </td>
                 </tr>
+                <!-- FORCE ASSISTANT UPDATE -->
+                <tr>
+                    <td rowspan="2" class="advanced-settings-table-image">
+                        <span class="material-icons-outlined">auto_awesome</span>
+                    </td>
+                    <td class="advanced-settings-table-entry">
+                        <label for="forceAssistantUpdate" class="advanced-settings-title"
+                            id="forceAssistantUpdateLabel"></label>
+                    </td>
+                    <td class="advanced-settings-table-checkbox checkbox-wrapper-31">
+                        <input type="checkbox" id="forceAssistantUpdate" title="Force assistant update">
+                        <svg viewBox="0 0 35.6 35.6">
+                            <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
+                            <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
+                            <polyline class="checked" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
+                        </svg>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="advanced-settings-table-entry" colspan="2">
+                        <p id="forceAssistantUpdateText" class="setup-tooltip"></p>
+                    </td>
+                </tr>
+
             </table>
         </div>
     </div>
@@ -378,10 +397,9 @@
 
     <div id="orderModal" class="modal-wrapper">
         <div id="orderModalContent" class="modal">
-            <section id="modalBackWrapper"><a class="setup-tooltip" id="orderModalBackButton"><span
-                        class="material-symbols-outlined">
-                        close
-                    </span></a></section>
+            <section id="modalBackWrapper"><a class="modal-back-button material-symbols-outlined"
+                    id="orderModalBackButton">
+                    close</a></section>
             <img src="assets/instructions/player_order.webp" class="setup-image"
                 alt="An image showing the order of players. The first player to type in is the one to your left, and the rest follow clockwise.">
             <p id="orderModalText" class="setup-tooltip"></p>
@@ -421,6 +439,11 @@
                     check_circle
                 </span></button>
             <button id="dustCounterButton" class="small-button dust-counter-button " title="Dust counter">12</button>
+            <button id="assistantButton" class="small-button"><span class="material-icons-outlined"
+                    id="assistantButtonLabel">
+                    auto_awesome
+                </span>
+                </span></button>
         </div>
         <!-- Dust counter -->
         <div id="dustCounterBox" class="dust-counter-box">
@@ -484,10 +507,9 @@
 
     <div id="selectionModal" class="modal-wrapper">
         <div id="selectionModalContent" class="modal">
-            <section id="modalBackWrapper"><a class="setup-tooltip" id="modalBackButton"><span
-                        class="material-symbols-outlined">
-                        close
-                    </span></a></section>
+            <section id="modalBackWrapper"><a class="modal-back-button material-symbols-outlined" id="modalBackButton">
+                    close
+                </a></section>
             <section id="showLessSymbolsWrapper"><input type="checkbox" id="showLessSymbolsCheckbox"
                     title="Show less symbols"><span id="showLessSymbolsText" class="setup-tooltip"></span></section>
             <section id="selectionModalBasic" class="selection-modal-wrapper">
@@ -554,10 +576,9 @@
 
     <div id="instructionsModal" class="modal-wrapper">
         <div id="instructionsModalContent" class="modal">
-            <section id="modalBackWrapper"><a class="setup-tooltip" id="instructionsModalBackButton"><span
-                        class="material-symbols-outlined">
-                        close
-                    </span></a></section>
+            <section id="modalBackWrapper"><a class="modal-back-button material-icons-outlined"
+                    id="instructionsModalBackButton">
+                    close</a></section>
             <span class="setup-text" id="instructionsModalTitle"></span>
             <section class="modal-section">
                 <span id="instructionsModalImage1" class="instructions-image material-symbols-outlined"></span>
@@ -612,6 +633,62 @@
         </div>
     </div>
 
+
+    <!--  ASSISTANT MODAL  -->
+    <div id="assistantModal" class="modal-wrapper full-screen-modal">
+        <form id="assistantForm">
+            <section id="modalBackWrapper"><a class="modal-back-button material-icons-outlined"
+                    id="assistantModalBackButton">
+                    close</a></section>
+            <section class="modal-section assistant-section">
+                <span class="material-icons-outlined modal-header">auto_awesome</span>
+                <span id="assistantModalTitle" class="setup-text modal-header"></span>
+            </section>
+            <section class="modal-section assistant-section">
+                <label for="assistantWhoAskedSelect" id="assistantWhoAskedQuestion" class="setup-text"></label><br>
+                <select title="assistantWhoAskedSelect" id="assistantWhoAskedSelect"
+                    class="small-button board-button select">
+                </select>
+            </section>
+            <section class="modal-section assistant-section">
+                <section for="assistantWhatAskedSelect" id="assistantWhatAskedQuestion" class="setup-text file-input">
+                </section>
+                <label for="assistantWhichCharacterSelect" id="assistantWhichCharacterQuestion" class="setup-tooltip">
+                    <span class="material-symbols-outlined">person</span>
+                    <span id="assistantWhichCharacterLabel" class="setup-tooltip"></span>
+                </label><br>
+                <select title="assistantWhichCharacterSelect" id="assistantWhichCharacterSelect"
+                    class="small-button board-button select">
+                </select><br>
+                <label for="assistantWhichWeaponSelect" id="assistantWhichWeaponQuestion" class="setup-tooltip">
+                    <span class="material-symbols-outlined">syringe</span>
+                    <span id="assistantWhichWeaponLabel" class="setup-tooltip"></span>
+                </label><br>
+                <select title="assistantWhichWeaponSelect" id="assistantWhichWeaponSelect"
+                    class="small-button board-button select">
+                </select><br>
+                <label for="assistantWhichRoomSelect" id="assistantWhichRoomQuestion" class="setup-tooltip">
+                    <span class="material-symbols-outlined">house</span>
+                    <span id="assistantWhichRoomLabel" class="setup-tooltip"></span>
+                </label><br>
+                <select title="assistantWhichRoomSelect" id="assistantWhichRoomSelect"
+                    class="small-button board-button select">
+                </select>
+            </section>
+            <section class="modal-section assistant-section">
+                <label for="assistantWhoAnsweredSelect" id="assistantWhoAnsweredQuestion"
+                    class="setup-text"></label><br>
+                <select title="assistantWhoAnsweredSelect" id="assistantWhoAnsweredSelect"
+                    class="small-button board-button select">
+                </select>
+            </section>
+            <section class="modal-section assistant-section">
+                <p id="assistantConfirmError" class="setup-tooltip"></p>
+                <button type="submit" title="assistantConfirmButton" id="assistantConfirmButton"
+                    class="small-button alt-button"></span>
+            </section>
+        </form>
+    </div>
 
 
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
