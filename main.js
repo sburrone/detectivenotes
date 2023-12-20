@@ -334,15 +334,15 @@ $(document).ready(function () {
         let board = game.board >= CUSTOM_BOARD_THRESHOLD ? settings.customBoards[game.board - CUSTOM_BOARD_THRESHOLD] : boards[game.board]
         game.table.push({ divider: true, name: 'Characters' })
         board.characters.forEach(character => {
-            game.table.push({ row: character, section: 'Characters', locked: false, items: Array(game.players.length).fill('reset') })
+            game.table.push({ row: character, section: 'Characters', locked: false, items: Array(game.players.length).fill('reset'), maybeCounter: Array(game.players.length).fill(0) })
         })
         game.table.push({ divider: true, name: 'Weapons' })
         board.weapons.forEach(weapon => {
-            game.table.push({ row: weapon, section: 'Weapons', locked: false, items: Array(game.players.length).fill('reset') })
+            game.table.push({ row: weapon, section: 'Weapons', locked: false, items: Array(game.players.length).fill('reset'), maybeCounter: Array(game.players.length).fill(0) })
         })
         game.table.push({ divider: true, name: 'Rooms' })
         board.rooms.forEach(room => {
-            game.table.push({ row: room, section: 'Rooms', locked: false, items: Array(game.players.length).fill('reset') })
+            game.table.push({ row: room, section: 'Rooms', locked: false, items: Array(game.players.length).fill('reset'), maybeCounter: Array(game.players.length).fill(0) })
         })
         saveGame()
     }
@@ -427,7 +427,8 @@ $(document).ready(function () {
     loadGame()
 
     function checkIncompatibleSave() {
-        if (localStorage.getItem("date")) {
+        //Controllo versioni <2.x e <4.x
+        if (localStorage.getItem("date") || !_.find(game.table, el => el.items && el.maybeCounter)) {
             //Trovato salvataggio vecchio. Cancella tutto.
             $("#continueGameButton").attr("disabled", "true")
             $("#continueGameButton").css("filter", "grayscale(0.75)")
@@ -1084,7 +1085,7 @@ $(document).ready(function () {
                 currentRow.append(header)
 
                 game.players.forEach((player, index) => {
-                    currentRow.append(getCellLink(index, item.row))
+                    currentRow.append(getCellLink(index, item.row, item.maybeCounter[index]))
                 })
 
                 $("#tableSection" + item.section).append(currentRow)
@@ -1101,10 +1102,15 @@ $(document).ready(function () {
 
         let table = getFilteredTable()
         //controlla se la casella è spuntata
-        $(".cell-image-link").find("img").each(function () {
-            let id = $(this).data("key").split(',') // id: i,j è itemsArray[i] players[j]
+        $(".cell-image-link").each(function () {
+            let id = $(this).find("img").data("key").split(',') // id: i,j è itemsArray[i] players[j]
             let icon = table[id[0]].items[id[1]]
-            $(this).attr("src", imageData[icon]).attr("class", icon)
+            $(this).find("img").attr("src", imageData[icon]).attr("class", icon)
+            let counter = table[id[0]].maybeCounter[id[1]]
+            $(this).find("span").text(counter)
+            if (counter > 1 && icon === "maybe") {
+                $(this).find("span").css("display", "block")
+            }
         })
         //controlla se la riga è spuntata
         $("tr").find(".table-header-checkbox-cell").each(function () {
@@ -1131,12 +1137,12 @@ $(document).ready(function () {
 
     let toUpdate = undefined, oldID = undefined
 
-    function getCellLink(number, item) {
+    function getCellLink(playerNumber, item, maybeCounter) {
         let cell = $("<td>")
         let cellLink = $("<a>").attr("class", "cell-image-link")
         cellLink.attr("id", "cellLink")
         cellLink.data("locked", "false")
-        cellLink.data("player", number.toString())
+        cellLink.data("player", playerNumber.toString())
         cellLink.data("item", item)
         cellLink.on("click", function () {
             //Only if data-locked: false
@@ -1150,9 +1156,9 @@ $(document).ready(function () {
         let cellImage = $("<img>")
         cellImage.attr("src", "assets/icons/reset.svg")
         cellImage.attr("class", "reset")
-        cellImage.data("key", "" + itemsArray.indexOf(item) + "," + number)
-        cellImage.attr("id", "cellImg" + number + "_" + itemsArray.indexOf(item))
-        let cellNumber = $("<span id='cellNumber" + number + "_" + itemsArray.indexOf(item) + "' class='cell-number'>").data("player", number.toString()).data("item", itemsArray.indexOf(item))
+        cellImage.data("key", "" + itemsArray.indexOf(item) + "," + playerNumber)
+        cellImage.attr("id", "cellImg" + playerNumber + "_" + itemsArray.indexOf(item))
+        let cellNumber = $("<span id='cellNumber" + playerNumber + "_" + itemsArray.indexOf(item) + "' class='cell-number'>").data("player", playerNumber.toString()).data("item", itemsArray.indexOf(item)).text(maybeCounter).css("display", "none")
         cellLink.append(cellImage, cellNumber)
         cell.append(cellLink)
         return cell
@@ -1376,9 +1382,9 @@ $(document).ready(function () {
             Sovrascrivi i reset e i forse no con croci per i giocatori tra WhoAsked e WhoAnswered.
             Sovrascrivi i reset con forse sì per WhoAnswered.
             Aumenta di uno i forse sì per WhoAnsered.
+            Memorizza i WhoAnswered.
             
             In futuro:
-            Memorizza i WhoAnswered
             Tieni traccia di quante carte ogni giocatore ha e segna la spunta se è l'unica opzione.
         */
         let whoAsked = $("#assistantWhoAskedSelect").find(":selected").val().replace("playerWhoAsked", "")
@@ -1442,8 +1448,10 @@ $(document).ready(function () {
                         console.log(cur, tot)
                         $("#cellNumber" + whoAnswered + "_" + item).css("display", tot < 2 ? "none" : "block")
                         $("#cellNumber" + whoAnswered + "_" + item).text(tot)
+                        getFilteredTable()[item].maybeCounter[whoAnswered] = tot
                     } else {
                         getFilteredTable()[item].items[whoAnswered] = "maybe"
+                        getFilteredTable()[item].maybeCounter[whoAnswered] = 1
                     }
                     $("#cellImg" + whoAnswered + "_" + item).removeClass($("#cellImg" + whoAnswered + "_" + item).attr("class"))
                     $("#cellImg" + whoAnswered + "_" + item).addClass("maybe")
