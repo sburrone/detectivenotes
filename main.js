@@ -1340,7 +1340,7 @@ $(document).ready(function () {
 
     // Assistant
 
-    $("#assistantButton").on("click", function () {
+    $("#assistantButton, #assistantAltButton").on("click", function () {
         hideAndShowModal("#assistantModal")
         clearAssistantForm()
         populateAssistantForm()
