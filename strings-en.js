@@ -1,4 +1,4 @@
-export const versionNumber = 4.2
+export const versionNumber = 4.3
 
 export const boardsEN = [
     {
@@ -135,7 +135,8 @@ export const idStringsEN = {
     assistantWhichRoomLabel: "Room",
     assistantConfirmError: "The player that asked the question cannot be the same one that showed the card.",
     forceAssistantUpdateLabel: "Force assistant update",
-    forceAssistantUpdateText: "When OFF, the assistant can only overwrite empty cells automatically. When ON, it overwrites all of them."
+    forceAssistantUpdateText: "When OFF, the assistant can only overwrite empty cells automatically. When ON, it overwrites all of them.",
+    customBoardMaxPlayers: "Max players"
 }
 
 export const titleStringsEN = {
@@ -186,7 +187,8 @@ export const manualStringsEN = {
         delete: "Delete",
         characters: "Suspects",
         weapons: "Weapons",
-        rooms: "Rooms"
+        rooms: "Rooms",
+        maxPlayers: "Max players"
     },
     customBoardDeleteModal: {
         confirmationTitle: "Delete board?",

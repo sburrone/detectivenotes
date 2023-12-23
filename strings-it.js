@@ -136,7 +136,8 @@ export const idStringsIT = {
     assistantWhichRoomLabel: "Stanza",
     assistantConfirmError: "Il giocatore che ha fatto la domanda non può essere lo stesso che ha mostrato la carta.",
     forceAssistantUpdateLabel: "Forza aggiornamento da assistente",
-    forceAssistantUpdateText: "Se spento, l'assistente sovrascrive automaticamente solo i riquadri vuoti della tabella. Se attivo, li sovrascrive tutti."
+    forceAssistantUpdateText: "Se spento, l'assistente sovrascrive automaticamente solo i riquadri vuoti della tabella. Se attivo, li sovrascrive tutti.",
+    customBoardMaxPlayers: "Max giocatori"
 }
 
 export const titleStringsIT = {
@@ -184,7 +185,8 @@ export const manualStringsIT = {
         delete: "Elimina",
         characters: "Sospetti",
         weapons: "Armi",
-        rooms: "Stanze"
+        rooms: "Stanze",
+        maxPlayers: "Max giocatori"
     },
     customBoardDeleteModal: {
         confirmationTitle: "Elimino il tavolo?",

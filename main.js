@@ -431,7 +431,7 @@ $(document).ready(function () {
 
     function checkIncompatibleSave() {
         //Controllo versioni <2.x e <4.x
-        if (localStorage.getItem("date") || !_.find(game.table, el => el.items && el.maybeCounter)) {
+        if (localStorage.getItem("date") || (game.table && !_.find(game.table, el => el.items && el.maybeCounter))) {
             //Trovato salvataggio vecchio. Cancella tutto.
             $("#continueGameButton").attr("disabled", "true")
             $("#continueGameButton").css("filter", "grayscale(0.75)")
@@ -556,6 +556,8 @@ $(document).ready(function () {
         $("#hideDustCounter").prop("disabled", (game.board != 5))
         if (game.board < CUSTOM_BOARD_THRESHOLD) {
             itemsArray = boards[game.board]["characters"].concat(boards[game.board]["weapons"]).concat(boards[game.board]["rooms"])
+        } else {
+            $("#playerNum").attr("max", settings.customBoards[id - CUSTOM_BOARD_THRESHOLD].maxPlayers || 6)
         }
         $("#playerNum").attr("min", minPlayers)
         $("#playerNum").val(3)
@@ -603,6 +605,7 @@ $(document).ready(function () {
     const buildCustomBoard = () => {
         //FIll itemsArray with values from the form
         let customBoardName = $("#customBoardName").val()
+        let customBoardMaxPlayers = Number.parseInt($("#customBoardMaxPlayersValue").val())
         let customCharacters = []
         for (let i = 0; i < customBoardSizes.Characters; i++) {
             customCharacters.push($("#customCharacters" + i).val())
@@ -618,7 +621,7 @@ $(document).ready(function () {
         if (!settings.customBoards) {
             settings.customBoards = []
         }
-        const boardToSave = { name: customBoardName, characters: customCharacters, weapons: customWeapons, rooms: customRooms }
+        const boardToSave = { name: customBoardName, characters: customCharacters, weapons: customWeapons, rooms: customRooms, maxPlayers: customBoardMaxPlayers }
         return boardToSave
     }
 
@@ -660,7 +663,7 @@ $(document).ready(function () {
 
         const tbody = $("<tbody class='custom-board-body' id='" + elementId + "Body'>")
         const spanName = $("<span>").text(board.name)
-        const tdName = $("<td colspan='3'>").append($(spanName))
+        const tdName = $("<td colspan='4'>").append($(spanName))
         let trItemsExpanded
         if (expandable) {
             const expandButton = $("<a class='material-symbols-outlined' id='" + elementId + "ExpandButton'>").text("expand_more").on("click", function () {
@@ -669,13 +672,14 @@ $(document).ready(function () {
                 $("#" + elementId + 'Items').toggle()
                 $("#" + elementId + 'ItemsExpanded').toggle()
             })
+            const maxPlayersExpandedHeader = $("<div class='items-expanded-div'>").append($(emojiSpan).clone().text("group"), " ", manualStrings.customBoardTitles.maxPlayers, ": ", board.maxPlayers || 6)
             const charactersExpandedHeader = $("<div>").append($(emojiSpan).clone().text("person"), " ", manualStrings.customBoardTitles.characters)
             const charactersExpandedList = $("<div class='items-expanded-div'>").append($(getListFromArray(board.characters)))
             const weaponsExpandedHeader = $("<div>").append($(emojiSpan).clone().text("syringe"), " ", manualStrings.customBoardTitles.weapons)
             const weaponsExpandedList = $("<div class='items-expanded-div'>").append($(getListFromArray(board.weapons)))
             const roomsExpandedHeader = $("<div>").append($(emojiSpan).clone().text("house"), " ", manualStrings.customBoardTitles.rooms)
             const roomsExpandedList = $("<div class='items-expanded-div'>").append($(getListFromArray(board.rooms)))
-            const cell = $("<td class='items-expanded-cell' colspan='3' id='" + elementId + "ItemsExpandedList'>").append($(charactersExpandedHeader), $(charactersExpandedList), $(weaponsExpandedHeader), $(weaponsExpandedList), $(roomsExpandedHeader), $(roomsExpandedList))
+            const cell = $("<td class='items-expanded-cell' colspan='4' id='" + elementId + "ItemsExpandedList'>").append($(maxPlayersExpandedHeader), $(charactersExpandedHeader), $(charactersExpandedList), $(weaponsExpandedHeader), $(weaponsExpandedList), $(roomsExpandedHeader), $(roomsExpandedList))
 
             trItemsExpanded = $("<tr id='" + elementId + "ItemsExpanded'>").append($(cell))
             $(tdName).append($(expandButton))
@@ -703,10 +707,11 @@ $(document).ready(function () {
         }
         $(trName).append($(tdName))
 
+        const tdMaxPlayers = $("<td id='" + elementId + "MaxPlayers'>").append($(emojiSpan).clone().text("group"), " ", board.maxPlayers || 6)
         const tdCharacters = $("<td id='" + elementId + "Characters'>").append($(emojiSpan).clone().text("person"), " ", board.characters.length)
         const tdWeapons = $("<td id='" + elementId + "Weapons'>").append($(emojiSpan).clone().text("syringe"), " ", board.weapons.length)
         const tdRooms = $("<td id='" + elementId + "Rooms'>").append($(emojiSpan).clone().text("house"), " ", board.rooms.length)
-        const trItems = $("<tr id='" + elementId + "Items'>").append($(tdCharacters), $(tdWeapons), $(tdRooms))
+        const trItems = $("<tr id='" + elementId + "Items'>").append($(tdMaxPlayers), $(tdCharacters), $(tdWeapons), $(tdRooms))
 
         $(tbody).append($(trName), $(trItems))
 
@@ -729,7 +734,7 @@ $(document).ready(function () {
             const deleteButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Delete'>").text("delete").attr("title", manualStrings.customBoardTitles.delete).on("click", function () {
                 deleteCustomBoard(index)
             })
-            const trButtons = $("<tr id='" + elementId + "Buttons'>").append($("<td class='custom-board-button-cell' colspan='3'>").append($(useButton), $(editButton), $(exportButton), $(deleteButton)))
+            const trButtons = $("<tr id='" + elementId + "Buttons'>").append($("<td class='custom-board-button-cell' colspan='4'>").append($(useButton), $(editButton), $(exportButton), $(deleteButton)))
             $(tbody).append($(trButtons))
 
         }
@@ -1056,6 +1061,10 @@ $(document).ready(function () {
     })
 
     function fillTable() {
+        if (game.players.length > 6) {
+            $("html, body").css("overflow-x", "auto")
+        }
+
         game.players.forEach(player => {
             let cell = $("<th>").attr("class", "name-holder")
             cell.attr("scope", "col")
