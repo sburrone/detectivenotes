@@ -528,11 +528,11 @@ $(document).ready(function () {
         updateFields()
     })
 
-    $("#playerOrderModalLink, #orderModalBackButton").on("click", function () {
+    $("#playerOrderModalLink").on("click", function () {
         $("#orderModal").toggle()
     })
 
-    $("#mainMenuLanguageButton, #languageModalBackButton").on("click", function () {
+    $("#mainMenuLanguageButton").on("click", function () {
         $("#languageModal").toggle()
     })
 
@@ -1213,7 +1213,7 @@ $(document).ready(function () {
     }
 
     //Toggle instructions modal
-    $("#showInstructionsModal, #instructionsModalBackButton").on("click", function () {
+    $("#showInstructionsModal").on("click", function () {
         $("#instructionsModal").toggle()
     })
 
