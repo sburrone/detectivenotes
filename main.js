@@ -459,6 +459,9 @@ $(document).ready(function () {
                 swapUpperBar()
             }
             $("#mainGame").css("display", "block")
+
+            $("#instructionsTooltip").css("visibility", "visible") //todo mantieni
+
             fillTable()
             updateTable()
             if (game.board === 5) {
@@ -1029,6 +1032,9 @@ $(document).ready(function () {
             swapUpperBar()
         }
         $("#mainGame").css("display", "block")
+
+        $("#instructionsTooltip").css("visibility", "visible") //todo mantieni
+
         const playerArray = []
         $('#playerNameContainer input').each(function () {
             playerArray.push(this.value) // "this" is the current element in the loop
@@ -1045,6 +1051,10 @@ $(document).ready(function () {
             $("#instructionsModalSection6").hide()
         }
         fillTable()
+    })
+
+    $("#instructionsTooltipClose").on("click", function () {
+        $("#instructionsTooltip").css("visibility", "hidden") //todo mantieni
     })
 
     $("#dustCounterDown, #dustCounterAltDown").on("click", function () {
@@ -1304,7 +1314,18 @@ $(document).ready(function () {
         saveItem(rowName, columnName, newID)
     })
 
+    // INSTRUCTIONS MODAL TOOLTIP
+    $("#tooltipDebugButton").on("click", function () {
+        generateTooltip()
+    })
+
+    function generateTooltip() {
+        const tooltip = $("<div class='tooltip-wrapper'>").text("Tooltip text")
+    }
+
+
     //INSTRUCTIONS MODAL IMAGE
+    const instructionsUpdateTime = 2000
 
     //Image 1: Cards given
     const instructionsModalImage1 = ["shelves", "kitchen", "candle", "person", "dinner_dining", "chair"]
@@ -1315,15 +1336,16 @@ $(document).ready(function () {
         }
         $("#instructionsModalImage1, #instructionsModalImage2B").text(instructionsModalImage1[im1Index])
         im1Index++
-    }, 2000)
+    }, instructionsUpdateTime)
 
     //Image 2: Check box
     let im2Interval = window.setInterval(function () {
-        $("#fakeCheckbox").click()
-        $(".fake-table").css("background-color", ($("#fakeCheckbox").prop("checked") ?
+        let isChecked = $("#fakeCheckbox").is(":checked")
+        $("#fakeCheckbox").prop("checked", !isChecked)
+        $(".fake-table").css("background-color", (!isChecked ?
             "var(--current-lightRed)"
             : ""))
-    }, 2000)
+    }, instructionsUpdateTime)
 
     //Image 3: Lock cards
     let im3Locked = false
@@ -1335,7 +1357,7 @@ $(document).ready(function () {
             "var(--current-darkBlue)")
         //Change label
         $("#fakeLockButtonLabel").text(im3Locked ? "lock" : "lock_open_right")
-    }, 2000)
+    }, instructionsUpdateTime)
 
     //Image 5: Autocomplete
     let im5On = false
@@ -1344,7 +1366,7 @@ $(document).ready(function () {
         //Change bg
         $("#fakeAutocompleteButton").css("background-color", im5On ?
             "var(--current-lightRed)" : "var(--green)")
-    }, 2000)
+    }, instructionsUpdateTime)
 
 
     // Assistant
