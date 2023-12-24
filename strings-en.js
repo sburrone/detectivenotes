@@ -1,4 +1,6 @@
-export const versionNumber = 4.4
+export const versionNumber = 4.5
+
+export const minVersionNumber = 4.5
 
 export const boardsEN = [
     {

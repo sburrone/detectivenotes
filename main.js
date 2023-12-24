@@ -1,7 +1,7 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js'
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js'
 import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/controls/OrbitControls.js'
-import { idStringsEN, boardsEN, titleStringsEN, manualStringsEN } from './strings-en.js'
+import { idStringsEN, boardsEN, titleStringsEN, manualStringsEN, minVersionNumber, versionNumber } from './strings-en.js'
 import { idStringsIT, boardsIT, titleStringsIT, manualStringsIT } from './strings-it.js'
 
 
@@ -302,6 +302,7 @@ $(document).ready(function () {
 
     function saveGame() {
         game.date = Date.now()
+        game.version = versionNumber
         localStorage.setItem("game", JSON.stringify(game))
     }
 
@@ -377,7 +378,7 @@ $(document).ready(function () {
     }
 
     function saveSettings() {
-        localStorage.setItem("settings", JSON.stringify(settings)) //Testato!
+        localStorage.setItem("settings", JSON.stringify(settings))
     }
 
     function loadGame() {
@@ -385,13 +386,7 @@ $(document).ready(function () {
     }
 
     function loadSettings() {
-        settings = JSON.parse(localStorage.getItem("settings")) || {
-            longNamesCompatibilityMode: false,
-            alternateInGameToolbar: false,
-            hideDustCounter: false,
-            forceAssistantUpdate: false,
-            autocomplete: true
-        }
+        settings = JSON.parse(localStorage.getItem("settings")) || settings
     }
 
     //Detect language, load strings
@@ -432,8 +427,7 @@ $(document).ready(function () {
     loadGame()
 
     function checkIncompatibleSave() {
-        //Controllo versioni <2.x e <4.x
-        if (localStorage.getItem("date") || (game.table && !_.find(game.table, el => el.items && el.maybeCounter))) {
+        if (!isCompatible(game)) {
             //Trovato salvataggio vecchio. Cancella tutto.
             $("#continueGameButton").attr("disabled", "true")
             $("#continueGameButton").css("filter", "grayscale(0.75)")
@@ -442,7 +436,11 @@ $(document).ready(function () {
         }
     }
 
-    if (game.date && !localStorage.getItem("date")) {
+    function isCompatible(game) {
+        return game && game.date && game.version && game.version >= minVersionNumber
+    }
+
+    if (isCompatible(game)) {
         $("#continueGameButton").toggle()
         $("#beginButtonSubtitle").toggle()
         let formattedPlayers = game.players.toString().replaceAll(',', ', ')
@@ -461,8 +459,6 @@ $(document).ready(function () {
                 swapUpperBar()
             }
             $("#mainGame").css("display", "block")
-
-            $("#instructionsTooltip").css("visibility", "visible") //todo mantieni
 
             fillTable()
             updateTable()
@@ -1024,6 +1020,7 @@ $(document).ready(function () {
         saveSetting("longNamesCompatibilityMode", $("#longNamesCompatibilityMode").is(":checked"))
         saveSetting("hideDustCounter", $("#hideDustCounter").is(":checked"))
         saveSetting("alternateInGameToolbar", $("#alternateInGameToolbar").is(":checked"))
+        saveSetting("forceAssistantUpdate", $("#forceAssistantUpdate").is(":checked"))
 
         toggleGlobalLockButton(game.locked)
         toggleAutocompleteButton(settings.autocomplete)
@@ -1034,8 +1031,6 @@ $(document).ready(function () {
             swapUpperBar()
         }
         $("#mainGame").css("display", "block")
-
-        $("#instructionsTooltip").css("visibility", "visible") //todo mantieni
 
         const playerArray = []
         $('#playerNameContainer input').each(function () {
@@ -1053,10 +1048,6 @@ $(document).ready(function () {
             $("#instructionsModalSection6").hide()
         }
         fillTable()
-    })
-
-    $("#instructionsTooltipClose").on("click", function () {
-        $("#instructionsTooltip").css("visibility", "hidden") //todo mantieni
     })
 
     $("#dustCounterDown, #dustCounterAltDown").on("click", function () {
