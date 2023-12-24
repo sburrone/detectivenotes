@@ -295,6 +295,7 @@ $(document).ready(function () {
     let settings = {
         longNamesCompatibilityMode: false,
         alternateInGameToolbar: false,
+        forceAssistantUpdate: false,
         hideDustCounter: false,
         autocomplete: true
     }
@@ -388,6 +389,7 @@ $(document).ready(function () {
             longNamesCompatibilityMode: false,
             alternateInGameToolbar: false,
             hideDustCounter: false,
+            forceAssistantUpdate: false,
             autocomplete: true
         }
     }
@@ -1410,7 +1412,6 @@ $(document).ready(function () {
 
     $("#assistantForm").on("submit", function (e) {
         e.preventDefault()
-        //Elaborate
         /*
             Valida:
             WhoAsked e WhoAnswered non possono essere uguali.

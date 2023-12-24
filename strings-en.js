@@ -101,7 +101,7 @@ export const idStringsEN = {
     creditsModalText: "Detective Notes<br>Version " + versionNumber + "<br>made with 🩷 by Nicholas<br><br>This project uses the <a href=\"https://sketchfab.com/3d-models/clue-board-game-843af04381cc495ca5f0a4bebadb1752\" target=\"_blank\">\"Clue (Board Game)\"</a> model by <a href=\"https://sketchfab.com/paulyanez\" target=\"_blank\">Anthony Yanez</a>, licensed under <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">CC-BY-4.0</a>.",
     advancedSettingsTitle: "Advanced settings",
     longNamesCompatibilityModeLabel: "Long names compatibility mode",
-    longNamesCompatibilityModeText: "Show player names vertically, allowing long names to be displayed without stretching the table.",
+    longNamesCompatibilityModeText: "Show player names vertically, allowing long names to be displayed without stretching the table.<br>Suggested option: ON",
     hideDustCounterLabel: "Hide dust counter",
     hideDustCounterText: "Hide dust counter for Harry Potter board",
     hideDustCounterDisabled: "This option is available for the Harry Potter board only.",
@@ -135,8 +135,9 @@ export const idStringsEN = {
     assistantWhichRoomLabel: "Room",
     assistantConfirmError: "The player that asked the question cannot be the same one that showed the card.",
     forceAssistantUpdateLabel: "Force assistant update",
-    forceAssistantUpdateText: "When OFF, the assistant can only overwrite empty cells automatically. When ON, it overwrites all of them.",
-    customBoardMaxPlayers: "Max players"
+    forceAssistantUpdateText: "When OFF, the assistant can only overwrite empty cells automatically. When ON, it overwrites all of them.<br>Suggested option: OFF",
+    customBoardMaxPlayers: "Max players",
+    instructionsModalText7: "Assistant lets you keep track of your opponents' guesses."
 }
 
 export const titleStringsEN = {

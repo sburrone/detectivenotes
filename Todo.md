@@ -1,5 +1,4 @@
 # Da fare:
-- Istruzioni per l'assistente
 - Sistemare i title
 - Aggiornamento live delle impostazioni
 - Semplificare l'aggiornamento della versione
