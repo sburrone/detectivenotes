@@ -427,7 +427,7 @@ $(document).ready(function () {
     loadGame()
 
     function checkIncompatibleSave() {
-        if (!isCompatible(game)) {
+        if (validateGame(game) === "INCOMPATIBLE") {
             //Trovato salvataggio vecchio. Cancella tutto.
             $("#continueGameButton").attr("disabled", "true")
             $("#continueGameButton").css("filter", "grayscale(0.75)")
@@ -436,11 +436,18 @@ $(document).ready(function () {
         }
     }
 
-    function isCompatible(game) {
-        return game && game.date && game.version && game.version >= minVersionNumber
+    function validateGame(game) {
+        let ret = "OK"
+        if (!game || _.isEmpty(game)) {
+            ret = "EMPTY"
+        } else if (game.date && game.version && game.version < minVersionNumber) {
+            console.info("Game version does not meet requirements. Saved game version is", game.version, "and required version is", minVersionNumber, ".")
+            ret = "INCOMPATIBLE"
+        }
+        return ret
     }
 
-    if (isCompatible(game)) {
+    if (validateGame(game) === "OK") {
         $("#continueGameButton").toggle()
         $("#beginButtonSubtitle").toggle()
         let formattedPlayers = game.players.toString().replaceAll(',', ', ')
