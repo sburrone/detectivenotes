@@ -34,7 +34,7 @@ html,
 body {
     margin: 0;
     padding: 0;
-    height: 100%;
+    height: 100vh;
     transition: .3s ease-in-out;
     overflow-x: hidden;
     overflow-y: auto;
@@ -136,7 +136,7 @@ progress {
 }
 
 #mainMenu {
-    height: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -292,12 +292,31 @@ a:hover {
     justify-content: space-evenly;
     height: auto;
     width: 100%;
-    position: fixed;
+    position: relative;
     z-index: 4;
     overflow-x: auto;
     overflow-y: hidden;
     padding: 8px;
     white-space: nowrap;
+}
+
+.table-wrapper {
+    top: 0 !important;
+}
+
+.alt-toolbar {
+    position: sticky;
+    bottom: 0;
+}
+
+.alt-table {
+    top: 0 !important;
+}
+
+.alt-dust-counter {
+    width: 100%;
+    position: sticky;
+    bottom: 68px;
 }
 
 .upperbar-title {
@@ -308,7 +327,7 @@ a:hover {
 .content {
     transition: .3s ease-in-out;
     position: relative;
-    top: 75px;
+    top: 12px;
     padding-bottom: 100px;
     z-index: 1;
     text-align: center;
@@ -659,11 +678,11 @@ button {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    position: relative;
+    top: 68px;
     padding: 10px;
     text-align: center;
     display: none;
-    z-index: 5;
+    z-index: 2;
     overflow-x: auto;
     overflow-y: hidden;
     height: auto;
@@ -1031,20 +1050,6 @@ a {
     position: sticky;
     top: 0;
     z-index: 10;
-}
-
-#mainGameUB {
-    position: static;
-}
-
-#mainGameTableWrapper {
-    top: 0px;
-}
-
-#alternateToolbar {
-    position: sticky;
-    bottom: 0;
-    display: none;
 }
 
 .in-game-upperbar {

@@ -392,12 +392,12 @@ $(document).ready(function () {
     //Detect language, load strings
     let stringKeys = Object.keys(idStrings)
     stringKeys.forEach((key) => {
-        //console.log('string',key)
+        //console.log('string', key)
         document.getElementById(key).innerHTML = idStrings[key]
     })
     let titleKeys = Object.keys(titleStrings)
     titleKeys.forEach((key) => {
-        //console.log('title',key)
+        //console.log('title', key)
         document.getElementById(key).title = titleStrings[key]
     })
     $("#startGame").attr("value", manualStrings.letsPlay)
@@ -413,14 +413,17 @@ $(document).ready(function () {
     }, 2000)
 
     function swapUpperBar() {
-        $("#mainGameUB").hide()
+        $("#mainGameTableWrapper").addClass("alt-table")
+        $("#mainGameUB").detach().insertAfter("#mainGameTableWrapper").addClass("alt-toolbar")
+        $("#dustCounterBox").detach().insertAfter("#mainGameTableWrapper").addClass("alt-dust-counter")
+        /*$("#mainGameUB").hide()
         $("#alternateToolbar").show()
         if (game.board === 5 && !settings.hideDustCounter) {
             $("#dustCounterBox").detach().insertBefore("#alternateToolbar")
             $("#dustCounterBox").css("position", "sticky")
             $("#dustCounterBox").css("bottom", "68px")
         }
-        $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", "var(--green)")
+        $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", "var(--green)")*/
     }
 
     loadSettings()

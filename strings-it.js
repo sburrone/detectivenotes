@@ -164,7 +164,7 @@ export const titleStringsIT = {
     playerOrder4: "Il quarto giocatore alla tua sinistra",
     playerOrder5: "Il quinto giocatore alla tua sinistra",
     dustCounterButton: "Contatore polveri",
-    dustCounterAltButton: "Contatore polveri",
+    //dustCounterAltButton: "Contatore polveri",
     showLessSymbolsCheckbox: "Mostra meno simboli",
     fakeCheckbox: "Spunta istruzioni",
     assistantConfirmButton: "Conferma"

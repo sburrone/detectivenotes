@@ -165,7 +165,7 @@ export const titleStringsEN = {
     playerOrder4: "The fourth player to your left",
     playerOrder5: "The fifth player to your left",
     dustCounterButton: "Dust counter",
-    dustCounterAltButton: "Dust counter",
+    //dustCounterAltButton: "Dust counter",
     showLessSymbolsCheckbox: "Show less symbols",
     fakeCheckbox: "Instructions checkbox",
     assistantConfirmButton: "Confirm",
