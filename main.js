@@ -387,6 +387,11 @@ $(document).ready(function () {
 
     function loadSettings() {
         settings = JSON.parse(localStorage.getItem("settings")) || settings
+        _.forEach(settings, (val, key) => {
+            if (val === true) {
+                $("#" + key).prop("checked", true)
+            }
+        })
     }
 
     //Detect language, load strings
