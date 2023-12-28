@@ -387,17 +387,22 @@ $(document).ready(function () {
 
     function loadSettings() {
         settings = JSON.parse(localStorage.getItem("settings")) || settings
+        _.forEach(settings, (val, key) => {
+            if (val === true) { //Solo i valori booleani vanno cambiati
+                $("#" + key).prop("checked", true)
+            }
+        })
     }
 
     //Detect language, load strings
     let stringKeys = Object.keys(idStrings)
     stringKeys.forEach((key) => {
-        //console.log('string',key)
+        //console.log('string', key)
         document.getElementById(key).innerHTML = idStrings[key]
     })
     let titleKeys = Object.keys(titleStrings)
     titleKeys.forEach((key) => {
-        //console.log('title',key)
+        //console.log('title', key)
         document.getElementById(key).title = titleStrings[key]
     })
     $("#startGame").attr("value", manualStrings.letsPlay)
@@ -411,17 +416,6 @@ $(document).ready(function () {
         $(".language-label").text(languageLabels[languageIndex])
         languageIndex++
     }, 2000)
-
-    function swapUpperBar() {
-        $("#mainGameUB").hide()
-        $("#alternateToolbar").show()
-        if (game.board === 5 && !settings.hideDustCounter) {
-            $("#dustCounterBox").detach().insertBefore("#alternateToolbar")
-            $("#dustCounterBox").css("position", "sticky")
-            $("#dustCounterBox").css("bottom", "68px")
-        }
-        $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", "var(--green)")
-    }
 
     loadSettings()
     loadGame()
@@ -462,27 +456,12 @@ $(document).ready(function () {
             //Fill
             $("#mainMenu").css("display", "none")
             clearInterval(languageInterval)
-            if (settings.alternateInGameToolbar) {
-                swapUpperBar()
-            }
+            swapUpperBar(settings.alternateInGameToolbar)
             $("#mainGame").css("display", "block")
 
             fillTable()
             updateTable()
-            if (game.board === 5) {
-                $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(game.dustCounter)
-                if (!settings.hideDustCounter) {
-                    $(".dust-counter-box").css("display", "flex")
-                    $("#instructionsModalSection6").show()
-                } else {
-                    $(".dust-counter-button").hide()
-                    $("#instructionsModalSection6").hide()
-                }
-            }
-            if (game.board !== 5 || settings.hideDustCounter) {
-                $(".dust-counter-button").hide()
-                $("#instructionsModalSection6").hide()
-            }
+            hideDustCounter(game.board !== 5 || settings.hideDustCounter)
         })
     }
 
@@ -558,10 +537,6 @@ $(document).ready(function () {
         }
 
         game.board = id
-        if (game.board == 5) {
-            $("#hideDustCounterText, #hideDustCounterDisabled").toggle()
-        }
-        $("#hideDustCounter").prop("disabled", (game.board != 5))
         if (game.board < CUSTOM_BOARD_THRESHOLD) {
             itemsArray = boards[game.board]["characters"].concat(boards[game.board]["weapons"]).concat(boards[game.board]["rooms"])
         } else {
@@ -990,7 +965,11 @@ $(document).ready(function () {
         darkMode = !current
     }
 
-    $("#advancedSettingsToggle").on("click", function () {
+    $("#advancedSettingsToggle, #advancedSettingsInGameToggle").on("click", function () {
+        if (game.board == 5) {
+            $("#hideDustCounterText, #hideDustCounterDisabled").toggle()
+        }
+        $("#hideDustCounter").prop("disabled", (game.board != 5))
         $("#advancedSettingsModal").toggle()
     })
 
@@ -1006,15 +985,51 @@ $(document).ready(function () {
 
     $("#longNamesCompatibilityMode").on("change", function () {
         saveSetting("longNamesCompatibilityMode", $(this).is(":checked"))
+        changeLongNamesMode($(this).is(":checked"))
     })
+
+    function changeLongNamesMode(shouldShowLongNames) {
+        if (shouldShowLongNames) {
+            $(".long-names-cell").show()
+            $(".normal-names-cell").hide()
+        } else {
+            $(".long-names-cell").hide()
+            $(".normal-names-cell").show()
+        }
+    }
 
     $("#hideDustCounter").on("change", function () {
         saveSetting("hideDustCounter", $(this).is(":checked"))
+        hideDustCounter($(this).is(":checked"))
     })
 
     $("#alternateInGameToolbar").on("change", function () {
         saveSetting("alternateInGameToolbar", $(this).is(":checked"))
+        swapUpperBar($(this).is(":checked"))
     })
+
+    function hideDustCounter(shouldHide) {
+        if (shouldHide) {
+            $(".dust-counter-box, .dust-counter-button, #instructionsModalSection6").hide()
+        } else {
+            $(".dust-counter-box").css("display", "flex")
+            $(".dust-counter-button").show()
+            $("#instructionsModalSection6").show()
+            $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(game.dustCounter)
+        }
+    }
+
+    function swapUpperBar(shouldSwap) {
+        if (shouldSwap) {
+            $("#mainGameTableWrapper").addClass("alt-table")
+            $("#mainGameUB").detach().insertAfter("#mainGameTableWrapper").addClass("alt-toolbar")
+            $("#dustCounterBox").detach().insertAfter("#mainGameTableWrapper").addClass("alt-dust-counter")
+        } else {
+            $("#mainGameTableWrapper").removeClass("alt-table")
+            $("#mainGameUB").detach().insertBefore("#mainGameTableWrapper").removeClass("alt-toolbar")
+            $("#dustCounterBox").detach().insertBefore("#mainGameTableWrapper").removeClass("alt-dust-counter")
+        }
+    }
 
     $("#forceAssistantUpdate").on("change", function () {
         saveSetting("forceAssistantUpdate", $(this).is(":checked"))
@@ -1034,9 +1049,7 @@ $(document).ready(function () {
         saveGame()
 
         $("#setup").css("display", "none")
-        if (settings.alternateInGameToolbar) {
-            swapUpperBar()
-        }
+        swapUpperBar(settings.alternateInGameToolbar)
         $("#mainGame").css("display", "block")
 
         const playerArray = []
@@ -1047,13 +1060,7 @@ $(document).ready(function () {
         //Save data
         saveGameSetup(game.board, playerArray)
         setupTable()
-        if (game.board === 5 && !settings.hideDustCounter) {
-            $(".dust-counter-box").css("display", "flex")
-            $("#instructionsModalSection6").show()
-        } else {
-            $(".dust-counter-button").hide()
-            $("#instructionsModalSection6").hide()
-        }
+        hideDustCounter(game.board !== 5 || settings.hideDustCounter)
         fillTable()
     })
 
@@ -1078,16 +1085,15 @@ $(document).ready(function () {
         game.players.forEach(player => {
             let cell = $("<th>").attr("class", "name-holder")
             cell.attr("scope", "col")
-            if (settings.longNamesCompatibilityMode) {
-                const sideways = $("<span>").addClass("sideways").text(player)
-                const initial = $("<span>").text(player.trim().charAt(0))
-                cell.append(sideways, $("<br>"), initial)
-            } else {
-                cell.text(player)
-            }
+            const sideways = $("<span>").addClass("sideways").text(player)
+            const initial = $("<span>").text(player.trim().charAt(0))
+            const longDiv = $("<div class='long-names-cell'>").append($(sideways), $("<br>"), $(initial))
+            const normalDiv = $("<div class='normal-names-cell'>").text(player)
+            cell.append($(longDiv), $(normalDiv))
             cell.css("background-color", "var(--current-lightGrey")
             $("#tableRowPlayers").append(cell)
         })
+        changeLongNamesMode(settings.longNamesCompatibilityMode)
 
         game.table.forEach((item, itemIndex) => {
             /*
