@@ -1483,11 +1483,11 @@ $(document).ready(function () {
                     }
                 }
 
-                if (whoAnswered !== -1 && whoAnswered < game.players.length && (getFilteredTable()[item].items[whoAnswered] === "reset" || settings.forceAssistantUpdate)) {
+                if (whoAnswered !== -1 && whoAnswered < game.players.length && (getFilteredTable()[item].items[whoAnswered] === "reset" || getFilteredTable()[item].items[whoAnswered] === "maybe" || settings.forceAssistantUpdate)) {
                     if (getFilteredTable()[item].items[whoAnswered] === "maybe") {
                         getFilteredTable()[item].maybeCounter[whoAnswered]++
-                        $("#cellNumber" + whoAnswered + "_" + item).css("display", getFilteredTable()[item].maybeCounter[whoAnswered] < 2 ? "none" : "block")
                         $("#cellNumber" + whoAnswered + "_" + item).text(getFilteredTable()[item].maybeCounter[whoAnswered])
+                        $("#cellNumber" + whoAnswered + "_" + item).css("display", getFilteredTable()[item].maybeCounter[whoAnswered] < 2 ? "none" : "block")
                     } else {
                         getFilteredTable()[item].items[whoAnswered] = "maybe"
                         getFilteredTable()[item].maybeCounter[whoAnswered] = 1
