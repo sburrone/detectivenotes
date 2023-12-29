@@ -1483,14 +1483,11 @@ $(document).ready(function () {
                     }
                 }
 
-                console.log('Condition: whoA !=-1, whoA < playerslength, tablereset or forceassistant')
                 if (whoAnswered !== -1 && whoAnswered < game.players.length && (getFilteredTable()[item].items[whoAnswered] === "reset" || getFilteredTable()[item].items[whoAnswered] === "maybe" || settings.forceAssistantUpdate)) {
                     if (getFilteredTable()[item].items[whoAnswered] === "maybe") {
-                        console.log('Before: item, counter', item, getFilteredTable()[item].maybeCounter[whoAnswered])
                         getFilteredTable()[item].maybeCounter[whoAnswered]++
                         $("#cellNumber" + whoAnswered + "_" + item).text(getFilteredTable()[item].maybeCounter[whoAnswered])
                         $("#cellNumber" + whoAnswered + "_" + item).css("display", getFilteredTable()[item].maybeCounter[whoAnswered] < 2 ? "none" : "block")
-                        console.log('After: item, counter', item, getFilteredTable()[item].maybeCounter[whoAnswered])
                     } else {
                         getFilteredTable()[item].items[whoAnswered] = "maybe"
                         getFilteredTable()[item].maybeCounter[whoAnswered] = 1
