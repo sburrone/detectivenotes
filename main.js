@@ -1458,27 +1458,18 @@ $(document).ready(function () {
                 if (whoAsked < whoAnswered) {
                     for (let i = whoAsked + 1; i < whoAnswered; i++) {
                         if (getFilteredTable()[item].items[i] === "reset" || settings.forceAssistantUpdate) {
-                            getFilteredTable()[item].items[i] = "cross"
-                            $("#cellImg" + i + "_" + item).removeClass($("#cellImg" + i + "_" + item).attr("class"))
-                            $("#cellImg" + i + "_" + item).addClass("cross")
-                            $("#cellImg" + i + "_" + item).attr("src", imageData.cross)
+                            assistantCross(i, item)
                         }
                     }
                 } else {
                     for (let i = whoAsked + 1; i < game.players.length; i++) {
                         if (getFilteredTable()[item].items[i] === "reset" || settings.forceAssistantUpdate) {
-                            getFilteredTable()[item].items[i] = "cross"
-                            $("#cellImg" + i + "_" + item).removeClass($("#cellImg" + i + "_" + item).attr("class"))
-                            $("#cellImg" + i + "_" + item).addClass("cross")
-                            $("#cellImg" + i + "_" + item).attr("src", imageData.cross)
+                            assistantCross(i, item)
                         }
                     }
                     for (let i = 0; i < whoAnswered; i++) {
                         if (getFilteredTable()[item].items[i] === "reset" || settings.forceAssistantUpdate) {
-                            getFilteredTable()[item].items[i] = "cross"
-                            $("#cellImg" + i + "_" + item).removeClass($("#cellImg" + i + "_" + item).attr("class"))
-                            $("#cellImg" + i + "_" + item).addClass("cross")
-                            $("#cellImg" + i + "_" + item).attr("src", imageData.cross)
+                            assistantCross(i, item)
                         }
                     }
                 }
@@ -1502,4 +1493,14 @@ $(document).ready(function () {
         saveGame()
         hideAndShowModal()
     })
+
+    function assistantCross(i, item) {
+        getFilteredTable()[item].items[i] = "cross"
+        getFilteredTable()[item].maybeCounter[i] = 0
+        $("#cellImg" + i + "_" + item).removeClass($("#cellImg" + i + "_" + item).attr("class"))
+        $("#cellImg" + i + "_" + item).addClass("cross")
+        $("#cellImg" + i + "_" + item).attr("src", imageData.cross)
+        $("#cellNumber" + i + "_" + item).text(getFilteredTable()[item].maybeCounter[i])
+        $("#cellNumber" + i + "_" + item).hide()
+    }
 })
