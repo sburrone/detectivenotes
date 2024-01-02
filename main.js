@@ -966,10 +966,13 @@ $(document).ready(function () {
     }
 
     $("#advancedSettingsToggle, #advancedSettingsInGameToggle").on("click", function () {
-        if (game.board == 5) {
+        if (game.board === 5) {
+            $("#hideDustCounterSection").removeClass("advanced-settings-disabled")
             $("#hideDustCounterText, #hideDustCounterDisabled").toggle()
+        } else {
+            $("#hideDustCounterSection").addClass("advanced-settings-disabled")
         }
-        $("#hideDustCounter").prop("disabled", (game.board != 5))
+        $("#hideDustCounter").prop("disabled", (game.board !== 5))
         $("#advancedSettingsModal").toggle()
     })
 

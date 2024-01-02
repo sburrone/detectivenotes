@@ -334,6 +334,7 @@ a:hover {
     text-align: center;
     background-color: var(--current-white);
     color: var(--current-black);
+    margin-bottom: 100px;
 }
 
 .invertible {
@@ -774,6 +775,12 @@ table {
     padding: 10px;
 }
 
+@media screen and (orientation: portrait) {
+    .advanced-settings-table-image {
+        display: none;
+    }
+}
+
 
 @media screen and (max-width: 1080px) {
 
@@ -1121,4 +1128,8 @@ a {
         1px -1px 0 var(--current-white);
     ;
     transform: translate(10px, 10px);
+}
+
+.advanced-settings-disabled tr {
+    display: none;
 }
