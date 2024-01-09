@@ -552,6 +552,8 @@ $(document).ready(function () {
         $("#playerNumTooltip").text($("#playerNum").val())
     }
 
+    const playerFields = {}
+
     function updateFields() {
         const val = $("#playerNum").val()
         $("#playerNumTooltip").text(val)
@@ -569,10 +571,14 @@ $(document).ready(function () {
             for (let i = currentFields; i < val - 1; i++) {
                 let fieldSection = $("<section>")
                 let field = $("<input>").attr("class", "setup-name")
-                field.attr("type", "text")
+                field.attr("type", "search")
                 field.attr("required", "required")
                 field.attr("name", "player" + i)
                 field.attr("pattern", "[A-Za-z0-9]+")
+                field.on("input", function () {
+                    playerFields[i] = field.val()
+                })
+                field.val(playerFields[i])
                 fieldSection.append(field, $("<br>"))
                 $("#playerNameContainer").append(fieldSection)
             }
