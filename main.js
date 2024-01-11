@@ -417,6 +417,59 @@ $(document).ready(function () {
         languageIndex++
     }, 2000)
 
+    /*
+
+    ///////////////
+    //  ACTIONS  //
+    ///////////////
+
+    Sintassi:
+
+    history = [Action]
+
+    action = {
+        type: String                        <-- L'unico attributo obbligatorio
+    }
+
+    types:
+    1. "updateManual": scelta normale dentro selectionModal
+        1.1. item = Number                  <-- Indirizzo dentro itemsArray. ereditato dalle subactions
+        1.2. subactions = []
+            1.2.1. subaction = {            <-- Opzionale
+                type: "updateWholeRow",
+                id: String                  <-- cross, reset, ecc.
+            }
+            1.2.2. subaction = {            <-- Obbligatorio per updateGroup
+                type: "update",
+                player: Number,
+                id: String
+            }
+    
+    2. "updateAssistant": operazione dell'assistente
+        2.1. subactions = []
+            2.1.1. subaction = {
+                type: "assistantCross",
+                item: Number,               <-- Item non viene ereditato perché l'azione non viene eseguita in alcuni casi (item bloccato, cella già riempita che non va sovrascritta)
+                player: Number
+            }
+            2.1.2. subaction = {
+                type: "assistantMaybe",
+                item: Number,
+                player: Number,
+                maybeCounter: Number        <-- quello nuovo
+            }
+    
+    3. "lockItem": blocco di una riga
+        3.1. item = Number
+        3.2. row = [String]                 <-- id sostituiti con il blocco
+
+    4. "unlockItem": sblocco di una riga
+        4.1. item = Number
+
+    */
+
+    const history = []
+
     loadSettings()
     loadGame()
 
@@ -781,7 +834,7 @@ $(document).ready(function () {
     })
 
     function exportCustomBoard(id) {
-        let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(id ? settings.customBoards[id] : settings.customBoards)); //todo sistema
+        let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(id ? settings.customBoards[id] : settings.customBoards));
         let downloadAnchorNode = document.createElement('a');
         downloadAnchorNode.setAttribute("href", dataStr);
         downloadAnchorNode.setAttribute("download", (id ? settings.customBoards[id].name : "Detective Notes Boards") + ".board");
@@ -997,6 +1050,10 @@ $(document).ready(function () {
         changeLongNamesMode($(this).is(":checked"))
     })
 
+    $("#autocomplete").on("change", function () {
+        saveSetting("autocomplete", $(this).is(":checked"))
+    })
+
     function changeLongNamesMode(shouldShowLongNames) {
         if (shouldShowLongNames) {
             $(".long-names-cell").show()
@@ -1052,9 +1109,9 @@ $(document).ready(function () {
         saveSetting("hideDustCounter", $("#hideDustCounter").is(":checked"))
         saveSetting("alternateInGameToolbar", $("#alternateInGameToolbar").is(":checked"))
         saveSetting("forceAssistantUpdate", $("#forceAssistantUpdate").is(":checked"))
+        saveSetting("autocomplete", $("#autocomplete").is(":checked"))
 
         toggleGlobalLockButton(game.locked)
-        toggleAutocompleteButton(settings.autocomplete)
         saveGame()
 
         $("#setup").css("display", "none")
@@ -1134,7 +1191,6 @@ $(document).ready(function () {
     function updateTable() {
         //aggiorna header
         toggleGlobalLockButton(game.locked)
-        toggleAutocompleteButton(settings.autocomplete)
         saveGame()
 
         let table = getFilteredTable()
@@ -1242,21 +1298,6 @@ $(document).ready(function () {
         $("#instructionsModal").toggle()
     })
 
-    //Change autocomplete button
-    $("#autocompleteButton, #autocompleteButtonAlt").on("click", function () {
-        toggleAutocompleteButton()
-    })
-
-    function toggleAutocompleteButton(force) {
-        let shouldTurnOn = (force === undefined) ? !settings.autocomplete : force
-        if (shouldTurnOn) {
-            $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", "var(--green)")
-        } else {
-            $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", "var(--current-lightRed)")
-        }
-        saveSetting("autocomplete", shouldTurnOn)
-    }
-
 
     //Lock cards
     $("#lockPersonalCards, #lockPersonalCardsAlt").on("click", function () {
@@ -1303,6 +1344,8 @@ $(document).ready(function () {
         const newID = $(this).attr("id")
 
         $("#selectionModal").toggle()
+
+        //todo action
 
         //Se spunto e autocompl. ON, metti croci sulla riga
         if (newID == "check" && settings.autocomplete) {
@@ -1372,15 +1415,6 @@ $(document).ready(function () {
             "var(--current-darkBlue)")
         //Change label
         $("#fakeLockButtonLabel").text(im3Locked ? "lock" : "lock_open_right")
-    }, instructionsUpdateTime)
-
-    //Image 5: Autocomplete
-    let im5On = false
-    let im5Interval = window.setInterval(function () {
-        im5On = !im5On
-        //Change bg
-        $("#fakeAutocompleteButton").css("background-color", im5On ?
-            "var(--current-lightRed)" : "var(--green)")
     }, instructionsUpdateTime)
 
 
@@ -1455,7 +1489,6 @@ $(document).ready(function () {
 
         //Valida
         if (whoAsked === whoAnswered) {
-            //Normalmente dovrei dare errore in caso io WhoAnswered = nessuno, ma possiedo alcune delle carte nell'ipotesi.
             $("#assistantConfirmError").show()
             return
         }

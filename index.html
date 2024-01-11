@@ -303,6 +303,30 @@
                     close</a></section>
             <p id="advancedSettingsTitle" class="setup-text"></p>
             <table class="advanced-settings-table">
+
+                <!-- AUTOCOMPLETE -->
+                <tr>
+                    <td rowspan="2" class="advanced-settings-table-image">
+                        <span class="material-icons-outlined" disabled>verified</span>
+                    </td>
+                    <td class="advanced-settings-table-entry">
+                        <label for="hideDustCounter" class="advanced-settings-title" id="autocompleteLabel"></label>
+                    </td>
+                    <td class="advanced-settings-table-checkbox checkbox-wrapper-31">
+                        <input type="checkbox" id="autocomplete" title="Autocomplete" />
+                        <svg viewBox="0 0 35.6 35.6">
+                            <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
+                            <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
+                            <polyline class="checked" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
+                        </svg>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="advanced-settings-table-entry" colspan="2">
+                        <p id="autocompleteText" class="setup-tooltip"></p>
+                    </td>
+                </tr>
+
                 <!-- LONG NAMES COMPATIBILITY MODE -->
                 <tr>
                     <td rowspan="2" class="advanced-settings-table-image">
@@ -328,6 +352,7 @@
                         <p id="longNamesCompatibilityModeText" class="setup-tooltip"></p>
                     </td>
                 </tr>
+
                 <!-- DUST COUNTER HIDE -->
                 <tbody id="hideDustCounterSection">
                     <tr>
@@ -355,6 +380,7 @@
                         </td>
                     </tr>
                 </tbody>
+
                 <!-- ALTERNATE INGAME TOOLBAR -->
                 <tr>
                     <td rowspan="2" class="hide-dust-counter-cell advanced-settings-table-image">
@@ -379,6 +405,7 @@
                         <p id="alternateInGameToolbarText" class="setup-tooltip"></p>
                     </td>
                 </tr>
+
                 <!-- FORCE ASSISTANT UPDATE -->
                 <tr>
                     <td rowspan="2" class="advanced-settings-table-image">
@@ -454,15 +481,15 @@
                     id="lockPersonalCardsLabel">
                     lock_open_right
                 </span></button>
-            <button id="autocompleteButton" class="small-button autocomplete-button"><span
-                    class="material-symbols-outlined" id="autocompleteButtonLabel">
-                    check_circle
-                </span></button>
             <button id="dustCounterButton" class="small-button dust-counter-button " title="Dust counter">12</button>
             <button id="assistantButton" class="small-button"><span class="material-icons-outlined"
                     id="assistantButtonLabel">
                     auto_awesome
                 </span></button>
+            <button id="undoButton" class="small-button" title="Undo"><span
+                    class="material-symbols-outlined">undo</span></button>
+            <button id="redoButton" class="small-button" title="Redo"><span
+                    class="material-symbols-outlined">redo</span></button>
         </div>
         <!-- Dust counter -->
         <div id="dustCounterBox" class="dust-counter-box">
@@ -613,11 +640,6 @@
                 <button id="fakeLockButton" class="fake-button material-symbols-outlined">
                     lock_open_right</button>
                 <p id="instructionsModalText3" class="setup-tooltip"></p>
-            </section>
-            <section class="modal-section">
-                <button id="fakeAutocompleteButton" class="fake-button material-symbols-outlined">
-                    check_circle</button>
-                <p id="instructionsModalText5" class="setup-tooltip"></p>
             </section>
             <section class="modal-section" id="instructionsModalSection6">
                 <button id="fakeDustButton" class="small-button fake-button">12</button>
