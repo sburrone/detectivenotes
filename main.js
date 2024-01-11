@@ -326,8 +326,18 @@ $(document).ready(function () {
         saveGame()
     }
 
-    function toggleLockRow(row, force) {
-        getFilteredTable()[row].locked = force || !getFilteredTable()[row].locked
+    function toggleLockRow(rowNo, force, rowItems) {
+        const action = {
+            item: rowNo
+        }
+        getFilteredTable()[rowNo].locked = force || !getFilteredTable()[rowNo].locked
+        if (getFilteredTable()[rowNo].locked) {
+            action.type = "lockItem"
+            action.row = rowItems
+        } else {
+            action.type = "unlockItem"
+        }
+        !force && saveAction(action)
         saveGame()
     }
 
@@ -468,7 +478,13 @@ $(document).ready(function () {
 
     */
 
-    const history = []
+    function saveAction(action) {
+        if (!game.history) {
+            game.history = []
+        }
+        game.history.push(action)
+        saveGame()
+    }
 
     loadSettings()
     loadGame()
@@ -551,6 +567,7 @@ $(document).ready(function () {
         clearInterval(languageInterval)
         $("#setup").css("display", "block")
         game.board = 0
+        game.history = []
         itemsArray = boards[game.board]["characters"].concat(boards[game.board]["weapons"]).concat(boards[game.board]["rooms"])
         localStorage.removeItem("game")
 
@@ -1267,7 +1284,8 @@ $(document).ready(function () {
         checkbox.data("item", item)
         checkbox.attr("class", "table-header-checkbox")
         checkbox.on("change", function () {
-            toggleLockRow(itemsArray.indexOf(item), $(this).is(":checked"))
+            const oldRow = _.cloneDeep(getFilteredTable()[itemsArray.indexOf(item)].items)
+            toggleLockRow(itemsArray.indexOf(item), $(this).is(":checked"), oldRow)
             if ($(this).is(":checked")) {
                 $(this).closest(".table-row").find("td > a").data("locked", "true")
                 $(this).closest(".table-row").addClass("locked")
@@ -1345,14 +1363,26 @@ $(document).ready(function () {
 
         $("#selectionModal").toggle()
 
-        //todo action
+        //Crea azione
+        const action = {
+            type: "updateManual",
+            subactions: []
+        }
 
         //Se spunto e autocompl. ON, metti croci sulla riga
         if (newID == "check" && settings.autocomplete) {
             updateWholeRow("cross")
+            action.subactions.push({
+                type: "updateWholeRow",
+                id: "cross"
+            })
         } else if (oldID == "check" && newID != "check" && settings.autocomplete) {
             //Se tolgo spunta, metti reset
             updateWholeRow("reset")
+            action.subactions.push({
+                type: "updateWholeRow",
+                id: "reset"
+            })
         }
 
         //Aggiorna la casella vera
@@ -1369,6 +1399,16 @@ $(document).ready(function () {
         //Aggiorna LocalData
         let rowName = itemsArray.indexOf(toUpdate.data("item"))
         let columnName = parseInt(toUpdate.data("player"))
+
+        action.item = rowName
+        action.subactions.push({
+            type: "update",
+            player: columnName,
+            id: newID
+        })
+
+        saveAction(action)
+
         saveItem(rowName, columnName, newID)
     })
 
@@ -1494,6 +1534,11 @@ $(document).ready(function () {
         }
         $("#assistantConfirmError").hide()
 
+        //Crea azione
+        const action = {
+            subactions: []
+        }
+
         //Elabora
         whichItems.forEach(item => {
             if (!getFilteredTable()[item].locked) {
@@ -1501,17 +1546,32 @@ $(document).ready(function () {
                     for (let i = whoAsked + 1; i < whoAnswered; i++) {
                         if (getFilteredTable()[item].items[i] === "reset" || settings.forceAssistantUpdate) {
                             assistantCross(i, item)
+                            action.subactions.push({
+                                type: "assistantCross",
+                                item: item,
+                                player: i
+                            })
                         }
                     }
                 } else {
                     for (let i = whoAsked + 1; i < game.players.length; i++) {
                         if (getFilteredTable()[item].items[i] === "reset" || settings.forceAssistantUpdate) {
                             assistantCross(i, item)
+                            action.subactions.push({
+                                type: "assistantCross",
+                                item: item,
+                                player: i
+                            })
                         }
                     }
                     for (let i = 0; i < whoAnswered; i++) {
                         if (getFilteredTable()[item].items[i] === "reset" || settings.forceAssistantUpdate) {
                             assistantCross(i, item)
+                            action.subactions.push({
+                                type: "assistantCross",
+                                item: item,
+                                player: i
+                            })
                         }
                     }
                 }
@@ -1525,12 +1585,20 @@ $(document).ready(function () {
                         getFilteredTable()[item].items[whoAnswered] = "maybe"
                         getFilteredTable()[item].maybeCounter[whoAnswered] = 1
                     }
+                    action.subactions.push({
+                        type: "assistantMaybe",
+                        item: item,
+                        player: whoAnswered,
+                        maybeCounter: getFilteredTable()[item].maybeCounter[whoAnswered]
+                    })
                     $("#cellImg" + whoAnswered + "_" + item).removeClass($("#cellImg" + whoAnswered + "_" + item).attr("class"))
                     $("#cellImg" + whoAnswered + "_" + item).addClass("maybe")
                     $("#cellImg" + whoAnswered + "_" + item).attr("src", imageData.maybe)
                 }
             }
         })
+
+        saveAction(action)
 
         saveGame()
         hideAndShowModal()
