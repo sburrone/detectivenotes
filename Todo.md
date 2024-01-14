@@ -3,4 +3,3 @@
 - Semplificare l'aggiornamento della versione
 - Riordinare main.js e style.css
 - Storico azioni
-- Sistema blocco globale
