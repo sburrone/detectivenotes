@@ -1004,7 +1004,8 @@ a {
 }
 
 #instructionsModalImage1,
-#instructionsModalImage2B {
+#instructionsModalImage2B,
+#instructionsModalImage4 {
     border: 6px solid var(--current-black);
     padding: 5px;
     border-radius: 12px;

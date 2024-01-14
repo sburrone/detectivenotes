@@ -140,7 +140,8 @@ export const idStringsEN = {
     customBoardMaxPlayers: "Max players",
     instructionsModalText7: "Assistant lets you keep track of your opponents' guesses.",
     autocompleteLabel: "Autocomplete",
-    autocompleteText: "With Autocomplete, when you set a check <span class=\"material-symbols-outlined\">done</span> on a card, crosses <span class=\"material-symbols-outlined\">close</span> are filled in automatically.<br>This option is ON by default, disable it to add crosses manually."
+    autocompleteText: "With Autocomplete, when you set a check <span class=\"material-symbols-outlined\">done</span> on a card, crosses <span class=\"material-symbols-outlined\">close</span> are filled in automatically.<br>This option is ON by default, disable it to add crosses manually.",
+    instructionsModalText8: "If you make a mistake, you can undo and redo."
 }
 
 export const titleStringsEN = {
