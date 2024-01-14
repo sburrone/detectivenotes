@@ -530,7 +530,6 @@ $(document).ready(function () {
         }
         game.history.push(action)
         game.historyIndex = game.history.length
-        console.log('Saved', action, game.historyIndex, game.history.length)
         saveGame()
     }
 
@@ -543,7 +542,6 @@ $(document).ready(function () {
             return
         }
         game.historyIndex--
-        console.log('Popping', game.historyIndex, game.history.length, game.history)
         const action = game.history[game.historyIndex]
         doUndoAction(action)
         saveGame()
@@ -551,14 +549,13 @@ $(document).ready(function () {
 
     function doUndoAction(action, item) {
         //Item al momento è usato solo da updateManual, ed è la riga della tabella.
-        console.log('Undoing', action, item)
         switch (action.type) {
 
             case "updateManual":
                 if (_.isUndefined(action.item)) {
-                    console.log(action, "Item not valid!")
+                    console.error(action, "Item not valid!")
                 } else if (_.isUndefined(action.subactions)) {
-                    console.log(action, "Subactions not valid!")
+                    console.error(action, "Subactions not valid!")
                 } else {
                     _.forEachRight(action.subactions, sa => doUndoAction(sa, action.item))
                 }
@@ -566,11 +563,11 @@ $(document).ready(function () {
 
             case "updateWholeRow":
                 if (_.isUndefined(action.id)) {
-                    console.log(action, "Id not valid!")
+                    console.error(action, "Id not valid!")
                 } else if (_.isUndefined(action.oldRow)) {
-                    console.log(action, "Row not valid!")
+                    console.error(action, "Row not valid!")
                 } else if (_.isUndefined(action.oldMaybeCounter)) {
-                    console.log(action, "Maybe counter not valid!")
+                    console.error(action, "Maybe counter not valid!")
                 } else {
                     getFilteredTable()[item].items = _.cloneDeep(action.oldRow)
                     getFilteredTable()[item].maybeCounter = _.cloneDeep(action.oldMaybeCounter)
@@ -580,13 +577,13 @@ $(document).ready(function () {
 
             case "update":
                 if (_.isUndefined(action.player)) {
-                    console.log(action, "Player not valid!")
+                    console.error(action, "Player not valid!")
                 } else if (_.isUndefined(action.id)) {
-                    console.log(action, "Id not valid!")
+                    console.error(action, "Id not valid!")
                 } else if (_.isUndefined(action.oldId)) {
-                    console.log(action, "Old id not valid!")
+                    console.error(action, "Old id not valid!")
                 } else if (_.isUndefined(action.oldMaybeCounter)) {
-                    console.log(action, "Old maybe counter not valid!")
+                    console.error(action, "Old maybe counter not valid!")
                 } else {
                     getFilteredTable()[item].items[action.player] = action.oldId
                     getFilteredTable()[item].maybeCounter[action.player] = action.oldMaybeCounter
@@ -596,7 +593,7 @@ $(document).ready(function () {
 
             case "updateAssistant":
                 if (_.isUndefined(action.subactions)) {
-                    console.log(action, "Subactions not valid!")
+                    console.error(action, "Subactions not valid!")
                 } else {
                     _.forEachRight(action.subactions, sa => doUndoAction(sa))
                 }
@@ -604,13 +601,13 @@ $(document).ready(function () {
 
             case "assistantCross":
                 if (_.isUndefined(action.player)) {
-                    console.log(action, "Player not valid!")
+                    console.error(action, "Player not valid!")
                 } else if (_.isUndefined(action.oldId)) {
-                    console.log(action, "Old id not valid!")
+                    console.error(action, "Old id not valid!")
                 } else if (_.isUndefined(action.oldMaybeCounter)) {
-                    console.log(action, "Old maybe counter not valid!")
+                    console.error(action, "Old maybe counter not valid!")
                 } else if (_.isUndefined(action.item)) {
-                    console.log(action, "Item maybe counter not valid!")
+                    console.error(action, "Item maybe counter not valid!")
                 } else {
                     getFilteredTable()[action.item].items[action.player] = action.oldId
                     getFilteredTable()[action.item].maybeCounter[action.player] = action.oldMaybeCounter
@@ -620,13 +617,13 @@ $(document).ready(function () {
 
             case "assistantMaybe":
                 if (_.isUndefined(action.player)) {
-                    console.log(action, "Player not valid!")
+                    console.error(action, "Player not valid!")
                 } else if (_.isUndefined(action.oldId)) {
-                    console.log(action, "Old id not valid!")
+                    console.error(action, "Old id not valid!")
                 } else if (_.isUndefined(action.item)) {
-                    console.log(action, "Item maybe counter not valid!")
+                    console.error(action, "Item maybe counter not valid!")
                 } else if (_.isUndefined(action.maybeCounter)) {
-                    console.log(action, "Maybe counter not valid!")
+                    console.error(action, "Maybe counter not valid!")
                 } else {
                     getFilteredTable()[action.item].items[action.player] = action.oldId
                     getFilteredTable()[action.item].maybeCounter[action.player] = _.cloneDeep(action.maybeCounter)
@@ -636,11 +633,11 @@ $(document).ready(function () {
 
             case "lockItem":
                 if (_.isUndefined(action.item)) {
-                    console.log(action, "Item not valid!")
+                    console.error(action, "Item not valid!")
                 } else if (_.isUndefined(action.oldRow)) {
-                    console.log(action, "Old row not valid!")
+                    console.error(action, "Old row not valid!")
                 } else if (_.isUndefined(action.oldMaybeCounter)) {
-                    console.log(action, "Old maybe counter not valid!")
+                    console.error(action, "Old maybe counter not valid!")
                 } else {
                     getFilteredTable()[action.item].items = _.cloneDeep(action.oldRow)
                     getFilteredTable()[action.item].maybeCounter = _.cloneDeep(action.oldMaybeCounter)
@@ -654,7 +651,7 @@ $(document).ready(function () {
 
             case "unlockItem":
                 if (_.isUndefined(action.item)) {
-                    console.log(action, "Item not valid")
+                    console.error(action, "Item not valid")
                 } else {
                     game.players.forEach((player, index) => {
                         getFilteredTable()[action.item].items[index] = "cross"
@@ -669,7 +666,7 @@ $(document).ready(function () {
                 return
 
             default:
-                console.log(action, "Type not valid!")
+                console.error(action, "Type not valid!")
                 return
         }
     }
@@ -684,7 +681,6 @@ $(document).ready(function () {
         }
         const action = game.history[game.historyIndex]
 
-        console.log('Redoing', game.historyIndex, game.history.length, action)
         //Esegui inverso
         doRedoAction(action)
         game.historyIndex++
@@ -697,9 +693,9 @@ $(document).ready(function () {
 
             case "updateManual":
                 if (_.isUndefined(action.item)) {
-                    console.log(action, action.item, "Item not valid!")
+                    console.error(action, action.item, "Item not valid!")
                 } else if (_.isUndefined(action.subactions)) {
-                    console.log(action, "Subactions not valid!")
+                    console.error(action, "Subactions not valid!")
                 } else {
                     _.forEach(action.subactions, sa => doRedoAction(sa, action.item))
                 }
@@ -707,11 +703,11 @@ $(document).ready(function () {
 
             case "updateWholeRow":
                 if (_.isUndefined(action.id)) {
-                    console.log(action, "Id not valid!")
+                    console.error(action, "Id not valid!")
                 } else if (_.isUndefined(action.oldRow)) {
-                    console.log(action, "Row not valid!")
+                    console.error(action, "Row not valid!")
                 } else if (_.isUndefined(action.oldMaybeCounter)) {
-                    console.log(action, "Maybe counter not valid!")
+                    console.error(action, "Maybe counter not valid!")
                 } else {
                     getFilteredTable()[item].items.forEach((el, player) => {
                         getFilteredTable()[item].items[player] = action.id
@@ -723,13 +719,13 @@ $(document).ready(function () {
 
             case "update":
                 if (_.isUndefined(action.player)) {
-                    console.log(action, "Player not valid!")
+                    console.error(action, "Player not valid!")
                 } else if (_.isUndefined(action.id)) {
-                    console.log(action, "Id not valid!")
+                    console.error(action, "Id not valid!")
                 } else if (_.isUndefined(action.oldId)) {
-                    console.log(action, "Old id not valid!")
+                    console.error(action, "Old id not valid!")
                 } else if (_.isUndefined(action.oldMaybeCounter)) {
-                    console.log(action, "Old maybe counter not valid!")
+                    console.error(action, "Old maybe counter not valid!")
                 } else {
                     getFilteredTable()[item].items[action.player] = action.id
                     getFilteredTable()[item].maybeCounter[action.player] = 0
@@ -739,7 +735,7 @@ $(document).ready(function () {
 
             case "updateAssistant":
                 if (_.isUndefined(action.subactions)) {
-                    console.log(action, "Subactions not valid!")
+                    console.error(action, "Subactions not valid!")
                 } else {
                     _.forEach(action.subactions, sa => doRedoAction(sa))
                 }
@@ -747,13 +743,13 @@ $(document).ready(function () {
 
             case "assistantCross":
                 if (_.isUndefined(action.player)) {
-                    console.log(action, "Player not valid!")
+                    console.error(action, "Player not valid!")
                 } else if (_.isUndefined(action.oldId)) {
-                    console.log(action, "Old id not valid!")
+                    console.error(action, "Old id not valid!")
                 } else if (_.isUndefined(action.oldMaybeCounter)) {
-                    console.log(action, "Old maybe counter not valid!")
+                    console.error(action, "Old maybe counter not valid!")
                 } else if (_.isUndefined(action.item)) {
-                    console.log(action, "Item maybe counter not valid!")
+                    console.error(action, "Item maybe counter not valid!")
                 } else {
                     getFilteredTable()[action.item].items[action.player] = "cross"
                     getFilteredTable()[action.item].maybeCounter[action.player] = 0
@@ -763,13 +759,13 @@ $(document).ready(function () {
 
             case "assistantMaybe":
                 if (_.isUndefined(action.player)) {
-                    console.log(action, "Player not valid!")
+                    console.error(action, "Player not valid!")
                 } else if (_.isUndefined(action.oldId)) {
-                    console.log(action, "Old id not valid!")
+                    console.error(action, "Old id not valid!")
                 } else if (_.isUndefined(action.item)) {
-                    console.log(action, "Item maybe counter not valid!")
+                    console.error(action, "Item maybe counter not valid!")
                 } else if (_.isUndefined(action.maybeCounter)) {
-                    console.log(action, "Maybe counter not valid!")
+                    console.error(action, "Maybe counter not valid!")
                 } else {
                     getFilteredTable()[action.item].items[action.player] = "maybe"
                     getFilteredTable()[action.item].maybeCounter[action.player] = _.cloneDeep(action.maybeCounter) + 1
@@ -779,11 +775,11 @@ $(document).ready(function () {
 
             case "lockItem":
                 if (_.isUndefined(action.item)) {
-                    console.log(action, "Item not valid!")
+                    console.error(action, "Item not valid!")
                 } else if (_.isUndefined(action.oldRow)) {
-                    console.log(action, "Old row not valid!")
+                    console.error(action, "Old row not valid!")
                 } else if (_.isUndefined(action.oldMaybeCounter)) {
-                    console.log(action, "Old maybe counter not valid!")
+                    console.error(action, "Old maybe counter not valid!")
                 } else {
                     getFilteredTable()[action.item].items = Array(game.players.length).fill("cross")
                     getFilteredTable()[action.item].maybeCounter = Array(game.players.length).fill(0)
@@ -797,7 +793,7 @@ $(document).ready(function () {
 
             case "unlockItem":
                 if (_.isUndefined(action.item)) {
-                    console.log(action, "Item not valid")
+                    console.error(action, "Item not valid")
                 } else {
                     getFilteredTable()[action.item].items = Array(game.players.length).fill("reset")
                     getFilteredTable()[action.item].maybeCounter = Array(game.players.length).fill(0)
@@ -810,7 +806,7 @@ $(document).ready(function () {
                 return
 
             default:
-                console.log(action, "Type not valid!")
+                console.error(action, "Type not valid!")
                 return
         }
     }
@@ -1655,7 +1651,6 @@ $(document).ready(function () {
     function toggleGlobalLockButton(force) {
         let shouldLock = force !== undefined ? force : !game.locked
         toggleLockGlobal(shouldLock)
-        console.log('force', force, 'locked', game.locked, 'shouldLock', shouldLock)
         if (shouldLock) {   //if currently unlocked, locks cards
             $(".table-header-checkbox").each(function () {
                 $(this).attr("disabled", "disabled")
