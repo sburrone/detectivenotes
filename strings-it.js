@@ -140,7 +140,7 @@ export const idStringsIT = {
     instructionsModalText7: "Con Assistente puoi tenere traccia delle ipotesi degli altri giocatori automaticamente.",
     autocompleteLabel: "Autocompletamento",
     autocompleteText: "Con Autocompletamento, quando metti una spunta<span class=\"material-symbols-outlined\">done</span> su una carta, le croci <span class=\"material-symbols-outlined\">close</span> vengono inserite automatricamente. <br>Questa opzione è normalmente attiva, disabilitala per aggiungere le croci manualmente.",
-    instructionsModalText8: "Se sbagli, puoi annullare e ripetere ogni azione."
+    instructionsModalText8: "Se sbagli, puoi annullare e ripetere ogni azione.<br>Lo storico delle azioni viene salvato con la partita."
 }
 
 export const titleStringsIT = {
