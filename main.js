@@ -368,7 +368,7 @@ $(document).ready(function () {
     }
 
     function toggleLockGlobal(force) {
-        game.locked = force || !game.locked
+        game.locked = force !== undefined ? force : !game.locked
         saveGame()
     }
 
@@ -1653,7 +1653,9 @@ $(document).ready(function () {
     })
 
     function toggleGlobalLockButton(force) {
-        let shouldLock = (force === undefined) ? !game.locked : force
+        let shouldLock = force !== undefined ? force : !game.locked
+        toggleLockGlobal(shouldLock)
+        console.log('force', force, 'locked', game.locked, 'shouldLock', shouldLock)
         if (shouldLock) {   //if currently unlocked, locks cards
             $(".table-header-checkbox").each(function () {
                 $(this).attr("disabled", "disabled")
@@ -1667,7 +1669,6 @@ $(document).ready(function () {
             $("#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel").css("background-color", "var(--current-darkBlue)")
             $("#lockPersonalCardsLabel, #lockPersonalCardsAltLabel").text("lock_open_right")
         }
-        toggleLockGlobal(shouldLock)
     }
 
     //Hide extra symbols
