@@ -1,4 +1,4 @@
-export const versionNumber = 5.4
+export const versionNumber = 6
 
 export const minVersionNumber = 4.5
 
@@ -78,7 +78,6 @@ export const idStringsEN = {
     instructionsModalText2: "Tick the box next to their name to lock them in.",
     instructionsModalText3: "Once you've locked in all your cards, tap the lock icon at the top of the screen.",
     instructionsModalText4: "Your game progress is saved automatically.",
-    instructionsModalText5: "With Autocomplete, when you set a check <span class=\"material-symbols-outlined\">done</span> on a card, crosses <span class=\"material-symbols-outlined\">close</span> are filled in automatically.<br>This option is ON by default, disable it to add crosses manually.",
     instructionsModalText6: "On the Harry Potter board, keep track of how much dust you have with this counter. Tap it to increase and decrease how much dust you have.",
     //autocompleteStatusContainer: "Autocomplete is ",
     //autocompleteStatus: "ON",
@@ -139,7 +138,10 @@ export const idStringsEN = {
     forceAssistantUpdateLabel: "Force assistant update",
     forceAssistantUpdateText: "When OFF, the assistant can only overwrite empty cells automatically. When ON, it overwrites all of them.<br>Suggested option: OFF",
     customBoardMaxPlayers: "Max players",
-    instructionsModalText7: "Assistant lets you keep track of your opponents' guesses."
+    instructionsModalText7: "Assistant lets you keep track of your opponents' guesses.",
+    autocompleteLabel: "Autocomplete",
+    autocompleteText: "With Autocomplete, when you set a check <span class=\"material-symbols-outlined\">done</span> on a card, crosses <span class=\"material-symbols-outlined\">close</span> are filled in automatically.<br>This option is ON by default, disable it to add crosses manually.",
+    instructionsModalText8: "If you make a mistake, you can undo and redo."
 }
 
 export const titleStringsEN = {

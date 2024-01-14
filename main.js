@@ -326,8 +326,19 @@ $(document).ready(function () {
         saveGame()
     }
 
-    function toggleLockRow(row, force) {
-        getFilteredTable()[row].locked = force || !getFilteredTable()[row].locked
+    function toggleLockRow(rowNo, force, rowItems, maybeCounter) {
+        const action = {
+            item: rowNo
+        }
+        getFilteredTable()[rowNo].locked = force || !getFilteredTable()[rowNo].locked
+        if (getFilteredTable()[rowNo].locked) {
+            action.type = "lockItem"
+            action.oldRow = rowItems
+            action.oldMaybeCounter = maybeCounter
+        } else {
+            action.type = "unlockItem"
+        }
+        saveAction(action)
         saveGame()
     }
 
@@ -357,7 +368,7 @@ $(document).ready(function () {
     }
 
     function toggleLockGlobal(force) {
-        game.locked = force || !game.locked
+        game.locked = force !== undefined ? force : !game.locked
         saveGame()
     }
 
@@ -416,6 +427,389 @@ $(document).ready(function () {
         $(".language-label").text(languageLabels[languageIndex])
         languageIndex++
     }, 2000)
+
+    function redrawFromDataForAllPlayers(item) {
+        for (let i = 0; i < game.players.length; i++) {
+            redrawFromData(item, i)
+        }
+    }
+
+    function redrawFromData(item, player) {
+        const id = getFilteredTable()[item].items[player]
+        const maybe = getFilteredTable()[item].maybeCounter[player]
+
+        $("#cellImg" + player + "_" + item).removeClass($("#cellImg" + player + "_" + item).attr("class"))
+        $("#cellImg" + player + "_" + item).addClass(id)
+        $("#cellImg" + player + "_" + item).attr("src", imageData[id])
+        $("#cellNumber" + player + "_" + item).text(maybe)
+        if (id === "maybe" && maybe > 1) {
+            $("#cellNumber" + player + "_" + item).show()
+        } else {
+            $("#cellNumber" + player + "_" + item).hide()
+        }
+    }
+
+    /*
+
+    ///////////////
+    //  ACTIONS  //
+    ///////////////
+
+    Sintassi:
+
+    history = [Action]
+
+    action = {
+        type: String                        <-- L'unico attributo obbligatorio
+    }
+
+    types:
+    1. "updateManual": scelta normale dentro selectionModal
+        1.1. item = Number                  <-- Indirizzo dentro itemsArray. ereditato dalle subactions
+        1.2. subactions = []
+            1.2.1. subaction = {            <-- Opzionale, per autocomplete
+                type: "updateWholeRow",
+                id: String,                 <-- cross, reset, ecc.
+                oldRow: [String],
+                oldMaybeCounter: [Number],  <-- opzionale, se oldRow contiene maybe
+            }
+            1.2.2. subaction = {            <-- Obbligatorio per updateGroup
+                type: "update",
+                player: Number,
+                id: String,
+                oldId: String,
+                oldMaybeCounter: Number     <-- opzionale, se oldId contiene maybe
+            }
+    
+    2. "updateAssistant": operazione dell'assistente
+        2.1. subactions = []
+            2.1.1. subaction = {
+                type: "assistantCross",
+                item: Number,               <-- Item non viene ereditato perché l'azione non viene eseguita in alcuni casi (item bloccato, cella già riempita che non va sovrascritta)
+                player: Number,
+                oldId: String,
+                oldMaybeCounter: Number     <-- opzionale, se oldId contiene maybe
+            }
+            2.1.2. subaction = {
+                type: "assistantMaybe",
+                item: Number,
+                player: Number,
+                maybeCounter: Number,       <-- quello nuovo
+                oldId: String
+            }
+    
+    3. "lockItem": blocco di una riga
+        3.1. item = Number
+        3.2. oldRow = [String]              <-- id sostituiti con il blocco
+        3.3. oldMaybeCounter = [Number]        <-- opzionale, se oldRow contiene maybe
+
+    4. "unlockItem": sblocco di una riga
+        4.1. item = Number
+
+
+    Gestione storia:
+
+    - historyIndex rimane aggiornato con la lunghezza di history.
+    - Ad ogni undo, prende l'azione a history[historyIndex] e historyIndex torna indietro di uno.
+    - Ad ogni redo, prende l'azione a history[historyIndex] e historyIndex aumenta di uno.
+
+    */
+
+    const MAX_ACTIONS = 50
+
+    function saveAction(action) {
+        if (!game.history) {
+            game.history = []
+            game.historyIndex = 0
+        }
+        if (game.historyIndex !== game.history.length) {
+            game.history = _.slice(game.history, 0, game.historyIndex)
+        }
+        if (game.history.length >= MAX_ACTIONS) {
+            game.history.shift()
+        }
+        game.history.push(action)
+        game.historyIndex = game.history.length
+        saveGame()
+    }
+
+    $("#undoButton").on("click", function () {
+        undoAction()
+    })
+
+    function undoAction() {
+        if (game.historyIndex === 0) {
+            return
+        }
+        game.historyIndex--
+        const action = game.history[game.historyIndex]
+        doUndoAction(action)
+        saveGame()
+    }
+
+    function doUndoAction(action, item) {
+        //Item al momento è usato solo da updateManual, ed è la riga della tabella.
+        switch (action.type) {
+
+            case "updateManual":
+                if (_.isUndefined(action.item)) {
+                    console.error(action, "Item not valid!")
+                } else if (_.isUndefined(action.subactions)) {
+                    console.error(action, "Subactions not valid!")
+                } else {
+                    _.forEachRight(action.subactions, sa => doUndoAction(sa, action.item))
+                }
+                return
+
+            case "updateWholeRow":
+                if (_.isUndefined(action.id)) {
+                    console.error(action, "Id not valid!")
+                } else if (_.isUndefined(action.oldRow)) {
+                    console.error(action, "Row not valid!")
+                } else if (_.isUndefined(action.oldMaybeCounter)) {
+                    console.error(action, "Maybe counter not valid!")
+                } else {
+                    getFilteredTable()[item].items = _.cloneDeep(action.oldRow)
+                    getFilteredTable()[item].maybeCounter = _.cloneDeep(action.oldMaybeCounter)
+                    redrawFromDataForAllPlayers(item)
+                }
+                return
+
+            case "update":
+                if (_.isUndefined(action.player)) {
+                    console.error(action, "Player not valid!")
+                } else if (_.isUndefined(action.id)) {
+                    console.error(action, "Id not valid!")
+                } else if (_.isUndefined(action.oldId)) {
+                    console.error(action, "Old id not valid!")
+                } else if (_.isUndefined(action.oldMaybeCounter)) {
+                    console.error(action, "Old maybe counter not valid!")
+                } else {
+                    getFilteredTable()[item].items[action.player] = action.oldId
+                    getFilteredTable()[item].maybeCounter[action.player] = action.oldMaybeCounter
+                    redrawFromData(item, action.player)
+                }
+                return
+
+            case "updateAssistant":
+                if (_.isUndefined(action.subactions)) {
+                    console.error(action, "Subactions not valid!")
+                } else {
+                    _.forEachRight(action.subactions, sa => doUndoAction(sa))
+                }
+                return
+
+            case "assistantCross":
+                if (_.isUndefined(action.player)) {
+                    console.error(action, "Player not valid!")
+                } else if (_.isUndefined(action.oldId)) {
+                    console.error(action, "Old id not valid!")
+                } else if (_.isUndefined(action.oldMaybeCounter)) {
+                    console.error(action, "Old maybe counter not valid!")
+                } else if (_.isUndefined(action.item)) {
+                    console.error(action, "Item maybe counter not valid!")
+                } else {
+                    getFilteredTable()[action.item].items[action.player] = action.oldId
+                    getFilteredTable()[action.item].maybeCounter[action.player] = action.oldMaybeCounter
+                    redrawFromData(action.item, action.player)
+                }
+                return
+
+            case "assistantMaybe":
+                if (_.isUndefined(action.player)) {
+                    console.error(action, "Player not valid!")
+                } else if (_.isUndefined(action.oldId)) {
+                    console.error(action, "Old id not valid!")
+                } else if (_.isUndefined(action.item)) {
+                    console.error(action, "Item maybe counter not valid!")
+                } else if (_.isUndefined(action.maybeCounter)) {
+                    console.error(action, "Maybe counter not valid!")
+                } else {
+                    getFilteredTable()[action.item].items[action.player] = action.oldId
+                    getFilteredTable()[action.item].maybeCounter[action.player] = _.cloneDeep(action.maybeCounter)
+                    redrawFromData(action.item, action.player)
+                }
+                return
+
+            case "lockItem":
+                if (_.isUndefined(action.item)) {
+                    console.error(action, "Item not valid!")
+                } else if (_.isUndefined(action.oldRow)) {
+                    console.error(action, "Old row not valid!")
+                } else if (_.isUndefined(action.oldMaybeCounter)) {
+                    console.error(action, "Old maybe counter not valid!")
+                } else {
+                    getFilteredTable()[action.item].items = _.cloneDeep(action.oldRow)
+                    getFilteredTable()[action.item].maybeCounter = _.cloneDeep(action.oldMaybeCounter)
+                    redrawFromDataForAllPlayers(action.item)
+                    $("#rowCheckbox" + action.item).prop("checked", false)
+                    $("#rowCheckbox" + action.item).closest(".table-row").find("td > a").data("locked", "false")
+                    $("#rowCheckbox" + action.item).closest(".table-row").removeClass("locked")
+                    $("#rowCheckbox" + action.item).closest(".table-row").css("background-color", "")
+                }
+                return
+
+            case "unlockItem":
+                if (_.isUndefined(action.item)) {
+                    console.error(action, "Item not valid")
+                } else {
+                    game.players.forEach((player, index) => {
+                        getFilteredTable()[action.item].items[index] = "cross"
+                        getFilteredTable()[action.item].maybeCounter[index] = 0
+                        redrawFromData(action.item, index)
+                    })
+                    $("#rowCheckbox" + action.item).prop("checked", true)
+                    $("#rowCheckbox" + action.item).closest(".table-row").find("td > a").data("locked", "true")
+                    $("#rowCheckbox" + action.item).closest(".table-row").addClass("locked")
+                    $("#rowCheckbox" + action.item).closest(".table-row").css("background-color", "var(--current-lightRed)")
+                }
+                return
+
+            default:
+                console.error(action, "Type not valid!")
+                return
+        }
+    }
+
+    $("#redoButton").on("click", function () {
+        redoAction()
+    })
+
+    function redoAction() {
+        if (game.historyIndex >= game.history.length) {
+            return
+        }
+        const action = game.history[game.historyIndex]
+
+        //Esegui inverso
+        doRedoAction(action)
+        game.historyIndex++
+        saveGame()
+    }
+
+    function doRedoAction(action, item) {
+        //Item al momento è usato solo da updateManual, ed è la riga della tabella.
+        switch (action.type) {
+
+            case "updateManual":
+                if (_.isUndefined(action.item)) {
+                    console.error(action, action.item, "Item not valid!")
+                } else if (_.isUndefined(action.subactions)) {
+                    console.error(action, "Subactions not valid!")
+                } else {
+                    _.forEach(action.subactions, sa => doRedoAction(sa, action.item))
+                }
+                return
+
+            case "updateWholeRow":
+                if (_.isUndefined(action.id)) {
+                    console.error(action, "Id not valid!")
+                } else if (_.isUndefined(action.oldRow)) {
+                    console.error(action, "Row not valid!")
+                } else if (_.isUndefined(action.oldMaybeCounter)) {
+                    console.error(action, "Maybe counter not valid!")
+                } else {
+                    getFilteredTable()[item].items.forEach((el, player) => {
+                        getFilteredTable()[item].items[player] = action.id
+                        getFilteredTable()[item].maybeCounter[player] = 0
+                        redrawFromData(item, player)
+                    })
+                }
+                return
+
+            case "update":
+                if (_.isUndefined(action.player)) {
+                    console.error(action, "Player not valid!")
+                } else if (_.isUndefined(action.id)) {
+                    console.error(action, "Id not valid!")
+                } else if (_.isUndefined(action.oldId)) {
+                    console.error(action, "Old id not valid!")
+                } else if (_.isUndefined(action.oldMaybeCounter)) {
+                    console.error(action, "Old maybe counter not valid!")
+                } else {
+                    getFilteredTable()[item].items[action.player] = action.id
+                    getFilteredTable()[item].maybeCounter[action.player] = 0
+                    redrawFromData(item, action.player)
+                }
+                return
+
+            case "updateAssistant":
+                if (_.isUndefined(action.subactions)) {
+                    console.error(action, "Subactions not valid!")
+                } else {
+                    _.forEach(action.subactions, sa => doRedoAction(sa))
+                }
+                return
+
+            case "assistantCross":
+                if (_.isUndefined(action.player)) {
+                    console.error(action, "Player not valid!")
+                } else if (_.isUndefined(action.oldId)) {
+                    console.error(action, "Old id not valid!")
+                } else if (_.isUndefined(action.oldMaybeCounter)) {
+                    console.error(action, "Old maybe counter not valid!")
+                } else if (_.isUndefined(action.item)) {
+                    console.error(action, "Item maybe counter not valid!")
+                } else {
+                    getFilteredTable()[action.item].items[action.player] = "cross"
+                    getFilteredTable()[action.item].maybeCounter[action.player] = 0
+                    redrawFromData(action.item, action.player)
+                }
+                return
+
+            case "assistantMaybe":
+                if (_.isUndefined(action.player)) {
+                    console.error(action, "Player not valid!")
+                } else if (_.isUndefined(action.oldId)) {
+                    console.error(action, "Old id not valid!")
+                } else if (_.isUndefined(action.item)) {
+                    console.error(action, "Item maybe counter not valid!")
+                } else if (_.isUndefined(action.maybeCounter)) {
+                    console.error(action, "Maybe counter not valid!")
+                } else {
+                    getFilteredTable()[action.item].items[action.player] = "maybe"
+                    getFilteredTable()[action.item].maybeCounter[action.player] = _.cloneDeep(action.maybeCounter) + 1
+                    redrawFromData(action.item, action.player)
+                }
+                return
+
+            case "lockItem":
+                if (_.isUndefined(action.item)) {
+                    console.error(action, "Item not valid!")
+                } else if (_.isUndefined(action.oldRow)) {
+                    console.error(action, "Old row not valid!")
+                } else if (_.isUndefined(action.oldMaybeCounter)) {
+                    console.error(action, "Old maybe counter not valid!")
+                } else {
+                    getFilteredTable()[action.item].items = Array(game.players.length).fill("cross")
+                    getFilteredTable()[action.item].maybeCounter = Array(game.players.length).fill(0)
+                    redrawFromDataForAllPlayers(action.item)
+                }
+                $("#rowCheckbox" + action.item).prop("checked", true)
+                $("#rowCheckbox" + action.item).closest(".table-row").find("td > a").data("locked", "true")
+                $("#rowCheckbox" + action.item).closest(".table-row").addClass("locked")
+                $("#rowCheckbox" + action.item).closest(".table-row").css("background-color", "var(--current-lightRed)")
+                return
+
+            case "unlockItem":
+                if (_.isUndefined(action.item)) {
+                    console.error(action, "Item not valid")
+                } else {
+                    getFilteredTable()[action.item].items = Array(game.players.length).fill("reset")
+                    getFilteredTable()[action.item].maybeCounter = Array(game.players.length).fill(0)
+                    redrawFromDataForAllPlayers(action.item)
+                }
+                $("#rowCheckbox" + action.item).prop("checked", false)
+                $("#rowCheckbox" + action.item).closest(".table-row").find("td > a").data("locked", "false")
+                $("#rowCheckbox" + action.item).closest(".table-row").removeClass("locked")
+                $("#rowCheckbox" + action.item).closest(".table-row").css("background-color", "")
+                return
+
+            default:
+                console.error(action, "Type not valid!")
+                return
+        }
+    }
 
     loadSettings()
     loadGame()
@@ -497,6 +891,7 @@ $(document).ready(function () {
         $("#mainMenu").css("display", "none")
         clearInterval(languageInterval)
         $("#setup").css("display", "block")
+        game = {}
         game.board = 0
         itemsArray = boards[game.board]["characters"].concat(boards[game.board]["weapons"]).concat(boards[game.board]["rooms"])
         localStorage.removeItem("game")
@@ -781,7 +1176,7 @@ $(document).ready(function () {
     })
 
     function exportCustomBoard(id) {
-        let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(id ? settings.customBoards[id] : settings.customBoards)); //todo sistema
+        let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(id ? settings.customBoards[id] : settings.customBoards));
         let downloadAnchorNode = document.createElement('a');
         downloadAnchorNode.setAttribute("href", dataStr);
         downloadAnchorNode.setAttribute("download", (id ? settings.customBoards[id].name : "Detective Notes Boards") + ".board");
@@ -997,6 +1392,10 @@ $(document).ready(function () {
         changeLongNamesMode($(this).is(":checked"))
     })
 
+    $("#autocomplete").on("change", function () {
+        saveSetting("autocomplete", $(this).is(":checked"))
+    })
+
     function changeLongNamesMode(shouldShowLongNames) {
         if (shouldShowLongNames) {
             $(".long-names-cell").show()
@@ -1052,9 +1451,9 @@ $(document).ready(function () {
         saveSetting("hideDustCounter", $("#hideDustCounter").is(":checked"))
         saveSetting("alternateInGameToolbar", $("#alternateInGameToolbar").is(":checked"))
         saveSetting("forceAssistantUpdate", $("#forceAssistantUpdate").is(":checked"))
+        saveSetting("autocomplete", $("#autocomplete").is(":checked"))
 
         toggleGlobalLockButton(game.locked)
-        toggleAutocompleteButton(settings.autocomplete)
         saveGame()
 
         $("#setup").css("display", "none")
@@ -1134,7 +1533,6 @@ $(document).ready(function () {
     function updateTable() {
         //aggiorna header
         toggleGlobalLockButton(game.locked)
-        toggleAutocompleteButton(settings.autocomplete)
         saveGame()
 
         let table = getFilteredTable()
@@ -1207,11 +1605,13 @@ $(document).ready(function () {
         let checkboxDiv = $("<div>").addClass("checkbox-wrapper-31 checkbox-wrapper-32")
 
         let checkbox = $("<input>").attr("type", "checkbox")
-        checkbox.attr("id", "rowCheckbox")
+        checkbox.attr("id", "rowCheckbox" + itemsArray.indexOf(item))
         checkbox.data("item", item)
         checkbox.attr("class", "table-header-checkbox")
         checkbox.on("change", function () {
-            toggleLockRow(itemsArray.indexOf(item), $(this).is(":checked"))
+            const oldRow = _.cloneDeep(getFilteredTable()[itemsArray.indexOf(item)].items)
+            const oldMaybeCounter = _.cloneDeep(getFilteredTable()[itemsArray.indexOf(item)].maybeCounter)
+            toggleLockRow(itemsArray.indexOf(item), $(this).is(":checked"), oldRow, oldMaybeCounter)
             if ($(this).is(":checked")) {
                 $(this).closest(".table-row").find("td > a").data("locked", "true")
                 $(this).closest(".table-row").addClass("locked")
@@ -1242,21 +1642,6 @@ $(document).ready(function () {
         $("#instructionsModal").toggle()
     })
 
-    //Change autocomplete button
-    $("#autocompleteButton, #autocompleteButtonAlt").on("click", function () {
-        toggleAutocompleteButton()
-    })
-
-    function toggleAutocompleteButton(force) {
-        let shouldTurnOn = (force === undefined) ? !settings.autocomplete : force
-        if (shouldTurnOn) {
-            $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", "var(--green)")
-        } else {
-            $("#autocompleteButton, #autocompleteButtonLabel, #autocompleteButtonAlt, #autocompleteButtonAltLabel").css("background-color", "var(--current-lightRed)")
-        }
-        saveSetting("autocomplete", shouldTurnOn)
-    }
-
 
     //Lock cards
     $("#lockPersonalCards, #lockPersonalCardsAlt").on("click", function () {
@@ -1264,7 +1649,8 @@ $(document).ready(function () {
     })
 
     function toggleGlobalLockButton(force) {
-        let shouldLock = (force === undefined) ? !game.locked : force
+        let shouldLock = force !== undefined ? force : !game.locked
+        toggleLockGlobal(shouldLock)
         if (shouldLock) {   //if currently unlocked, locks cards
             $(".table-header-checkbox").each(function () {
                 $(this).attr("disabled", "disabled")
@@ -1278,7 +1664,6 @@ $(document).ready(function () {
             $("#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel").css("background-color", "var(--current-darkBlue)")
             $("#lockPersonalCardsLabel, #lockPersonalCardsAltLabel").text("lock_open_right")
         }
-        toggleLockGlobal(shouldLock)
     }
 
     //Hide extra symbols
@@ -1288,13 +1673,10 @@ $(document).ready(function () {
 
     //Autocomplete
     function updateWholeRow(id) {
-        toUpdate.closest(".table-row").find("img").attr("src", imageData[id]).attr("class", id)
-        if (id !== "maybe") {
-            toUpdate.closest(".table-row").find("span").text("0").hide()
-        }
         let rowName = itemsArray.indexOf(toUpdate.data("item"))
         game.players.forEach((player, i) => {
             saveItem(rowName, i, id)
+            redrawFromData(rowName, i)
         })
     }
 
@@ -1304,29 +1686,52 @@ $(document).ready(function () {
 
         $("#selectionModal").toggle()
 
-        //Se spunto e autocompl. ON, metti croci sulla riga
-        if (newID == "check" && settings.autocomplete) {
-            updateWholeRow("cross")
-        } else if (oldID == "check" && newID != "check" && settings.autocomplete) {
-            //Se tolgo spunta, metti reset
-            updateWholeRow("reset")
-        }
-
-        //Aggiorna la casella vera
-        const img = $(toUpdate.find("img"))
-        $(img).removeClass($(img).attr("class"))
-        $(img).addClass(newID)
-        $(img).attr("src", imageData[newID])
-
-        //I numeri vengono usati solo sui forse.
-        if (newID !== "maybe") {
-            $(toUpdate).find("span").hide()
+        //Crea azione
+        const action = {
+            type: "updateManual",
+            subactions: []
         }
 
         //Aggiorna LocalData
         let rowName = itemsArray.indexOf(toUpdate.data("item"))
         let columnName = parseInt(toUpdate.data("player"))
+        const oldRow = _.cloneDeep(getFilteredTable()[rowName].items)
+        const oldMaybeCounter = _.cloneDeep(getFilteredTable()[rowName].maybeCounter)
+
+        //Se spunto e autocompl. ON, metti croci sulla riga
+        if (newID == "check" && settings.autocomplete) {
+            updateWholeRow("cross")
+            action.subactions.push({
+                type: "updateWholeRow",
+                id: "cross",
+                oldRow: oldRow,
+                oldMaybeCounter: oldMaybeCounter
+            })
+
+        } else if (oldID == "check" && newID != "check" && settings.autocomplete) {
+            //Se tolgo spunta, metti reset
+            updateWholeRow("reset")
+            action.subactions.push({
+                type: "updateWholeRow",
+                id: "reset",
+                oldRow: oldRow,
+                oldMaybeCounter: oldMaybeCounter
+            })
+        }
+
+        action.item = rowName
+        action.subactions.push({
+            type: "update",
+            player: columnName,
+            id: newID,
+            oldId: getFilteredTable()[rowName].items[columnName],
+            oldMaybeCounter: _.cloneDeep(getFilteredTable()[rowName].maybeCounter[columnName])
+        })
+
+        saveAction(action)
+
         saveItem(rowName, columnName, newID)
+        redrawFromData(rowName, columnName)
     })
 
     // INSTRUCTIONS MODAL TOOLTIP
@@ -1372,15 +1777,6 @@ $(document).ready(function () {
             "var(--current-darkBlue)")
         //Change label
         $("#fakeLockButtonLabel").text(im3Locked ? "lock" : "lock_open_right")
-    }, instructionsUpdateTime)
-
-    //Image 5: Autocomplete
-    let im5On = false
-    let im5Interval = window.setInterval(function () {
-        im5On = !im5On
-        //Change bg
-        $("#fakeAutocompleteButton").css("background-color", im5On ?
-            "var(--current-lightRed)" : "var(--green)")
     }, instructionsUpdateTime)
 
 
@@ -1455,11 +1851,16 @@ $(document).ready(function () {
 
         //Valida
         if (whoAsked === whoAnswered) {
-            //Normalmente dovrei dare errore in caso io WhoAnswered = nessuno, ma possiedo alcune delle carte nell'ipotesi.
             $("#assistantConfirmError").show()
             return
         }
         $("#assistantConfirmError").hide()
+
+        //Crea azione
+        const action = {
+            type: "updateAssistant",
+            subactions: []
+        }
 
         //Elabora
         whichItems.forEach(item => {
@@ -1467,37 +1868,62 @@ $(document).ready(function () {
                 if (whoAsked < whoAnswered) {
                     for (let i = whoAsked + 1; i < whoAnswered; i++) {
                         if (getFilteredTable()[item].items[i] === "reset" || settings.forceAssistantUpdate) {
+                            action.subactions.push({
+                                type: "assistantCross",
+                                item: item,
+                                player: i,
+                                oldId: getFilteredTable()[item].items[i],
+                                oldMaybeCounter: getFilteredTable()[item].maybeCounter[i]
+                            })
                             assistantCross(i, item)
                         }
                     }
                 } else {
                     for (let i = whoAsked + 1; i < game.players.length; i++) {
                         if (getFilteredTable()[item].items[i] === "reset" || settings.forceAssistantUpdate) {
+                            action.subactions.push({
+                                type: "assistantCross",
+                                item: item,
+                                player: i,
+                                oldId: getFilteredTable()[item].items[i],
+                                oldMaybeCounter: getFilteredTable()[item].maybeCounter[i]
+                            })
                             assistantCross(i, item)
                         }
                     }
                     for (let i = 0; i < whoAnswered; i++) {
                         if (getFilteredTable()[item].items[i] === "reset" || settings.forceAssistantUpdate) {
+                            action.subactions.push({
+                                type: "assistantCross",
+                                item: item,
+                                player: i,
+                                oldId: getFilteredTable()[item].items[i]
+                            })
                             assistantCross(i, item)
                         }
                     }
                 }
 
                 if (whoAnswered !== -1 && whoAnswered < game.players.length && (getFilteredTable()[item].items[whoAnswered] === "reset" || getFilteredTable()[item].items[whoAnswered] === "maybe" || settings.forceAssistantUpdate)) {
+                    action.subactions.push({
+                        type: "assistantMaybe",
+                        item: item,
+                        player: whoAnswered,
+                        maybeCounter: getFilteredTable()[item].maybeCounter[whoAnswered],
+                        oldId: getFilteredTable()[item].items[whoAnswered]
+                    })
                     if (getFilteredTable()[item].items[whoAnswered] === "maybe") {
                         getFilteredTable()[item].maybeCounter[whoAnswered]++
-                        $("#cellNumber" + whoAnswered + "_" + item).text(getFilteredTable()[item].maybeCounter[whoAnswered])
-                        $("#cellNumber" + whoAnswered + "_" + item).css("display", getFilteredTable()[item].maybeCounter[whoAnswered] < 2 ? "none" : "block")
                     } else {
                         getFilteredTable()[item].items[whoAnswered] = "maybe"
                         getFilteredTable()[item].maybeCounter[whoAnswered] = 1
                     }
-                    $("#cellImg" + whoAnswered + "_" + item).removeClass($("#cellImg" + whoAnswered + "_" + item).attr("class"))
-                    $("#cellImg" + whoAnswered + "_" + item).addClass("maybe")
-                    $("#cellImg" + whoAnswered + "_" + item).attr("src", imageData.maybe)
+                    redrawFromData(item, whoAnswered)
                 }
             }
         })
+
+        saveAction(action)
 
         saveGame()
         hideAndShowModal()
@@ -1506,10 +1932,6 @@ $(document).ready(function () {
     function assistantCross(i, item) {
         getFilteredTable()[item].items[i] = "cross"
         getFilteredTable()[item].maybeCounter[i] = 0
-        $("#cellImg" + i + "_" + item).removeClass($("#cellImg" + i + "_" + item).attr("class"))
-        $("#cellImg" + i + "_" + item).addClass("cross")
-        $("#cellImg" + i + "_" + item).attr("src", imageData.cross)
-        $("#cellNumber" + i + "_" + item).text(getFilteredTable()[item].maybeCounter[i])
-        $("#cellNumber" + i + "_" + item).hide()
+        redrawFromData(item, i)
     }
 })
