@@ -1,4 +1,4 @@
-export const versionNumber = 6.1
+export const versionNumber = 6.2
 
 export const minVersionNumber = 4.5
 
@@ -141,7 +141,9 @@ export const idStringsEN = {
     instructionsModalText7: "Assistant lets you keep track of your opponents' guesses.",
     autocompleteLabel: "Autocomplete",
     autocompleteText: "With Autocomplete, when you set a check <span class=\"material-symbols-outlined\">done</span> on a card, crosses <span class=\"material-symbols-outlined\">close</span> are filled in automatically.<br>This option is ON by default, disable it to add crosses manually.",
-    instructionsModalText8: "If you make a mistake, you can undo and redo.<br>Your actions are saved with the game."
+    instructionsModalText8: "If you make a mistake, you can undo and redo.<br>Your actions are saved with the game.",
+    darkModeLabel: "Dark mode",
+    darkModeText: "Switch between a lighter and darker color scheme."
 }
 
 export const titleStringsEN = {

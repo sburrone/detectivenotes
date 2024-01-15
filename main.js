@@ -1353,6 +1353,10 @@ $(document).ready(function () {
         toggleDarkMode(darkMode)
     })
 
+    $("#darkMode").on("change", function () {
+        toggleDarkMode(darkMode)
+    })
+
     function toggleDarkMode(current) {
         $(".dark-mode-label").text(current ? "dark_mode" : "light_mode")
         // !current is new darkMode
@@ -1364,6 +1368,7 @@ $(document).ready(function () {
             document.documentElement.style.setProperty(string, newColor)
         })
         darkMode = !current
+        $("#darkMode").prop("checked", darkMode)
     }
 
     $("#advancedSettingsToggle, #advancedSettingsInGameToggle").on("click", function () {

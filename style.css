@@ -816,6 +816,25 @@ table {
     #changeLanguageText {
         display: none;
     }
+
+    #darkModeToggle {
+        display: none;
+    }
+
+    .dark-mode-section {
+        display: table-row;
+    }
+
+}
+
+@media screen and (min-width: 450px) {
+    #darkModeToggle {
+        display: block;
+    }
+
+    .dark-mode-section {
+        display: none;
+    }
 }
 
 @media screen and (min-width: 1080px) {
