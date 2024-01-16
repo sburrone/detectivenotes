@@ -1,6 +1,6 @@
-export const versionNumber = 6.2
+export const versionNumber = 7
 
-export const minVersionNumber = 4.5
+export const minVersionNumber = 7
 
 export const boardsEN = [
     {
@@ -141,9 +141,12 @@ export const idStringsEN = {
     instructionsModalText7: "Assistant lets you keep track of your opponents' guesses.",
     autocompleteLabel: "Autocomplete",
     autocompleteText: "With Autocomplete, when you set a check <span class=\"material-symbols-outlined\">done</span> on a card, crosses <span class=\"material-symbols-outlined\">close</span> are filled in automatically.<br>This option is ON by default, disable it to add crosses manually.",
-    instructionsModalText8: "If you make a mistake, you can undo and redo.<br>Your actions are saved with the game.",
+    instructionsModalText8: "If you make a mistake, you can undo and redo.<br>Your actions are saved with the game.<br>View your action history by long pressing (or right clicking) on one of the buttons.",
     darkModeLabel: "Dark mode",
-    darkModeText: "Switch between a lighter and darker color scheme."
+    darkModeText: "Switch between a lighter and darker color scheme.",
+    actionHistoryModalTitle: "History",
+    actionHistoryModalSubtitle: "Pick the point you want to restore from the list.",
+    actionHistorySection: "Your history is empty."
 }
 
 export const titleStringsEN = {
@@ -204,5 +207,16 @@ export const manualStringsEN = {
     incompatibleText: "This saved game is incompatible with this version of the app, cannot resume.",
     letsPlay: "Let's play!",
     me: "Myself",
-    nobody: "No one"
+    you: "You",
+    nobody: "No one",
+    actionHistoryModal: {
+        updateManual: "Manual update",
+        updateManualText: "[ITEM]: Changed from [OLDID] to [NEWID] for [PLAYER]",
+        updateAssistant: "Assistant update",
+        updateAssistantText: "[WHOASKED] accused [ITEM0] with [ITEM1] in [ITEM2]. [WHOANSWERED] answered.",
+        lockItem: "Locked card",
+        locked: "Locked [ITEM].",
+        unlockItem: "Unlocked card",
+        unlocked: "Unlocked [ITEM]."
+    }
 }

@@ -1173,3 +1173,27 @@ input[type="search"]:focus::-webkit-search-cancel-button {
 input[type="search"].dark::-webkit-search-cancel-button {
     filter: invert(1);
 }
+
+.action-container {
+    margin: 12px;
+    padding: 12px;
+    text-align: left;
+    background-color: var(--current-lightGrey);
+}
+
+.action-title-icon {
+    font-size: 18px !important;
+    margin-right: 8px;
+}
+
+.action-title {
+    margin-bottom: 8px;
+}
+
+.action-subtitle img {
+    height: 28px;
+}
+
+#actionHistorySection {
+    margin-bottom: 40px;
+}

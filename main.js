@@ -480,6 +480,9 @@ $(document).ready(function () {
                 oldId: String,
                 oldMaybeCounter: Number     <-- opzionale, se oldId contiene maybe
             }
+        1.3. oldId: String
+        1.4. newId: String
+        1.5. player: Number
     
     2. "updateAssistant": operazione dell'assistente
         2.1. subactions = []
@@ -497,6 +500,9 @@ $(document).ready(function () {
                 maybeCounter: Number,       <-- quello nuovo
                 oldId: String
             }
+        2.2. items = [Number]
+        2.3. whoAsked = Number
+        2.4. whoAnswered = Number
     
     3. "lockItem": blocco di una riga
         3.1. item = Number
@@ -846,7 +852,7 @@ $(document).ready(function () {
 
         $("#continueGameButton").on("click", function () {
             //Valorizza itemsArray
-            itemsArray = board["characters"].concat(board["weapons"]).concat(board["rooms"])
+            itemsArray = boards[game.board]["characters"].concat(boards[game.board]["weapons"]).concat(boards[game.board]["rooms"])
             //Fill
             $("#mainMenu").css("display", "none")
             clearInterval(languageInterval)
@@ -1691,17 +1697,21 @@ $(document).ready(function () {
 
         $("#selectionModal").toggle()
 
-        //Crea azione
-        const action = {
-            type: "updateManual",
-            subactions: []
-        }
-
         //Aggiorna LocalData
         let rowName = itemsArray.indexOf(toUpdate.data("item"))
         let columnName = parseInt(toUpdate.data("player"))
         const oldRow = _.cloneDeep(getFilteredTable()[rowName].items)
         const oldMaybeCounter = _.cloneDeep(getFilteredTable()[rowName].maybeCounter)
+
+        //Crea azione
+        const action = {
+            type: "updateManual",
+            subactions: [],
+            newId: newID,
+            oldId: oldRow[columnName],
+            item: rowName,
+            player: columnName
+        }
 
         //Se spunto e autocompl. ON, metti croci sulla riga
         if (newID == "check" && settings.autocomplete) {
@@ -1724,7 +1734,6 @@ $(document).ready(function () {
             })
         }
 
-        action.item = rowName
         action.subactions.push({
             type: "update",
             player: columnName,
@@ -1864,7 +1873,10 @@ $(document).ready(function () {
         //Crea azione
         const action = {
             type: "updateAssistant",
-            subactions: []
+            subactions: [],
+            items: whichItems,
+            whoAsked: whoAsked,
+            whoAnswered: whoAnswered
         }
 
         //Elabora
@@ -1939,4 +1951,113 @@ $(document).ready(function () {
         getFilteredTable()[item].maybeCounter[i] = 0
         redrawFromData(item, i)
     }
+
+    $("#undoButton, #redoButton").on("contextmenu", function (e) {
+        e.preventDefault()
+        fillHistoryModal()
+        hideAndShowModal("#actionHistoryModal")
+    })
+
+    function fillHistoryModal() {
+        $("#actionHistorySection").empty()
+        if (!game.history || game.history.length === 0) {
+            $("#actionHistorySectionEmpty").show()
+            return
+        }
+        $("actionHistorySectionEmpty").hide()
+        _.forEachRight(game.history, action => {
+            $("#actionHistorySection").append(drawAction(action))
+        })
+    }
+
+    function drawAction(action) {
+        const container = $("<div class='action-container'>")
+        const titleContainer = $("<div class='setup-text action-title'>")
+        const icon = $("<span class='small-button material-icons-outlined action-title-icon'>")
+        const title = $("<span>")
+        const subtitleContainer = $("<div class='setup-tooltip action-subtitle'>")
+
+        switch (action.type) {
+            case "updateManual":
+                $(icon).text("add_circle_outline")
+                $(title).text(manualStrings.actionHistoryModal.updateManual)
+                const oldId = "<img src='" + imageData[action.oldId] + "' class='action-icon " + action.oldId + "'>"
+                const newId = "<img src='" + imageData[action.newId] + "' class='action-icon " + action.newId + "'>"
+                $(subtitleContainer).html(manualStrings.actionHistoryModal.updateManualText.replace("[ITEM]", getFilteredTable()[action.item].row).replace("[OLDID]", oldId).replace("[NEWID]", newId).replace("[PLAYER]", game.players[action.player]))
+                break
+            case "updateAssistant":
+                $(icon).text("auto_awesome")
+                $(title).text(manualStrings.actionHistoryModal.updateAssistant)
+                $(subtitleContainer).html(getFormattedUpdateAssistant(action))
+                break
+            case "lockItem":
+                $(icon).text("lock")
+                $(title).text(manualStrings.actionHistoryModal.lockItem)
+                $(subtitleContainer).html(manualStrings.actionHistoryModal.locked.replace("[ITEM]", getFilteredTable()[action.item].row))
+                break
+            case "unlockItem":
+                $(icon).text("lock_open")
+                $(title).text(manualStrings.actionHistoryModal.unlockItem)
+                $(subtitleContainer).html(manualStrings.actionHistoryModal.unlocked.replace("[ITEM]", getFilteredTable()[action.item].row))
+                break
+        }
+
+        $(titleContainer).append($(icon), $(title))
+        $(container).append($(titleContainer), $(subtitleContainer))
+
+        return container
+    }
+
+    function getFormattedUpdateAssistant(action) {
+
+        let ret
+
+        if (manualStrings.actionHistoryModal.updateAssistantTextCustom) {
+            //Usa formattazione personalizzata
+            if (action.whoAsked === -1 && action.whoAnswered >= game.players.length) {
+                //Il giocatore ha chiesto, nessuno ha risposto
+                ret = manualStrings.actionHistoryModal.updateAssistantTextCustom.playerAskedNobodyAnswered
+            } else if (action.whoAsked === -1) {
+                //Il giocatore ha chiesto
+                ret = manualStrings.actionHistoryModal.updateAssistantTextCustom.playerAsked
+                ret = ret.replace("[WHOANSWERED]", game.players[action.whoAnswered])
+            } else if (action.whoAnswered === -1) {
+                //Il giocatore ha risposto
+                ret = manualStrings.actionHistoryModal.updateAssistantTextCustom.playerAnswered
+                ret = ret.replace("[WHOASKED]", game.players[action.whoAsked])
+                ret = ret.replace("[WHOANSWERED]", manualStrings.you)
+            } else if (action.whoAnswered >= game.players.length) {
+                // Nessuno ha risposto
+                ret = manualStrings.actionHistoryModal.updateAssistantTextCustom.nobodyAnswered
+                ret = ret.replace("[WHOASKED]", game.players[action.whoAsked])
+                ret = ret.replace("[WHOANSWERED]", manualStrings.nobody)
+            } else {
+                // Predefinito
+                ret = manualStrings.actionHistoryModal.updateAssistantText
+                ret = ret.replace("[WHOASKED]", game.players[action.whoAsked])
+                ret = ret.replace("[WHOANSWERED]", game.players[action.whoAnswered])
+            }
+
+        } else {
+
+            //Usa formattazione normale.
+            ret = manualStrings.actionHistoryModal.updateAssistantText
+            ret = ret.replace("[WHOASKED]", action.whoAsked === -1 ? manualStrings.you : game.players[action.whoAsked])
+            if (action.whoAnswered === -1) {
+                ret = ret.replace("[WHOANSWERED]", manualStrings.you)
+            } else if (action.whoAnswered >= game.players.length) {
+                ret = ret.replace("[WHOANSWERED]", manualStrings.nobody)
+            } else {
+                ret = ret.replace("[WHOANSWERED]", game.players[action.whoAnswered])
+            }
+
+        }
+
+        action.items.forEach((item, index) => {
+            ret = ret.replace("[ITEM" + index + "]", getFilteredTable()[item].row)
+        })
+
+        return ret
+    }
+
 })

@@ -140,9 +140,12 @@ export const idStringsIT = {
     instructionsModalText7: "Con Assistente puoi tenere traccia delle ipotesi degli altri giocatori automaticamente.",
     autocompleteLabel: "Autocompletamento",
     autocompleteText: "Con Autocompletamento, quando metti una spunta<span class=\"material-symbols-outlined\">done</span> su una carta, le croci <span class=\"material-symbols-outlined\">close</span> vengono inserite automatricamente. <br>Questa opzione è normalmente attiva, disabilitala per aggiungere le croci manualmente.",
-    instructionsModalText8: "Se sbagli, puoi annullare e ripetere ogni azione.<br>Lo storico delle azioni viene salvato con la partita.",
+    instructionsModalText8: "Se sbagli, puoi annullare e ripetere ogni azione.<br>Lo storico delle azioni viene salvato con la partita.<br>Accedi allo storico delle azioni tenendo premuto (o cliccando col tasto destro) su uno dei pulsanti.",
     darkModeLabel: "Modalità scura",
-    darkModeText: "Usa uno schema di colori scuro per non affaticare la vista."
+    darkModeText: "Usa uno schema di colori scuro per non affaticare la vista.",
+    actionHistoryModalTitle: "Cronologia",
+    actionHistoryModalSubtitle: "Scegli il punto a cui vuoi tornare dalla lista.",
+    actionHistorySection: "La tua cronologia è vuota."
 }
 
 export const titleStringsIT = {
@@ -200,5 +203,22 @@ export const manualStringsIT = {
     incompatibleText: "La partita salvata non è compatibile con questa versione dell'app, non posso continuare la partita.",
     letsPlay: "Giochiamo!",
     me: "Me stessə",
-    nobody: "Nessuno"
+    you: "Tu",
+    nobody: "Nessuno",
+    actionHistoryModal: {
+        updateManual: "Aggiornamento manuale",
+        updateManualText: "[ITEM]: Cambiato da [OLDID] a [NEWID] per [PLAYER]",
+        updateAssistant: "Aggiornamento assistente",
+        updateAssistantText: "[WHOASKED] ha accusato [ITEM0] con [ITEM1] in [ITEM2]. Ha risposto [WHOANSWERED].",
+        updateAssistantTextCustom: {
+            playerAsked: "Hai accusato [ITEM0] con [ITEM1] in [ITEM2]. Ha risposto [WHOANSWERED].",
+            playerAnswered: "[WHOASKED] ha accusato [ITEM0] con [ITEM1] in [ITEM2]. Hai risposto te.",
+            nobodyAnswered: "[WHOASKED] ha accusato [ITEM0] con [ITEM1] in [ITEM2]. Non ha risposto nessuno.",
+            playerAskedNobodyAnswered: "Hai accusato [ITEM0] con [ITEM1] in [ITEM2]. Non ha risposto nessuno."
+        },
+        lockItem: "Carta bloccata",
+        locked: "Bloccatə [ITEM].",
+        unlockItem: "Carta sbloccata",
+        unlocked: "Sbloccatə [ITEM]."
+    }
 }
