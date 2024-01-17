@@ -1175,10 +1175,12 @@ input[type="search"].dark::-webkit-search-cancel-button {
 }
 
 .action-container {
-    margin: 12px;
+    margin: 12px auto;
     padding: 12px;
     text-align: left;
     background-color: var(--current-lightGrey);
+    transition: .3s ease-in-out;
+    max-width: 800px;
 }
 
 .action-title-icon {
@@ -1192,6 +1194,24 @@ input[type="search"].dark::-webkit-search-cancel-button {
 
 .action-subtitle img {
     height: 28px;
+}
+
+.undone {
+    filter: brightness(0.5);
+}
+
+.action-hovering-undo {
+    background-color: var(--current-lightBlue);
+}
+
+.action-hovering-undo button {
+    background-color: var(--current-darkBlue);
+}
+
+.action-hovering-redo {
+    filter: brightness(1);
+    background-color: var(--current-darkBlue);
+    color: var(--current-white);
 }
 
 #actionHistorySection {

@@ -145,7 +145,7 @@ export const idStringsIT = {
     darkModeText: "Usa uno schema di colori scuro per non affaticare la vista.",
     actionHistoryModalTitle: "Cronologia",
     actionHistoryModalSubtitle: "Scegli il punto a cui vuoi tornare dalla lista.",
-    actionHistorySection: "La tua cronologia è vuota."
+    actionHistorySectionEmpty: "La tua cronologia è vuota."
 }
 
 export const titleStringsIT = {
@@ -207,7 +207,7 @@ export const manualStringsIT = {
     nobody: "Nessuno",
     actionHistoryModal: {
         updateManual: "Aggiornamento manuale",
-        updateManualText: "[ITEM]: Cambiato da [OLDID] a [NEWID] per [PLAYER]",
+        updateManualText: "[ITEM]: Cambiato da [OLDID] a [NEWID] per [PLAYER].",
         updateAssistant: "Aggiornamento assistente",
         updateAssistantText: "[WHOASKED] ha accusato [ITEM0] con [ITEM1] in [ITEM2]. Ha risposto [WHOANSWERED].",
         updateAssistantTextCustom: {
@@ -219,6 +219,7 @@ export const manualStringsIT = {
         lockItem: "Carta bloccata",
         locked: "Bloccatə [ITEM].",
         unlockItem: "Carta sbloccata",
-        unlocked: "Sbloccatə [ITEM]."
+        unlocked: "Sbloccatə [ITEM].",
+        deletePrompt: "Vuoi cancellare questa azione dalla cronologia? È irreversibile."
     }
 }

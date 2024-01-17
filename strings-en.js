@@ -146,7 +146,7 @@ export const idStringsEN = {
     darkModeText: "Switch between a lighter and darker color scheme.",
     actionHistoryModalTitle: "History",
     actionHistoryModalSubtitle: "Pick the point you want to restore from the list.",
-    actionHistorySection: "Your history is empty."
+    actionHistorySectionEmpty: "Your history is empty."
 }
 
 export const titleStringsEN = {
@@ -211,12 +211,13 @@ export const manualStringsEN = {
     nobody: "No one",
     actionHistoryModal: {
         updateManual: "Manual update",
-        updateManualText: "[ITEM]: Changed from [OLDID] to [NEWID] for [PLAYER]",
+        updateManualText: "[ITEM]: Changed from [OLDID] to [NEWID] for [PLAYER].",
         updateAssistant: "Assistant update",
         updateAssistantText: "[WHOASKED] accused [ITEM0] with [ITEM1] in [ITEM2]. [WHOANSWERED] answered.",
         lockItem: "Locked card",
         locked: "Locked [ITEM].",
         unlockItem: "Unlocked card",
-        unlocked: "Unlocked [ITEM]."
+        unlocked: "Unlocked [ITEM].",
+        deletePrompt: "Are you sure you want to delete this action from your history? It's irreversible."
     }
 }

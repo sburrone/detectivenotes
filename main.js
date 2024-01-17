@@ -1965,17 +1965,81 @@ $(document).ready(function () {
             return
         }
         $("actionHistorySectionEmpty").hide()
-        _.forEachRight(game.history, action => {
-            $("#actionHistorySection").append(drawAction(action))
+        _.forEachRight(game.history, (action, index) => {
+            $("#actionHistorySection").append(drawAction(index, action))
         })
     }
 
-    function drawAction(action) {
-        const container = $("<div class='action-container'>")
+    function onActionHover(index) {
+        // Mouse enter
+        if (game.historyIndex <= index) {
+            // Redo
+            for (let i = 0; i < game.historyIndex; i++) {
+                $("#actionContainer" + i).removeClass("action-hovering-undo action-hovering-redo")
+            }
+            for (let i = game.historyIndex; i <= index; i++) {
+                $("#actionContainer" + i).addClass("action-hovering-redo")
+            }
+            for (let i = index + 1; i < game.history.length; i++) {
+                $("#actionContainer" + i).removeClass("action-hovering-undo action-hovering-redo")
+            }
+        } else {
+            // Undo
+            for (let i = 0; i < index; i++) {
+                $("#actionContainer" + i).removeClass("action-hovering-undo action-hovering-redo")
+            }
+            for (let i = index; i < game.historyIndex; i++) {
+                $("#actionContainer" + i).addClass("action-hovering-undo")
+            }
+            for (let i = game.historyIndex; i < game.history.length; i++) {
+                $("#actionContainer" + i).removeClass("action-hovering-undo action-hovering-redo")
+            }
+        }
+    }
+
+    function batchUndoRedo(index) {
+        if (game.historyIndex < index) {
+            for (let i = game.historyIndex; i <= index; i++) {
+                redoAction(game.history[i])
+            }
+        } else {
+            for (let i = game.historyIndex - 1; i >= index; i--) {
+                undoAction(game.history[i])
+            }
+        }
+        hideAndShowModal()
+    }
+
+    function drawAction(index, action) {
+        const container = $("<div class='action-container'>").on("mouseenter", function () {
+            onActionHover(index)
+
+        }).on("mouseleave", function () {
+            // Mouse leave
+            game.history.forEach((action, i) => {
+                $("#actionContainer" + i).removeClass("action-hovering-undo action-hovering-redo")
+            })
+
+        }).on("click", function () {
+
+            batchUndoRedo(index)
+
+        }).on("contextmenu", function (e) {
+            //Confirmation, then delete
+            e.preventDefault()
+            $(container).prop("onclick", null)
+            $(subtitleContainer).hide()
+            $(deletePromptContainer).show()
+
+        }).attr("id", "actionContainer" + index)
+        if (index >= game.historyIndex) {
+            $(container).addClass("undone")
+        }
         const titleContainer = $("<div class='setup-text action-title'>")
         const icon = $("<span class='small-button material-icons-outlined action-title-icon'>")
         const title = $("<span>")
         const subtitleContainer = $("<div class='setup-tooltip action-subtitle'>")
+        const deletePromptContainer = getActionDeletePrompt(index)
 
         switch (action.type) {
             case "updateManual":
@@ -2003,9 +2067,29 @@ $(document).ready(function () {
         }
 
         $(titleContainer).append($(icon), $(title))
-        $(container).append($(titleContainer), $(subtitleContainer))
+        $(deletePromptContainer).hide()
+        $(container).append($(titleContainer), $(subtitleContainer), $(deletePromptContainer))
 
         return container
+    }
+
+    function getActionDeletePrompt(index) {
+        const ret = $("<div class='setup-tooltip action-subtitle'>")
+        const text = $("<span>").text(manualStrings.actionHistoryModal.deletePrompt)
+        const yesButton = $("<button class='small-button material-icons-outlined board-button action-title-icon'>").text("done").on("click", function () {
+            game.history.splice(index, 1)
+            if (index < game.historyIndex) {
+                game.historyIndex--
+            }
+            saveGame()
+            fillHistoryModal()
+        })
+        const noButton = $("<button class='small-button material-icons-outlined board-button action-title-icon'>").text("close").on("click", function () {
+            fillHistoryModal()
+        })
+
+        $(ret).append($(text), $(yesButton), $(noButton))
+        return ret
     }
 
     function getFormattedUpdateAssistant(action) {
@@ -2059,5 +2143,4 @@ $(document).ready(function () {
 
         return ret
     }
-
 })
