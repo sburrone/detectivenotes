@@ -1952,6 +1952,9 @@ $(document).ready(function () {
         redrawFromData(item, i)
     }
 
+
+    // HISTORY
+
     $("#undoButton, #redoButton").on("contextmenu", function (e) {
         e.preventDefault()
         fillHistoryModal()
@@ -1964,7 +1967,8 @@ $(document).ready(function () {
             $("#actionHistorySectionEmpty").show()
             return
         }
-        $("actionHistorySectionEmpty").hide()
+        $("#actionHistorySectionEmpty").hide()
+        $("#actionConfirmSection").hide()
         _.forEachRight(game.history, (action, index) => {
             $("#actionHistorySection").append(drawAction(index, action))
         })
@@ -2010,6 +2014,16 @@ $(document).ready(function () {
         hideAndShowModal()
     }
 
+    function getActionConfirmPrompt(index) {
+        let ret
+        if (game.historyIndex < index) {
+            ret = manualStrings.actionHistoryModal.confirmationPrompt[index - game.historyIndex === 1 ? "singleRedo" : "batchRedo"].replace("[NUM]", index - game.historyIndex)
+        } else {
+            ret = manualStrings.actionHistoryModal.confirmationPrompt[index - game.historyIndex === 1 ? "singleUndo" : "batchUndo"].replace("[NUM]", index - game.historyIndex)
+        }
+        return ret
+    }
+
     function drawAction(index, action) {
         const container = $("<div class='action-container'>").on("mouseenter", function () {
             onActionHover(index)
@@ -2022,7 +2036,11 @@ $(document).ready(function () {
 
         }).on("click", function () {
 
-            batchUndoRedo(index)
+            $("#actionConfirmText").text(getActionConfirmPrompt(index))
+            $("#actionConfirmSection").show()
+            $("#actionConfirmButton").on("click", function () {
+                batchUndoRedo(index)
+            })
 
         }).on("contextmenu", function (e) {
             //Confirmation, then delete

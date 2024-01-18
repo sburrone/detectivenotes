@@ -146,7 +146,8 @@ export const idStringsEN = {
     darkModeText: "Switch between a lighter and darker color scheme.",
     actionHistoryModalTitle: "History",
     actionHistoryModalSubtitle: "Pick the point you want to restore from the list.",
-    actionHistorySectionEmpty: "Your history is empty."
+    actionHistorySectionEmpty: "Your history is empty.",
+    actionConfirmButton: "Confirm"
 }
 
 export const titleStringsEN = {
@@ -218,6 +219,12 @@ export const manualStringsEN = {
         locked: "Locked [ITEM].",
         unlockItem: "Unlocked card",
         unlocked: "Unlocked [ITEM].",
-        deletePrompt: "Are you sure you want to delete this action from your history? It's irreversible."
+        deletePrompt: "Are you sure you want to delete this action from your history? It's irreversible.",
+        confirmationPrompt: {
+            singleRedo: "You're about to redo one action.",
+            singleUndo: "You're about to undo one action.",
+            batchRedo: "You're about to redo [NUM] actions.",
+            batchUndo: "You're about to undo [NUM] actions."
+        }
     }
 }

@@ -145,7 +145,8 @@ export const idStringsIT = {
     darkModeText: "Usa uno schema di colori scuro per non affaticare la vista.",
     actionHistoryModalTitle: "Cronologia",
     actionHistoryModalSubtitle: "Scegli il punto a cui vuoi tornare dalla lista.",
-    actionHistorySectionEmpty: "La tua cronologia è vuota."
+    actionHistorySectionEmpty: "La tua cronologia è vuota.",
+    actionConfirmButton: "Conferma"
 }
 
 export const titleStringsIT = {
@@ -220,6 +221,12 @@ export const manualStringsIT = {
         locked: "Bloccatə [ITEM].",
         unlockItem: "Carta sbloccata",
         unlocked: "Sbloccatə [ITEM].",
-        deletePrompt: "Vuoi cancellare questa azione dalla cronologia? È irreversibile."
+        deletePrompt: "Vuoi cancellare questa azione dalla cronologia? È irreversibile.",
+        confirmationPrompt: {
+            singleRedo: "Stai per ripetere un'azione.",
+            singleUndo: "Stai per annullare un'azione.",
+            batchRedo: "Stai per ripetere [NUM] azioni.",
+            batchUndo: "Stai per annullare [NUM] azioni."
+        }
     }
 }
