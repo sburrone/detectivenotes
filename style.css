@@ -1217,3 +1217,9 @@ input[type="search"].dark::-webkit-search-cancel-button {
 #actionHistorySection {
     margin-bottom: 40px;
 }
+
+#actionConfirmSection {
+    position: fixed;
+    width: 100%;
+    bottom: 20px;
+}

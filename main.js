@@ -554,6 +554,7 @@ $(document).ready(function () {
     }
 
     function doUndoAction(action, item) {
+        console.log("Do undoing", action)
         //Item al momento è usato solo da updateManual, ed è la riga della tabella.
         switch (action.type) {
 
@@ -1464,7 +1465,7 @@ $(document).ready(function () {
         saveSetting("forceAssistantUpdate", $("#forceAssistantUpdate").is(":checked"))
         saveSetting("autocomplete", $("#autocomplete").is(":checked"))
 
-        toggleGlobalLockButton(game.locked)
+        toggleGlobalLockButton(false)
         saveGame()
 
         $("#setup").css("display", "none")
@@ -1963,15 +1964,15 @@ $(document).ready(function () {
 
     function fillHistoryModal() {
         $("#actionHistorySection").empty()
+        $("#actionConfirmSection").hide()
         if (!game.history || game.history.length === 0) {
             $("#actionHistorySectionEmpty").show()
-            return
+        } else {
+            $("#actionHistorySectionEmpty").hide()
+            _.forEachRight(game.history, (action, index) => {
+                $("#actionHistorySection").append(drawAction(index, action))
+            })
         }
-        $("#actionHistorySectionEmpty").hide()
-        $("#actionConfirmSection").hide()
-        _.forEachRight(game.history, (action, index) => {
-            $("#actionHistorySection").append(drawAction(index, action))
-        })
     }
 
     function onActionHover(index) {
@@ -2002,12 +2003,14 @@ $(document).ready(function () {
     }
 
     function batchUndoRedo(index) {
-        if (game.historyIndex < index) {
+        console.log("Batch undo redo, hi, i", game.historyIndex, index)
+        if (game.historyIndex <= index) {
             for (let i = game.historyIndex; i <= index; i++) {
                 redoAction(game.history[i])
             }
         } else {
             for (let i = game.historyIndex - 1; i >= index; i--) {
+                console.log("Undoing", i)
                 undoAction(game.history[i])
             }
         }
@@ -2016,10 +2019,10 @@ $(document).ready(function () {
 
     function getActionConfirmPrompt(index) {
         let ret
-        if (game.historyIndex < index) {
-            ret = manualStrings.actionHistoryModal.confirmationPrompt[index - game.historyIndex === 1 ? "singleRedo" : "batchRedo"].replace("[NUM]", index - game.historyIndex)
+        if (game.historyIndex <= index) {
+            ret = manualStrings.actionHistoryModal.confirmationPrompt[$(".action-hovering-redo").length === 1 ? "singleRedo" : "batchRedo"].replace("[NUM]", $(".action-hovering-redo").length)
         } else {
-            ret = manualStrings.actionHistoryModal.confirmationPrompt[index - game.historyIndex === 1 ? "singleUndo" : "batchUndo"].replace("[NUM]", index - game.historyIndex)
+            ret = manualStrings.actionHistoryModal.confirmationPrompt[$(".action-hovering-undo").length === 1 ? "singleUndo" : "batchUndo"].replace("[NUM]", $(".action-hovering-undo").length)
         }
         return ret
     }

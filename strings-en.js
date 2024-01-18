@@ -1,4 +1,4 @@
-export const versionNumber = 7
+export const versionNumber = 7.1
 
 export const minVersionNumber = 7
 
@@ -179,7 +179,8 @@ export const titleStringsEN = {
     assistantConfirmButton: "Confirm",
     assistantWhichCharacterLabel: "Suspect",
     assistantWhichWeaponLabel: "Weapon",
-    assistantWhichRoomLabel: "Room"
+    assistantWhichRoomLabel: "Room",
+    actionConfirmButton: "Confirm"
 }
 
 export const manualStringsEN = {

@@ -175,7 +175,8 @@ export const titleStringsIT = {
     //dustCounterAltButton: "Contatore polveri",
     showLessSymbolsCheckbox: "Mostra meno simboli",
     fakeCheckbox: "Spunta istruzioni",
-    assistantConfirmButton: "Conferma"
+    assistantConfirmButton: "Conferma",
+    actionConfirmButton: "Conferma"
 }
 
 export const manualStringsIT = {
