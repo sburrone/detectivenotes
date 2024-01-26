@@ -301,6 +301,7 @@ $(document).ready(function () {
     }
 
     function saveGame() {
+        game.lang = userLang
         game.date = Date.now()
         game.version = versionNumber
         localStorage.setItem("game", JSON.stringify(game))
@@ -554,7 +555,6 @@ $(document).ready(function () {
     }
 
     function doUndoAction(action, item) {
-        console.log("Do undoing", action)
         //Item al momento è usato solo da updateManual, ed è la riga della tabella.
         switch (action.type) {
 
@@ -853,7 +853,11 @@ $(document).ready(function () {
 
         $("#continueGameButton").on("click", function () {
             //Valorizza itemsArray
-            itemsArray = boards[game.board]["characters"].concat(boards[game.board]["weapons"]).concat(boards[game.board]["rooms"])
+            itemsArray = board["characters"].concat(board["weapons"]).concat(board["rooms"])
+            if (game.board < CUSTOM_BOARD_THRESHOLD && game.lang !== userLang) {
+                //Convert save to current language
+                translateSaveGame()
+            }
             //Fill
             $("#mainMenu").css("display", "none")
             clearInterval(languageInterval)
@@ -863,6 +867,12 @@ $(document).ready(function () {
             fillTable()
             updateTable()
             hideDustCounter(game.board !== 5 || settings.hideDustCounter)
+        })
+    }
+
+    function translateSaveGame() {
+        getFilteredTable().forEach((tableElement, index) => {
+            tableElement.row = itemsArray[index]
         })
     }
 
@@ -2003,14 +2013,12 @@ $(document).ready(function () {
     }
 
     function batchUndoRedo(index) {
-        console.log("Batch undo redo, hi, i", game.historyIndex, index)
         if (game.historyIndex <= index) {
             for (let i = game.historyIndex; i <= index; i++) {
                 redoAction(game.history[i])
             }
         } else {
             for (let i = game.historyIndex - 1; i >= index; i--) {
-                console.log("Undoing", i)
                 undoAction(game.history[i])
             }
         }

@@ -1,4 +1,4 @@
-export const versionNumber = 7.1
+export const versionNumber = 7.2
 
 export const minVersionNumber = 7
 
