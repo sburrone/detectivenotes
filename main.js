@@ -162,88 +162,6 @@ $(document).ready(function () {
 
     let darkMode = false
 
-    //Dark mode
-
-    const colors = {
-        darkBlue: "#274161",
-        white: "white",
-        lightBlue: "#2CB6E3",
-        lightRed: "#ff9185",
-        darkRed: "#6b2a22",
-        black: "black",
-        green: "#36a655",
-        grey: "#ccc",
-        darkGrey: "rgb(25, 25, 25)",
-        lightGrey: "rgb(230, 230, 230)",
-        lightSemitransparentWhite: "rgba(255, 255, 255, 0.86)",
-        darkSemitransparentWhite: "rgba(0, 0, 0, 0.86)",
-        darkInvertFilter: "invert(1)",
-        lightInvertFilter: "invert(0)"
-    }
-
-    const currentColors = {
-        darkBlue: {
-            current: 'std',
-            std: colors.darkBlue,
-            alt: colors.lightBlue
-        },
-        lightBlue: {
-            current: 'std',
-            std: colors.lightBlue,
-            alt: colors.darkBlue
-        },
-        darkRed: {
-            current: 'std',
-            std: colors.darkRed,
-            alt: colors.lightRed
-        },
-        lightRed: {
-            current: 'std',
-            std: colors.lightRed,
-            alt: colors.darkRed
-        },
-        white: {
-            current: 'std',
-            std: colors.white,
-            alt: colors.black
-        },
-        black: {
-            current: 'std',
-            std: colors.black,
-            alt: colors.white
-        },
-        darkGrey: {
-            current: 'std',
-            std: colors.darkGrey,
-            alt: colors.lightGrey
-        },
-        lightGrey: {
-            current: 'std',
-            std: colors.lightGrey,
-            alt: colors.darkGrey
-        },
-        lightSemitransparentWhite: {
-            current: 'std',
-            std: colors.lightSemitransparentWhite,
-            alt: colors.darkSemitransparentWhite
-        },
-        darkSemitransparentWhite: {
-            current: 'std',
-            std: colors.darkSemitransparentWhite,
-            alt: colors.lightSemitransparentWhite
-        },
-        darkInvertFilter: {
-            current: 'std',
-            std: colors.darkInvertFilter,
-            alt: colors.lightInvertFilter
-        },
-        lightInvertFilter: {
-            current: 'std',
-            std: colors.lightInvertFilter,
-            alt: colors.darkInvertFilter
-        }
-    }
-
     //Language
     let userLang = navigator.language || navigator.userLanguage
     const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -653,6 +571,7 @@ $(document).ready(function () {
                     $("#rowCheckbox" + action.item).closest(".table-row").find("td > a").data("locked", "false")
                     $("#rowCheckbox" + action.item).closest(".table-row").removeClass("locked")
                     $("#rowCheckbox" + action.item).closest(".table-row").css("background-color", "")
+                    $("#rowCheckbox" + action.item).closest(".table-row").css("color", "")
                 }
                 return
 
@@ -668,7 +587,8 @@ $(document).ready(function () {
                     $("#rowCheckbox" + action.item).prop("checked", true)
                     $("#rowCheckbox" + action.item).closest(".table-row").find("td > a").data("locked", "true")
                     $("#rowCheckbox" + action.item).closest(".table-row").addClass("locked")
-                    $("#rowCheckbox" + action.item).closest(".table-row").css("background-color", "var(--current-lightRed)")
+                    $("#rowCheckbox" + action.item).closest(".table-row").css("background-color", "var(--md-sys-color-error-container)")
+                    $("#rowCheckbox" + action.item).closest(".table-row").css("color", "var(--md-sys-color-on-error-container)")
                 }
                 return
 
@@ -795,7 +715,8 @@ $(document).ready(function () {
                 $("#rowCheckbox" + action.item).prop("checked", true)
                 $("#rowCheckbox" + action.item).closest(".table-row").find("td > a").data("locked", "true")
                 $("#rowCheckbox" + action.item).closest(".table-row").addClass("locked")
-                $("#rowCheckbox" + action.item).closest(".table-row").css("background-color", "var(--current-lightRed)")
+                $("#rowCheckbox" + action.item).css("background-color", "var(--md-sys-color-error-container)")
+                $("#rowCheckbox" + action.item).css("color", "var(--md-sys-color-on-error-container)")
                 return
 
             case "unlockItem":
@@ -810,6 +731,7 @@ $(document).ready(function () {
                 $("#rowCheckbox" + action.item).closest(".table-row").find("td > a").data("locked", "false")
                 $("#rowCheckbox" + action.item).closest(".table-row").removeClass("locked")
                 $("#rowCheckbox" + action.item).closest(".table-row").css("background-color", "")
+                $("#rowCheckbox" + action.item).closest(".table-row").css("color", "")
                 return
 
             default:
@@ -916,7 +838,6 @@ $(document).ready(function () {
         //Populate Setup
         boards.forEach(board => {
             let button = $("<button>").attr("class", "small-button board-button")
-            //button.css("background-color", "var(--current-lightBlue)")
             button.text(board.name)
             button.on("click", function (event) {
                 selectBoard(board.id, board.minPlayers, event)
@@ -941,11 +862,11 @@ $(document).ready(function () {
 
     function selectBoard(id, minPlayers, event) {
         //Cambio colori
-        $("#boardButtonContainer, #customizeBoardContainer").find("*").css("background-color", "var(--current-lightBlue)")
+        $("#boardButtonContainer, #customizeBoardContainer").find("*").css("background-color", "var(--md-sys-color-secondary-container)").css("color", "--md-sys-color-on-secondary-container")
         $("#boardButtonContainer").find("*").data("selected", "false")
         if (event) {
             $(event.target).data("selected", "true")
-            $(event.target).css("background-color", "var(--current-lightRed)")
+            $(event.target).css("background-color", "var(--md-sys-color-tertiary-container)").css("color", "var(--md-sys-color-on-tertiary-container)")
         }
 
         game.board = id
@@ -1094,9 +1015,9 @@ $(document).ready(function () {
             checkbox.attr("class", "table-header-checkbox board-import-checkbox")
             checkbox.on("change", function () {
                 if ($(this).is(":checked")) {
-                    $("#" + elementId + 'Body td, #' + elementId + 'Body th').css("background-color", "var(--current-lightBlue")
+                    $("#" + elementId + 'Body td, #' + elementId + 'Body th').css("background-color", "var(--md-sys-color-secondary-container").css("color", "var(--md-sys-color-on-secondary-container")
                 } else {
-                    $("#" + elementId + 'Body td, #' + elementId + 'Body th').css("background-color", "")
+                    $("#" + elementId + 'Body td, #' + elementId + 'Body th').css("background-color", "").css("color", "")
                 }
             })
 
@@ -1168,7 +1089,7 @@ $(document).ready(function () {
         $("#customizeBoardButtonSubtitle").show()
         $("#customizeBoardButtonSubtitle").text(settings.customBoards[id].name)
         $("#customizeBoardButton").data("selected", "true")
-        $("#customizeBoardButton, #customizeBoardButton > *").css("background-color", "var(--current-lightRed)")
+        $("#customizeBoardButton, #customizeBoardButton > *").css("background-color", "var(--md-sys-color-tertiary-container)").css("color", "var(--md-sys-color-on-tertiary-container)")
         hideAndShowModal("#customizeBoardButtonSubtitle")
     }
 
@@ -1377,13 +1298,12 @@ $(document).ready(function () {
     function toggleDarkMode(current) {
         $(".dark-mode-label").text(current ? "dark_mode" : "light_mode")
         // !current is new darkMode
-        Object.keys(currentColors).forEach(key => {
-            const colorObject = currentColors[key]
-            colorObject.current = current ? 'std' : 'alt'
-            const string = '--current-' + key
-            const newColor = current ? colorObject.std : colorObject.alt
-            document.documentElement.style.setProperty(string, newColor)
-        })
+        if (current) {
+            //Set to light
+            $(":root").removeClass("dark")
+        } else {
+            $(":root").addClass("dark")
+        }
         darkMode = !current
         $("#darkMode").prop("checked", darkMode)
     }
@@ -1520,7 +1440,7 @@ $(document).ready(function () {
             const longDiv = $("<div class='long-names-cell'>").append($(sideways), $("<br>"), $(initial))
             const normalDiv = $("<div class='normal-names-cell'>").text(player)
             cell.append($(longDiv), $(normalDiv))
-            cell.css("background-color", "var(--current-lightGrey")
+            cell.css("background-color", "var(--md-sys-color-secondary-container")
             $("#tableRowPlayers").append(cell)
         })
         changeLongNamesMode(settings.longNamesCompatibilityMode)
@@ -1577,6 +1497,8 @@ $(document).ready(function () {
                 $(this).find("input").prop("checked", true)
                 $(this).closest(".table-row").find("td > a").data("locked", "true")
                 $(this).closest(".table-row").addClass("locked")
+                $(this).closest(".table-row").css("background-color", "var(--md-sys-color-error-container)")
+                $(this).closest(".table-row").css("color", "var(--md-sys-color-on-error-container)")
             }
         })
     }
@@ -1637,7 +1559,8 @@ $(document).ready(function () {
             if ($(this).is(":checked")) {
                 $(this).closest(".table-row").find("td > a").data("locked", "true")
                 $(this).closest(".table-row").addClass("locked")
-                $(this).closest(".table-row").css("background-color", "var(--current-lightRed)")
+                $(this).closest(".table-row").css("background-color", "var(--md-sys-color-error-container)")
+                $(this).closest(".table-row").css("color", "var(--md-sys-color-on-error-container)")
                 //Update symbols
                 toUpdate = $(this)
                 updateWholeRow("cross")
@@ -1646,6 +1569,7 @@ $(document).ready(function () {
                 $(this).closest(".table-row").find("td > a").data("locked", "false")
                 $(this).closest(".table-row").removeClass("locked")
                 $(this).closest(".table-row").css("background-color", "")
+                $(this).closest(".table-row").css("color", "")
                 //Update symbols
                 toUpdate = $(this)
                 updateWholeRow("reset")
@@ -1677,13 +1601,13 @@ $(document).ready(function () {
             $(".table-header-checkbox").each(function () {
                 $(this).attr("disabled", "disabled")
             })
-            $("#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel").css("background-color", "var(--current-lightRed)")
+            $("#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel").css("background-color", "var(--md-sys-color-error-container)").css("color", "var(--md-sys-color-on-error-container)")
             $("#lockPersonalCardsLabel, #lockPersonalCardsAltLabel").text("lock")
         } else {        //if currently locked, unlocks cards
             $(".table-header-checkbox").each(function () {
                 $(this).removeAttr("disabled")
             })
-            $("#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel").css("background-color", "var(--current-darkBlue)")
+            $("#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel").css("background-color", "var(--md-sys-color-on-secondary)").css("color", "var(--md-sys-color-secondary)")
             $("#lockPersonalCardsLabel, #lockPersonalCardsAltLabel").text("lock_open_right")
         }
     }
@@ -1787,9 +1711,7 @@ $(document).ready(function () {
     let im2Interval = window.setInterval(function () {
         let isChecked = $("#fakeCheckbox").is(":checked")
         $("#fakeCheckbox").prop("checked", !isChecked)
-        $(".fake-table").css("background-color", (!isChecked ?
-            "var(--current-lightRed)"
-            : ""))
+        $(".fake-table").css("background-color", (!isChecked ? "var(--md-sys-color-error-container)" : "")).css("color", (!isChecked ? "var(--md-sys-color-on-error-container)" : ""))
     }, instructionsUpdateTime)
 
     //Image 3: Lock cards
@@ -1797,11 +1719,10 @@ $(document).ready(function () {
     let im3Interval = window.setInterval(function () {
         im3Locked = !im3Locked
         //Change bg
-        $("#fakeLockButton").css("background-color", im3Locked ?
-            "var(--current-lightRed)" :
-            "var(--current-darkBlue)")
+        $("#fakeLockButton").css("background-color", im3Locked ? "var(--md-sys-color-error-container)" : "var(--md-sys-color-secondary-container)").css("color", im3Locked ? "var(--md-sys-color-on-error-container)" : "var(--md-sys-color-on-secondary-container)")
         //Change label
-        $("#fakeLockButtonLabel").text(im3Locked ? "lock" : "lock_open_right")
+        console.log("Changing!", im3Locked)
+        $("#fakeLockButton").text(im3Locked ? "lock" : "lock_open_right")
     }, instructionsUpdateTime)
 
 

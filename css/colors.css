@@ -1,0 +1,215 @@
+:root {
+    /* light */
+    --md-sys-color-primary-light: #006b56;
+    --md-sys-color-on-primary-light: #ffffff;
+    --md-sys-color-primary-container-light: #77f9d4;
+    --md-sys-color-on-primary-container-light: #002018;
+    --md-sys-color-secondary-light: #4b635b;
+    --md-sys-color-on-secondary-light: #ffffff;
+    --md-sys-color-secondary-container-light: #cee9dd;
+    --md-sys-color-on-secondary-container-light: #072019;
+    --md-sys-color-tertiary-light: #416276;
+    --md-sys-color-on-tertiary-light: #ffffff;
+    --md-sys-color-tertiary-container-light: #c4e7ff;
+    --md-sys-color-on-tertiary-container-light: #001e2c;
+    --md-sys-color-error-light: #ba1a1a;
+    --md-sys-color-error-container-light: #ffdad6;
+    --md-sys-color-on-error-light: #ffffff;
+    --md-sys-color-on-error-container-light: #410002;
+    --md-sys-color-background-light: #fbfdfa;
+    --md-sys-color-on-background-light: #191c1b;
+    --md-sys-color-surface-light: #fbfdfa;
+    --md-sys-color-on-surface-light: #191c1b;
+    --md-sys-color-surface-variant-light: #dbe5df;
+    --md-sys-color-on-surface-variant-light: #3f4945;
+    --md-sys-color-outline-light: #6f7975;
+    --md-sys-color-inverse-on-surface-light: #eff1ee;
+    --md-sys-color-inverse-surface-light: #2e312f;
+    --md-sys-color-inverse-primary-light: #57dcb9;
+    --md-sys-color-shadow-light: #000000;
+    --md-sys-color-surface-tint-light: #006b56;
+    --md-sys-color-outline-variant-light: #bfc9c3;
+    --md-sys-color-scrim-light: #000000;
+    /* dark */
+    --md-sys-color-primary-dark: #57dcb9;
+    --md-sys-color-on-primary-dark: #00382c;
+    --md-sys-color-primary-container-dark: #005140;
+    --md-sys-color-on-primary-container-dark: #77f9d4;
+    --md-sys-color-secondary-dark: #b2ccc2;
+    --md-sys-color-on-secondary-dark: #1d352d;
+    --md-sys-color-secondary-container-dark: #344c43;
+    --md-sys-color-on-secondary-container-dark: #cee9dd;
+    --md-sys-color-tertiary-dark: #a8cbe2;
+    --md-sys-color-on-tertiary-dark: #0e3446;
+    --md-sys-color-tertiary-container-dark: #284b5e;
+    --md-sys-color-on-tertiary-container-dark: #c4e7ff;
+    --md-sys-color-error-dark: #ffb4ab;
+    --md-sys-color-error-container-dark: #93000a;
+    --md-sys-color-on-error-dark: #690005;
+    --md-sys-color-on-error-container-dark: #ffdad6;
+    --md-sys-color-background-dark: #191c1b;
+    --md-sys-color-on-background-dark: #e1e3e0;
+    --md-sys-color-surface-dark: #191c1b;
+    --md-sys-color-on-surface-dark: #e1e3e0;
+    --md-sys-color-surface-variant-dark: #3f4945;
+    --md-sys-color-on-surface-variant-dark: #bfc9c3;
+    --md-sys-color-outline-dark: #89938e;
+    --md-sys-color-inverse-on-surface-dark: #191c1b;
+    --md-sys-color-inverse-surface-dark: #e1e3e0;
+    --md-sys-color-inverse-primary-dark: #006b56;
+    --md-sys-color-shadow-dark: #000000;
+    --md-sys-color-surface-tint-dark: #57dcb9;
+    --md-sys-color-outline-variant-dark: #3f4945;
+    --md-sys-color-scrim-dark: #000000;
+
+    --light-text: #1e0607;
+    --light-background: #fceeee;
+    --light-primary: #66e5b0;
+    --light-secondary: #711420;
+    --light-accent: #207bbc;
+
+    --light-primary-background: #b5e2cf;
+    --light-secondary-background: #e1c2c4;
+
+    --dark-text: #f9e1e2;
+    --dark-background: #110303;
+    --dark-primary: #1a9964;
+    --dark-secondary: #eb8e9b;
+    --dark-accent: #439edf;
+
+    --dark-primary-background: #1d3f25;
+    --dark-secondary-background: #271112;
+
+    --dark-blue: #274161;
+    --light-white: white;
+    --dark-white: black;
+    --white: white;
+    --light-blue: #2CB6E3;
+    --light-red: #ff9185;
+    --dark-red: #6b2a22;
+    --black: black;
+    --green: #36a655;
+    --grey: #ccc;
+    --dark-grey: rgb(25, 25, 25);
+    --light-grey: rgb(230, 230, 230);
+    --light-semitransparent-white: rgba(255, 255, 255, 0.86);
+    --dark-semitransparent-white: rgba(0, 0, 0, 0.86);
+
+    --light-hover: brightness(0.85);
+    --dark-hover: brightness(1.15);
+
+    --dark-invert-filter: invert(1);
+    --light-invert-filter: invert(0);
+
+    /* current */
+    --md-sys-color-primary: var(--md-sys-color-primary-light);
+    --md-sys-color-on-primary: var(--md-sys-color-on-primary-light);
+    --md-sys-color-primary-container: var(--md-sys-color-primary-container-light);
+    --md-sys-color-on-primary-container: var(--md-sys-color-on-primary-container-light);
+    --md-sys-color-secondary: var(--md-sys-color-secondary-light);
+    --md-sys-color-on-secondary: var(--md-sys-color-on-secondary-light);
+    --md-sys-color-secondary-container: var(--md-sys-color-secondary-container-light);
+    --md-sys-color-on-secondary-container: var(--md-sys-color-on-secondary-container-light);
+    --md-sys-color-tertiary: var(--md-sys-color-tertiary-light);
+    --md-sys-color-on-tertiary: var(--md-sys-color-on-tertiary-light);
+    --md-sys-color-tertiary-container: var(--md-sys-color-tertiary-container-light);
+    --md-sys-color-on-tertiary-container: var(--md-sys-color-on-tertiary-container-light);
+    --md-sys-color-error: var(--md-sys-color-error-light);
+    --md-sys-color-error-container: var(--md-sys-color-error-container-light);
+    --md-sys-color-on-error: var(--md-sys-color-on-error-light);
+    --md-sys-color-on-error-container: var(--md-sys-color-on-error-container-light);
+    --md-sys-color-background: var(--md-sys-color-background-light);
+    --md-sys-color-on-background: var(--md-sys-color-on-background-light);
+    --md-sys-color-surface: var(--md-sys-color-surface-light);
+    --md-sys-color-on-surface: var(--md-sys-color-on-surface-light);
+    --md-sys-color-surface-variant: var(--md-sys-color-surface-variant-light);
+    --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface-variant-light);
+    --md-sys-color-outline: var(--md-sys-color-outline-light);
+    --md-sys-color-inverse-on-surface: var(--md-sys-color-inverse-on-surface-light);
+    --md-sys-color-inverse-surface: var(--md-sys-color-inverse-surface-light);
+    --md-sys-color-inverse-primary: var(--md-sys-color-inverse-primary-light);
+    --md-sys-color-shadow: var(--md-sys-color-shadow-light);
+    --md-sys-color-surface-tint: var(--md-sys-color-surface-tint-light);
+    --md-sys-color-outline-variant: var(--md-sys-color-outline-variant-light);
+    --md-sys-color-scrim: var(--md-sys-color-scrim-light);
+
+    --current-text: var(--light-text);
+    --current-background: var(--light-background);
+    --current-primary: var(--light-primary);
+    --current-secondary: var(--light-secondary);
+    --current-accent: var(--light-accent);
+    --current-primaryBackground: var(--light-primary-background);
+    --current-secondaryBackground: var(--light-secondary-background);
+
+    --current-hover: var(--light-hover);
+
+    --current-lightBlue: var(--light-blue);
+    --current-darkBlue: var(--dark-blue);
+    --current-lightRed: var(--light-red);
+    --current-darkRed: var(--dark-red);
+    --current-lightGrey: var(--light-grey);
+    --current-darkGrey: var(--dark-grey);
+    --current-white: var(--white);
+    --current-black: var(--black);
+    --current-lightSemitransparentWhite: var(--light-semitransparent-white);
+
+    --current-lightInvertFilter: var(--light-invert-filter);
+
+    transition: .3s ease-in-out;
+}
+
+.dark {
+    transition: .3s ease-in-out;
+
+    --md-sys-color-primary: var(--md-sys-color-primary-dark);
+    --md-sys-color-on-primary: var(--md-sys-color-on-primary-dark);
+    --md-sys-color-primary-container: var(--md-sys-color-primary-container-dark);
+    --md-sys-color-on-primary-container: var(--md-sys-color-on-primary-container-dark);
+    --md-sys-color-secondary: var(--md-sys-color-secondary-dark);
+    --md-sys-color-on-secondary: var(--md-sys-color-on-secondary-dark);
+    --md-sys-color-secondary-container: var(--md-sys-color-secondary-container-dark);
+    --md-sys-color-on-secondary-container: var(--md-sys-color-on-secondary-container-dark);
+    --md-sys-color-tertiary: var(--md-sys-color-tertiary-dark);
+    --md-sys-color-on-tertiary: var(--md-sys-color-on-tertiary-dark);
+    --md-sys-color-tertiary-container: var(--md-sys-color-tertiary-container-dark);
+    --md-sys-color-on-tertiary-container: var(--md-sys-color-on-tertiary-container-dark);
+    --md-sys-color-error: var(--md-sys-color-error-dark);
+    --md-sys-color-error-container: var(--md-sys-color-error-container-dark);
+    --md-sys-color-on-error: var(--md-sys-color-on-error-dark);
+    --md-sys-color-on-error-container: var(--md-sys-color-on-error-container-dark);
+    --md-sys-color-background: var(--md-sys-color-background-dark);
+    --md-sys-color-on-background: var(--md-sys-color-on-background-dark);
+    --md-sys-color-surface: var(--md-sys-color-surface-dark);
+    --md-sys-color-on-surface: var(--md-sys-color-on-surface-dark);
+    --md-sys-color-surface-variant: var(--md-sys-color-surface-variant-dark);
+    --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface-variant-dark);
+    --md-sys-color-outline: var(--md-sys-color-outline-dark);
+    --md-sys-color-inverse-on-surface: var(--md-sys-color-inverse-on-surface-dark);
+    --md-sys-color-inverse-surface: var(--md-sys-color-inverse-surface-dark);
+    --md-sys-color-inverse-primary: var(--md-sys-color-inverse-primary-dark);
+    --md-sys-color-shadow: var(--md-sys-color-shadow-dark);
+    --md-sys-color-surface-tint: var(--md-sys-color-surface-tint-dark);
+    --md-sys-color-outline-variant: var(--md-sys-color-outline-variant-dark);
+    --md-sys-color-scrim: var(--md-sys-color-scrim-dark);
+
+    --current-text: var(--dark-text);
+    --current-background: var(--dark-background);
+    --current-primary: var(--dark-primary);
+    --current-secondary: var(--dark-secondary);
+    --current-accent: var(--dark-accent);
+    --current-primaryBackground: var(--dark-primary-background);
+    --current-secondaryBackground: var(--dark-secondary-background);
+
+    --current-hover: var(--dark-hover);
+
+    --current-lightBlue: var(--dark-blue);
+    --current-darkBlue: var(--light-blue);
+    --current-lightRed: var(--dark-red);
+    --current-darkRed: var(--light-red);
+    --current-lightGrey: var(--dark-grey);
+    --current-darkGrey: var(--light-grey);
+    --current-white: var(--black);
+    --current-black: var(--white);
+    --current-lightSemitransparentWhite: var(--dark-semitransparent-white);
+    --current-lightInvertFilter: var(--dark-invert-filter);
+}

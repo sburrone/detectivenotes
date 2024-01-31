@@ -1,34 +1,5 @@
-:root {
-    --dark-blue: #274161;
-    --light-white: white;
-    --dark-white: black;
-    --white: white;
-    --light-blue: #2CB6E3;
-    --light-red: #ff9185;
-    --dark-red: #6b2a22;
-    --black: black;
-    --green: #36a655;
-    --grey: #ccc;
-    --dark-grey: rgb(25, 25, 25);
-    --light-grey: rgb(230, 230, 230);
-    --light-semitransparent-white: rgba(255, 255, 255, 0.86);
-    --dark-semitransparent-white: rgba(0, 0, 0, 0.86);
-
-
-    --current-lightBlue: var(--light-blue);
-    --current-darkBlue: var(--dark-blue);
-    --current-lightRed: var(--light-red);
-    --current-darkRed: var(--dark-red);
-    --current-lightGrey: var(--light-grey);
-    --current-darkGrey: var(--dark-grey);
-    --current-white: var(--white);
-    --current-black: var(--black);
-    --current-lightSemitransparentWhite: var(--light-semitransparent-white);
-
-    --dark-invert-filter: invert(1);
-    --light-invert-filter: invert(0);
-    --current-lightInvertFilter: var(--light-invert-filter);
-}
+@import url(colors.css);
+@import url(colors.module.css);
 
 html,
 body {
@@ -42,8 +13,8 @@ body {
 
 html {
     transition: .3s ease-in-out;
-    background-color: var(--current-white);
-    color: var(--current-black);
+    background-color: var(--md-sys-color-background);
+    color: var(--md-sys-color-on-background);
 }
 
 #model {
@@ -97,7 +68,7 @@ html {
     transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
-    background-color: var(--black);
+    background-color: var(--md-sys-color-background);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -111,8 +82,8 @@ html {
 progress {
     height: 20px;
     border-radius: 10px;
-    accent-color: var(--light-blue);
-    background-color: var(--dark-blue);
+    accent-color: var(--md-sys-color-on-primary-container);
+    background-color: var(--md-sys-color-primary-container);
     border: none;
     -webkit-appearance: auto;
     appearance: auto;
@@ -120,18 +91,18 @@ progress {
 }
 
 ::-moz-progress-bar {
-    background-color: var(--light-blue);
+    background-color: var(--md-sys-color-primary-container);
     border-radius: 10px;
 }
 
 ::-webkit-progress-bar {
-    background-color: var(--dark-blue);
+    background-color: var(--md-sys-color-primary-container);
     border-radius: 1000px;
 }
 
 ::-webkit-progress-value {
     transition: width 0.5s;
-    background-color: var(--light-blue);
+    background-color: var(--md-sys-color-on-primary-container);
     border-radius: 1000px;
 }
 
@@ -148,21 +119,20 @@ progress {
     font-family: 'Dela Gothic One', cursive;
     font-size: 80px;
     text-align: center;
-    color: var(--dark-blue);
-    text-shadow: var(--white) 1px 0 50px;
-    -webkit-text-stroke: 2px var(--white);
+    color: var(--md-sys-color-primary);
+    text-shadow: var(--md-sys-color-primary-container) 1px 0 50px;
+    -webkit-text-stroke: 2px var(--md-sys-color-on-primary);
 }
 
 .big-button {
-    color: var(--white);
-    background-color: var(--dark-blue);
+    color: var(--md-sys-color-on-tertiary-container);
+    background-color: var(--md-sys-color-tertiary-container);
     text-decoration: none;
     text-align: center;
     padding: 20px;
     border-radius: 24px;
     width: 300px;
     margin: 10px;
-    border: 2px solid white;
 }
 
 .big-button-title {
@@ -233,24 +203,9 @@ html {
     font-family: 'Inter', sans-serif;
 }
 
-.confirmation-button {
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    color: var(--white);
-    background-color: var(--light-blue);
-    text-decoration: none;
-    padding: 20px 30px;
-    border-radius: 500px;
-    z-index: 10;
-    font-size: 24px;
-    margin-bottom: 10px;
-    border: 0px;
-}
-
 button:hover,
 a:hover {
-    filter: brightness(0.85);
+    filter: var(--current-hover);
 }
 
 .begin-button {
@@ -258,8 +213,8 @@ a:hover {
     text-align: center;
     align-items: center;
     justify-content: center;
-    color: var(--white);
-    background-color: var(--current-lightRed);
+    color: var(--md-sys-color-on-tertiary-container);
+    background-color: var(--md-sys-color-tertiary-container);
     text-decoration: none;
     padding: 20px 30px;
     margin-top: 10px;
@@ -269,7 +224,7 @@ a:hover {
 }
 
 .begin-button:hover {
-    filter: brightness(85%);
+    filter: var(--current-hover);
 }
 
 #beginButtonSubtitle,
@@ -284,8 +239,8 @@ a:hover {
 
 .upperbar {
     transition: .3s ease-in-out;
-    background-color: var(--current-lightBlue);
-    color: var(--white);
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
     display: flex;
     align-items: center;
     text-align: center;
@@ -332,8 +287,8 @@ a:hover {
     padding-bottom: 100px;
     z-index: 1;
     text-align: center;
-    background-color: var(--current-white);
-    color: var(--current-black);
+    background-color: var(--md-sys-color-background);
+    color: var(--md-sys-color-on-background);
     margin-bottom: 100px;
 }
 
@@ -356,8 +311,8 @@ a:hover {
 
 .small-button {
     transition: .3s ease-in-out;
-    color: var(--white);
-    background-color: var(--current-darkBlue);
+    color: var(--md-sys-color-secondary);
+    background-color: var(--md-sys-color-on-secondary);
     text-decoration: none;
     text-align: center;
     font-size: 24px;
@@ -380,8 +335,8 @@ a:hover {
 
 .main-menu-small-button {
     transition: .3s ease-in-out;
-    background-color: var(--current-lightBlue);
-    color: var(--white);
+    background-color: var(--md-sys-color-tertiary-container);
+    color: var(--md-sys-color-on-tertiary-container);
     padding: 8px;
     margin: 4px;
     text-decoration: none;
@@ -411,13 +366,16 @@ a:hover {
     font-size: 20px;
     padding: 8px 16px;
     margin: 4px;
-    background-color: var(--current-lightBlue);
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
 }
 
 .alt-button {
     font-size: 22px;
     padding: 8px 16px;
     margin: 4px;
+    background-color: var(--md-sys-color-tertiary-container);
+    color: var(--md-sys-color-on-tertiary-container);
 }
 
 .small-button>span {
@@ -489,15 +447,16 @@ button {
 .setup-tooltip-modal-link {
     transition: .3s ease-in-out;
     font-size: 18px;
-    color: var(--current-darkBlue);
-    text-decoration: underline var(--current-lightBlue);
+    color: var(--md-sys-color-tertiary);
+    text-decoration: underline var(--md-sys-color-tertiary-container);
     white-space: nowrap;
 }
 
 .setup-name {
-    background-color: var(--white);
+    background-color: var(--md-sys-color-secondary-container);
     border-radius: 100px;
-    border: 1px solid var(--dark-blue);
+    border: 1px solid var(--md-sys-color-on-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
     font-size: 18px;
     padding: 10px 15px 10px 15px;
     margin: 5px;
@@ -513,15 +472,15 @@ button {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: var(--current-lightSemitransparentWhite);
-    color: var(--current-black);
+    background-color: color-mix(in srgb, var(--md-sys-color-background) 80%, transparent);
+    color: var(--md-sys-color-on-background);
     -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
 }
 
 .modal a {
     transition: .3s ease-in-out;
-    color: var(--current-black);
+    color: var(--md-sys-color-on-background);
     text-decoration: none;
 }
 
@@ -539,7 +498,7 @@ button {
     transition: .3s ease-in-out;
     margin: auto;
     padding: 20px;
-    border: 1px solid var(--grey);
+    border: 1px solid var(--md-sys-color-on-surface);
     width: 80%;
     text-align: center;
     display: flex;
@@ -580,8 +539,8 @@ button {
 
 .language-link {
     transition: .3s ease-in-out;
-    background-color: var(--current-lightBlue);
-    color: var(--white) !important;
+    background-color: var(--md-sys-color-tertiary-container);
+    color: var(--md-sys-color-on-tertiary-container) !important;
     padding: 10px 80px;
     border-radius: 5000px;
     margin: 10px;
@@ -604,7 +563,12 @@ button {
 
 .reset {
     transition: .3s ease-in-out;
-    filter: invert(22%) sepia(94%) saturate(291%) hue-rotate(171deg) brightness(89%) contrast(96%);
+    filter: invert(38%) sepia(19%) saturate(761%) hue-rotate(159deg) brightness(89%) contrast(96%) !important;
+}
+
+.dark .reset {
+    transition: .3s ease-in-out;
+    filter: invert(91%) sepia(98%) saturate(6790%) hue-rotate(172deg) brightness(93%) contrast(89%) !important;
 }
 
 .check {
@@ -617,6 +581,16 @@ button {
 
 .cross {
     filter: invert(47%) sepia(54%) saturate(682%) hue-rotate(318deg) brightness(87%) contrast(94%) !important;
+}
+
+.dark .locked .cross {
+    transition: .3s ease-in-out;
+    filter: invert(78%) sepia(6%) saturate(2397%) hue-rotate(316deg) brightness(97%) contrast(109%) !important;
+}
+
+.locked .cross {
+    transition: .3s ease-in-out;
+    filter: invert(13%) sepia(83%) saturate(3572%) hue-rotate(352deg) brightness(107%) contrast(93%) !important;
 }
 
 .maybeNot {
@@ -675,8 +649,8 @@ button {
 
 .dust-counter-box {
     transition: .3s ease-in-out;
-    background-color: var(--current-darkBlue);
-    color: var(--white);
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -692,8 +666,8 @@ button {
 
 .counterbutton {
     transition: .3s ease-in-out;
-    color: white;
-    background-color: var(--current-lightBlue);
+    color: var(--md-sys-color-on-secondary);
+    background-color: var(--md-sys-color-secondary);
     text-decoration: none;
     text-align: center;
     padding: 8px;
@@ -710,7 +684,7 @@ button {
     margin-left: 20px;
     margin-right: 20px;
     width: 150px;
-    color: var(--white);
+    color: var(--md-sys-color-on-secondary-container);
 }
 
 .custom-table-num,
@@ -723,7 +697,7 @@ button {
 }
 
 .custom-table-header {
-    border-top: 2px solid var(--current-lightGrey);
+    border-top: 2px solid var(--md-sys-color-on-background);
     padding-top: 10px;
 }
 
@@ -736,7 +710,7 @@ button {
 }
 
 .custom-board-body {
-    border-bottom: 2px solid var(--current-darkGrey);
+    border-bottom: 2px solid var(--md-sys-color-on-surface-variant);
 }
 
 .custom-board-name-row td {
@@ -768,7 +742,8 @@ table {
 
 .main-table-row>* {
     transition: .3s ease-in-out;
-    background-color: var(--current-lightGrey);
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
 }
 
 .table-header {
@@ -873,60 +848,15 @@ table {
     display: none;
 }
 
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--red) !important;
-    -webkit-transition: .3s;
-    transition: .3s;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 5px;
-    bottom: 2px;
-    background-color: var(--white);
-    -webkit-transition: .3s;
-    transition: .3s;
-}
-
-input:checked+.slider {
-    background-color: var(--green) !important;
-}
-
-input:focus+.slider {
-    box-shadow: 0 0 1px var(--dark-blue);
-}
-
-input:checked+.slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-}
-
-.slider.round {
-    border-radius: 34px;
-}
-
-.slider.round:before {
-    border-radius: 50%;
-}
-
 input[type="range"] {
     transition: .3s ease-in-out;
-    accent-color: var(--current-darkBlue);
+    accent-color: var(--md-sys-color-on-secondary-container);
 }
 
 .locked {
     transition: .3s ease-in-out;
-    background-color: var(--current-lightRed);
+    background-color: var(--md-sys-error-container);
+    color: var(--md-sys-on-error-container);
 }
 
 button,
@@ -953,13 +883,13 @@ a {
 }
 
 .checkbox-wrapper-31 .background {
-    fill: var(--current-lightGrey);
+    fill: var(--md-sys-color-surface-variant);
     transition: ease all 0.6s;
 }
 
 .checkbox-wrapper-31 .stroke {
     fill: none;
-    stroke: var(--white);
+    stroke: var(--md-sys-color-on-background);
     stroke-miterlimit: 10;
     stroke-width: 2px;
     stroke-dashoffset: 100;
@@ -970,7 +900,7 @@ a {
 
 .checkbox-wrapper-31 .checked {
     fill: none;
-    stroke: var(--white);
+    stroke: var(--md-sys-color-on-background);
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 2px;
@@ -978,6 +908,11 @@ a {
     stroke-dasharray: 22;
     -webkit-transition: ease all 0.6s;
     transition: ease all 0.6s;
+}
+
+.locked .checked,
+.locked .stroke {
+    stroke: var(--md-sys-color-on-error-container) !important;
 }
 
 .checkbox-wrapper-31 input[type=checkbox] {
@@ -998,7 +933,7 @@ a {
 }
 
 .checkbox-wrapper-31 input[type=checkbox]:checked+svg .background {
-    fill: var(--green) !important;
+    fill: var(--md-sys-color-primary);
 }
 
 .checkbox-wrapper-32 input[type=checkbox]:checked+svg .background {
@@ -1007,10 +942,12 @@ a {
 
 .checkbox-wrapper-31 input[type=checkbox]:checked+svg .stroke {
     stroke-dashoffset: 0;
+    stroke: var(--md-sys-color-on-primary);
 }
 
 .checkbox-wrapper-31 input[type=checkbox]:checked+svg .checked {
     stroke-dashoffset: 0;
+    stroke: var(--md-sys-color-on-primary);
 }
 
 .modal-section {
@@ -1025,7 +962,7 @@ a {
 #instructionsModalImage1,
 #instructionsModalImage2B,
 #instructionsModalImage4 {
-    border: 6px solid var(--current-black);
+    border: 6px solid var(--md-sys-color-on-background);
     padding: 5px;
     border-radius: 12px;
     vertical-align: middle;
@@ -1056,7 +993,7 @@ a {
 
 .fake-button {
     transition: .3s ease-in-out;
-    color: var(--white);
+    color: var(--md-sys-color-on-background);
     text-decoration: none;
     text-align: center;
     height: 60px;
@@ -1089,10 +1026,6 @@ a {
     margin-left: 8px !important;
 }
 
-.selected {
-    background-color: var(--current-lightRed) !important;
-}
-
 #setupContent {
     padding: 0px 20px;
 }
@@ -1101,10 +1034,6 @@ a {
     height: 46px;
     width: 46px;
     vertical-align: top;
-}
-
-.autocomplete-button {
-    background-color: var(--green);
 }
 
 .material-symbols-outlined,
@@ -1142,10 +1071,10 @@ a {
 }
 
 .cell-number {
-    text-shadow: 1px 1px 0 var(--current-white),
-        -1px 1px 0 var(--current-white),
-        -1px -1px 0 var(--current-white),
-        1px -1px 0 var(--current-white);
+    text-shadow: 1px 1px 0 var(--md-sys-color-surface),
+        -1px 1px 0 var(--md-sys-color-surface),
+        -1px -1px 0 var(--md-sys-color-surface),
+        1px -1px 0 var(--md-sys-color-surface);
     ;
     transform: translate(10px, 10px);
 }
@@ -1178,7 +1107,8 @@ input[type="search"].dark::-webkit-search-cancel-button {
     margin: 12px auto;
     padding: 12px;
     text-align: left;
-    background-color: var(--current-lightGrey);
+    background-color: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
     transition: .3s ease-in-out;
     max-width: 800px;
 }
@@ -1201,17 +1131,19 @@ input[type="search"].dark::-webkit-search-cancel-button {
 }
 
 .action-hovering-undo {
-    background-color: var(--current-lightBlue);
+    background-color: var(--md-sys-color-tertiary-container);
+    color: var(--md-sys-color-on-tertiary-container);
 }
 
 .action-hovering-undo button {
-    background-color: var(--current-darkBlue);
+    background-color: var(--md-sys-color-tertiary);
+    color: var(--md-sys-color-on-tertiary);
 }
 
 .action-hovering-redo {
     filter: brightness(1);
-    background-color: var(--current-darkBlue);
-    color: var(--current-white);
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
 }
 
 #actionHistorySection {
