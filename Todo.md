@@ -2,4 +2,6 @@
 - Sistemare i title
 - Semplificare l'aggiornamento della versione
 - Riordinare main.js e style.css
-- Nuova grafica
+- Rifare le istruzioni
+- Rifare il modale di selezione
+- Rifare i bottoni del menu principale

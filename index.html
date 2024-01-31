@@ -12,7 +12,9 @@
     <title>Cluedo Detective Notes</title>
     <meta name="description" content="Cluedo Detective Notes by @nmtb4e.">
     <meta name="google" content="nositelinkssearchbox" />
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="css/colors.css">
+    <link rel="stylesheet" type="text/css" href="css/colors.module.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -562,7 +564,8 @@
                     close
                 </a></section>
             <section id="showLessSymbolsWrapper"><input type="checkbox" id="showLessSymbolsCheckbox"
-                    title="Show less symbols"><span id="showLessSymbolsText" class="setup-tooltip"></span></section>
+                    title="Show less symbols"><label for="showLessSymbolsCheckbox" id="showLessSymbolsText"
+                    class="setup-tooltip"></label></section>
             <section id="selectionModalBasic" class="selection-modal-wrapper">
                 <section class="selection-modal-section" id="selectionModalReset">
                     <a class="selection-modal-image" id="reset">
@@ -641,7 +644,7 @@
                     <tr class="table-row">
                         <th id="fakeCheckboxCell" class="advanced-settings-table-checkbox instructions-image"
                             scope="row">
-                            <div class="checkbox-wrapper-31 checkbox-wrapper-32">
+                            <div class="checkbox-wrapper-31 checkbox-wrapper-32 locked">
                                 <input type="checkbox" id="fakeCheckbox" class="table-header-checkbox"
                                     title="Instructions checkbox" />
                                 <svg viewBox="0 0 35.6 35.6">
