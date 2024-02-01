@@ -749,7 +749,7 @@ $(document).ready(function () {
             $("#continueGameButton").attr("disabled", "true")
             $("#continueGameButton").css("filter", "grayscale(0.75)")
             $("#continueGameButton").toggle()
-            $("#continueButtonSubtitle").text(manualStrings.incompatibleText)
+            $("#continueButtonSubtitle").empty().text(manualStrings.incompatibleText)
         }
     }
 
@@ -758,7 +758,7 @@ $(document).ready(function () {
         if (!game || _.isEmpty(game)) {
             ret = "EMPTY"
         } else if (game.date && game.version && game.version < minVersionNumber) {
-            console.info("Game version does not meet requirements. Saved game version is", game.version, "and required version is", minVersionNumber, ".")
+            console.info("Game version does not meet requirements. Saved game version is", game.version, "and required version is", minVersionNumber)
             ret = "INCOMPATIBLE"
         }
         return ret
@@ -771,7 +771,9 @@ $(document).ready(function () {
         let rawDate = new Date(game.date)
         let formattedDate = rawDate.getFullYear() + "-" + ((rawDate.getMonth() + 1) >= 10 ? (rawDate.getMonth() + 1) : ("0" + (rawDate.getMonth() + 1))) + "-" + (rawDate.getDate() >= 10 ? rawDate.getDate() : ("0" + rawDate.getDate())) + " " + rawDate.getHours() + ":" + (rawDate.getMinutes() >= 10 ? rawDate.getMinutes() : ("0" + rawDate.getMinutes()))
         let board = game.board >= CUSTOM_BOARD_THRESHOLD ? settings.customBoards[game.board - CUSTOM_BOARD_THRESHOLD] : boards[game.board]
-        $("#continueButtonSubtitle").html(formattedDate + "<br>" + board.name + "<br>" + formattedPlayers)
+        $("#continueGameTableCellDateText").text(formattedDate)
+        $("#continueGameTableCellBoardText").text(board.name)
+        $("#continueGameTableCellPlayersText").text(formattedPlayers)
 
         $("#continueGameButton").on("click", function () {
             //Valorizza itemsArray
@@ -790,6 +792,8 @@ $(document).ready(function () {
             updateTable()
             hideDustCounter(game.board !== 5 || settings.hideDustCounter)
         })
+    } else {
+        $("#beginButton").css("border-radius", "24px")
     }
 
     function translateSaveGame() {
@@ -1721,7 +1725,6 @@ $(document).ready(function () {
         //Change bg
         $("#fakeLockButton").css("background-color", im3Locked ? "var(--md-sys-color-error-container)" : "var(--md-sys-color-secondary-container)").css("color", im3Locked ? "var(--md-sys-color-on-error-container)" : "var(--md-sys-color-on-secondary-container)")
         //Change label
-        console.log("Changing!", im3Locked)
         $("#fakeLockButton").text(im3Locked ? "lock" : "lock_open_right")
     }, instructionsUpdateTime)
 

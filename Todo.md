@@ -4,4 +4,3 @@
 - Riordinare main.js e style.css
 - Rifare le istruzioni
 - Rifare il modale di selezione
-- Rifare i bottoni del menu principale

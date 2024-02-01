@@ -43,11 +43,29 @@
     <div id="mainMenu">
         <div id="model"></div>
         <p id="mainTitle" class="main-title"></p>
-        <a id="continueGameButton" class="big-button"><span id="continueButton"
-                class="big-button-title"></span><br><span id="continueButtonSubtitle"
-                class="big-button-subtitle"></span></a>
-        <a id="newGameButton" class="big-button"><span id="beginButton" class="big-button-title"></span><br><span
-                id="beginButtonSubtitle" class="big-button-subtitle"></span></a>
+        <a id="continueGameButton" class="big-button">
+            <div id="continueButton" class="big-button-title"></div>
+            <div id="continueButtonSubtitle" class="big-button-subtitle">
+                <table id="continueGameTable" class="big-button-table">
+                    <tr id="continueGameTableDateRow">
+                        <th id="continueGameTableCellDateIcon" class="material-symbols-outlined">calendar_month</th>
+                        <th id="continueGameTableCellDateText"></th>
+                    </tr>
+                    <tr id="continueGameTableBoardRow">
+                        <th id="continueGameTableCellBoardIcon" class="material-symbols-outlined">casino</th>
+                        <th id="continueGameTableCellBoardText"></th>
+                    </tr>
+                    <tr id="continueGameTablePlayersRow">
+                        <th id="continueGameTableCellPlayersIcon" class="material-symbols-outlined">person</th>
+                        <th id="continueGameTableCellPlayersText"></th>
+                    </tr>
+                </table>
+            </div>
+        </a>
+        <a id="newGameButton" class="big-button">
+            <div id="beginButton" class="big-button-title"></div>
+            <div id="beginButtonSubtitle" class="big-button-subtitle"></div>
+        </a>
         <div id="mainMenuButtons">
             <button id="mainMenuLanguageButton" class="main-menu-small-button"><span id="changeLanguageText"
                     class="language-label">Cambia lingua</span><span class="material-symbols-outlined">
