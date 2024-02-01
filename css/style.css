@@ -1160,3 +1160,15 @@ input[type="search"].dark::-webkit-search-cancel-button {
     width: 100%;
     bottom: 20px;
 }
+
+#showLessSymbolsWrapper {
+    padding-top: 40px;
+}
+
+.expand {
+    padding: 0px 10px;
+}
+
+#showLessSymbolsCheckbox {
+    appearance: none;
+}

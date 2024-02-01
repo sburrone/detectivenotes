@@ -85,7 +85,7 @@ export const idStringsEN = {
     tableHeaderCharacters: "Suspects",
     tableHeaderWeapons: "Weapons",
     tableHeaderRooms: "Rooms",
-    showLessSymbolsText: "Show less symbols",
+    showLessSymbolsText: "Show less",
     resetText: "Reset",
     checkFullText: "Yes",
     checkMaybeText: "Maybe",
@@ -227,5 +227,6 @@ export const manualStringsEN = {
             batchRedo: "You're about to redo [NUM] actions.",
             batchUndo: "You're about to undo [NUM] actions."
         }
-    }
+    },
+    showMoreSymbols: "Show more"
 }

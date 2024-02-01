@@ -3,4 +3,3 @@
 - Semplificare l'aggiornamento della versione
 - Riordinare main.js e style.css
 - Rifare le istruzioni
-- Rifare il modale di selezione

@@ -84,7 +84,7 @@ export const idStringsIT = {
     tableHeaderCharacters: "Sospettati",
     tableHeaderWeapons: "Armi",
     tableHeaderRooms: "Stanze",
-    showLessSymbolsText: "Mostra meno simboli",
+    showLessSymbolsText: "Mostra meno",
     resetText: "Reset",
     checkFullText: "Sì",
     checkMaybeText: "Forse",
@@ -229,5 +229,6 @@ export const manualStringsIT = {
             batchRedo: "Stai per ripetere [NUM] azioni.",
             batchUndo: "Stai per annullare [NUM] azioni."
         }
-    }
+    },
+    showMoreSymbols: "Mostra altro"
 }

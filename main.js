@@ -1618,8 +1618,16 @@ $(document).ready(function () {
     }
 
     //Hide extra symbols
-    $("#showLessSymbolsCheckbox").on("change", function () {
+    $("#showLessSymbolsCheckbox").on("change", function (a, b, c, d) {
         $("#selectionModalExtended").toggle()
+
+        if ($(this).is(":checked")) {
+            $(".expand").text("expand_more")
+            $("#showLessSymbolsText").text(manualStrings.showMoreSymbols)
+        } else {
+            $(".expand").text("expand_less")
+            $("#showLessSymbolsText").text(idStrings.showLessSymbolsText)
+        }
     })
 
     //Autocomplete
