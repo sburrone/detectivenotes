@@ -794,6 +794,7 @@ $(document).ready(function () {
         })
     } else {
         $("#beginButton").css("border-radius", "24px")
+        $("#beginButton").css("text-transform", "none")
     }
 
     function translateSaveGame() {
