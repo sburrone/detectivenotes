@@ -49,15 +49,15 @@
                 <table id="continueGameTable" class="big-button-table">
                     <tr id="continueGameTableDateRow">
                         <th id="continueGameTableCellDateIcon" class="material-symbols-outlined">calendar_month</th>
-                        <th id="continueGameTableCellDateText"></th>
+                        <td id="continueGameTableCellDateText"></td>
                     </tr>
                     <tr id="continueGameTableBoardRow">
                         <th id="continueGameTableCellBoardIcon" class="material-symbols-outlined">casino</th>
-                        <th id="continueGameTableCellBoardText"></th>
+                        <td id="continueGameTableCellBoardText"></td>
                     </tr>
                     <tr id="continueGameTablePlayersRow">
                         <th id="continueGameTableCellPlayersIcon" class="material-symbols-outlined">person</th>
-                        <th id="continueGameTableCellPlayersText"></th>
+                        <td id="continueGameTableCellPlayersText"></td>
                     </tr>
                 </table>
             </div>
@@ -145,28 +145,38 @@
                 </span></button>
         </div>
         <div id="setupContent" class="content">
-            <span id="boardQuestion" class="setup-text"></span><br>
-            <section id="boardButtonContainer"></section>
-            <section id="customizeBoardContainer">
-                <button title="Customize Board button" id="customizeBoardButton" class="small-button board-button"><span
-                        id="customizeBoardButtonText"></span><br><span id="customizeBoardButtonSubtitle"
-                        class="setup-tooltip"></span></button>
+
+            <section class="setup-section">
+                <div class="setup-index"><span>1</span></div>
+                <span id="boardQuestion" class="setup-text"></span><br>
+                <section id="boardButtonContainer"></section>
+                <section id="customizeBoardContainer">
+                    <button title="Customize Board button" id="customizeBoardButton"
+                        class="small-button board-button"><span id="customizeBoardButtonText"></span><br><span
+                            id="customizeBoardButtonSubtitle" class="setup-tooltip"></span></button>
+                </section>
             </section>
-            <hr>
+
+            <section class="setup-section"></section>
+            <div class="setup-index">2</div>
             <span id="playerNumQuestion" class="setup-text"></span><br>
             <input title="Number of players" type="range" id="playerNum" min="2" max="6" step="1" value="3"
                 class="range"><br>
             <label for="playerNum" id="playerNumTooltip" class="setup-tooltip"></label>
-            <hr>
-            <span id="playerNameQuestion" class="setup-text"></span><br>
-            <span id="playerNameTooltip" class="setup-tooltip"></span>
-            <a id="playerOrderModalLink" class="setup-tooltip-modal-link"></a><br>
-            <form id="playerNameForm">
-                <section id="playerNameContainer"></section>
-                <hr>
-                <span id="readyText" class="setup-text"></span><br>
-                <input type="submit" id="startGame" class="begin-button">
-            </form>
+            </section>
+
+            <section class="setup-section">
+                <div class="setup-index">3</div>
+                <span id="playerNameQuestion" class="setup-text"></span><br>
+                <span id="playerNameTooltip" class="setup-tooltip"></span>
+                <a id="playerOrderModalLink" class="setup-tooltip-modal-link"></a><br>
+                <form id="playerNameForm">
+                    <section id="playerNameContainer"></section>
+                    <hr>
+                    <span id="readyText" class="setup-text"></span><br>
+                    <input type="submit" id="startGame" class="begin-button">
+                </form>
+            </section>
         </div>
     </div>
 
@@ -214,8 +224,8 @@
                     </tr>
                     <tr>
                         <td colspan="3" class="custom-table-add">
-                            <input title="Board name" class="setup-name" type="text" name="customBoardName"
-                                pattern="[A-Za-z0-9]+" , id="customBoardName" />
+                            <input title="Board name" class="setup-name" type="text" name="customBoardName" pattern="[a-zA-Z0-9\u0080-\u024F\u1F300-\u1F5FF]+
+" , id="customBoardName" />
                         </td>
                     </tr>
                 </thead>

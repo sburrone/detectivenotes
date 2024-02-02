@@ -1,4 +1,4 @@
-export const versionNumber = 7.4
+export const versionNumber = 7.5
 
 export const minVersionNumber = 7
 
@@ -100,7 +100,7 @@ export const idStringsEN = {
     playerOrderModalLink: "What order?",
     orderModalText: "The game moves clockwise.<br>Write the player's names clockwise, starting from the player to your left.",
     creditsModalText: "Detective Notes<br>Version " + versionNumber + "<br>made with 🩷 by Nicholas<br><br>This project uses the <a href=\"https://sketchfab.com/3d-models/clue-board-game-843af04381cc495ca5f0a4bebadb1752\" target=\"_blank\">\"Clue (Board Game)\"</a> model by <a href=\"https://sketchfab.com/paulyanez\" target=\"_blank\">Anthony Yanez</a>, licensed under <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">CC-BY-4.0</a>.",
-    advancedSettingsTitle: "Advanced settings",
+    advancedSettingsTitle: "Settings",
     longNamesCompatibilityModeLabel: "Long names compatibility mode",
     longNamesCompatibilityModeText: "Show player names vertically, allowing long names to be displayed without stretching the table.<br>Suggested option: ON",
     hideDustCounterLabel: "Hide dust counter",
@@ -140,7 +140,7 @@ export const idStringsEN = {
     customBoardMaxPlayers: "Max players",
     instructionsModalText7: "Assistant lets you keep track of your opponents' guesses.",
     autocompleteLabel: "Autocomplete",
-    autocompleteText: "With Autocomplete, when you set a check <span class=\"material-symbols-outlined\">done</span> on a card, crosses <span class=\"material-symbols-outlined\">close</span> are filled in automatically.<br>This option is ON by default, disable it to add crosses manually.",
+    autocompleteText: "With Autocomplete, when you set a check <span class=\"material-symbols-outlined\">done</span> on a card, crosses <span class=\"material-symbols-outlined\">close</span> are filled in automatically.<br>This option is ON by default, disable it to add crosses manually.<br>Suggested option: ON",
     instructionsModalText8: "If you make a mistake, you can undo and redo.<br>Your actions are saved with the game.<br>View your action history by long pressing (or right clicking) on one of the buttons.",
     darkModeLabel: "Dark mode",
     darkModeText: "Switch between a lighter and darker color scheme.",

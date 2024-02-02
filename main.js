@@ -715,8 +715,8 @@ $(document).ready(function () {
                 $("#rowCheckbox" + action.item).prop("checked", true)
                 $("#rowCheckbox" + action.item).closest(".table-row").find("td > a").data("locked", "true")
                 $("#rowCheckbox" + action.item).closest(".table-row").addClass("locked")
-                $("#rowCheckbox" + action.item).css("background-color", "var(--md-sys-color-error-container)")
-                $("#rowCheckbox" + action.item).css("color", "var(--md-sys-color-on-error-container)")
+                $("#rowCheckbox" + action.item).closest(".table-row").css("background-color", "var(--md-sys-color-error-container)")
+                $("#rowCheckbox" + action.item).closest(".table-row").css("color", "var(--md-sys-color-on-error-container)")
                 return
 
             case "unlockItem":
@@ -912,7 +912,7 @@ $(document).ready(function () {
                 field.attr("type", "search")
                 field.attr("required", "required")
                 field.attr("name", "player" + i)
-                field.attr("pattern", "[A-Za-z0-9]+")
+                field.attr("pattern", "[a-zA-Z0-9\u0080-\u024F\u1F300-\u1F5FF]+")
                 field.on("input", function () {
                     playerFields[i] = field.val()
                 })
@@ -1170,7 +1170,7 @@ $(document).ready(function () {
         const row = $("<tr>").attr("id", id + "Row")
 
         const numberCell = $("<th>").text(customBoardSizes[container]).addClass("custom-table-num")
-        const input = $("<input>").attr("class", "setup-name").attr("type", "text").attr("name", id).attr("pattern", "[A-Za-z0-9]+").attr("id", id)
+        const input = $("<input>").attr("class", "setup-name").attr("type", "text").attr("name", id).attr("pattern", "[a-zA-Z0-9\u0080-\u024F\u1F300-\u1F5FF]+").attr("id", id)
         if (text) {
             $(input).val(text)
         }
@@ -1994,11 +1994,14 @@ $(document).ready(function () {
             $(deletePromptContainer).show()
 
         }).attr("id", "actionContainer" + index)
+
         if (index >= game.historyIndex) {
             $(container).addClass("undone")
         }
+
         const titleContainer = $("<div class='setup-text action-title'>")
-        const icon = $("<span class='small-button material-icons-outlined action-title-icon'>")
+        const iconContainer = $("<span class='small-button action-title-icon'>")
+        const icon = $("<span class='material-icons-outlined'>")
         const title = $("<span>")
         const subtitleContainer = $("<div class='setup-tooltip action-subtitle'>")
         const deletePromptContainer = getActionDeletePrompt(index)
@@ -2028,7 +2031,8 @@ $(document).ready(function () {
                 break
         }
 
-        $(titleContainer).append($(icon), $(title))
+        $(iconContainer).append(index, $(icon))
+        $(titleContainer).append($(iconContainer), $(title))
         $(deletePromptContainer).hide()
         $(container).append($(titleContainer), $(subtitleContainer), $(deletePromptContainer))
 

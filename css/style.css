@@ -138,14 +138,17 @@ progress {
     text-transform: uppercase;
     padding: 20px;
     border-radius: 24px 24px 0px 0px;
+    transition: .3s ease-in-out;
 }
 
 .big-button-subtitle {
     font-size: 18px;
-    color: var(--md-sys-color-tertiary-container);
-    background-color: var(--md-sys-color-on-tertiary-container);
+    color: var(--md-sys-color-tertiary);
+    background-color: var(--md-sys-color-on-tertiary);
     border-radius: 0px 0px 24px 24px;
+    border: 2px solid var(--md-sys-color-tertiary-container);
     padding: 10px 20px;
+    transition: .3s ease-in-out;
 }
 
 font-face {
@@ -856,6 +859,7 @@ table {
 input[type="range"] {
     transition: .3s ease-in-out;
     accent-color: var(--md-sys-color-on-secondary-container);
+    max-width: 600px;
 }
 
 .locked {
@@ -1171,4 +1175,28 @@ input[type="search"].dark::-webkit-search-cancel-button {
 
 #showLessSymbolsCheckbox {
     appearance: none;
+}
+
+.setup-index {
+    font-size: 28px;
+    height: 58px;
+    width: 58px;
+    line-height: 58px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+    display: inline-block;
+    margin: 12px;
+}
+
+.setup-section {
+    padding: 12px 0;
+    max-width: 800px;
+    margin: auto;
+}
+
+#playerNameContainer {
+    margin-top: 10px;
 }
