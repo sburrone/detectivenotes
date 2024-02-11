@@ -290,11 +290,12 @@ a:hover {
 
 .content {
     transition: .3s ease-in-out;
+    text-align: center;
     position: relative;
     top: 12px;
     padding-bottom: 100px;
     z-index: 1;
-    text-align: center;
+    /* text-align: center; */
     background-color: var(--md-sys-color-background);
     color: var(--md-sys-color-on-background);
     margin-bottom: 100px;
@@ -1189,12 +1190,28 @@ input[type="search"].dark::-webkit-search-cancel-button {
     color: var(--md-sys-color-on-primary-container);
     display: inline-block;
     margin: 12px;
+    text-align: center;
 }
 
 .setup-section {
     padding: 12px 0;
     max-width: 800px;
     margin: auto;
+}
+
+.setup-header {
+    text-align: start;
+    padding: 0 20%;
+}
+
+@media screen and (orientation: portrait) {
+    .setup-header {
+        padding: 0;
+    }
+}
+
+@media screen and (orientation: landscape) {
+    .settings-header {}
 }
 
 #playerNameContainer {

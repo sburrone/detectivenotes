@@ -136,7 +136,8 @@
 
     <div id="setup" class="setup">
         <div id="setupUB" class="upperbar">
-            <button id="darkModeToggle" class="small-button"><span class="material-symbols-outlined dark-mode-label">
+            <button id="darkModeToggleSetup" class="small-button"><span
+                    class="material-symbols-outlined dark-mode-label">
                     dark_mode
                 </span></button>
             <span id="newGame" class="upperbar-title"></span>
@@ -146,9 +147,11 @@
         </div>
         <div id="setupContent" class="content">
 
-            <section class="setup-section">
+            <section class="setup-section setup-header">
                 <div class="setup-index"><span>1</span></div>
-                <span id="boardQuestion" class="setup-text"></span><br>
+                <span id="boardQuestion" class="setup-text"></span>
+            </section>
+            <section class="setup-section">
                 <section id="boardButtonContainer"></section>
                 <section id="customizeBoardContainer">
                     <button title="Customize Board button" id="customizeBoardButton"
@@ -157,17 +160,21 @@
                 </section>
             </section>
 
-            <section class="setup-section"></section>
-            <div class="setup-index">2</div>
-            <span id="playerNumQuestion" class="setup-text"></span><br>
-            <input title="Number of players" type="range" id="playerNum" min="2" max="6" step="1" value="3"
-                class="range"><br>
-            <label for="playerNum" id="playerNumTooltip" class="setup-tooltip"></label>
+            <section class="setup-section setup-header">
+                <div class="setup-index">2</div>
+                <span id="playerNumQuestion" class="setup-text"></span>
+            </section>
+            <section class="setup-section">
+                <input title="Number of players" type="range" id="playerNum" min="2" max="6" step="1" value="3"
+                    class="range"><br>
+                <label for="playerNum" id="playerNumTooltip" class="setup-tooltip"></label>
             </section>
 
-            <section class="setup-section">
+            <section class="setup-section setup-header">
                 <div class="setup-index">3</div>
-                <span id="playerNameQuestion" class="setup-text"></span><br>
+                <span id="playerNameQuestion" class="setup-text"></span>
+            </section>
+            <section class="setup-section">
                 <span id="playerNameTooltip" class="setup-tooltip"></span>
                 <a id="playerOrderModalLink" class="setup-tooltip-modal-link"></a><br>
                 <form id="playerNameForm">

@@ -1292,7 +1292,7 @@ $(document).ready(function () {
 
     }
 
-    $("#darkModeToggle, #mainMenuDarkModeButton").on("click", function () {
+    $("#darkModeToggle, #darkModeToggleSetup, #mainMenuDarkModeButton").on("click", function () {
         toggleDarkMode(darkMode)
     })
 
