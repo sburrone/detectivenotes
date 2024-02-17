@@ -16,17 +16,17 @@ export const boardsIT = [
         minPlayers: 2,
         //maxPlayers: 6 sempre
         characters: ["Daenerys", "Daario", "Missandei", "Grey Worm", "Loraq", "Jorah"],
-        weapons: ["Fiala di veleno", "Ascia da guerra", "Arokh", "Uomo senza volto", "Balestra", "Daga dell'assassino"],
+        weapons: ["Fiala di veleno", "Ascia da guerra", "Arokh", "Uomo senza volto", "Balestra", "Daga dell'Assassino"],
         rooms: ["Bordello", "Piramide", "Quartiere degli schiavi", "Tempio delle grazie", "Catacombe del drago", "Tunnel", "Gran Bazaar", "Porte della città", "Fossa di Daznak"]
     },
     {
         id: 2,
-        name: "Red Keep",
+        name: "La Fortezza Rossa",
         minPlayers: 2,
         //maxPlayers: 6 sempre
         characters: ["Cersei", "Tyrion", "Jaime", "Margaery", "Petyr", "Sansa"],
-        weapons: ["Poison Vial", "Battle Axe", "Arokh", "Faceless Man", "Crossbow", "Assassin Dagger"],
-        rooms: ["Council Chamber", "Cyburn's Laboratory", "Tower of the Hand", "Kingsguard Chambers", "Prison Cells", "Gardens", "Pavillion", "Townmen's Bedchambers", "Pycelle's Lab", "Cercei's Bedchambers", "Sparring Yard"]
+        weapons: ["Fiala di veleno", "Ascia da guerra", "Arokh", "Uomo senza volto", "Balestra", "Daga dell'Assassino"],
+        rooms: ["Sala del Concilio Ristretto", "Laboratorio di Qyburn", "Torre del Primo Cavaliere", "Stanze della Guardia Reale", "Celle della prigione", "Giardini", "Chiostro", "Stanze di Re Tommen", "Laboratorio del Gran Maestro Pycelle", "Stanze di Cersei", "Cortile di allenamento"]
     },
     {
         id: 3,
