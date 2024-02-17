@@ -146,7 +146,8 @@ export const idStringsIT = {
     actionHistoryModalTitle: "Cronologia",
     actionHistoryModalSubtitle: "Scegli il punto a cui vuoi tornare dalla lista.",
     actionHistorySectionEmpty: "La tua cronologia è vuota.",
-    actionConfirmButton: "Conferma"
+    actionConfirmButton: "Conferma",
+    introMessage: "da Nicholas<br>con 🩷"
 }
 
 export const titleStringsIT = {

@@ -1,4 +1,4 @@
-export const versionNumber = 7.5
+export const versionNumber = 7.6
 
 export const minVersionNumber = 7
 
@@ -147,7 +147,8 @@ export const idStringsEN = {
     actionHistoryModalTitle: "History",
     actionHistoryModalSubtitle: "Pick the point you want to restore from the list.",
     actionHistorySectionEmpty: "Your history is empty.",
-    actionConfirmButton: "Confirm"
+    actionConfirmButton: "Confirm",
+    introMessage: "from Nicholas<br>with 🩷"
 }
 
 export const titleStringsEN = {

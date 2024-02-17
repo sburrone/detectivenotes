@@ -215,7 +215,8 @@ $(document).ready(function () {
         alternateInGameToolbar: false,
         forceAssistantUpdate: false,
         hideDustCounter: false,
-        autocomplete: true
+        autocomplete: true,
+        showLessSymbols: false,
     }
 
     function saveGame() {
@@ -848,6 +849,7 @@ $(document).ready(function () {
                 selectBoard(board.id, board.minPlayers, event)
             })
             $("#boardButtonContainer").append(button)
+            if (board.id === 0) $(button).trigger("click")
         })
 
         updateFields()
@@ -1119,10 +1121,10 @@ $(document).ready(function () {
     })
 
     function exportCustomBoard(id) {
-        let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(id ? settings.customBoards[id] : settings.customBoards));
+        let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(!_.isUndefined(id) ? settings.customBoards[id] : settings.customBoards));
         let downloadAnchorNode = document.createElement('a');
         downloadAnchorNode.setAttribute("href", dataStr);
-        downloadAnchorNode.setAttribute("download", (id ? settings.customBoards[id].name : "Detective Notes Boards") + ".board");
+        downloadAnchorNode.setAttribute("download", "Detective Notes Board" + (!_.isUndefined(id) ? " - " + settings.customBoards[id].name : "s") + ".board");
         document.body.appendChild(downloadAnchorNode); // required for firefox
         downloadAnchorNode.click();
         downloadAnchorNode.remove();
@@ -1475,6 +1477,12 @@ $(document).ready(function () {
             }
         })
         saveGame()
+
+        if (settings.showLessSymbols) {
+            $("#selectionModalExtended").hide()
+            $(".expand").text("expand_more")
+            $("#showLessSymbolsText").text(manualStrings.showMoreSymbols)
+        }
     }
 
     function updateTable() {
@@ -1618,10 +1626,10 @@ $(document).ready(function () {
     }
 
     //Hide extra symbols
-    $("#showLessSymbolsCheckbox").on("change", function (a, b, c, d) {
+    $("#showLessSymbolsCheckbox").on("change", function () {
         $("#selectionModalExtended").toggle()
-
-        if ($(this).is(":checked")) {
+        saveSetting("showLessSymbols", !settings.showLessSymbols)
+        if (settings.showLessSymbols) {
             $(".expand").text("expand_more")
             $("#showLessSymbolsText").text(manualStrings.showMoreSymbols)
         } else {
