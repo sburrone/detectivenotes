@@ -1158,9 +1158,9 @@ input[type="search"].dark::-webkit-search-cancel-button {
 }
 
 #actionConfirmSection {
-    position: fixed;
+    position: sticky;
     width: 100%;
-    bottom: 20px;
+    bottom: 40px;
 }
 
 #showLessSymbolsWrapper {

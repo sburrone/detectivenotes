@@ -76,7 +76,7 @@ export const idStringsEN = {
     startGame: "Start Game",
     instructionsModalText1: "At the beginning of the game, you'll be given some cards.",
     instructionsModalText2: "Tick the box next to their name to lock them in.",
-    instructionsModalText3: "Once you've locked in all your cards, tap the lock icon at the top of the screen.",
+    instructionsModalText3: "Once you've locked in all your cards, tap the lock icon in your toolbar.",
     instructionsModalText4: "Your game progress is saved automatically.",
     instructionsModalText6: "On the Harry Potter board, keep track of how much dust you have with this counter. Tap it to increase and decrease how much dust you have.",
     //autocompleteStatusContainer: "Autocomplete is ",
