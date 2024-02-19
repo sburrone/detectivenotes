@@ -1,5 +1,5 @@
 {
-    "short_name": "Detective Notes",
+    "short_name": "D-Notes",
     "name": "Detective Notes",
     "icons": [
         {
@@ -22,5 +22,7 @@
     "scope": "/detectivenotes",
     "theme_color": "#00382c",
     "orientation": "portrait",
-    "categories": "entertainment"
+    "categories": [
+        "entertainment"
+    ]
 }
