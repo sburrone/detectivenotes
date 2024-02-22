@@ -24,5 +24,11 @@
     "orientation": "portrait",
     "categories": [
         "entertainment"
+    ],
+    "related_applications": [
+        {
+            "platform": "webapp",
+            "url": "https://sburrone.github.io/detectivenotes/manifest.webmanifest"
+        }
     ]
 }
