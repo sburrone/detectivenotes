@@ -1,4 +1,4 @@
-export const versionNumber = 7.8
+export const versionNumber = 7.9
 
 export const minVersionNumber = 7
 
@@ -102,7 +102,7 @@ export const idStringsEN = {
     creditsModalText: "Detective Notes<br>Version " + versionNumber + "<br>made with 🩷 by Nicholas<br><br>This project uses the <a href=\"https://sketchfab.com/3d-models/clue-board-game-843af04381cc495ca5f0a4bebadb1752\" target=\"_blank\">\"Clue (Board Game)\"</a> model by <a href=\"https://sketchfab.com/paulyanez\" target=\"_blank\">Anthony Yanez</a>, licensed under <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">CC-BY-4.0</a>.",
     advancedSettingsTitle: "Settings",
     longNamesCompatibilityModeLabel: "Long names compatibility mode",
-    longNamesCompatibilityModeText: "Enable to show player names vertically, allowing long names to be displayed without stretching the table. (Recommended)<br>Disable to show names normally.",
+    longNamesCompatibilityModeText: "<span class='text-primary'>Recommended</span> Enable to show player names vertically, allowing long names to be displayed without stretching the table.<br>Disable to show names normally.",
     hideDustCounterLabel: "Hide dust counter",
     hideDustCounterText: "Hide dust counter for Harry Potter board",
     hideDustCounterDisabled: "This option is available for the Harry Potter board only.",
@@ -136,11 +136,11 @@ export const idStringsEN = {
     assistantWhichRoomLabel: "Room",
     assistantConfirmError: "The player that asked the question cannot be the same one that showed the card.",
     forceAssistantUpdateLabel: "Force assistant update",
-    forceAssistantUpdateText: "Enable to allow the assistant to overwrite all cells when necessary.<br>Disable to allow it to only overwrite empty cells. (Recommended)",
+    forceAssistantUpdateText: "<span class='text-primary'>Recommended</span> Enable to allow the assistant to overwrite all cells when necessary.<br>Disable to allow it to only overwrite empty cells.",
     customBoardMaxPlayers: "Max players",
     instructionsModalText7: "Assistant lets you keep track of your opponents' guesses.",
     autocompleteLabel: "Autocomplete",
-    autocompleteText: "Enable to add crosses<span class=\"material-symbols-outlined\">close</span> automatically each time you tick<span class=\"material-symbols-outlined\">done</span> a card. (Recommended)<br>Disable to add crosses manually.",
+    autocompleteText: "<span class='text-primary'>Recommended</span> Enable to add crosses<span class=\"material-symbols-outlined\">close</span> automatically each time you tick<span class=\"material-symbols-outlined\">done</span> a card.<br>Disable to add crosses manually.",
     instructionsModalText8: "If you make a mistake, you can undo and redo.<br>Your actions are saved with the game.<br>View your action history by long pressing (or right clicking) on one of the buttons.",
     darkModeLabel: "Dark mode",
     darkModeText: "Switch between a lighter and darker color scheme.",

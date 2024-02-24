@@ -122,8 +122,10 @@ $(document).ready(function () {
             })
 
             function doneLoading() {
-                $("#loadingScreen").fadeOut(1000)
-                checkIncompatibleSave()
+                document.fonts.ready.then(() => {
+                    $("#loadingScreen").fadeOut(1000)
+                    checkIncompatibleSave()
+                })
             }
 
             this._RAF()
@@ -869,7 +871,7 @@ $(document).ready(function () {
 
     function selectBoard(id, minPlayers, event) {
         //Cambio colori
-        $("#boardButtonContainer, #customizeBoardContainer").find("*").css("background-color", "var(--md-sys-color-secondary-container)").css("color", "--md-sys-color-on-secondary-container")
+        $("#boardButtonContainer, #customizeBoardContainer").find("*").css("background-color", "var(--md-sys-color-secondary-container)").css("color", "var(--md-sys-color-on-secondary-container)")
         $("#boardButtonContainer").find("*").data("selected", "false")
         if (event) {
             $(event.target).data("selected", "true")
@@ -1075,6 +1077,7 @@ $(document).ready(function () {
 
     function updateCustomBoardList() {
         if (settings.customBoards && settings.customBoards.length > 0) {
+            $("#exportAllBoardsButton").show()
             $("#customBoardLoadSection").empty()
             settings.customBoards.forEach((customBoard, index) => {
                 $("#customBoardLoadSection").append($(getBoardListElement(customBoard, index, "customBoardLoad" + index, true, false, true)))
@@ -1082,6 +1085,7 @@ $(document).ready(function () {
             $("#customBoardExistingSection").show()
         } else {
             $("#customBoardExistingSection").hide()
+            $("#exportAllBoardsButton").hide()
         }
     }
 
