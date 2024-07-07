@@ -1920,7 +1920,7 @@ $(document).ready(function() {
     function fillTable() {
         if (game.players.length > 6) {
             $("html, body").css("overflow-x", "auto")
-        }ì
+        }
 
         game.players.forEach((player, index) => {
             let cell = $("<th>").attr("class", "name-holder")
