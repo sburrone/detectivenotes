@@ -8,18 +8,66 @@ export const boardsEN = [
         name: "Classic",
         minPlayers: 3,
         //maxPlayers: 6 sempre
-        characters: ["Miss Scarlett", "Professor Plum", "Mrs. Peacock", "Reverend Green", "Colonel Mustard", "Mrs. White"],
-        weapons: ["Candlestick", "Dagger", "Lead Pipe", "Revolver", "Rope", "Spanner"],
-        rooms: ["Kitchen", "Ballroom", "Conservatory", "Dining Room", "Billiard Room", "Library", "Lounge", "Hall", "Study"]
+        characters: [
+            "Miss Scarlett",
+            "Professor Plum",
+            "Mrs. Peacock",
+            "Reverend Green",
+            "Colonel Mustard",
+            "Mrs. White",
+        ],
+        weapons: [
+            "Candlestick",
+            "Dagger",
+            "Lead Pipe",
+            "Revolver",
+            "Rope",
+            "Spanner",
+        ],
+        rooms: [
+            "Kitchen",
+            "Ballroom",
+            "Conservatory",
+            "Dining Room",
+            "Billiard Room",
+            "Library",
+            "Lounge",
+            "Hall",
+            "Study",
+        ],
     },
     {
         id: 1,
         name: "Meereen",
         minPlayers: 2,
         //maxPlayers: 6 sempre
-        characters: ["Daenerys", "Daario", "Missandei", "Grey Worm", "Loraq", "Jorah"],
-        weapons: ["Poison Vial", "Battle Axe", "Arokh", "Faceless Man", "Crossbow", "Assassin Dagger"],
-        rooms: ["Brothel", "Pyramid", "Slave Quarters", "Temple", "Dragon Catacombs", "Tunnels", "Grand Bazaar", "City Gates", "Pit of Daznak"]
+        characters: [
+            "Daenerys",
+            "Daario",
+            "Missandei",
+            "Grey Worm",
+            "Loraq",
+            "Jorah",
+        ],
+        weapons: [
+            "Poison Vial",
+            "Battle Axe",
+            "Arokh",
+            "Faceless Man",
+            "Crossbow",
+            "Assassin Dagger",
+        ],
+        rooms: [
+            "Brothel",
+            "Pyramid",
+            "Slave Quarters",
+            "Temple",
+            "Dragon Catacombs",
+            "Tunnels",
+            "Grand Bazaar",
+            "City Gates",
+            "Pit of Daznak",
+        ],
     },
     {
         id: 2,
@@ -27,8 +75,27 @@ export const boardsEN = [
         minPlayers: 2,
         //maxPlayers: 6 sempre
         characters: ["Cersei", "Tyrion", "Jaime", "Margaery", "Petyr", "Sansa"],
-        weapons: ["Poison Vial", "Battle Axe", "Arokh", "Faceless Man", "Crossbow", "Assassin Dagger"],
-        rooms: ["Council Chamber", "Cyburn's Laboratory", "Tower of the Hand", "Kingsguard Chambers", "Prison Cells", "Gardens", "Pavillion", "Townmen's Bedchambers", "Pycelle's Lab", "Cercei's Bedchambers", "Sparring Yard"]
+        weapons: [
+            "Poison Vial",
+            "Battle Axe",
+            "Arokh",
+            "Faceless Man",
+            "Crossbow",
+            "Assassin Dagger",
+        ],
+        rooms: [
+            "Council Chamber",
+            "Cyburn's Laboratory",
+            "Tower of the Hand",
+            "Kingsguard Chambers",
+            "Prison Cells",
+            "Gardens",
+            "Pavillion",
+            "Townmen's Bedchambers",
+            "Pycelle's Lab",
+            "Cercei's Bedchambers",
+            "Sparring Yard",
+        ],
     },
     {
         id: 3,
@@ -36,28 +103,93 @@ export const boardsEN = [
         minPlayers: 2,
         //maxPlayers: 6 sempre
         characters: ["Nabooru", "Darunia", "Zelda", "Link", "Rauru", "Impa"],
-        weapons: ["Master Sword", "Fairy Bow", "Megaton Hammer", "Boomerang", "Hookshot", "Bombuchu"],
-        rooms: ["Death Mountain", "Kakariko Village", "Lake Hylia", "Lost Woods", "Zora's Domain", "Gerudo Valley", "Kokiri Forest", "Gerudo Fortress", "Sacred Forest Meadow"]
+        weapons: [
+            "Master Sword",
+            "Fairy Bow",
+            "Megaton Hammer",
+            "Boomerang",
+            "Hookshot",
+            "Bombuchu",
+        ],
+        rooms: [
+            "Death Mountain",
+            "Kakariko Village",
+            "Lake Hylia",
+            "Lost Woods",
+            "Zora's Domain",
+            "Gerudo Valley",
+            "Kokiri Forest",
+            "Gerudo Fortress",
+            "Sacred Forest Meadow",
+        ],
     },
     {
         id: 4,
         name: "Star Wars",
         minPlayers: 2,
         //maxPlayers: 6 sempre
-        characters: ["Alderaan", "Bespin", "Dagobah", "Endor", "Tatooine", "Yavin 4"],
-        weapons: ["X-Wing", "Y-Wing", "TIE Fighter", "TIE Bomber", "Millenium Falcon", "Escape Pod"],
-        rooms: ["War Room", "Throne Room", "Trash Compactor", "Laser Control Room", "Docking Bay", "Red Control Room", "Overbridge", "Detention Block", "Tractor Beam Generator"]
+        characters: [
+            "Alderaan",
+            "Bespin",
+            "Dagobah",
+            "Endor",
+            "Tatooine",
+            "Yavin 4",
+        ],
+        weapons: [
+            "X-Wing",
+            "Y-Wing",
+            "TIE Fighter",
+            "TIE Bomber",
+            "Millenium Falcon",
+            "Escape Pod",
+        ],
+        rooms: [
+            "War Room",
+            "Throne Room",
+            "Trash Compactor",
+            "Laser Control Room",
+            "Docking Bay",
+            "Red Control Room",
+            "Overbridge",
+            "Detention Block",
+            "Tractor Beam Generator",
+        ],
     },
     {
         id: 5,
         name: "Harry Potter",
         minPlayers: 3,
         //maxPlayers: 6 sempre
-        characters: ["Fenrir Greyback", "Lucius Malfoy", "Peter Pettygrew", "Draco Malfoy", "Snatcher", "Bellatrix Lastrange"],
-        weapons: ["Jinxed Broomstick", "Cursed Necklace", "Love Potion", "Poisoned Mead", "Incedio", "Stupefy"],
-        rooms: ["Malfoy Manor", "The Hog's Head", "The Shrieking Shack", "Hogwarts Castle", "Forbidden Coast", "Gringotts", "Weasleys' Wizard Wheezes", "Ministry of Magic", "12 Grimmauld Place"]
+        characters: [
+            "Fenrir Greyback",
+            "Lucius Malfoy",
+            "Peter Pettygrew",
+            "Draco Malfoy",
+            "Snatcher",
+            "Bellatrix Lastrange",
+        ],
+        weapons: [
+            "Jinxed Broomstick",
+            "Cursed Necklace",
+            "Love Potion",
+            "Poisoned Mead",
+            "Incedio",
+            "Stupefy",
+        ],
+        rooms: [
+            "Malfoy Manor",
+            "The Hog's Head",
+            "The Shrieking Shack",
+            "Hogwarts Castle",
+            "Forbidden Coast",
+            "Gringotts",
+            "Weasleys' Wizard Wheezes",
+            "Ministry of Magic",
+            "12 Grimmauld Place",
+        ],
     },
-];
+]
 
 export const idStringsEN = {
     mainTitle: "detective<br>notes",
@@ -74,11 +206,14 @@ export const idStringsEN = {
     playerNameTooltip: "Keep your names short, and write them in order.",
     readyText: "Are you ready?",
     startGame: "Start Game",
-    instructionsModalText1: "At the beginning of the game, you'll be given some cards.",
-    instructionsModalText2: "Tick the box next to their name to lock them in.",
-    instructionsModalText3: "Once you've locked in all your cards, tap the lock icon in your toolbar.",
+    instructionsModalText1:
+        "At the beginning of the game, you'll be given some cards.",
+    instructionsModalText2: "Tick the box next to their name to lock them in.<br>Also tick any public card.",
+    instructionsModalText3:
+        "Once you've locked in all your cards, tap the lock icon in your toolbar.",
     instructionsModalText4: "Your game progress is saved automatically.",
-    instructionsModalText6: "On the Harry Potter board, keep track of how much dust you have with this counter. Tap it to increase and decrease how much dust you have.",
+    instructionsModalText6:
+        "On the Harry Potter board, keep track of how much dust you have with this counter. Tap it to increase and decrease how much dust you have.",
     //autocompleteStatusContainer: "Autocomplete is ",
     //autocompleteStatus: "ON",
     tableHeaderPlayers: "Players",
@@ -98,18 +233,25 @@ export const idStringsEN = {
     skipText: "Skip",
     dustCounter: "Dust counter",
     playerOrderModalLink: "What order?",
-    orderModalText: "The game moves clockwise.<br>Write the player's names clockwise, starting from the player to your left.",
-    creditsModalText: "Detective Notes<br>Version " + versionNumber + "<br>made with 🩷 by Nicholas<br><br>This project uses the <a href=\"https://sketchfab.com/3d-models/clue-board-game-843af04381cc495ca5f0a4bebadb1752\" target=\"_blank\">\"Clue (Board Game)\"</a> model by <a href=\"https://sketchfab.com/paulyanez\" target=\"_blank\">Anthony Yanez</a>, licensed under <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">CC-BY-4.0</a>.",
+    orderModalText:
+        "The game moves clockwise.<br>Write the player's names clockwise, starting from the player to your left.",
+    creditsModalText:
+        "Detective Notes<br>Version " +
+        versionNumber +
+        '<br>made with 🩷 by Nicholas<br><br>This project uses the <a href="https://sketchfab.com/3d-models/clue-board-game-843af04381cc495ca5f0a4bebadb1752" target="_blank">"Clue (Board Game)"</a> model by <a href="https://sketchfab.com/paulyanez" target="_blank">Anthony Yanez</a>, licensed under <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">CC-BY-4.0</a>.',
     advancedSettingsTitle: "Settings",
     longNamesCompatibilityModeLabel: "Long names compatibility mode",
-    longNamesCompatibilityModeText: "<span class='text-primary'>Recommended</span> Enable to show player names vertically, allowing long names to be displayed without stretching the table.<br>Disable to show names normally.",
+    longNamesCompatibilityModeText:
+        "<span class='text-primary'>Recommended</span> Enable to show player names vertically, allowing long names to be displayed without stretching the table.<br>Disable to show names normally.",
     hideDustCounterLabel: "Hide dust counter",
     hideDustCounterText: "Hide dust counter for Harry Potter board",
-    hideDustCounterDisabled: "This option is available for the Harry Potter board only.",
+    hideDustCounterDisabled:
+        "This option is available for the Harry Potter board only.",
     instructionsModalTitle: "Instructions",
     skipLoading: "Skip",
     alternateInGameToolbarLabel: "Alternate ingame toolbar",
-    alternateInGameToolbarText: "Move the ingame toolbar to the bottom of the screen.",
+    alternateInGameToolbarText:
+        "Move the ingame toolbar to the bottom of the screen.",
     customizeBoardButtonText: "Custom board",
     saveBoardButton: "Save board",
     customBoardHeaderName: "Board name",
@@ -134,21 +276,52 @@ export const idStringsEN = {
     assistantWhichCharacterLabel: "Suspect",
     assistantWhichWeaponLabel: "Weapon",
     assistantWhichRoomLabel: "Room",
-    assistantConfirmError: "The player that asked the question cannot be the same one that showed the card.",
+    assistantConfirmError:
+        "The player that asked the question cannot be the same one that showed the card.",
     forceAssistantUpdateLabel: "Force assistant update",
-    forceAssistantUpdateText: "<span class='text-primary'>Recommended</span> Enable to allow the assistant to overwrite all cells when necessary.<br>Disable to allow it to only overwrite empty cells.",
+    forceAssistantUpdateText:
+        "<span class='text-primary'>Recommended</span> Enable to allow the assistant to overwrite all cells when necessary.<br>Disable to allow it to only overwrite empty cells.",
     customBoardMaxPlayers: "Max players",
-    instructionsModalText7: "Assistant lets you keep track of your opponents' guesses.",
+    instructionsModalText7:
+        "Assistant lets you keep track of your opponents' guesses.",
     autocompleteLabel: "Autocomplete",
-    autocompleteText: "<span class='text-primary'>Recommended</span> Enable to add crosses<span class=\"material-symbols-outlined\">close</span> automatically each time you tick<span class=\"material-symbols-outlined\">done</span> a card.<br>Disable to add crosses manually.",
-    instructionsModalText8: "If you make a mistake, you can undo and redo.<br>Your actions are saved with the game.<br>View your action history by long pressing (or right clicking) on one of the buttons.",
+    autocompleteText:
+        '<span class=\'text-primary\'>Recommended</span> Enable to add crosses<span class="material-symbols-outlined">close</span> automatically each time you tick<span class="material-symbols-outlined">done</span> a card.<br>Disable to add crosses manually.',
+    instructionsModalText8:
+        "If you make a mistake, you can undo and redo.<br>Your actions are saved with the game.<br>View your action history by long pressing (or right clicking) on one of the buttons.",
     darkModeLabel: "Dark mode",
     darkModeText: "Switch between a lighter and darker color scheme.",
     actionHistoryModalTitle: "History",
-    actionHistoryModalSubtitle: "Pick the point you want to restore from the list.",
+    actionHistoryModalSubtitle:
+        "Pick the point you want to restore from the list.",
     actionHistorySectionEmpty: "Your history is empty.",
     actionConfirmButton: "Confirm",
-    introMessage: "from Nicholas<br>with 🩷"
+    introMessage: "from Nicholas<br>with 🩷",
+    continueToAdvancedSetup: "Configure",
+    advancedSetupQuestion: "Wanna take a look at the advanced setup?",
+    advancedSetupTooltip:
+        "You can skip this, but you won't be able to access detailed player information.",
+    advancedSetupModalTitle: "Advanced Setup",
+    cardConfigurationTitle: "Leftover Cards Setup",
+    cardConfigurationDescription:
+        "The board you picked has [NUMCARDS] cards.<br>With [NUMPLAYERS] players, everyone will get [NUMEACH] carte.",
+    cardConfigurationEnabledDescription:
+        "What are we doing with the remaining [NUMLEFTOVER] card(s)?<br>I need to know this to set up detailed player information.",
+    cardConfigurationDisabledDescription:
+        "No cards remain. There's no need to set up detailed player information.",
+    cardConfigurationCommon: "Keep them public",
+    cardConfigurationCommonText:
+        "Each player will get the same number of cards, and the ones that remain will be public.",
+    cardConfigurationAssign: "Assign to players",
+    cardConfigurationAssignText:
+        "Some players will get more cards than others. Choose who:",
+    closeAdvancedSetupButton: "Done",
+    instructionsModalText9: "You can get detailed player information by tapping their name.",
+    playerInfoTotalText: "Total cards",
+    playerInfoYesText: "Confirmed cards <span class=\"material-symbols-outlined\">done</span>",
+    playerInfoMaybeText: "Confirmed cards <span class=\"material-symbols-outlined\">done</span> and suspected cards",
+    playerInfoRemainingYesText: "Remaining cards (excl. suspected)",
+    playerInfoRemainingMaybeText: "Remaining cards (incl. suspected)",
 }
 
 export const titleStringsEN = {
@@ -181,7 +354,7 @@ export const titleStringsEN = {
     assistantWhichCharacterLabel: "Suspect",
     assistantWhichWeaponLabel: "Weapon",
     assistantWhichRoomLabel: "Room",
-    actionConfirmButton: "Confirm"
+    actionConfirmButton: "Confirm",
 }
 
 export const manualStringsEN = {
@@ -191,7 +364,7 @@ export const manualStringsEN = {
         characters: "There are no suspects.",
         weapons: "There are no weapons.",
         rooms: "There are no rooms.",
-        generic: "Board not valid"
+        generic: "Board not valid",
     },
     customBoardTitles: {
         play: "Use this board",
@@ -201,33 +374,38 @@ export const manualStringsEN = {
         characters: "Suspects",
         weapons: "Weapons",
         rooms: "Rooms",
-        maxPlayers: "Max players"
+        maxPlayers: "Max players",
     },
     customBoardDeleteModal: {
         confirmationTitle: "Delete board?",
-        confirmationSubtitle: "This cannot be undone!"
+        confirmationSubtitle: "This cannot be undone!",
     },
-    incompatibleText: "This saved game is incompatible with this version of the app, cannot resume.",
+    incompatibleText:
+        "This saved game is incompatible with this version of the app, cannot resume.",
     letsPlay: "Let's play!",
     me: "Myself",
     you: "You",
     nobody: "No one",
     actionHistoryModal: {
         updateManual: "Manual update",
-        updateManualText: "[ITEM]: Changed from [OLDID] to [NEWID] for [PLAYER].",
+        updateManualText:
+            "[ITEM]: Changed from [OLDID] to [NEWID] for [PLAYER].",
         updateAssistant: "Assistant update",
-        updateAssistantText: "[WHOASKED] accused [ITEM0] with [ITEM1] in [ITEM2]. [WHOANSWERED] answered.",
+        updateAssistantText:
+            "[WHOASKED] accused [ITEM0] with [ITEM1] in [ITEM2]. [WHOANSWERED] answered.",
         lockItem: "Locked card",
         locked: "Locked [ITEM].",
         unlockItem: "Unlocked card",
         unlocked: "Unlocked [ITEM].",
-        deletePrompt: "Are you sure you want to delete this action from your history? It's irreversible.",
+        deletePrompt:
+            "Are you sure you want to delete this action from your history? It's irreversible.",
         confirmationPrompt: {
             singleRedo: "You're about to redo one action.",
             singleUndo: "You're about to undo one action.",
             batchRedo: "You're about to redo [NUM] actions.",
-            batchUndo: "You're about to undo [NUM] actions."
-        }
+            batchUndo: "You're about to undo [NUM] actions.",
+        },
     },
-    showMoreSymbols: "Show more"
+    showMoreSymbols: "Show more",
+    player: "Player",
 }

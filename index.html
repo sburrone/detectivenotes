@@ -146,43 +146,88 @@
                 </span></button>
         </div>
         <div id="setupContent" class="content">
+            <form id="playerNameForm">
 
-            <section class="setup-section setup-header">
-                <div class="setup-index"><span>1</span></div>
-                <span id="boardQuestion" class="setup-text"></span>
-            </section>
-            <section class="setup-section">
-                <section id="boardButtonContainer"></section>
-                <section id="customizeBoardContainer">
-                    <button title="Customize Board button" id="customizeBoardButton"
-                        class="small-button board-button"><span id="customizeBoardButtonText"></span><br><span
-                            id="customizeBoardButtonSubtitle" class="setup-tooltip"></span></button>
+                <section class="setup-section setup-header">
+                    <div class="setup-index"><span>1</span></div>
+                    <span id="boardQuestion" class="setup-text"></span>
                 </section>
-            </section>
+                <section class="setup-section">
+                    <section id="boardButtonContainer"></section>
+                    <section id="customizeBoardContainer">
+                        <button title="Customize Board button" id="customizeBoardButton"
+                            class="small-button board-button"><span id="customizeBoardButtonText"></span><br><span
+                                id="customizeBoardButtonSubtitle" class="setup-tooltip"></span></button>
+                    </section>
+                </section>
 
-            <section class="setup-section setup-header">
-                <div class="setup-index">2</div>
-                <span id="playerNumQuestion" class="setup-text"></span>
-            </section>
-            <section class="setup-section">
-                <input title="Number of players" type="range" id="playerNum" min="2" max="6" step="1" value="3"
-                    class="range"><br>
-                <label for="playerNum" id="playerNumTooltip" class="setup-tooltip"></label>
-            </section>
+                <section class="setup-section setup-header">
+                    <div class="setup-index">2</div>
+                    <span id="playerNumQuestion" class="setup-text"></span>
+                </section>
+                <section class="setup-section">
+                    <input title="Number of players" type="range" id="playerNum" min="2" max="6" step="1" value="3"
+                        class="range"><br>
+                    <label for="playerNum" id="playerNumTooltip" class="setup-tooltip"></label>
+                </section>
 
-            <section class="setup-section setup-header">
-                <div class="setup-index">3</div>
-                <span id="playerNameQuestion" class="setup-text"></span>
-            </section>
-            <section class="setup-section">
-                <span id="playerNameTooltip" class="setup-tooltip"></span>
-                <a id="playerOrderModalLink" class="setup-tooltip-modal-link"></a><br>
-                <form id="playerNameForm">
+                <section class="setup-section setup-header">
+                    <div class="setup-index">3</div>
+                    <span id="playerNameQuestion" class="setup-text"></span>
+                </section>
+
+                <section class="setup-section">
+                    <span id="playerNameTooltip" class="setup-tooltip"></span>
+                    <a id="playerOrderModalLink" class="setup-tooltip-modal-link"></a><br>
                     <section id="playerNameContainer"></section>
-                    <hr>
-                    <span id="readyText" class="setup-text"></span><br>
-                    <input type="submit" id="startGame" class="begin-button">
-                </form>
+                </section>
+
+                <section class="setup-section setup-header">
+                    <div class="setup-index">4</div>
+                    <span id="advancedSetupQuestion" class="setup-text"></span>
+                </section>
+                <section class="setup-section">
+                    <span id="advancedSetupTooltip" class="setup-tooltip"></span><br>
+                    <button type="button" id="continueToAdvancedSetup" title="Continue to advanced setup"
+                        class="small-button board-button"></button>
+                </section>
+
+                <hr>
+                <span id="readyText" class="setup-text"></span><br>
+                <input type="submit" id="startGame" class="begin-button">
+            </form>
+        </div>
+    </div>
+
+
+    <!--  ADVANCED SETUP  -->
+
+    <div id="advancedSetupModal" class="modal-wrapper">
+        <div id="advancedSetupModalContent" class="modal">
+            <section id="modalBackWrapper">
+                <a class="modal-back-button material-symbols-outlined" id="advancedSetupModalBackButton">
+                    close</a>
+            </section>
+            <p id="advancedSetupModalTitle" class="setup-text"></p>
+            <section id="cardConfigurationWrapper">
+                <p class="setup-text" id="cardConfigurationTitle"></p>
+                <p class="setup-tooltip" id="cardConfigurationDescription"></p>
+                <section id="cardConfigurationEnabled">
+                    <p class="setup-tooltip" id="cardConfigurationEnabledDescription"></p>
+                    <button class="small-button board-button" type="button" id="cardConfigurationCommon"
+                        title="Keep public"></button>
+                    <button class="small-button board-button" type="button" id="cardConfigurationAssign"
+                        title="Assign to players"></button>
+                    <p class="setup-tooltip" id="cardConfigurationCommonText"></p>
+                    <p class="setup-tooltip" id="cardConfigurationAssignText"></p>
+                    <section id="cardConfigurationCommonSection"></section>
+                </section>
+                <section id="cardConfigurationDisabled">
+                    <p class="setup-tooltip" id="cardConfigurationDisabledDescription"></p>
+                </section>
+                <hr>
+                <button id="closeAdvancedSetupButton" class="small-button board-button" type="button"
+                    title="Close"></button>
             </section>
         </div>
     </div>
@@ -232,7 +277,7 @@
                     <tr>
                         <td colspan="3" class="custom-table-add">
                             <input title="Board name" class="setup-name" type="text" name="customBoardName" pattern="[a-zA-Z0-9\u0080-\u024F\u1F300-\u1F5FF]+
-" , id="customBoardName" />
+" id="customBoardName" />
                         </td>
                     </tr>
                 </thead>
@@ -298,7 +343,7 @@
             </table>
 
             <hr>
-            <span clas="setup-tooltip hidden" id="boardValidationFailedMessage"></span>
+            <span class="setup-tooltip hidden" id="boardValidationFailedMessage"></span>
             <button id="saveBoardButton" class="begin-button" title="Save board" type="button"></button>
 
 
@@ -344,7 +389,7 @@
                 <!-- AUTOCOMPLETE -->
                 <tr>
                     <td rowspan="2" class="advanced-settings-table-image">
-                        <span class="material-icons-outlined" disabled>verified</span>
+                        <span class="material-icons-outlined">verified</span>
                     </td>
                     <td class="advanced-settings-table-entry">
                         <label for="hideDustCounter" class="advanced-settings-title" id="autocompleteLabel"></label>
@@ -711,6 +756,11 @@
                 <button id="fakeDustButton" class="small-button fake-button">12</button>
                 <p id="instructionsModalText6" class="setup-tooltip"></p>
             </section>
+            <section class="modal-section" id="instructionModalSection9">
+                <button id="fakeSettingsButton"
+                        class="small-button fake-button material-icons-outlined">manage_accounts</button>
+                <p id="instructionsModalText9" class="setup-tooltip"></p>
+            </section>
             <section class="modal-section" id="instructionModalSection7">
                 <button id="fakeAssistantButton"
                     class="small-button fake-button material-icons-outlined">auto_awesome</button>
@@ -722,8 +772,7 @@
                 <p id="instructionsModalText8" class="setup-tooltip"></p>
             </section>
             <section class="modal-section">
-                <span class="instructions-image material-icons-outlined" id="instructionsModalImage4"
-                    alt="Save icon">save</span>
+                <span class="instructions-image material-icons-outlined" id="instructionsModalImage4">save</span>
                 <p id="instructionsModalText4" class="setup-tooltip"></p>
             </section>
         </div>
@@ -747,7 +796,7 @@
                 </select>
             </section>
             <section class="modal-section assistant-section">
-                <section for="assistantWhatAskedSelect" id="assistantWhatAskedQuestion" class="setup-text file-input">
+                <section id="assistantWhatAskedQuestion" class="setup-text file-input">
                 </section>
                 <label for="assistantWhichCharacterSelect" id="assistantWhichCharacterQuestion" class="setup-tooltip">
                     <span class="material-symbols-outlined">person</span>
@@ -781,7 +830,7 @@
             <section class="modal-section assistant-section">
                 <p id="assistantConfirmError" class="setup-tooltip"></p>
                 <button type="submit" title="assistantConfirmButton" id="assistantConfirmButton"
-                    class="small-button alt-button"></span>
+                    class="small-button alt-button"></button>
             </section>
         </form>
     </div>
@@ -802,6 +851,41 @@
             <span class="setup-tooltip" id="actionConfirmText"></span><br>
             <button title="actionConfirmButton" class="small-button board-button" id="actionConfirmButton"
                 type="button"></button>
+        </section>
+    </div>
+
+    <!-- PLAYER INFO MODAL !-->
+    <div id="playerInfoModal" class="modal-wrapper full-screen-modal">
+        <section id="modalBackWrapper"><a class="modal-back-button material-icons-outlined"
+                                          id="playerInfoModalBackButton">
+            close</a></section>
+        <section class="modal-section">
+            <span class="material-icons-outlined modal-header-icon">manage_accounts</span><br>
+            <span id="playerInfoModalTitle" class="setup-text modal-header"></span>
+        </section>
+        <section class="modal-section">
+            <table class="player-info-table setup-tooltip">
+                <tr>
+                    <td id="playerInfoTotalText"></td>
+                    <td id="playerInfoTotalCounter"></td>
+                </tr>
+                <tr>
+                    <td id="playerInfoYesText"></td>
+                    <td id="playerInfoYesCounter"></td>
+                </tr>
+                <tr>
+                    <td id="playerInfoMaybeText"></td>
+                    <td id="playerInfoMaybeCounter"></td>
+                </tr>
+                <tr>
+                    <td id="playerInfoRemainingYesText"></td>
+                    <td id="playerInfoRemainingYesCounter"></td>
+                </tr>
+                <tr>
+                    <td id="playerInfoRemainingMaybeText"></td>
+                    <td id="playerInfoRemainingMaybeCounter"></td>
+                </tr>
+            </table>
         </section>
     </div>
 

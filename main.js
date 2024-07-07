@@ -1,16 +1,27 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js'
-import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js'
-import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/controls/OrbitControls.js'
-import { idStringsEN, boardsEN, titleStringsEN, manualStringsEN, minVersionNumber, versionNumber } from './strings-en.js'
-import { idStringsIT, boardsIT, titleStringsIT, manualStringsIT } from './strings-it.js'
-
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js"
+import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js"
+import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/controls/OrbitControls.js"
+import {
+    idStringsEN,
+    boardsEN,
+    titleStringsEN,
+    manualStringsEN,
+    minVersionNumber,
+    versionNumber,
+} from "./strings-en.js"
+import {
+    idStringsIT,
+    boardsIT,
+    titleStringsIT,
+    manualStringsIT,
+} from "./strings-it.js"
 
 let _APP = null
 
 let locked = false
 
-$(document).ready(function () {
-    'use strict'
+$(document).ready(function() {
+    "use strict"
 
     const cameraPositions = [
         [0, 60, 0],
@@ -19,11 +30,13 @@ $(document).ready(function () {
         [40, 15, 40],
         [15, 50, 15],
         [15, 50, 50],
-        [30, 30, 30]
+        [30, 30, 30],
     ]
 
     function getCameraPosition() {
-        return cameraPositions[Math.floor(Math.random() * cameraPositions.length)]
+        return cameraPositions[
+            Math.floor(Math.random() * cameraPositions.length)
+            ]
     }
 
     class AnimatedBoard {
@@ -42,14 +55,18 @@ $(document).ready(function () {
             this._threejs.toneMapping = THREE.ACESFilmicToneMapping
             this._threejs.outputEncoding = THREE.sRGBEncoding
 
-            const modelDiv = document.getElementById('model')
+            const modelDiv = document.getElementById("model")
             modelDiv.appendChild(this._threejs.domElement)
 
             this._threejs.setSize(modelDiv.offsetWidth, modelDiv.offsetHeight)
 
-            window.addEventListener('resize', () => {
-                this._OnWindowResize()
-            }, false)
+            window.addEventListener(
+                "resize",
+                () => {
+                    this._OnWindowResize()
+                },
+                false,
+            )
 
             const fov = 60
             const aspect = modelDiv.offsetWidth / modelDiv.offsetHeight
@@ -57,11 +74,15 @@ $(document).ready(function () {
             const far = 1000.0
             this._camera = new THREE.PerspectiveCamera(fov, aspect, near, far)
             const chosenPosition = getCameraPosition()
-            this._camera.position.set(chosenPosition[0], chosenPosition[1], chosenPosition[2])
+            this._camera.position.set(
+                chosenPosition[0],
+                chosenPosition[1],
+                chosenPosition[2],
+            )
 
             this._scene = new THREE.Scene()
 
-            let light = new THREE.DirectionalLight(0xFFFFFF)
+            let light = new THREE.DirectionalLight(0xffffff)
             light.position.set(20, 100, 10)
             light.target.position.set(0, 0, 0)
             light.castShadow = true
@@ -79,10 +100,13 @@ $(document).ready(function () {
             light.shadow.camera.bottom = -100
             this._scene.add(light)
 
-            light = new THREE.AmbientLight(0xFFFFFF)
+            light = new THREE.AmbientLight(0xffffff)
             this._scene.add(light)
 
-            this._controls = new OrbitControls(this._camera, this._threejs.domElement)
+            this._controls = new OrbitControls(
+                this._camera,
+                this._threejs.domElement,
+            )
             this._controls.target.set(0, 10, 0)
             this._controls.maxDistance = 80
             this._controls.minDistance = 1
@@ -95,27 +119,31 @@ $(document).ready(function () {
 
             const loadingManager = new THREE.LoadingManager()
 
-            loadingManager.onLoad = function () {
+            loadingManager.onLoad = function() {
                 doneLoading()
             }
 
             $("#skipLoading").on("click", doneLoading)
 
-            loadingManager.onProgress = function (url, itemsLoaded, itemsTotal) {
-                $("#progressBar").val(itemsLoaded / itemsTotal * 100)
+            loadingManager.onProgress = function(
+                url,
+                itemsLoaded,
+                itemsTotal,
+            ) {
+                $("#progressBar").val((itemsLoaded / itemsTotal) * 100)
             }
 
-            loadingManager.onError = function (url) {
-                console.log('There was an error loading ' + url)
+            loadingManager.onError = function(url) {
+                console.log("There was an error loading " + url)
                 doneLoading()
             }
 
             const loader = new GLTFLoader(loadingManager)
-            loader.setPath('./3d/')
-            loader.load('scene.gltf', (gltf) => {
+            loader.setPath("./3d/")
+            loader.load("scene.gltf", (gltf) => {
                 //gltf.scale.setScalar(0.1)
                 gltf.scene.scale.set(0.05, 0.05, 0.05)
-                gltf.scene.traverse(c => {
+                gltf.scene.traverse((c) => {
                     c.castShadow = true
                 })
                 this._scene.add(gltf.scene)
@@ -130,6 +158,7 @@ $(document).ready(function () {
 
             this._RAF()
         }
+
         _OnWindowResize() {
             this._camera.aspect = window.innerWidth / window.innerHeight
             this._camera.updateProjectionMatrix()
@@ -139,7 +168,7 @@ $(document).ready(function () {
         _Step(timeElapsed) {
             const timeElapsedS = timeElapsed * 0.001
             if (this._mixers) {
-                this._mixers.map(m => m.update(timeElapsedS))
+                this._mixers.map((m) => m.update(timeElapsedS))
             }
         }
 
@@ -170,25 +199,31 @@ $(document).ready(function () {
         get: (searchParams, prop) => searchParams.get(prop),
     })
     let forcedLang = params.lang
-    if ((forcedLang && forcedLang.toLowerCase() == "it") || (!forcedLang && userLang.includes("it"))) {
+    if (
+        (forcedLang && forcedLang.toLowerCase() === "it") ||
+        (!forcedLang && userLang.includes("it"))
+    ) {
         $("html").attr("lang", "it")
         userLang = "it-IT"
-    } else if ((forcedLang && forcedLang.toLowerCase() == "en") || (!forcedLang && userLang.includes("en"))) {
+    } else if (
+        (forcedLang && forcedLang.toLowerCase() === "en") ||
+        (!forcedLang && userLang.includes("en"))
+    ) {
         userLang = "en-US"
     }
     let idStrings, boards, titleStrings, manualStrings
     let itemsArray
     const imageData = {
-        "check": "assets/icons/check.svg",
-        "maybe": "assets/icons/check.svg",
-        "cross": "assets/icons/cross.svg",
-        "maybeNot": "assets/icons/cross.svg",
-        "reset": "assets/icons/reset.svg",
-        "star": "assets/icons/star.svg",
-        "question": "assets/icons/question.svg",
-        "exclamation": "assets/icons/exclamation.svg",
-        "flag": "assets/icons/flag.svg",
-        "skip": "assets/icons/skip.svg"
+        check: "assets/icons/check.svg",
+        maybe: "assets/icons/check.svg",
+        cross: "assets/icons/cross.svg",
+        maybeNot: "assets/icons/cross.svg",
+        reset: "assets/icons/reset.svg",
+        star: "assets/icons/star.svg",
+        question: "assets/icons/question.svg",
+        exclamation: "assets/icons/exclamation.svg",
+        flag: "assets/icons/flag.svg",
+        skip: "assets/icons/skip.svg",
     }
 
     switch (userLang) {
@@ -233,10 +268,13 @@ $(document).ready(function () {
         saveSettings() //Testato!
     }
 
+    let advancedCards = {type: "undefined"}
+
     function saveGameSetup(board, players) {
         game.board = board
         game.players = players
         game.locked = false
+        game.advancedCards = advancedCards
         saveGame()
     }
 
@@ -250,9 +288,10 @@ $(document).ready(function () {
 
     function toggleLockRow(rowNo, force, rowItems, maybeCounter) {
         const action = {
-            item: rowNo
+            item: rowNo,
         }
-        getFilteredTable()[rowNo].locked = force || !getFilteredTable()[rowNo].locked
+        getFilteredTable()[rowNo].locked =
+            force || !getFilteredTable()[rowNo].locked
         if (getFilteredTable()[rowNo].locked) {
             action.type = "lockItem"
             action.oldRow = rowItems
@@ -269,24 +308,45 @@ $(document).ready(function () {
         if (game.board === 5) {
             game.dustCounter = 12
         }
-        let board = game.board >= CUSTOM_BOARD_THRESHOLD ? settings.customBoards[game.board - CUSTOM_BOARD_THRESHOLD] : boards[game.board]
-        game.table.push({ divider: true, name: 'Characters' })
-        board.characters.forEach(character => {
-            game.table.push({ row: character, section: 'Characters', locked: false, items: Array(game.players.length).fill('reset'), maybeCounter: Array(game.players.length).fill(0) })
+        let board =
+            game.board >= CUSTOM_BOARD_THRESHOLD
+                ? settings.customBoards[game.board - CUSTOM_BOARD_THRESHOLD]
+                : boards[game.board]
+        game.table.push({ divider: true, name: "Characters" })
+        board.characters.forEach((character) => {
+            game.table.push({
+                row: character,
+                section: "Characters",
+                locked: false,
+                items: Array(game.players.length).fill("reset"),
+                maybeCounter: Array(game.players.length).fill(0),
+            })
         })
-        game.table.push({ divider: true, name: 'Weapons' })
-        board.weapons.forEach(weapon => {
-            game.table.push({ row: weapon, section: 'Weapons', locked: false, items: Array(game.players.length).fill('reset'), maybeCounter: Array(game.players.length).fill(0) })
+        game.table.push({ divider: true, name: "Weapons" })
+        board.weapons.forEach((weapon) => {
+            game.table.push({
+                row: weapon,
+                section: "Weapons",
+                locked: false,
+                items: Array(game.players.length).fill("reset"),
+                maybeCounter: Array(game.players.length).fill(0),
+            })
         })
-        game.table.push({ divider: true, name: 'Rooms' })
-        board.rooms.forEach(room => {
-            game.table.push({ row: room, section: 'Rooms', locked: false, items: Array(game.players.length).fill('reset'), maybeCounter: Array(game.players.length).fill(0) })
+        game.table.push({ divider: true, name: "Rooms" })
+        board.rooms.forEach((room) => {
+            game.table.push({
+                row: room,
+                section: "Rooms",
+                locked: false,
+                items: Array(game.players.length).fill("reset"),
+                maybeCounter: Array(game.players.length).fill(0),
+            })
         })
         saveGame()
     }
 
-    const getFilteredTable = function () {
-        return game.table.filter(el => !el.divider)
+    const getFilteredTable = function() {
+        return game.table.filter((el) => !el.divider)
     }
 
     function toggleLockGlobal(force) {
@@ -294,7 +354,7 @@ $(document).ready(function () {
         saveGame()
     }
 
-    const dustCounterIncrease = function () {
+    const dustCounterIncrease = function() {
         if (game.board === 5) {
             game.dustCounter++
             saveGame()
@@ -302,7 +362,7 @@ $(document).ready(function () {
         return game.dustCounter
     }
 
-    const dustCounterDecrease = function () {
+    const dustCounterDecrease = function() {
         if (game.board === 5) {
             game.dustCounter--
             saveGame()
@@ -321,7 +381,8 @@ $(document).ready(function () {
     function loadSettings() {
         settings = JSON.parse(localStorage.getItem("settings")) || settings
         _.forEach(settings, (val, key) => {
-            if (val === true) { //Solo i valori booleani vanno cambiati
+            if (val === true) {
+                //Solo i valori booleani vanno cambiati
                 $("#" + key).prop("checked", true)
             }
         })
@@ -342,8 +403,8 @@ $(document).ready(function () {
 
     const languageLabels = ["Switch language", "Cambia lingua"]
     let languageIndex = 0
-    let languageInterval = window.setInterval(function () {
-        if (languageIndex == languageLabels.length) {
+    let languageInterval = window.setInterval(function() {
+        if (languageIndex === languageLabels.length) {
             languageIndex = 0
         }
         $(".language-label").text(languageLabels[languageIndex])
@@ -360,10 +421,9 @@ $(document).ready(function () {
         const id = getFilteredTable()[item].items[player]
         const maybe = getFilteredTable()[item].maybeCounter[player]
 
-        $("#cellImg" + player + "_" + item).removeClass($("#cellImg" + player + "_" + item).attr("class"))
-        $("#cellImg" + player + "_" + item).addClass(id)
-        $("#cellImg" + player + "_" + item).attr("src", imageData[id])
-        $("#cellNumber" + player + "_" + item).text(maybe)
+        $("#cellImg" + player + "_" + item).removeClass(
+            $("#cellImg" + player + "_" + item).attr("class"),
+        ).addClass(id).attr("src", imageData[id]).text(maybe)
         if (id === "maybe" && maybe > 1) {
             $("#cellNumber" + player + "_" + item).show()
         } else {
@@ -461,7 +521,7 @@ $(document).ready(function () {
         saveGame()
     }
 
-    $("#undoButton").on("click", function () {
+    $("#undoButton").on("click", function() {
         undoAction()
     })
 
@@ -478,14 +538,15 @@ $(document).ready(function () {
     function doUndoAction(action, item) {
         //Item al momento è usato solo da updateManual, ed è la riga della tabella.
         switch (action.type) {
-
             case "updateManual":
                 if (_.isUndefined(action.item)) {
                     console.error(action, "Item not valid!")
                 } else if (_.isUndefined(action.subactions)) {
                     console.error(action, "Subactions not valid!")
                 } else {
-                    _.forEachRight(action.subactions, sa => doUndoAction(sa, action.item))
+                    _.forEachRight(action.subactions, (sa) =>
+                        doUndoAction(sa, action.item),
+                    )
                 }
                 return
 
@@ -498,7 +559,9 @@ $(document).ready(function () {
                     console.error(action, "Maybe counter not valid!")
                 } else {
                     getFilteredTable()[item].items = _.cloneDeep(action.oldRow)
-                    getFilteredTable()[item].maybeCounter = _.cloneDeep(action.oldMaybeCounter)
+                    getFilteredTable()[item].maybeCounter = _.cloneDeep(
+                        action.oldMaybeCounter,
+                    )
                     redrawFromDataForAllPlayers(item)
                 }
                 return
@@ -514,7 +577,8 @@ $(document).ready(function () {
                     console.error(action, "Old maybe counter not valid!")
                 } else {
                     getFilteredTable()[item].items[action.player] = action.oldId
-                    getFilteredTable()[item].maybeCounter[action.player] = action.oldMaybeCounter
+                    getFilteredTable()[item].maybeCounter[action.player] =
+                        action.oldMaybeCounter
                     redrawFromData(item, action.player)
                 }
                 return
@@ -523,7 +587,7 @@ $(document).ready(function () {
                 if (_.isUndefined(action.subactions)) {
                     console.error(action, "Subactions not valid!")
                 } else {
-                    _.forEachRight(action.subactions, sa => doUndoAction(sa))
+                    _.forEachRight(action.subactions, (sa) => doUndoAction(sa))
                 }
                 return
 
@@ -537,8 +601,11 @@ $(document).ready(function () {
                 } else if (_.isUndefined(action.item)) {
                     console.error(action, "Item maybe counter not valid!")
                 } else {
-                    getFilteredTable()[action.item].items[action.player] = action.oldId
-                    getFilteredTable()[action.item].maybeCounter[action.player] = action.oldMaybeCounter
+                    getFilteredTable()[action.item].items[action.player] =
+                        action.oldId
+                    getFilteredTable()[action.item].maybeCounter[
+                        action.player
+                        ] = action.oldMaybeCounter
                     redrawFromData(action.item, action.player)
                 }
                 return
@@ -553,8 +620,11 @@ $(document).ready(function () {
                 } else if (_.isUndefined(action.maybeCounter)) {
                     console.error(action, "Maybe counter not valid!")
                 } else {
-                    getFilteredTable()[action.item].items[action.player] = action.oldId
-                    getFilteredTable()[action.item].maybeCounter[action.player] = _.cloneDeep(action.maybeCounter)
+                    getFilteredTable()[action.item].items[action.player] =
+                        action.oldId
+                    getFilteredTable()[action.item].maybeCounter[
+                        action.player
+                        ] = _.cloneDeep(action.maybeCounter)
                     redrawFromData(action.item, action.player)
                 }
                 return
@@ -567,14 +637,27 @@ $(document).ready(function () {
                 } else if (_.isUndefined(action.oldMaybeCounter)) {
                     console.error(action, "Old maybe counter not valid!")
                 } else {
-                    getFilteredTable()[action.item].items = _.cloneDeep(action.oldRow)
-                    getFilteredTable()[action.item].maybeCounter = _.cloneDeep(action.oldMaybeCounter)
+                    getFilteredTable()[action.item].items = _.cloneDeep(
+                        action.oldRow,
+                    )
+                    getFilteredTable()[action.item].maybeCounter = _.cloneDeep(
+                        action.oldMaybeCounter,
+                    )
                     redrawFromDataForAllPlayers(action.item)
                     $("#rowCheckbox" + action.item).prop("checked", false)
-                    $("#rowCheckbox" + action.item).closest(".table-row").find("td > a").data("locked", "false")
-                    $("#rowCheckbox" + action.item).closest(".table-row").removeClass("locked")
-                    $("#rowCheckbox" + action.item).closest(".table-row").css("background-color", "")
-                    $("#rowCheckbox" + action.item).closest(".table-row").css("color", "")
+                    $("#rowCheckbox" + action.item)
+                        .closest(".table-row")
+                        .find("td > a")
+                        .data("locked", "false")
+                    $("#rowCheckbox" + action.item)
+                        .closest(".table-row")
+                        .removeClass("locked")
+                    $("#rowCheckbox" + action.item)
+                        .closest(".table-row")
+                        .css("background-color", "")
+                    $("#rowCheckbox" + action.item)
+                        .closest(".table-row")
+                        .css("color", "")
                 }
                 return
 
@@ -588,10 +671,22 @@ $(document).ready(function () {
                         redrawFromData(action.item, index)
                     })
                     $("#rowCheckbox" + action.item).prop("checked", true)
-                    $("#rowCheckbox" + action.item).closest(".table-row").find("td > a").data("locked", "true")
-                    $("#rowCheckbox" + action.item).closest(".table-row").addClass("locked")
-                    $("#rowCheckbox" + action.item).closest(".table-row").css("background-color", "var(--md-sys-color-error-container)")
-                    $("#rowCheckbox" + action.item).closest(".table-row").css("color", "var(--md-sys-color-on-error-container)")
+                    $("#rowCheckbox" + action.item)
+                        .closest(".table-row")
+                        .find("td > a")
+                        .data("locked", "true")
+                    $("#rowCheckbox" + action.item)
+                        .closest(".table-row")
+                        .addClass("locked")
+                    $("#rowCheckbox" + action.item)
+                        .closest(".table-row")
+                        .css(
+                            "background-color",
+                            "var(--md-sys-color-error-container)",
+                        )
+                    $("#rowCheckbox" + action.item)
+                        .closest(".table-row")
+                        .css("color", "var(--md-sys-color-on-error-container)")
                 }
                 return
 
@@ -601,7 +696,7 @@ $(document).ready(function () {
         }
     }
 
-    $("#redoButton").on("click", function () {
+    $("#redoButton").on("click", function() {
         redoAction()
     })
 
@@ -620,14 +715,15 @@ $(document).ready(function () {
     function doRedoAction(action, item) {
         //Item al momento è usato solo da updateManual, ed è la riga della tabella.
         switch (action.type) {
-
             case "updateManual":
                 if (_.isUndefined(action.item)) {
                     console.error(action, action.item, "Item not valid!")
                 } else if (_.isUndefined(action.subactions)) {
                     console.error(action, "Subactions not valid!")
                 } else {
-                    _.forEach(action.subactions, sa => doRedoAction(sa, action.item))
+                    _.forEach(action.subactions, (sa) =>
+                        doRedoAction(sa, action.item),
+                    )
                 }
                 return
 
@@ -667,7 +763,7 @@ $(document).ready(function () {
                 if (_.isUndefined(action.subactions)) {
                     console.error(action, "Subactions not valid!")
                 } else {
-                    _.forEach(action.subactions, sa => doRedoAction(sa))
+                    _.forEach(action.subactions, (sa) => doRedoAction(sa))
                 }
                 return
 
@@ -681,8 +777,11 @@ $(document).ready(function () {
                 } else if (_.isUndefined(action.item)) {
                     console.error(action, "Item maybe counter not valid!")
                 } else {
-                    getFilteredTable()[action.item].items[action.player] = "cross"
-                    getFilteredTable()[action.item].maybeCounter[action.player] = 0
+                    getFilteredTable()[action.item].items[action.player] =
+                        "cross"
+                    getFilteredTable()[action.item].maybeCounter[
+                        action.player
+                        ] = 0
                     redrawFromData(action.item, action.player)
                 }
                 return
@@ -697,8 +796,11 @@ $(document).ready(function () {
                 } else if (_.isUndefined(action.maybeCounter)) {
                     console.error(action, "Maybe counter not valid!")
                 } else {
-                    getFilteredTable()[action.item].items[action.player] = "maybe"
-                    getFilteredTable()[action.item].maybeCounter[action.player] = _.cloneDeep(action.maybeCounter) + 1
+                    getFilteredTable()[action.item].items[action.player] =
+                        "maybe"
+                    getFilteredTable()[action.item].maybeCounter[
+                        action.player
+                        ] = _.cloneDeep(action.maybeCounter) + 1
                     redrawFromData(action.item, action.player)
                 }
                 return
@@ -711,30 +813,59 @@ $(document).ready(function () {
                 } else if (_.isUndefined(action.oldMaybeCounter)) {
                     console.error(action, "Old maybe counter not valid!")
                 } else {
-                    getFilteredTable()[action.item].items = Array(game.players.length).fill("cross")
-                    getFilteredTable()[action.item].maybeCounter = Array(game.players.length).fill(0)
+                    getFilteredTable()[action.item].items = Array(
+                        game.players.length,
+                    ).fill("cross")
+                    getFilteredTable()[action.item].maybeCounter = Array(
+                        game.players.length,
+                    ).fill(0)
                     redrawFromDataForAllPlayers(action.item)
                 }
                 $("#rowCheckbox" + action.item).prop("checked", true)
-                $("#rowCheckbox" + action.item).closest(".table-row").find("td > a").data("locked", "true")
-                $("#rowCheckbox" + action.item).closest(".table-row").addClass("locked")
-                $("#rowCheckbox" + action.item).closest(".table-row").css("background-color", "var(--md-sys-color-error-container)")
-                $("#rowCheckbox" + action.item).closest(".table-row").css("color", "var(--md-sys-color-on-error-container)")
+                $("#rowCheckbox" + action.item)
+                    .closest(".table-row")
+                    .find("td > a")
+                    .data("locked", "true")
+                $("#rowCheckbox" + action.item)
+                    .closest(".table-row")
+                    .addClass("locked")
+                $("#rowCheckbox" + action.item)
+                    .closest(".table-row")
+                    .css(
+                        "background-color",
+                        "var(--md-sys-color-error-container)",
+                    )
+                $("#rowCheckbox" + action.item)
+                    .closest(".table-row")
+                    .css("color", "var(--md-sys-color-on-error-container)")
                 return
 
             case "unlockItem":
                 if (_.isUndefined(action.item)) {
                     console.error(action, "Item not valid")
                 } else {
-                    getFilteredTable()[action.item].items = Array(game.players.length).fill("reset")
-                    getFilteredTable()[action.item].maybeCounter = Array(game.players.length).fill(0)
+                    getFilteredTable()[action.item].items = Array(
+                        game.players.length,
+                    ).fill("reset")
+                    getFilteredTable()[action.item].maybeCounter = Array(
+                        game.players.length,
+                    ).fill(0)
                     redrawFromDataForAllPlayers(action.item)
                 }
                 $("#rowCheckbox" + action.item).prop("checked", false)
-                $("#rowCheckbox" + action.item).closest(".table-row").find("td > a").data("locked", "false")
-                $("#rowCheckbox" + action.item).closest(".table-row").removeClass("locked")
-                $("#rowCheckbox" + action.item).closest(".table-row").css("background-color", "")
-                $("#rowCheckbox" + action.item).closest(".table-row").css("color", "")
+                $("#rowCheckbox" + action.item)
+                    .closest(".table-row")
+                    .find("td > a")
+                    .data("locked", "false")
+                $("#rowCheckbox" + action.item)
+                    .closest(".table-row")
+                    .removeClass("locked")
+                $("#rowCheckbox" + action.item)
+                    .closest(".table-row")
+                    .css("background-color", "")
+                $("#rowCheckbox" + action.item)
+                    .closest(".table-row")
+                    .css("color", "")
                 return
 
             default:
@@ -749,10 +880,10 @@ $(document).ready(function () {
     function checkIncompatibleSave() {
         if (validateGame(game) === "INCOMPATIBLE") {
             //Trovato salvataggio vecchio. Cancella tutto.
-            $("#continueGameButton").attr("disabled", "true")
-            $("#continueGameButton").css("filter", "grayscale(0.75)")
-            $("#continueGameButton").toggle()
-            $("#continueButtonSubtitle").empty().text(manualStrings.incompatibleText)
+            $("#continueGameButton").attr("disabled", "true").css("filter", "grayscale(0.75)").toggle()
+            $("#continueButtonSubtitle")
+                .empty()
+                .text(manualStrings.incompatibleText)
         }
     }
 
@@ -760,8 +891,17 @@ $(document).ready(function () {
         let ret = "OK"
         if (!game || _.isEmpty(game)) {
             ret = "EMPTY"
-        } else if (game.date && game.version && game.version < minVersionNumber) {
-            console.info("Game version does not meet requirements. Saved game version is", game.version, "and required version is", minVersionNumber)
+        } else if (
+            game.date &&
+            game.version &&
+            game.version < minVersionNumber
+        ) {
+            console.info(
+                "Game version does not meet requirements. Saved game version is",
+                game.version,
+                "and required version is",
+                minVersionNumber,
+            )
             ret = "INCOMPATIBLE"
         }
         return ret
@@ -770,17 +910,37 @@ $(document).ready(function () {
     if (validateGame(game) === "OK") {
         $("#continueGameButton").toggle()
         $("#beginButtonSubtitle").toggle()
-        let formattedPlayers = game.players.toString().replaceAll(',', ', ')
+        let formattedPlayers = game.players.toString().replaceAll(",", ", ")
         let rawDate = new Date(game.date)
-        let formattedDate = rawDate.getFullYear() + "-" + ((rawDate.getMonth() + 1) >= 10 ? (rawDate.getMonth() + 1) : ("0" + (rawDate.getMonth() + 1))) + "-" + (rawDate.getDate() >= 10 ? rawDate.getDate() : ("0" + rawDate.getDate())) + " " + rawDate.getHours() + ":" + (rawDate.getMinutes() >= 10 ? rawDate.getMinutes() : ("0" + rawDate.getMinutes()))
-        let board = game.board >= CUSTOM_BOARD_THRESHOLD ? settings.customBoards[game.board - CUSTOM_BOARD_THRESHOLD] : boards[game.board]
+        let formattedDate =
+            rawDate.getFullYear() +
+            "-" +
+            (rawDate.getMonth() + 1 >= 10
+                ? rawDate.getMonth() + 1
+                : "0" + (rawDate.getMonth() + 1)) +
+            "-" +
+            (rawDate.getDate() >= 10
+                ? rawDate.getDate()
+                : "0" + rawDate.getDate()) +
+            " " +
+            rawDate.getHours() +
+            ":" +
+            (rawDate.getMinutes() >= 10
+                ? rawDate.getMinutes()
+                : "0" + rawDate.getMinutes())
+        let board =
+            game.board >= CUSTOM_BOARD_THRESHOLD
+                ? settings.customBoards[game.board - CUSTOM_BOARD_THRESHOLD]
+                : boards[game.board]
         $("#continueGameTableCellDateText").text(formattedDate)
         $("#continueGameTableCellBoardText").text(board.name)
         $("#continueGameTableCellPlayersText").text(formattedPlayers)
 
-        $("#continueGameButton").on("click", function () {
+        $("#continueGameButton").on("click", function() {
             //Valorizza itemsArray
-            itemsArray = board["characters"].concat(board["weapons"]).concat(board["rooms"])
+            itemsArray = board["characters"]
+                .concat(board["weapons"])
+                .concat(board["rooms"])
             if (game.board < CUSTOM_BOARD_THRESHOLD && game.lang !== userLang) {
                 //Convert save to current language
                 translateSaveGame()
@@ -790,6 +950,12 @@ $(document).ready(function () {
             clearInterval(languageInterval)
             swapUpperBar(settings.alternateInGameToolbar)
             $("#mainGame").css("display", "block")
+
+            if (advancedCards.type && advancedCards.type !== "undefined") {
+                $("#instructionModalSection9").show()
+            } else {
+                $("#instructionModalSection9").hide()
+            }
 
             fillTable()
             updateTable()
@@ -806,13 +972,17 @@ $(document).ready(function () {
         })
     }
 
-    $(".debugButton").on("click", function () {
+    $(".debugButton").on("click", function() {
         console.log(game, settings)
     })
 
     //Install button (don't show if already in PWA)
-    if (!(params.source == "pwa" || window.matchMedia('(display-mode: standalone)').matches)) {
-
+    if (
+        !(
+            params.source === "pwa" ||
+            window.matchMedia("(display-mode: standalone)").matches
+        )
+    ) {
         let deferredPrompt
 
         window.addEventListener("beforeinstallprompt", (e) => {
@@ -826,10 +996,10 @@ $(document).ready(function () {
             deferredPrompt = null
         })
     } else {
-        $("#installButton").hide();
+        $("#installButton").hide()
     }
 
-    $("#newGameButton").on("click", function () {
+    $("#newGameButton").on("click", function() {
         //Rimuovi salvataggi non compatibili
         if (localStorage.getItem("date")) {
             localStorage.clear()
@@ -840,14 +1010,19 @@ $(document).ready(function () {
         $("#setup").css("display", "block")
         game = {}
         game.board = 0
-        itemsArray = boards[game.board]["characters"].concat(boards[game.board]["weapons"]).concat(boards[game.board]["rooms"])
+        itemsArray = boards[game.board]["characters"]
+            .concat(boards[game.board]["weapons"])
+            .concat(boards[game.board]["rooms"])
         localStorage.removeItem("game")
 
         //Populate Setup
-        boards.forEach(board => {
-            let button = $("<button>").attr("class", "small-button board-button")
-            button.text(board.name)
-            button.on("click", function (event) {
+        boards.forEach((board) => {
+            let button = $("<button>").attr(
+                "class",
+                "small-button board-button",
+            )
+            button.text(board.name).attr("type", "button")
+            button.on("click", function(event) {
                 selectBoard(board.id, board.minPlayers, event)
             })
             $("#boardButtonContainer").append(button)
@@ -857,32 +1032,46 @@ $(document).ready(function () {
         updateFields()
     })
 
-    $("#playerOrderModalLink").on("click", function () {
+    $("#playerOrderModalLink").on("click", function() {
         $("#orderModal").toggle()
     })
 
-    $("#mainMenuLanguageButton").on("click", function () {
+    $("#mainMenuLanguageButton").on("click", function() {
         $("#languageModal").toggle()
     })
 
-    $(".modal-back-button").on("click", function () {
+    $(".modal-back-button").on("click", function() {
         hideAndShowModal()
     })
 
     function selectBoard(id, minPlayers, event) {
         //Cambio colori
-        $("#boardButtonContainer, #customizeBoardContainer").find("*").css("background-color", "var(--md-sys-color-secondary-container)").css("color", "var(--md-sys-color-on-secondary-container)")
+        $("#boardButtonContainer, #customizeBoardContainer")
+            .find("*")
+            .css("background-color", "var(--md-sys-color-secondary-container)")
+            .css("color", "var(--md-sys-color-on-secondary-container)")
         $("#boardButtonContainer").find("*").data("selected", "false")
         if (event) {
             $(event.target).data("selected", "true")
-            $(event.target).css("background-color", "var(--md-sys-color-tertiary-container)").css("color", "var(--md-sys-color-on-tertiary-container)")
+            $(event.target)
+                .css(
+                    "background-color",
+                    "var(--md-sys-color-tertiary-container)",
+                )
+                .css("color", "var(--md-sys-color-on-tertiary-container)")
         }
 
         game.board = id
         if (game.board < CUSTOM_BOARD_THRESHOLD) {
-            itemsArray = boards[game.board]["characters"].concat(boards[game.board]["weapons"]).concat(boards[game.board]["rooms"])
+            itemsArray = boards[game.board]["characters"]
+                .concat(boards[game.board]["weapons"])
+                .concat(boards[game.board]["rooms"])
         } else {
-            $("#playerNum").attr("max", settings.customBoards[id - CUSTOM_BOARD_THRESHOLD].maxPlayers || 6)
+            $("#playerNum").attr(
+                "max",
+                settings.customBoards[id - CUSTOM_BOARD_THRESHOLD].maxPlayers ||
+                6,
+            )
         }
         $("#playerNum").attr("min", minPlayers)
         $("#playerNum").val(3)
@@ -912,12 +1101,18 @@ $(document).ready(function () {
             //Add fields
             for (let i = currentFields; i < val - 1; i++) {
                 let fieldSection = $("<section>")
-                let field = $("<input>").attr("class", "setup-name")
+                let field = $("<input>").attr(
+                    "class",
+                    "setup-name setup-player",
+                )
                 field.attr("type", "search")
                 field.attr("required", "required")
                 field.attr("name", "player" + i)
-                field.attr("pattern", "[a-zA-Z0-9\u0080-\u024F\u1F300-\u1F5FF]+")
-                field.on("input", function () {
+                field.attr(
+                    "pattern",
+                    "[a-zA-Z0-9\u0080-\u024F\u1F300-\u1F5FF]+",
+                )
+                field.on("input", function() {
                     playerFields[i] = field.val()
                 })
                 field.val(playerFields[i])
@@ -936,7 +1131,9 @@ $(document).ready(function () {
     const buildCustomBoard = () => {
         //FIll itemsArray with values from the form
         let customBoardName = $("#customBoardName").val()
-        let customBoardMaxPlayers = Number.parseInt($("#customBoardMaxPlayersValue").val())
+        let customBoardMaxPlayers = Number.parseInt(
+            $("#customBoardMaxPlayersValue").val(),
+        )
         let customCharacters = []
         for (let i = 0; i < customBoardSizes.Characters; i++) {
             customCharacters.push($("#customCharacters" + i).val())
@@ -952,13 +1149,19 @@ $(document).ready(function () {
         if (!settings.customBoards) {
             settings.customBoards = []
         }
-        const boardToSave = { name: customBoardName, characters: customCharacters, weapons: customWeapons, rooms: customRooms, maxPlayers: customBoardMaxPlayers }
+        const boardToSave = {
+            name: customBoardName,
+            characters: customCharacters,
+            weapons: customWeapons,
+            rooms: customRooms,
+            maxPlayers: customBoardMaxPlayers,
+        }
         return boardToSave
     }
 
     const validateBoard = (board) => {
         let res = undefined
-        if (_.find(settings.customBoards, el => _.isEqual(el, board))) {
+        if (_.find(settings.customBoards, (el) => _.isEqual(el, board))) {
             res = manualStrings.boardValidation.duplicate
         } else if (!board.name) {
             res = manualStrings.boardValidation.name
@@ -972,7 +1175,7 @@ $(document).ready(function () {
         return res
     }
 
-    $("#customizeBoardButton").on("click", function (event) {
+    $("#customizeBoardButton").on("click", function(event) {
         updateCustomBoardList()
         $("#customBoardModal").show()
     })
@@ -990,47 +1193,125 @@ $(document).ready(function () {
         return ret
     }
 
-    const getBoardListElement = (board, index, elementId, addButtons, addCheckbox, expandable) => {
-
-        const tbody = $("<tbody class='custom-board-body' id='" + elementId + "Body'>")
+    const getBoardListElement = (
+        board,
+        index,
+        elementId,
+        addButtons,
+        addCheckbox,
+        expandable,
+    ) => {
+        const tbody = $(
+            "<tbody class='custom-board-body' id='" + elementId + "Body'>",
+        )
         const spanName = $("<span>").text(board.name)
         const tdName = $("<td colspan='4'>").append($(spanName))
         let trItemsExpanded
         if (expandable) {
-            const expandButton = $("<a class='material-symbols-outlined' id='" + elementId + "ExpandButton'>").text("expand_more").on("click", function () {
-                const currentButton = $("#" + elementId + "ExpandButton")
-                $(currentButton).text($(currentButton).text() == "expand_more" ? "expand_less" : "expand_more")
-                $("#" + elementId + 'Items').toggle()
-                $("#" + elementId + 'ItemsExpanded').toggle()
-            })
-            const maxPlayersExpandedHeader = $("<div class='items-expanded-div'>").append($(emojiSpan).clone().text("group"), " ", manualStrings.customBoardTitles.maxPlayers, ": ", board.maxPlayers || 6)
-            const charactersExpandedHeader = $("<div>").append($(emojiSpan).clone().text("person"), " ", manualStrings.customBoardTitles.characters)
-            const charactersExpandedList = $("<div class='items-expanded-div'>").append($(getListFromArray(board.characters)))
-            const weaponsExpandedHeader = $("<div>").append($(emojiSpan).clone().text("syringe"), " ", manualStrings.customBoardTitles.weapons)
-            const weaponsExpandedList = $("<div class='items-expanded-div'>").append($(getListFromArray(board.weapons)))
-            const roomsExpandedHeader = $("<div>").append($(emojiSpan).clone().text("house"), " ", manualStrings.customBoardTitles.rooms)
-            const roomsExpandedList = $("<div class='items-expanded-div'>").append($(getListFromArray(board.rooms)))
-            const cell = $("<td class='items-expanded-cell' colspan='4' id='" + elementId + "ItemsExpandedList'>").append($(maxPlayersExpandedHeader), $(charactersExpandedHeader), $(charactersExpandedList), $(weaponsExpandedHeader), $(weaponsExpandedList), $(roomsExpandedHeader), $(roomsExpandedList))
+            const expandButton = $(
+                "<a class='material-symbols-outlined' id='" +
+                elementId +
+                "ExpandButton'>",
+            )
+                .text("expand_more")
+                .on("click", function() {
+                    const currentButton = $("#" + elementId + "ExpandButton")
+                    $(currentButton).text(
+                        $(currentButton).text() === "expand_more"
+                            ? "expand_less"
+                            : "expand_more",
+                    )
+                    $("#" + elementId + "Items").toggle()
+                    $("#" + elementId + "ItemsExpanded").toggle()
+                })
+            const maxPlayersExpandedHeader = $(
+                "<div class='items-expanded-div'>",
+            ).append(
+                $(emojiSpan).clone().text("group"),
+                " ",
+                manualStrings.customBoardTitles.maxPlayers,
+                ": ",
+                board.maxPlayers || 6,
+            )
+            const charactersExpandedHeader = $("<div>").append(
+                $(emojiSpan).clone().text("person"),
+                " ",
+                manualStrings.customBoardTitles.characters,
+            )
+            const charactersExpandedList = $(
+                "<div class='items-expanded-div'>",
+            ).append($(getListFromArray(board.characters)))
+            const weaponsExpandedHeader = $("<div>").append(
+                $(emojiSpan).clone().text("syringe"),
+                " ",
+                manualStrings.customBoardTitles.weapons,
+            )
+            const weaponsExpandedList = $(
+                "<div class='items-expanded-div'>",
+            ).append($(getListFromArray(board.weapons)))
+            const roomsExpandedHeader = $("<div>").append(
+                $(emojiSpan).clone().text("house"),
+                " ",
+                manualStrings.customBoardTitles.rooms,
+            )
+            const roomsExpandedList = $(
+                "<div class='items-expanded-div'>",
+            ).append($(getListFromArray(board.rooms)))
+            const cell = $(
+                "<td class='items-expanded-cell' colspan='4' id='" +
+                elementId +
+                "ItemsExpandedList'>",
+            ).append(
+                $(maxPlayersExpandedHeader),
+                $(charactersExpandedHeader),
+                $(charactersExpandedList),
+                $(weaponsExpandedHeader),
+                $(weaponsExpandedList),
+                $(roomsExpandedHeader),
+                $(roomsExpandedList),
+            )
 
-            trItemsExpanded = $("<tr id='" + elementId + "ItemsExpanded'>").append($(cell))
+            trItemsExpanded = $(
+                "<tr id='" + elementId + "ItemsExpanded'>",
+            ).append($(cell))
             $(tdName).append($(expandButton))
         }
-        const trName = $("<tr class='custom-board-name-row' id='" + elementId + "Name'>")
+        const trName = $(
+            "<tr class='custom-board-name-row' id='" + elementId + "Name'>",
+        )
         if (addCheckbox) {
-            let checkboxDiv = $("<div>").addClass("checkbox-wrapper-31 checkbox-wrapper-32")
+            let checkboxDiv = $("<div>").addClass(
+                "checkbox-wrapper-31 checkbox-wrapper-32",
+            )
 
             let checkbox = $("<input>").attr("type", "checkbox")
             checkbox.attr("id", elementId + "Checkbox")
-            checkbox.attr("class", "table-header-checkbox board-import-checkbox")
-            checkbox.on("change", function () {
+            checkbox.attr(
+                "class",
+                "table-header-checkbox board-import-checkbox",
+            )
+            checkbox.on("change", function() {
                 if ($(this).is(":checked")) {
-                    $("#" + elementId + 'Body td, #' + elementId + 'Body th').css("background-color", "var(--md-sys-color-secondary-container").css("color", "var(--md-sys-color-on-secondary-container")
+                    $("#" + elementId + "Body td, #" + elementId + "Body th")
+                        .css(
+                            "background-color",
+                            "var(--md-sys-color-secondary-container",
+                        )
+                        .css(
+                            "color",
+                            "var(--md-sys-color-on-secondary-container",
+                        )
                 } else {
-                    $("#" + elementId + 'Body td, #' + elementId + 'Body th').css("background-color", "").css("color", "")
+                    $("#" + elementId + "Body td, #" + elementId + "Body th")
+                        .css("background-color", "")
+                        .css("color", "")
                 }
             })
 
-            let checkboxCell = $("<th rowspan='2'>").attr("class", "table-header-checkbox-cell")
+            let checkboxCell = $("<th rowspan='2'>").attr(
+                "class",
+                "table-header-checkbox-cell",
+            )
             checkboxCell.attr("scope", "row")
             checkboxDiv.append(checkbox, checkboxSvg)
             checkboxCell.append(checkboxDiv)
@@ -1038,11 +1319,32 @@ $(document).ready(function () {
         }
         $(trName).append($(tdName))
 
-        const tdMaxPlayers = $("<td id='" + elementId + "MaxPlayers'>").append($(emojiSpan).clone().text("group"), " ", board.maxPlayers || 6)
-        const tdCharacters = $("<td id='" + elementId + "Characters'>").append($(emojiSpan).clone().text("person"), " ", board.characters.length)
-        const tdWeapons = $("<td id='" + elementId + "Weapons'>").append($(emojiSpan).clone().text("syringe"), " ", board.weapons.length)
-        const tdRooms = $("<td id='" + elementId + "Rooms'>").append($(emojiSpan).clone().text("house"), " ", board.rooms.length)
-        const trItems = $("<tr id='" + elementId + "Items'>").append($(tdMaxPlayers), $(tdCharacters), $(tdWeapons), $(tdRooms))
+        const tdMaxPlayers = $("<td id='" + elementId + "MaxPlayers'>").append(
+            $(emojiSpan).clone().text("group"),
+            " ",
+            board.maxPlayers || 6,
+        )
+        const tdCharacters = $("<td id='" + elementId + "Characters'>").append(
+            $(emojiSpan).clone().text("person"),
+            " ",
+            board.characters.length,
+        )
+        const tdWeapons = $("<td id='" + elementId + "Weapons'>").append(
+            $(emojiSpan).clone().text("syringe"),
+            " ",
+            board.weapons.length,
+        )
+        const tdRooms = $("<td id='" + elementId + "Rooms'>").append(
+            $(emojiSpan).clone().text("house"),
+            " ",
+            board.rooms.length,
+        )
+        const trItems = $("<tr id='" + elementId + "Items'>").append(
+            $(tdMaxPlayers),
+            $(tdCharacters),
+            $(tdWeapons),
+            $(tdRooms),
+        )
 
         $(tbody).append($(trName), $(trItems))
 
@@ -1052,22 +1354,55 @@ $(document).ready(function () {
         }
 
         if (addButtons) {
-
-            const useButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Use'>").text("play_arrow").attr("title", manualStrings.customBoardTitles.play).on("click", function () {
-                chooseCustomBoard(index)
-            })
-            const editButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Edit'>").text("edit").attr("title", manualStrings.customBoardTitles.edit).on("click", function () {
-                editCustomBoard(index)
-            })
-            const exportButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Export'>").text("download").attr("title", manualStrings.customBoardTitles.export).on("click", function () {
-                exportCustomBoard(index)
-            })
-            const deleteButton = $("<button class='small-button material-symbols-outlined' id='" + elementId + "Delete'>").text("delete").attr("title", manualStrings.customBoardTitles.delete).on("click", function () {
-                deleteCustomBoard(index)
-            })
-            const trButtons = $("<tr id='" + elementId + "Buttons'>").append($("<td class='custom-board-button-cell' colspan='4'>").append($(useButton), $(editButton), $(exportButton), $(deleteButton)))
+            const useButton = $(
+                "<button class='small-button material-symbols-outlined' id='" +
+                elementId +
+                "Use'>",
+            )
+                .text("play_arrow")
+                .attr("title", manualStrings.customBoardTitles.play)
+                .on("click", function() {
+                    chooseCustomBoard(index)
+                })
+            const editButton = $(
+                "<button class='small-button material-symbols-outlined' id='" +
+                elementId +
+                "Edit'>",
+            )
+                .text("edit")
+                .attr("title", manualStrings.customBoardTitles.edit)
+                .on("click", function() {
+                    editCustomBoard(index)
+                })
+            const exportButton = $(
+                "<button class='small-button material-symbols-outlined' id='" +
+                elementId +
+                "Export'>",
+            )
+                .text("download")
+                .attr("title", manualStrings.customBoardTitles.export)
+                .on("click", function() {
+                    exportCustomBoard(index)
+                })
+            const deleteButton = $(
+                "<button class='small-button material-symbols-outlined' id='" +
+                elementId +
+                "Delete'>",
+            )
+                .text("delete")
+                .attr("title", manualStrings.customBoardTitles.delete)
+                .on("click", function() {
+                    deleteCustomBoard(index)
+                })
+            const trButtons = $("<tr id='" + elementId + "Buttons'>").append(
+                $("<td class='custom-board-button-cell' colspan='4'>").append(
+                    $(useButton),
+                    $(editButton),
+                    $(exportButton),
+                    $(deleteButton),
+                ),
+            )
             $(tbody).append($(trButtons))
-
         }
 
         return tbody
@@ -1080,7 +1415,18 @@ $(document).ready(function () {
             $("#exportAllBoardsButton").show()
             $("#customBoardLoadSection").empty()
             settings.customBoards.forEach((customBoard, index) => {
-                $("#customBoardLoadSection").append($(getBoardListElement(customBoard, index, "customBoardLoad" + index, true, false, true)))
+                $("#customBoardLoadSection").append(
+                    $(
+                        getBoardListElement(
+                            customBoard,
+                            index,
+                            "customBoardLoad" + index,
+                            true,
+                            false,
+                            true,
+                        ),
+                    ),
+                )
             })
             $("#customBoardExistingSection").show()
         } else {
@@ -1089,18 +1435,22 @@ $(document).ready(function () {
         }
     }
 
-    $("#newBoardButton").on("click", function () {
+    $("#newBoardButton").on("click", function() {
         $("#saveBoardButton").data("editing", "false")
         hideAndShowModal("#newBoardModal")
     })
 
     function chooseCustomBoard(id) {
-        itemsArray = settings.customBoards[id]["characters"].concat(settings.customBoards[id]["weapons"]).concat(settings.customBoards[id]["rooms"])
+        itemsArray = settings.customBoards[id]["characters"]
+            .concat(settings.customBoards[id]["weapons"])
+            .concat(settings.customBoards[id]["rooms"])
         selectBoard(CUSTOM_BOARD_THRESHOLD + id, 2)
         $("#customizeBoardButtonSubtitle").show()
         $("#customizeBoardButtonSubtitle").text(settings.customBoards[id].name)
         $("#customizeBoardButton").data("selected", "true")
-        $("#customizeBoardButton, #customizeBoardButton > *").css("background-color", "var(--md-sys-color-tertiary-container)").css("color", "var(--md-sys-color-on-tertiary-container)")
+        $("#customizeBoardButton, #customizeBoardButton > *")
+            .css("background-color", "var(--md-sys-color-tertiary-container)")
+            .css("color", "var(--md-sys-color-on-tertiary-container)")
         hideAndShowModal("#customizeBoardButtonSubtitle")
     }
 
@@ -1113,60 +1463,85 @@ $(document).ready(function () {
         $("#customBoardCharacters").empty()
         $("#customBoardWeapons").empty()
         $("#customBoardRooms").empty()
-        boardToEdit.characters.forEach(character => addFieldToSection('Characters', character))
-        boardToEdit.weapons.forEach(weapon => addFieldToSection('Weapons', weapon))
-        boardToEdit.rooms.forEach(room => addFieldToSection('Rooms', room))
+        boardToEdit.characters.forEach((character) =>
+            addFieldToSection("Characters", character),
+        )
+        boardToEdit.weapons.forEach((weapon) =>
+            addFieldToSection("Weapons", weapon),
+        )
+        boardToEdit.rooms.forEach((room) => addFieldToSection("Rooms", room))
         $("#saveBoardButton").data("editing", id)
         hideAndShowModal("#newBoardModal")
     }
 
-    $("#exportAllBoardsButton").on("click", function () {
+    $("#exportAllBoardsButton").on("click", function() {
         exportCustomBoard()
     })
 
     function exportCustomBoard(id) {
-        let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(!_.isUndefined(id) ? settings.customBoards[id] : settings.customBoards));
-        let downloadAnchorNode = document.createElement('a');
-        downloadAnchorNode.setAttribute("href", dataStr);
-        downloadAnchorNode.setAttribute("download", "Detective Notes Board" + (!_.isUndefined(id) ? " - " + settings.customBoards[id].name : "s") + ".board");
-        document.body.appendChild(downloadAnchorNode); // required for firefox
-        downloadAnchorNode.click();
-        downloadAnchorNode.remove();
+        let dataStr =
+            "data:text/json;charset=utf-8," +
+            encodeURIComponent(
+                JSON.stringify(
+                    !_.isUndefined(id)
+                        ? settings.customBoards[id]
+                        : settings.customBoards,
+                ),
+            )
+        let downloadAnchorNode = document.createElement("a")
+        downloadAnchorNode.setAttribute("href", dataStr)
+        downloadAnchorNode.setAttribute(
+            "download",
+            "Detective Notes Board" +
+            (!_.isUndefined(id)
+                ? " - " + settings.customBoards[id].name
+                : "s") +
+            ".board",
+        )
+        document.body.appendChild(downloadAnchorNode) // required for firefox
+        downloadAnchorNode.click()
+        downloadAnchorNode.remove()
     }
 
     function deleteCustomBoard(id) {
-        $("#confirmationPromptTitle").text(manualStrings.customBoardDeleteModal.confirmationTitle)
-        $("#confirmationPromptSubtitle").text(manualStrings.customBoardDeleteModal.confirmationSubtitle)
-        $("#genericYes").on("click", function () {
-            id === 0 ? settings.customBoards.shift() : settings.customBoards.splice(id, 1)
+        $("#confirmationPromptTitle").text(
+            manualStrings.customBoardDeleteModal.confirmationTitle,
+        )
+        $("#confirmationPromptSubtitle").text(
+            manualStrings.customBoardDeleteModal.confirmationSubtitle,
+        )
+        $("#genericYes").on("click", function() {
+            id === 0
+                ? settings.customBoards.shift()
+                : settings.customBoards.splice(id, 1)
             saveSettings()
             updateCustomBoardList()
             hideAndShowModal("#customBoardModal")
             $("#genericYes").off("click")
         })
-        $("#genericNo").on("click", function () {
+        $("#genericNo").on("click", function() {
             hideAndShowModal("#customBoardModal")
             $("#genericNo").off("click")
         })
         hideAndShowModal("#confirmationModal")
     }
 
-    $("#addCharacterToCustomBoardButton").on("click", function () {
+    $("#addCharacterToCustomBoardButton").on("click", function() {
         addFieldToSection("Characters")
     })
 
-    $("#addWeaponToCustomBoardButton").on("click", function () {
+    $("#addWeaponToCustomBoardButton").on("click", function() {
         addFieldToSection("Weapons")
     })
 
-    $("#addRoomToCustomBoardButton").on("click", function () {
+    $("#addRoomToCustomBoardButton").on("click", function() {
         addFieldToSection("Rooms")
     })
 
     let customBoardSizes = {
         Characters: 0,
         Weapons: 0,
-        Rooms: 0
+        Rooms: 0,
     }
 
     function addFieldToSection(container, text) {
@@ -1175,32 +1550,50 @@ $(document).ready(function () {
 
         const row = $("<tr>").attr("id", id + "Row")
 
-        const numberCell = $("<th>").text(customBoardSizes[container]).addClass("custom-table-num")
-        const input = $("<input>").attr("class", "setup-name").attr("type", "text").attr("name", id).attr("pattern", "[a-zA-Z0-9\u0080-\u024F\u1F300-\u1F5FF]+").attr("id", id)
+        const numberCell = $("<th>")
+            .text(customBoardSizes[container])
+            .addClass("custom-table-num")
+        const input = $("<input>")
+            .attr("class", "setup-name")
+            .attr("type", "text")
+            .attr("name", id)
+            .attr("pattern", "[a-zA-Z0-9\u0080-\u024F\u1F300-\u1F5FF]+")
+            .attr("id", id)
         if (text) {
             $(input).val(text)
         }
-        const deleteButton = $("<button>").attr("class", "small-button board-button material-symbols-outlined").text("delete").attr("id", "delete" + id).on("click", function () {
-            $("#" + id + "Row").remove()
-            customBoardSizes[container]--
-            updateCustomBoardNumberCells()
-        })
+        const deleteButton = $("<button>")
+            .attr(
+                "class",
+                "small-button board-button material-symbols-outlined",
+            )
+            .text("delete")
+            .attr("id", "delete" + id)
+            .on("click", function() {
+                $("#" + id + "Row").remove()
+                customBoardSizes[container]--
+                updateCustomBoardNumberCells()
+            })
         const inputCell = $("<td>").html(input).addClass("custom-table-input")
-        const deleteButtonCell = $("<td>").html(deleteButton).addClass("custom-table-del")
+        const deleteButtonCell = $("<td>")
+            .html(deleteButton)
+            .addClass("custom-table-del")
 
         row.append(numberCell, inputCell, deleteButtonCell)
         $("#customBoard" + container).append(row)
     }
 
     function updateCustomBoardNumberCells() {
-        Object.keys(customBoardSizes).forEach(container => {
-            $("#customBoard" + container).find(".custom-table-num").each(function (index) {
-                $(this).text(index + 1)
-            })
+        Object.keys(customBoardSizes).forEach((container) => {
+            $("#customBoard" + container)
+                .find(".custom-table-num")
+                .each(function(index) {
+                    $(this).text(index + 1)
+                })
         })
     }
 
-    $("#saveBoardButton").on("click", function () {
+    $("#saveBoardButton").on("click", function() {
         const boardToSave = buildCustomBoard()
         const validation = validateBoard(boardToSave)
         if (!validation) {
@@ -1220,16 +1613,15 @@ $(document).ready(function () {
         }
     })
 
-    $("#newBoardModalBackButton").on("click", function () {
+    $("#newBoardModalBackButton").on("click", function() {
         hideAndShowModal("#customBoardModal")
     })
 
-
-    $("#customBoardModalBackButton").on("click", function () {
+    $("#customBoardModalBackButton").on("click", function() {
         hideAndShowModal()
     })
 
-    $("#importBoardButton").on("click", function () {
+    $("#importBoardButton").on("click", function() {
         $("#fileValidationFailed").hide()
         $("#chooseBoardsToImportSection").hide()
         hideAndShowModal("#importBoardModal")
@@ -1237,16 +1629,27 @@ $(document).ready(function () {
 
     let parsedFile
 
-    $("#fileInput").on("change", function (e) {
+    $("#fileInput").on("change", function(e) {
         $("#chooseBoardsToImportTable").empty()
         const reader = new FileReader()
-        reader.onload = function (event) {
+        reader.onload = function(event) {
             parsedFile = JSON.parse(event.target.result)
             if (validateFile(parsedFile)) {
                 $("#chooseBoardsToImportSection").show()
                 //Popola la sezione di scelta dei tavoli
                 parsedFile.forEach((board, index) => {
-                    $("#chooseBoardsToImportTable").append($(getBoardListElement(board, index, "customBoardInput" + index, false, true, true)))
+                    $("#chooseBoardsToImportTable").append(
+                        $(
+                            getBoardListElement(
+                                board,
+                                index,
+                                "customBoardInput" + index,
+                                false,
+                                true,
+                                true,
+                            ),
+                        ),
+                    )
                 })
             } else {
                 $("#chooseBoardsToImportSection").hide()
@@ -1258,8 +1661,13 @@ $(document).ready(function () {
 
     const validateFile = (file) => {
         let ret = true
-        file.forEach(board => {
-            ret = !!(board.name && board.characters && board.weapons && board.rooms)
+        file.forEach((board) => {
+            ret = !!(
+                board.name &&
+                board.characters &&
+                board.weapons &&
+                board.rooms
+            )
             if (!ret) {
                 return
             }
@@ -1267,9 +1675,9 @@ $(document).ready(function () {
         return ret
     }
 
-    $("#finalizeImportButton").on("click", function () {
+    $("#finalizeImportButton").on("click", function() {
         if ($(".board-import-checkbox").length !== 0) {
-            $(".board-import-checkbox").each(function (index) {
+            $(".board-import-checkbox").each(function(index) {
                 if ($(this).is(":checked")) {
                     settings.customBoards.push(parsedFile[index])
                 }
@@ -1281,28 +1689,35 @@ $(document).ready(function () {
         }
     })
 
-    $("#importBoardModalBackButton").on("click", function () {
+    $("#importBoardModalBackButton").on("click", function() {
         hideAndShowModal("#customBoardModal")
     })
 
     //Dark mode
 
-    if (window.matchMedia('(prefers-color-scheme)').media !== 'not all') {
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    if (window.matchMedia("(prefers-color-scheme)").media !== "not all") {
+        if (
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+        ) {
             toggleDarkMode(false)
         }
 
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-            toggleDarkMode(darkMode)
-        })
-
+        window
+            .matchMedia("(prefers-color-scheme: dark)")
+            .addEventListener("change", (event) => {
+                toggleDarkMode(darkMode)
+            })
     }
 
-    $("#darkModeToggle, #darkModeToggleSetup, #mainMenuDarkModeButton").on("click", function () {
-        toggleDarkMode(darkMode)
-    })
+    $("#darkModeToggle, #darkModeToggleSetup, #mainMenuDarkModeButton").on(
+        "click",
+        function() {
+            toggleDarkMode(darkMode)
+        },
+    )
 
-    $("#darkMode").on("change", function () {
+    $("#darkMode").on("change", function() {
         toggleDarkMode(darkMode)
     })
 
@@ -1319,33 +1734,40 @@ $(document).ready(function () {
         $("#darkMode").prop("checked", darkMode)
     }
 
-    $("#advancedSettingsToggle, #advancedSettingsInGameToggle").on("click", function () {
-        if (game.board === 5) {
-            $("#hideDustCounterSection").removeClass("advanced-settings-disabled")
-            $("#hideDustCounterText, #hideDustCounterDisabled").toggle()
-        } else {
-            $("#hideDustCounterSection").addClass("advanced-settings-disabled")
-        }
-        $("#hideDustCounter").prop("disabled", (game.board !== 5))
-        $("#advancedSettingsModal").toggle()
-    })
+    $("#advancedSettingsToggle, #advancedSettingsInGameToggle").on(
+        "click",
+        function() {
+            if (game.board === 5) {
+                $("#hideDustCounterSection").removeClass(
+                    "advanced-settings-disabled",
+                )
+                $("#hideDustCounterText, #hideDustCounterDisabled").toggle()
+            } else {
+                $("#hideDustCounterSection").addClass(
+                    "advanced-settings-disabled",
+                )
+            }
+            $("#hideDustCounter").prop("disabled", game.board !== 5)
+            $("#advancedSettingsModal").toggle()
+        },
+    )
 
     //Main menu buttons
-    $("#mainMenuCreditsButton").on("click", function () {
+    $("#mainMenuCreditsButton").on("click", function() {
         //Open credits modal
         $("#creditsModal").toggle()
     })
 
-    $("#playerNum").on("input", function () {
+    $("#playerNum").on("input", function() {
         updateFields()
     })
 
-    $("#longNamesCompatibilityMode").on("change", function () {
+    $("#longNamesCompatibilityMode").on("change", function() {
         saveSetting("longNamesCompatibilityMode", $(this).is(":checked"))
         changeLongNamesMode($(this).is(":checked"))
     })
 
-    $("#autocomplete").on("change", function () {
+    $("#autocomplete").on("change", function() {
         saveSetting("autocomplete", $(this).is(":checked"))
     })
 
@@ -1359,51 +1781,76 @@ $(document).ready(function () {
         }
     }
 
-    $("#hideDustCounter").on("change", function () {
+    $("#hideDustCounter").on("change", function() {
         saveSetting("hideDustCounter", $(this).is(":checked"))
         hideDustCounter($(this).is(":checked"))
     })
 
-    $("#alternateInGameToolbar").on("change", function () {
+    $("#alternateInGameToolbar").on("change", function() {
         saveSetting("alternateInGameToolbar", $(this).is(":checked"))
         swapUpperBar($(this).is(":checked"))
     })
 
     function hideDustCounter(shouldHide) {
         if (shouldHide) {
-            $(".dust-counter-box, .dust-counter-button, #instructionsModalSection6").hide()
+            $(
+                ".dust-counter-box, .dust-counter-button, #instructionsModalSection6",
+            ).hide()
         } else {
             $(".dust-counter-box").css("display", "flex")
             $(".dust-counter-button").show()
             $("#instructionsModalSection6").show()
-            $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(game.dustCounter)
+            $(
+                "#dustCounterValue, #dustCounterAltButton, #dustCounterButton",
+            ).text(game.dustCounter)
         }
     }
 
     function swapUpperBar(shouldSwap) {
         if (shouldSwap) {
             $("#mainGameTableWrapper").addClass("alt-table")
-            $("#mainGameUB").detach().insertAfter("#mainGameTableWrapper").addClass("alt-toolbar")
-            $("#dustCounterBox").detach().insertAfter("#mainGameTableWrapper").addClass("alt-dust-counter")
+            $("#mainGameUB")
+                .detach()
+                .insertAfter("#mainGameTableWrapper")
+                .addClass("alt-toolbar")
+            $("#dustCounterBox")
+                .detach()
+                .insertAfter("#mainGameTableWrapper")
+                .addClass("alt-dust-counter")
         } else {
             $("#mainGameTableWrapper").removeClass("alt-table")
-            $("#mainGameUB").detach().insertBefore("#mainGameTableWrapper").removeClass("alt-toolbar")
-            $("#dustCounterBox").detach().insertBefore("#mainGameTableWrapper").removeClass("alt-dust-counter")
+            $("#mainGameUB")
+                .detach()
+                .insertBefore("#mainGameTableWrapper")
+                .removeClass("alt-toolbar")
+            $("#dustCounterBox")
+                .detach()
+                .insertBefore("#mainGameTableWrapper")
+                .removeClass("alt-dust-counter")
         }
     }
 
-    $("#forceAssistantUpdate").on("change", function () {
+    $("#forceAssistantUpdate").on("change", function() {
         saveSetting("forceAssistantUpdate", $(this).is(":checked"))
     })
 
-    $("#playerNameForm").on("submit", function (event) {
+    $("#playerNameForm").on("submit", function(event) {
         event.preventDefault()
 
         //Salva le impostazioni dalla tabella
-        saveSetting("longNamesCompatibilityMode", $("#longNamesCompatibilityMode").is(":checked"))
+        saveSetting(
+            "longNamesCompatibilityMode",
+            $("#longNamesCompatibilityMode").is(":checked"),
+        )
         saveSetting("hideDustCounter", $("#hideDustCounter").is(":checked"))
-        saveSetting("alternateInGameToolbar", $("#alternateInGameToolbar").is(":checked"))
-        saveSetting("forceAssistantUpdate", $("#forceAssistantUpdate").is(":checked"))
+        saveSetting(
+            "alternateInGameToolbar",
+            $("#alternateInGameToolbar").is(":checked"),
+        )
+        saveSetting(
+            "forceAssistantUpdate",
+            $("#forceAssistantUpdate").is(":checked"),
+        )
         saveSetting("autocomplete", $("#autocomplete").is(":checked"))
 
         toggleGlobalLockButton(false)
@@ -1414,9 +1861,15 @@ $(document).ready(function () {
         $("#mainGame").css("display", "block")
 
         const playerArray = []
-        $('#playerNameContainer input').each(function () {
+        $("#playerNameContainer input").each(function() {
             playerArray.push(this.value) // "this" is the current element in the loop
         })
+
+        if (advancedCards.type && advancedCards.type !== "undefined") {
+            $("#instructionModalSection9").show()
+        } else {
+            $("#instructionModalSection9").hide()
+        }
 
         //Save data
         saveGameSetup(game.board, playerArray)
@@ -1425,33 +1878,67 @@ $(document).ready(function () {
         fillTable()
     })
 
-    $("#dustCounterDown, #dustCounterAltDown").on("click", function () {
-        $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(dustCounterDecrease())
+    $("#dustCounterDown, #dustCounterAltDown").on("click", function() {
+        $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(
+            dustCounterDecrease(),
+        )
     })
 
-    $("#dustCounterUp, #dustCounterAltDown").on("click", function () {
-        $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(dustCounterIncrease())
+    $("#dustCounterUp, #dustCounterAltDown").on("click", function() {
+        $("#dustCounterValue, #dustCounterAltButton, #dustCounterButton").text(
+            dustCounterIncrease(),
+        )
     })
 
-    $("#dustCounterButton, #dustCounterAltButton").on("click", function () {
-        const cur = $("#dustCounterBox").css("display") == "none"
+    $("#dustCounterButton, #dustCounterAltButton").on("click", function() {
+        const cur = $("#dustCounterBox").css("display") === "none"
         $("#dustCounterBox").css("display", cur ? "flex" : "none")
     })
+
+    function showPlayerInfo(index) {
+        const table = getFilteredTable()
+        const playerItems = table.map(item => item.items[index])
+
+        $("#playerInfoModalTitle").text(game.players[index])
+
+        let total = Math.floor(table.length / game.players.length)
+        if (game.advancedCards && game.advancedCards.type === "assign") total += game.advancedCards.players[index]
+        $("#playerInfoTotalCounter").text(total)
+
+        const yes = playerItems.filter(item => item === "check").length
+        const maybe = playerItems.filter(item => item === "check" || item === "maybe").length
+
+        $("#playerInfoYesCounter").text(yes)
+        $("#playerInfoMaybeCounter").text(maybe)
+
+        $("#playerInfoRemainingYesCounter").text(total-yes)
+        $("#playerInfoRemainingMaybeCounter").text(total-maybe)
+
+        hideAndShowModal("#playerInfoModal")
+    }
 
     function fillTable() {
         if (game.players.length > 6) {
             $("html, body").css("overflow-x", "auto")
-        }
+        }ì
 
-        game.players.forEach(player => {
+        game.players.forEach((player, index) => {
             let cell = $("<th>").attr("class", "name-holder")
             cell.attr("scope", "col")
             const sideways = $("<span>").addClass("sideways").text(player)
             const initial = $("<span>").text(player.trim().charAt(0))
-            const longDiv = $("<div class='long-names-cell'>").append($(sideways), $("<br>"), $(initial))
+            const longDiv = $("<div class='long-names-cell'>").append(
+                $(sideways),
+                $("<br>"),
+                $(initial),
+            )
             const normalDiv = $("<div class='normal-names-cell'>").text(player)
             cell.append($(longDiv), $(normalDiv))
-            cell.css("background-color", "var(--md-sys-color-secondary-container")
+            game.advancedCards && game.advancedCards.type !== "undefined" && cell.on("click", () => showPlayerInfo(index))
+            cell.css(
+                "background-color",
+                "var(--md-sys-color-secondary-container",
+            )
             $("#tableRowPlayers").append(cell)
         })
         changeLongNamesMode(settings.longNamesCompatibilityMode)
@@ -1462,7 +1949,10 @@ $(document).ready(function () {
                 item = {row, section, locked, items}
             */
             if (item.divider) {
-                $("#tableHeader" + item.name).attr("colspan", game.players.length + 2)
+                $("#tableHeader" + item.name).attr(
+                    "colspan",
+                    game.players.length + 2,
+                )
             } else {
                 let currentRow = $("<tr>").attr("class", "table-row")
 
@@ -1474,7 +1964,9 @@ $(document).ready(function () {
                 currentRow.append(header)
 
                 game.players.forEach((player, index) => {
-                    currentRow.append(getCellLink(index, item.row, item.maybeCounter[index]))
+                    currentRow.append(
+                        getCellLink(index, item.row, item.maybeCounter[index]),
+                    )
                 })
 
                 $("#tableSection" + item.section).append(currentRow)
@@ -1496,8 +1988,8 @@ $(document).ready(function () {
 
         let table = getFilteredTable()
         //controlla se la casella è spuntata
-        $(".cell-image-link").each(function () {
-            let id = $(this).find("img").data("key").split(',') // id: i,j è itemsArray[i] players[j]
+        $(".cell-image-link").each(function() {
+            let id = $(this).find("img").data("key").split(",") // id: i,j è itemsArray[i] players[j]
             let icon = table[id[0]].items[id[1]]
             $(this).find("img").attr("src", imageData[icon]).attr("class", icon)
             let counter = table[id[0]].maybeCounter[id[1]]
@@ -1507,23 +1999,35 @@ $(document).ready(function () {
             }
         })
         //controlla se la riga è spuntata
-        $("tr").find(".table-header-checkbox-cell").each(function () {
-            let item = $(this).find("input").data("item")
-            let index = itemsArray.indexOf(item)
-            if (table[index].locked) {
-                $(this).find("input").prop("checked", true)
-                $(this).closest(".table-row").find("td > a").data("locked", "true")
-                $(this).closest(".table-row").addClass("locked")
-                $(this).closest(".table-row").css("background-color", "var(--md-sys-color-error-container)")
-                $(this).closest(".table-row").css("color", "var(--md-sys-color-on-error-container)")
-            }
-        })
+        $("tr")
+            .find(".table-header-checkbox-cell")
+            .each(function() {
+                let item = $(this).find("input").data("item")
+                let index = itemsArray.indexOf(item)
+                if (table[index].locked) {
+                    $(this).find("input").prop("checked", true)
+                    $(this)
+                        .closest(".table-row")
+                        .find("td > a")
+                        .data("locked", "true")
+                    $(this).closest(".table-row").addClass("locked")
+                    $(this)
+                        .closest(".table-row")
+                        .css(
+                            "background-color",
+                            "var(--md-sys-color-error-container)",
+                        )
+                    $(this)
+                        .closest(".table-row")
+                        .css("color", "var(--md-sys-color-on-error-container)")
+                }
+            })
     }
 
     //Only show vertical long names at the top
-    $("body").on("scroll", function () {
+    $("body").on("scroll", function() {
         if (settings.longNamesCompatibilityMode) {
-            if ($("body").scrollTop() == 0) {
+            if ($("body").scrollTop() === 0) {
                 $(".sideways").show(300)
             } else {
                 $(".sideways").hide(300)
@@ -1531,7 +2035,8 @@ $(document).ready(function () {
         }
     })
 
-    let toUpdate = undefined, oldID = undefined
+    let toUpdate = undefined,
+        oldID = undefined
 
     function getCellLink(playerNumber, item, maybeCounter) {
         let cell = $("<td>")
@@ -1540,9 +2045,9 @@ $(document).ready(function () {
         cellLink.data("locked", "false")
         cellLink.data("player", playerNumber.toString())
         cellLink.data("item", item)
-        cellLink.on("click", function () {
+        cellLink.on("click", function() {
             //Only if data-locked: false
-            if ($(this).data("locked") == "false") {
+            if ($(this).data("locked") === "false") {
                 //Call selection modal
                 oldID = $(this).find("img").attr("class")
                 $("#selectionModal").toggle()
@@ -1552,38 +2057,78 @@ $(document).ready(function () {
         let cellImage = $("<img>")
         cellImage.attr("src", "assets/icons/reset.svg")
         cellImage.attr("class", "reset")
-        cellImage.data("key", "" + itemsArray.indexOf(item) + "," + playerNumber)
-        cellImage.attr("id", "cellImg" + playerNumber + "_" + itemsArray.indexOf(item))
-        let cellNumber = $("<span id='cellNumber" + playerNumber + "_" + itemsArray.indexOf(item) + "' class='cell-number'>").data("player", playerNumber.toString()).data("item", itemsArray.indexOf(item)).text(maybeCounter).css("display", "none")
+        cellImage.data(
+            "key",
+            "" + itemsArray.indexOf(item) + "," + playerNumber,
+        )
+        cellImage.attr(
+            "id",
+            "cellImg" + playerNumber + "_" + itemsArray.indexOf(item),
+        )
+        let cellNumber = $(
+            "<span id='cellNumber" +
+            playerNumber +
+            "_" +
+            itemsArray.indexOf(item) +
+            "' class='cell-number'>",
+        )
+            .data("player", playerNumber.toString())
+            .data("item", itemsArray.indexOf(item))
+            .text(maybeCounter)
+            .css("display", "none")
         cellLink.append(cellImage, cellNumber)
         cell.append(cellLink)
         return cell
     }
 
-    const checkboxSvg = "<svg viewBox=\"0 0 35.6 35.6\"><circle class=\"background\" cx=\"17.8\" cy=\"17.8\" r=\"17.8\"></circle><circle class=\"stroke\" cx=\"17.8\" cy=\"17.8\" r=\"14.37\"></circle><polyline class=\"checked\" points=\"11.78 18.12 15.55 22.23 25.17 12.87\"></polyline></svg>"
+    const checkboxSvg =
+        "<svg viewBox=\"0 0 35.6 35.6\"><circle class=\"background\" cx=\"17.8\" cy=\"17.8\" r=\"17.8\"></circle><circle class=\"stroke\" cx=\"17.8\" cy=\"17.8\" r=\"14.37\"></circle><polyline class=\"checked\" points=\"11.78 18.12 15.55 22.23 25.17 12.87\"></polyline></svg>"
 
     function getCheckboxCell(item) {
-        let checkboxDiv = $("<div>").addClass("checkbox-wrapper-31 checkbox-wrapper-32")
+        let checkboxDiv = $("<div>").addClass(
+            "checkbox-wrapper-31 checkbox-wrapper-32",
+        )
 
         let checkbox = $("<input>").attr("type", "checkbox")
         checkbox.attr("id", "rowCheckbox" + itemsArray.indexOf(item))
         checkbox.data("item", item)
         checkbox.attr("class", "table-header-checkbox")
-        checkbox.on("change", function () {
-            const oldRow = _.cloneDeep(getFilteredTable()[itemsArray.indexOf(item)].items)
-            const oldMaybeCounter = _.cloneDeep(getFilteredTable()[itemsArray.indexOf(item)].maybeCounter)
-            toggleLockRow(itemsArray.indexOf(item), $(this).is(":checked"), oldRow, oldMaybeCounter)
+        checkbox.on("change", function() {
+            const oldRow = _.cloneDeep(
+                getFilteredTable()[itemsArray.indexOf(item)].items,
+            )
+            const oldMaybeCounter = _.cloneDeep(
+                getFilteredTable()[itemsArray.indexOf(item)].maybeCounter,
+            )
+            toggleLockRow(
+                itemsArray.indexOf(item),
+                $(this).is(":checked"),
+                oldRow,
+                oldMaybeCounter,
+            )
             if ($(this).is(":checked")) {
-                $(this).closest(".table-row").find("td > a").data("locked", "true")
+                $(this)
+                    .closest(".table-row")
+                    .find("td > a")
+                    .data("locked", "true")
                 $(this).closest(".table-row").addClass("locked")
-                $(this).closest(".table-row").css("background-color", "var(--md-sys-color-error-container)")
-                $(this).closest(".table-row").css("color", "var(--md-sys-color-on-error-container)")
+                $(this)
+                    .closest(".table-row")
+                    .css(
+                        "background-color",
+                        "var(--md-sys-color-error-container)",
+                    )
+                $(this)
+                    .closest(".table-row")
+                    .css("color", "var(--md-sys-color-on-error-container)")
                 //Update symbols
                 toUpdate = $(this)
                 updateWholeRow("cross")
-
             } else {
-                $(this).closest(".table-row").find("td > a").data("locked", "false")
+                $(this)
+                    .closest(".table-row")
+                    .find("td > a")
+                    .data("locked", "false")
                 $(this).closest(".table-row").removeClass("locked")
                 $(this).closest(".table-row").css("background-color", "")
                 $(this).closest(".table-row").css("color", "")
@@ -1601,36 +2146,49 @@ $(document).ready(function () {
     }
 
     //Toggle instructions modal
-    $("#showInstructionsModal").on("click", function () {
+    $("#showInstructionsModal").on("click", function() {
         $("#instructionsModal").toggle()
     })
 
-
     //Lock cards
-    $("#lockPersonalCards, #lockPersonalCardsAlt").on("click", function () {
+    $("#lockPersonalCards, #lockPersonalCardsAlt").on("click", function() {
         toggleGlobalLockButton()
     })
 
     function toggleGlobalLockButton(force) {
         let shouldLock = force !== undefined ? force : !game.locked
         toggleLockGlobal(shouldLock)
-        if (shouldLock) {   //if currently unlocked, locks cards
-            $(".table-header-checkbox").each(function () {
+        if (shouldLock) {
+            //if currently unlocked, locks cards
+            $(".table-header-checkbox").each(function() {
                 $(this).attr("disabled", "disabled")
             })
-            $("#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel").css("background-color", "var(--md-sys-color-error-container)").css("color", "var(--md-sys-color-on-error-container)")
-            $("#lockPersonalCardsLabel, #lockPersonalCardsAltLabel").text("lock")
-        } else {        //if currently locked, unlocks cards
-            $(".table-header-checkbox").each(function () {
+            $(
+                "#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel",
+            )
+                .css("background-color", "var(--md-sys-color-error-container)")
+                .css("color", "var(--md-sys-color-on-error-container)")
+            $("#lockPersonalCardsLabel, #lockPersonalCardsAltLabel").text(
+                "lock",
+            )
+        } else {
+            //if currently locked, unlocks cards
+            $(".table-header-checkbox").each(function() {
                 $(this).removeAttr("disabled")
             })
-            $("#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel").css("background-color", "var(--md-sys-color-on-secondary)").css("color", "var(--md-sys-color-secondary)")
-            $("#lockPersonalCardsLabel, #lockPersonalCardsAltLabel").text("lock_open_right")
+            $(
+                "#lockPersonalCards, #lockPersonalCardsAlt, #lockPersonalCardsAltLabel, #lockPersonalCardsLabel",
+            )
+                .css("background-color", "var(--md-sys-color-on-secondary)")
+                .css("color", "var(--md-sys-color-secondary)")
+            $("#lockPersonalCardsLabel, #lockPersonalCardsAltLabel").text(
+                "lock_open_right",
+            )
         }
     }
 
     //Hide extra symbols
-    $("#showLessSymbolsCheckbox").on("change", function () {
+    $("#showLessSymbolsCheckbox").on("change", function() {
         $("#selectionModalExtended").toggle()
         saveSetting("showLessSymbols", !settings.showLessSymbols)
         if (settings.showLessSymbols) {
@@ -1652,7 +2210,7 @@ $(document).ready(function () {
     }
 
     //Select image
-    $(".selection-modal-image").on("click", function () {
+    $(".selection-modal-image").on("click", function() {
         const newID = $(this).attr("id")
 
         $("#selectionModal").toggle()
@@ -1661,7 +2219,9 @@ $(document).ready(function () {
         let rowName = itemsArray.indexOf(toUpdate.data("item"))
         let columnName = parseInt(toUpdate.data("player"))
         const oldRow = _.cloneDeep(getFilteredTable()[rowName].items)
-        const oldMaybeCounter = _.cloneDeep(getFilteredTable()[rowName].maybeCounter)
+        const oldMaybeCounter = _.cloneDeep(
+            getFilteredTable()[rowName].maybeCounter,
+        )
 
         //Crea azione
         const action = {
@@ -1670,27 +2230,30 @@ $(document).ready(function () {
             newId: newID,
             oldId: oldRow[columnName],
             item: rowName,
-            player: columnName
+            player: columnName,
         }
 
         //Se spunto e autocompl. ON, metti croci sulla riga
-        if (newID == "check" && settings.autocomplete) {
+        if (newID === "check" && settings.autocomplete) {
             updateWholeRow("cross")
             action.subactions.push({
                 type: "updateWholeRow",
                 id: "cross",
                 oldRow: oldRow,
-                oldMaybeCounter: oldMaybeCounter
+                oldMaybeCounter: oldMaybeCounter,
             })
-
-        } else if (oldID == "check" && newID != "check" && settings.autocomplete) {
+        } else if (
+            oldID === "check" &&
+            newID !== "check" &&
+            settings.autocomplete
+        ) {
             //Se tolgo spunta, metti reset
             updateWholeRow("reset")
             action.subactions.push({
                 type: "updateWholeRow",
                 id: "reset",
                 oldRow: oldRow,
-                oldMaybeCounter: oldMaybeCounter
+                oldMaybeCounter: oldMaybeCounter,
             })
         }
 
@@ -1699,7 +2262,9 @@ $(document).ready(function () {
             player: columnName,
             id: newID,
             oldId: getFilteredTable()[rowName].items[columnName],
-            oldMaybeCounter: _.cloneDeep(getFilteredTable()[rowName].maybeCounter[columnName])
+            oldMaybeCounter: _.cloneDeep(
+                getFilteredTable()[rowName].maybeCounter[columnName],
+            ),
         })
 
         saveAction(action)
@@ -1709,7 +2274,7 @@ $(document).ready(function () {
     })
 
     // INSTRUCTIONS MODAL TOOLTIP
-    $("#tooltipDebugButton").on("click", function () {
+    $("#tooltipDebugButton").on("click", function() {
         generateTooltip()
     })
 
@@ -1717,42 +2282,69 @@ $(document).ready(function () {
         const tooltip = $("<div class='tooltip-wrapper'>").text("Tooltip text")
     }
 
-
     //INSTRUCTIONS MODAL IMAGE
     const instructionsUpdateTime = 2000
 
     //Image 1: Cards given
-    const instructionsModalImage1 = ["shelves", "kitchen", "candle", "person", "dinner_dining", "chair"]
+    const instructionsModalImage1 = [
+        "shelves",
+        "kitchen",
+        "candle",
+        "person",
+        "dinner_dining",
+        "chair",
+    ]
     let im1Index = 0
-    let im1Interval = window.setInterval(function () {
-        if (im1Index == instructionsModalImage1.length) {
+    let im1Interval = window.setInterval(function() {
+        if (im1Index === instructionsModalImage1.length) {
             im1Index = 0
         }
-        $("#instructionsModalImage1, #instructionsModalImage2B").text(instructionsModalImage1[im1Index])
+        $("#instructionsModalImage1, #instructionsModalImage2B").text(
+            instructionsModalImage1[im1Index],
+        )
         im1Index++
     }, instructionsUpdateTime)
 
     //Image 2: Check box
-    let im2Interval = window.setInterval(function () {
+    let im2Interval = window.setInterval(function() {
         let isChecked = $("#fakeCheckbox").is(":checked")
         $("#fakeCheckbox").prop("checked", !isChecked)
-        $(".fake-table").css("background-color", (!isChecked ? "var(--md-sys-color-error-container)" : "")).css("color", (!isChecked ? "var(--md-sys-color-on-error-container)" : ""))
+        $(".fake-table")
+            .css(
+                "background-color",
+                !isChecked ? "var(--md-sys-color-error-container)" : "",
+            )
+            .css(
+                "color",
+                !isChecked ? "var(--md-sys-color-on-error-container)" : "",
+            )
     }, instructionsUpdateTime)
 
     //Image 3: Lock cards
     let im3Locked = false
-    let im3Interval = window.setInterval(function () {
+    let im3Interval = window.setInterval(function() {
         im3Locked = !im3Locked
         //Change bg
-        $("#fakeLockButton").css("background-color", im3Locked ? "var(--md-sys-color-error-container)" : "var(--md-sys-color-secondary-container)").css("color", im3Locked ? "var(--md-sys-color-on-error-container)" : "var(--md-sys-color-on-secondary-container)")
+        $("#fakeLockButton")
+            .css(
+                "background-color",
+                im3Locked
+                    ? "var(--md-sys-color-error-container)"
+                    : "var(--md-sys-color-secondary-container)",
+            )
+            .css(
+                "color",
+                im3Locked
+                    ? "var(--md-sys-color-on-error-container)"
+                    : "var(--md-sys-color-on-secondary-container)",
+            )
         //Change label
         $("#fakeLockButton").text(im3Locked ? "lock" : "lock_open_right")
     }, instructionsUpdateTime)
 
-
     // Assistant
 
-    $("#assistantButton, #assistantAltButton").on("click", function () {
+    $("#assistantButton, #assistantAltButton").on("click", function() {
         hideAndShowModal("#assistantModal")
         clearAssistantForm()
         populateAssistantForm()
@@ -1762,34 +2354,60 @@ $(document).ready(function () {
     const assistantFormItemsIDs = ["WhichCharacter", "WhichWeapon", "WhichRoom"]
 
     function clearAssistantForm() {
-        assistantFormPlayersIDs.forEach(id => $("#assistant" + id + "Select").empty())
-        assistantFormItemsIDs.forEach(id => $("#assistant" + id + "Select").empty())
+        assistantFormPlayersIDs.forEach((id) =>
+            $("#assistant" + id + "Select").empty(),
+        )
+        assistantFormItemsIDs.forEach((id) =>
+            $("#assistant" + id + "Select").empty(),
+        )
         $("#assistantWhatAskedSelect").empty()
         $("#assistantConfirmError").hide()
     }
 
     function populateAssistantForm() {
-        assistantFormPlayersIDs.forEach(id => {
-            $("#assistant" + id + "Select").append($("<option value='player" + id + "Myself'>").text(manualStrings.me))
+        assistantFormPlayersIDs.forEach((id) => {
+            $("#assistant" + id + "Select").append(
+                $("<option value='player" + id + "Myself'>").text(
+                    manualStrings.me,
+                ),
+            )
             game.players.forEach((player, index) => {
-                const option = $("<option value='player" + id + index + "'>").text(player)
+                const option = $(
+                    "<option value='player" + id + index + "'>",
+                ).text(player)
                 $("#assistant" + id + "Select").append($(option))
             })
         })
-        $("#assistantWhoAnsweredSelect option[value='playerWhoAnsweredMyself']").attr("disabled", "disabled")
+        $(
+            "#assistantWhoAnsweredSelect option[value='playerWhoAnsweredMyself']",
+        ).attr("disabled", "disabled")
         getFilteredTable().forEach((tableElement, tableIndex) => {
-            $("#assistantWhich" + tableElement.section.slice(0, -1) + "Select").append($("<option value='item" + tableIndex + "'>").text(tableElement.row))
+            $(
+                "#assistantWhich" + tableElement.section.slice(0, -1) + "Select",
+            ).append(
+                $("<option value='item" + tableIndex + "'>").text(
+                    tableElement.row,
+                ),
+            )
         })
-        $("#assistantWhoAnsweredSelect").append($("<option value='playerWhoAnsweredNobody'>").text(manualStrings.nobody))
+        $("#assistantWhoAnsweredSelect").append(
+            $("<option value='playerWhoAnsweredNobody'>").text(
+                manualStrings.nobody,
+            ),
+        )
     }
 
-    $("#assistantWhoAskedSelect").on("change", function () {
+    $("#assistantWhoAskedSelect").on("change", function() {
         const selectedId = $("#assistantWhoAskedSelect").find(":selected").val()
         $("#assistantWhoAnsweredSelect").find("*").removeAttr("disabled")
-        $("#assistantWhoAnsweredSelect option[value='" + selectedId.replace("WhoAsked", "WhoAnswered") + "']").attr("disabled", "disabled")
+        $(
+            "#assistantWhoAnsweredSelect option[value='" +
+            selectedId.replace("WhoAsked", "WhoAnswered") +
+            "']",
+        ).attr("disabled", "disabled")
     })
 
-    $("#assistantForm").on("submit", function (e) {
+    $("#assistantForm").on("submit", function(e) {
         e.preventDefault()
         /*
             Valida:
@@ -1804,13 +2422,34 @@ $(document).ready(function () {
             In futuro:
             Tieni traccia di quante carte ogni giocatore ha e segna la spunta se è l'unica opzione.
         */
-        let whoAsked = $("#assistantWhoAskedSelect").find(":selected").val().replace("playerWhoAsked", "")
+        let whoAsked = $("#assistantWhoAskedSelect")
+            .find(":selected")
+            .val()
+            .replace("playerWhoAsked", "")
         whoAsked = whoAsked !== "Myself" ? Number.parseInt(whoAsked) : -1
-        const whichCharacter = Number.parseInt($("#assistantWhichCharacterSelect").find(":selected").val().replace("item", ""))
-        const whichWeapon = Number.parseInt($("#assistantWhichWeaponSelect").find(":selected").val().replace("item", ""))
-        const whichRoom = Number.parseInt($("#assistantWhichRoomSelect").find(":selected").val().replace("item", ""))
+        const whichCharacter = Number.parseInt(
+            $("#assistantWhichCharacterSelect")
+                .find(":selected")
+                .val()
+                .replace("item", ""),
+        )
+        const whichWeapon = Number.parseInt(
+            $("#assistantWhichWeaponSelect")
+                .find(":selected")
+                .val()
+                .replace("item", ""),
+        )
+        const whichRoom = Number.parseInt(
+            $("#assistantWhichRoomSelect")
+                .find(":selected")
+                .val()
+                .replace("item", ""),
+        )
         const whichItems = [whichCharacter, whichWeapon, whichRoom]
-        let whoAnswered = $("#assistantWhoAnsweredSelect").find(":selected").val().replace("playerWhoAnswered", "")
+        let whoAnswered = $("#assistantWhoAnsweredSelect")
+            .find(":selected")
+            .val()
+            .replace("playerWhoAnswered", "")
         if (whoAnswered === "Myself") {
             whoAnswered = -1
         } else if (whoAnswered === "Nobody") {
@@ -1832,60 +2471,81 @@ $(document).ready(function () {
             subactions: [],
             items: whichItems,
             whoAsked: whoAsked,
-            whoAnswered: whoAnswered
+            whoAnswered: whoAnswered,
         }
 
         //Elabora
-        whichItems.forEach(item => {
+        whichItems.forEach((item) => {
             if (!getFilteredTable()[item].locked) {
                 if (whoAsked < whoAnswered) {
                     for (let i = whoAsked + 1; i < whoAnswered; i++) {
-                        if (getFilteredTable()[item].items[i] === "reset" || settings.forceAssistantUpdate) {
+                        if (
+                            getFilteredTable()[item].items[i] === "reset" ||
+                            settings.forceAssistantUpdate
+                        ) {
                             action.subactions.push({
                                 type: "assistantCross",
                                 item: item,
                                 player: i,
                                 oldId: getFilteredTable()[item].items[i],
-                                oldMaybeCounter: getFilteredTable()[item].maybeCounter[i]
+                                oldMaybeCounter:
+                                    getFilteredTable()[item].maybeCounter[i],
                             })
                             assistantCross(i, item)
                         }
                     }
                 } else {
                     for (let i = whoAsked + 1; i < game.players.length; i++) {
-                        if (getFilteredTable()[item].items[i] === "reset" || settings.forceAssistantUpdate) {
+                        if (
+                            getFilteredTable()[item].items[i] === "reset" ||
+                            settings.forceAssistantUpdate
+                        ) {
                             action.subactions.push({
                                 type: "assistantCross",
                                 item: item,
                                 player: i,
                                 oldId: getFilteredTable()[item].items[i],
-                                oldMaybeCounter: getFilteredTable()[item].maybeCounter[i]
+                                oldMaybeCounter:
+                                    getFilteredTable()[item].maybeCounter[i],
                             })
                             assistantCross(i, item)
                         }
                     }
                     for (let i = 0; i < whoAnswered; i++) {
-                        if (getFilteredTable()[item].items[i] === "reset" || settings.forceAssistantUpdate) {
+                        if (
+                            getFilteredTable()[item].items[i] === "reset" ||
+                            settings.forceAssistantUpdate
+                        ) {
                             action.subactions.push({
                                 type: "assistantCross",
                                 item: item,
                                 player: i,
-                                oldId: getFilteredTable()[item].items[i]
+                                oldId: getFilteredTable()[item].items[i],
                             })
                             assistantCross(i, item)
                         }
                     }
                 }
 
-                if (whoAnswered !== -1 && whoAnswered < game.players.length && (getFilteredTable()[item].items[whoAnswered] === "reset" || getFilteredTable()[item].items[whoAnswered] === "maybe" || settings.forceAssistantUpdate)) {
+                if (
+                    whoAnswered !== -1 &&
+                    whoAnswered < game.players.length &&
+                    (getFilteredTable()[item].items[whoAnswered] === "reset" ||
+                        getFilteredTable()[item].items[whoAnswered] ===
+                        "maybe" ||
+                        settings.forceAssistantUpdate)
+                ) {
                     action.subactions.push({
                         type: "assistantMaybe",
                         item: item,
                         player: whoAnswered,
-                        maybeCounter: getFilteredTable()[item].maybeCounter[whoAnswered],
-                        oldId: getFilteredTable()[item].items[whoAnswered]
+                        maybeCounter:
+                            getFilteredTable()[item].maybeCounter[whoAnswered],
+                        oldId: getFilteredTable()[item].items[whoAnswered],
                     })
-                    if (getFilteredTable()[item].items[whoAnswered] === "maybe") {
+                    if (
+                        getFilteredTable()[item].items[whoAnswered] === "maybe"
+                    ) {
                         getFilteredTable()[item].maybeCounter[whoAnswered]++
                     } else {
                         getFilteredTable()[item].items[whoAnswered] = "maybe"
@@ -1908,10 +2568,9 @@ $(document).ready(function () {
         redrawFromData(item, i)
     }
 
-
     // HISTORY
 
-    $("#undoButton, #redoButton").on("contextmenu", function (e) {
+    $("#undoButton, #redoButton").on("contextmenu", function(e) {
         e.preventDefault()
         fillHistoryModal()
         hideAndShowModal("#actionHistoryModal")
@@ -1935,24 +2594,32 @@ $(document).ready(function () {
         if (game.historyIndex <= index) {
             // Redo
             for (let i = 0; i < game.historyIndex; i++) {
-                $("#actionContainer" + i).removeClass("action-hovering-undo action-hovering-redo")
+                $("#actionContainer" + i).removeClass(
+                    "action-hovering-undo action-hovering-redo",
+                )
             }
             for (let i = game.historyIndex; i <= index; i++) {
                 $("#actionContainer" + i).addClass("action-hovering-redo")
             }
             for (let i = index + 1; i < game.history.length; i++) {
-                $("#actionContainer" + i).removeClass("action-hovering-undo action-hovering-redo")
+                $("#actionContainer" + i).removeClass(
+                    "action-hovering-undo action-hovering-redo",
+                )
             }
         } else {
             // Undo
             for (let i = 0; i < index; i++) {
-                $("#actionContainer" + i).removeClass("action-hovering-undo action-hovering-redo")
+                $("#actionContainer" + i).removeClass(
+                    "action-hovering-undo action-hovering-redo",
+                )
             }
             for (let i = index; i < game.historyIndex; i++) {
                 $("#actionContainer" + i).addClass("action-hovering-undo")
             }
             for (let i = game.historyIndex; i < game.history.length; i++) {
-                $("#actionContainer" + i).removeClass("action-hovering-undo action-hovering-redo")
+                $("#actionContainer" + i).removeClass(
+                    "action-hovering-undo action-hovering-redo",
+                )
             }
         }
     }
@@ -1973,39 +2640,49 @@ $(document).ready(function () {
     function getActionConfirmPrompt(index) {
         let ret
         if (game.historyIndex <= index) {
-            ret = manualStrings.actionHistoryModal.confirmationPrompt[$(".action-hovering-redo").length === 1 ? "singleRedo" : "batchRedo"].replace("[NUM]", $(".action-hovering-redo").length)
+            ret = manualStrings.actionHistoryModal.confirmationPrompt[
+                $(".action-hovering-redo").length === 1
+                    ? "singleRedo"
+                    : "batchRedo"
+                ].replace("[NUM]", $(".action-hovering-redo").length)
         } else {
-            ret = manualStrings.actionHistoryModal.confirmationPrompt[$(".action-hovering-undo").length === 1 ? "singleUndo" : "batchUndo"].replace("[NUM]", $(".action-hovering-undo").length)
+            ret = manualStrings.actionHistoryModal.confirmationPrompt[
+                $(".action-hovering-undo").length === 1
+                    ? "singleUndo"
+                    : "batchUndo"
+                ].replace("[NUM]", $(".action-hovering-undo").length)
         }
         return ret
     }
 
     function drawAction(index, action) {
-        const container = $("<div class='action-container'>").on("mouseenter", function () {
-            onActionHover(index)
-
-        }).on("mouseleave", function () {
-            // Mouse leave
-            game.history.forEach((action, i) => {
-                $("#actionContainer" + i).removeClass("action-hovering-undo action-hovering-redo")
+        const container = $("<div class='action-container'>")
+            .on("mouseenter", function() {
+                onActionHover(index)
             })
-
-        }).on("click", function () {
-
-            $("#actionConfirmText").text(getActionConfirmPrompt(index))
-            $("#actionConfirmSection").show()
-            $("#actionConfirmButton").on("click", function () {
-                batchUndoRedo(index)
+            .on("mouseleave", function() {
+                // Mouse leave
+                game.history.forEach((action, i) => {
+                    $("#actionContainer" + i).removeClass(
+                        "action-hovering-undo action-hovering-redo",
+                    )
+                })
             })
-
-        }).on("contextmenu", function (e) {
-            //Confirmation, then delete
-            e.preventDefault()
-            $(container).prop("onclick", null)
-            $(subtitleContainer).hide()
-            $(deletePromptContainer).show()
-
-        }).attr("id", "actionContainer" + index)
+            .on("click", function() {
+                $("#actionConfirmText").text(getActionConfirmPrompt(index))
+                $("#actionConfirmSection").show()
+                $("#actionConfirmButton").on("click", function() {
+                    batchUndoRedo(index)
+                })
+            })
+            .on("contextmenu", function(e) {
+                //Confirmation, then delete
+                e.preventDefault()
+                $(container).prop("onclick", null)
+                $(subtitleContainer).hide()
+                $(deletePromptContainer).show()
+            })
+            .attr("id", "actionContainer" + index)
 
         if (index >= game.historyIndex) {
             $(container).addClass("undone")
@@ -2015,16 +2692,34 @@ $(document).ready(function () {
         const iconContainer = $("<span class='small-button action-title-icon'>")
         const icon = $("<span class='material-icons-outlined'>")
         const title = $("<span>")
-        const subtitleContainer = $("<div class='setup-tooltip action-subtitle'>")
+        const subtitleContainer = $(
+            "<div class='setup-tooltip action-subtitle'>",
+        )
         const deletePromptContainer = getActionDeletePrompt(index)
 
         switch (action.type) {
             case "updateManual":
                 $(icon).text("add_circle_outline")
                 $(title).text(manualStrings.actionHistoryModal.updateManual)
-                const oldId = "<img src='" + imageData[action.oldId] + "' class='action-icon " + action.oldId + "'>"
-                const newId = "<img src='" + imageData[action.newId] + "' class='action-icon " + action.newId + "'>"
-                $(subtitleContainer).html(manualStrings.actionHistoryModal.updateManualText.replace("[ITEM]", getFilteredTable()[action.item].row).replace("[OLDID]", oldId).replace("[NEWID]", newId).replace("[PLAYER]", game.players[action.player]))
+                const oldId =
+                    "<img src='" +
+                    imageData[action.oldId] +
+                    "' class='action-icon " +
+                    action.oldId +
+                    "'>"
+                const newId =
+                    "<img src='" +
+                    imageData[action.newId] +
+                    "' class='action-icon " +
+                    action.newId +
+                    "'>"
+                $(subtitleContainer).html(
+                    manualStrings.actionHistoryModal.updateManualText
+                        .replace("[ITEM]", getFilteredTable()[action.item].row)
+                        .replace("[OLDID]", oldId)
+                        .replace("[NEWID]", newId)
+                        .replace("[PLAYER]", game.players[action.player]),
+                )
                 break
             case "updateAssistant":
                 $(icon).text("auto_awesome")
@@ -2034,91 +2729,255 @@ $(document).ready(function () {
             case "lockItem":
                 $(icon).text("lock")
                 $(title).text(manualStrings.actionHistoryModal.lockItem)
-                $(subtitleContainer).html(manualStrings.actionHistoryModal.locked.replace("[ITEM]", getFilteredTable()[action.item].row))
+                $(subtitleContainer).html(
+                    manualStrings.actionHistoryModal.locked.replace(
+                        "[ITEM]",
+                        getFilteredTable()[action.item].row,
+                    ),
+                )
                 break
             case "unlockItem":
                 $(icon).text("lock_open")
                 $(title).text(manualStrings.actionHistoryModal.unlockItem)
-                $(subtitleContainer).html(manualStrings.actionHistoryModal.unlocked.replace("[ITEM]", getFilteredTable()[action.item].row))
+                $(subtitleContainer).html(
+                    manualStrings.actionHistoryModal.unlocked.replace(
+                        "[ITEM]",
+                        getFilteredTable()[action.item].row,
+                    ),
+                )
                 break
         }
 
         $(iconContainer).append(index, $(icon))
         $(titleContainer).append($(iconContainer), $(title))
         $(deletePromptContainer).hide()
-        $(container).append($(titleContainer), $(subtitleContainer), $(deletePromptContainer))
+        $(container).append(
+            $(titleContainer),
+            $(subtitleContainer),
+            $(deletePromptContainer),
+        )
 
         return container
     }
 
     function getActionDeletePrompt(index) {
         const ret = $("<div class='setup-tooltip action-subtitle'>")
-        const text = $("<span>").text(manualStrings.actionHistoryModal.deletePrompt)
-        const yesButton = $("<button class='small-button material-icons-outlined board-button action-title-icon'>").text("done").on("click", function () {
-            game.history.splice(index, 1)
-            if (index < game.historyIndex) {
-                game.historyIndex--
-            }
-            saveGame()
-            fillHistoryModal()
-        })
-        const noButton = $("<button class='small-button material-icons-outlined board-button action-title-icon'>").text("close").on("click", function () {
-            fillHistoryModal()
-        })
+        const text = $("<span>").text(
+            manualStrings.actionHistoryModal.deletePrompt,
+        )
+        const yesButton = $(
+            "<button class='small-button material-icons-outlined board-button action-title-icon'>",
+        )
+            .text("done")
+            .on("click", function() {
+                game.history.splice(index, 1)
+                if (index < game.historyIndex) {
+                    game.historyIndex--
+                }
+                saveGame()
+                fillHistoryModal()
+            })
+        const noButton = $(
+            "<button class='small-button material-icons-outlined board-button action-title-icon'>",
+        )
+            .text("close")
+            .on("click", function() {
+                fillHistoryModal()
+            })
 
         $(ret).append($(text), $(yesButton), $(noButton))
         return ret
     }
 
     function getFormattedUpdateAssistant(action) {
-
         let ret
 
         if (manualStrings.actionHistoryModal.updateAssistantTextCustom) {
             //Usa formattazione personalizzata
-            if (action.whoAsked === -1 && action.whoAnswered >= game.players.length) {
+            if (
+                action.whoAsked === -1 &&
+                action.whoAnswered >= game.players.length
+            ) {
                 //Il giocatore ha chiesto, nessuno ha risposto
-                ret = manualStrings.actionHistoryModal.updateAssistantTextCustom.playerAskedNobodyAnswered
+                ret =
+                    manualStrings.actionHistoryModal.updateAssistantTextCustom
+                        .playerAskedNobodyAnswered
             } else if (action.whoAsked === -1) {
                 //Il giocatore ha chiesto
-                ret = manualStrings.actionHistoryModal.updateAssistantTextCustom.playerAsked
-                ret = ret.replace("[WHOANSWERED]", game.players[action.whoAnswered])
+                ret =
+                    manualStrings.actionHistoryModal.updateAssistantTextCustom
+                        .playerAsked
+                ret = ret.replace(
+                    "[WHOANSWERED]",
+                    game.players[action.whoAnswered],
+                )
             } else if (action.whoAnswered === -1) {
                 //Il giocatore ha risposto
-                ret = manualStrings.actionHistoryModal.updateAssistantTextCustom.playerAnswered
+                ret =
+                    manualStrings.actionHistoryModal.updateAssistantTextCustom
+                        .playerAnswered
                 ret = ret.replace("[WHOASKED]", game.players[action.whoAsked])
                 ret = ret.replace("[WHOANSWERED]", manualStrings.you)
             } else if (action.whoAnswered >= game.players.length) {
                 // Nessuno ha risposto
-                ret = manualStrings.actionHistoryModal.updateAssistantTextCustom.nobodyAnswered
+                ret =
+                    manualStrings.actionHistoryModal.updateAssistantTextCustom
+                        .nobodyAnswered
                 ret = ret.replace("[WHOASKED]", game.players[action.whoAsked])
                 ret = ret.replace("[WHOANSWERED]", manualStrings.nobody)
             } else {
                 // Predefinito
                 ret = manualStrings.actionHistoryModal.updateAssistantText
                 ret = ret.replace("[WHOASKED]", game.players[action.whoAsked])
-                ret = ret.replace("[WHOANSWERED]", game.players[action.whoAnswered])
+                ret = ret.replace(
+                    "[WHOANSWERED]",
+                    game.players[action.whoAnswered],
+                )
             }
-
         } else {
-
             //Usa formattazione normale.
             ret = manualStrings.actionHistoryModal.updateAssistantText
-            ret = ret.replace("[WHOASKED]", action.whoAsked === -1 ? manualStrings.you : game.players[action.whoAsked])
+            ret = ret.replace(
+                "[WHOASKED]",
+                action.whoAsked === -1
+                    ? manualStrings.you
+                    : game.players[action.whoAsked],
+            )
             if (action.whoAnswered === -1) {
                 ret = ret.replace("[WHOANSWERED]", manualStrings.you)
             } else if (action.whoAnswered >= game.players.length) {
                 ret = ret.replace("[WHOANSWERED]", manualStrings.nobody)
             } else {
-                ret = ret.replace("[WHOANSWERED]", game.players[action.whoAnswered])
+                ret = ret.replace(
+                    "[WHOANSWERED]",
+                    game.players[action.whoAnswered],
+                )
             }
-
         }
 
         action.items.forEach((item, index) => {
-            ret = ret.replace("[ITEM" + index + "]", getFilteredTable()[item].row)
+            ret = ret.replace(
+                "[ITEM" + index + "]",
+                getFilteredTable()[item].row,
+            )
         })
 
         return ret
     }
+
+    $("#continueToAdvancedSetup").on("click", function() {
+        // [NUMCARDS] carte.<br>Con [NUMPLAYERS] giocatori, ognunə riceverà [NUMCARDS] carte.<br>Cosa facciamo con le [NUMLEFTOVER]
+        const oldText = idStrings.cardConfigurationDescription
+        const board = boards[game.board]
+        const numCards =
+            board.characters.length + board.weapons.length + board.rooms.length
+        const numPlayers = $("#playerNum").val()
+        const numEach = Math.floor(numCards / numPlayers)
+        const numLeftover = numCards % numPlayers
+        leftoverCards = numLeftover
+        leftoverCardsToAssign = numLeftover
+
+        const newText = oldText
+            .replace("[NUMCARDS]", numCards)
+            .replace("[NUMPLAYERS]", numPlayers)
+            .replace("[NUMEACH]", numEach)
+        $("#cardConfigurationDescription").html(newText)
+
+        const oldEnabledText = idStrings.cardConfigurationEnabledDescription
+        $("#cardConfigurationEnabledDescription").html(
+            oldEnabledText.replace("[NUMLEFTOVER]", numLeftover),
+        )
+        if (numLeftover) {
+            $("#cardConfigurationDisabled").hide()
+            $("#cardConfigurationEnabled").show()
+            $(
+                "#cardConfigurationCommonText, #cardConfigurationAssignText",
+            ).hide()
+        } else {
+            $("#cardConfigurationDisabled").show()
+            $("#cardConfigurationEnabled").hide()
+        }
+        advancedCards &&
+        advancedCards.type === "assign" &&
+        updateLeftoverCardsAssign()
+        hideAndShowModal("#advancedSetupModal")
+    })
+
+    $("#cardConfigurationCommon").on("click", function() {
+        $("#cardConfigurationAssignText").hide()
+        $("#cardConfigurationCommonText").show()
+        $("#cardConfigurationAssign")
+            .css("background-color", "var(--md-sys-color-secondary-container)")
+            .css("color", "var(--md-sys-color-on-secondary-container)")
+        $("#cardConfigurationCommon")
+            .css("background-color", "var(--md-sys-color-tertiary-container)")
+            .css("color", "var(--md-sys-color-on-tertiary-container)")
+        advancedCards = { type: "common" }
+    })
+
+    let leftoverCards
+    let leftoverCardsToAssign
+
+    $("#cardConfigurationAssign").on("click", function() {
+        $("#cardConfigurationAssignText").show()
+        $("#cardConfigurationCommonText").hide()
+        $("#cardConfigurationCommon")
+            .css("background-color", "var(--md-sys-color-secondary-container)")
+            .css("color", "var(--md-sys-color-on-secondary-container)")
+        $("#cardConfigurationAssign")
+            .css("background-color", "var(--md-sys-color-tertiary-container)")
+            .css("color", "var(--md-sys-color-on-tertiary-container)")
+        advancedCards = { type: "assign", players: [] }
+        updateLeftoverCardsAssign()
+    })
+
+    function updateLeftoverCardsAssign() {
+        $("#cardConfigurationCommonSection").empty()
+        $(".setup-player").each((index, el) => {
+            const value = $(el).val()
+            advancedCards.players[index] = 0
+            const wrapper = $("<div>").addClass("setup-text")
+            const player = $("<span>").text(
+                value.length ? value : manualStrings.player + " " + (index + 1),
+            )
+            const minusButton = $("<button>")
+                .addClass("small-button material-symbols-outlined")
+                .on("click", () => {
+                    if (advancedCards.players[index]) {
+                        advancedCards.players[index]--
+                        leftoverCardsToAssign++
+                    }
+                    $("#leftoverCards" + index).text(
+                        advancedCards.players[index],
+                    )
+                })
+                .text("remove_circle")
+            const plusButton = $("<button>")
+                .addClass("small-button material-symbols-outlined")
+                .on("click", () => {
+                    if (leftoverCardsToAssign) {
+                        advancedCards.players[index]++
+                        leftoverCardsToAssign--
+                    }
+                    $("#leftoverCards" + index).text(
+                        advancedCards.players[index],
+                    )
+                })
+                .text("add_circle")
+            const number = $("<span id='leftoverCards" + index + "'>").text(
+                advancedCards.players[index],
+            )
+            $(wrapper).append(
+                $(player),
+                $(minusButton),
+                $(number),
+                $(plusButton),
+            )
+            $("#cardConfigurationCommonSection").append($(wrapper))
+        })
+    }
+
+    $("#closeAdvancedSetupButton").on("click", function () {
+        hideAndShowModal()
+    })
 })

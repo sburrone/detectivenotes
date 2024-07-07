@@ -6,3 +6,6 @@ twitter.js
 index_copy.html
 main_copy.js
 .hintrc
+.vscode
+.idea
+.prettierrc
