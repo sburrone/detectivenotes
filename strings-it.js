@@ -323,6 +323,8 @@ export const idStringsIT = {
     playerInfoMaybeText: "Carte confermate <span class=\"material-symbols-outlined\">done</span> e sospettate",
     playerInfoRemainingYesText: "Carte restanti (eccetto sospettate)",
     playerInfoRemainingMaybeText: "Carte restanti (incluse sospettate)",
+    playerInfoNoText: "Carte confermate <span class=\"material-symbols-outlined\">close</span>",
+    playerInfoMaybeNotText: "Carte confermate <span class=\"material-symbols-outlined\">close</span> e sospettate",
 }
 
 export const titleStringsIT = {

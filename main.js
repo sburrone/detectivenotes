@@ -951,7 +951,7 @@ $(document).ready(function() {
             swapUpperBar(settings.alternateInGameToolbar)
             $("#mainGame").css("display", "block")
 
-            if (advancedCards.type && advancedCards.type !== "undefined") {
+            if (game.advancedCards.type && game.advancedCards.type !== "undefined") {
                 $("#instructionModalSection9").show()
             } else {
                 $("#instructionModalSection9").hide()
@@ -1908,11 +1908,17 @@ $(document).ready(function() {
         const yes = playerItems.filter(item => item === "check").length
         const maybe = playerItems.filter(item => item === "check" || item === "maybe").length
 
+        const no = playerItems.filter(item => item === "cross").length
+        const maybeNot = playerItems.filter(item => item === "cross" || item === "maybeNot").length
+
         $("#playerInfoYesCounter").text(yes)
         $("#playerInfoMaybeCounter").text(maybe)
 
         $("#playerInfoRemainingYesCounter").text(total-yes)
         $("#playerInfoRemainingMaybeCounter").text(total-maybe)
+
+        $("#playerInfoNoCounter").text(no);
+        $("#playerInfoMaybeNotCounter").text(maybeNot);
 
         hideAndShowModal("#playerInfoModal")
     }

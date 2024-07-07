@@ -1,4 +1,4 @@
-export const versionNumber = 7.9
+export const versionNumber = 7.10
 
 export const minVersionNumber = 7
 
@@ -238,7 +238,7 @@ export const idStringsEN = {
     creditsModalText:
         "Detective Notes<br>Version " +
         versionNumber +
-        '<br>made with 🩷 by Nicholas<br><br>This project uses the <a href="https://sketchfab.com/3d-models/clue-board-game-843af04381cc495ca5f0a4bebadb1752" target="_blank">"Clue (Board Game)"</a> model by <a href="https://sketchfab.com/paulyanez" target="_blank">Anthony Yanez</a>, licensed under <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">CC-BY-4.0</a>.',
+        '<br>made with 🩷 by Nicholas<br><br>This project uses the <a href="https://sketchfab.com/3d-models/clue-board-game-843af04381cc495ca5f0a4bebadb1752" target="_blank">"Clue (Board Game)"</a> model by <a href="https://sketchfab.com/paulyanez" target="_blank">Anthony Yanez</a>, licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC-BY-4.0</a>.',
     advancedSettingsTitle: "Settings",
     longNamesCompatibilityModeLabel: "Long names compatibility mode",
     longNamesCompatibilityModeText:
@@ -288,7 +288,7 @@ export const idStringsEN = {
     autocompleteText:
         '<span class=\'text-primary\'>Recommended</span> Enable to add crosses<span class="material-symbols-outlined">close</span> automatically each time you tick<span class="material-symbols-outlined">done</span> a card.<br>Disable to add crosses manually.',
     instructionsModalText8:
-        "If you make a mistake, you can undo and redo.<br>Your actions are saved with the game.<br>View your action history by long pressing (or right clicking) on one of the buttons.",
+        "If you make a mistake, you can undo and redo.<br>Your actions are saved with the game.<br>View your action history by long pressing (or right-clicking) on one of the buttons.",
     darkModeLabel: "Dark mode",
     darkModeText: "Switch between a lighter and darker color scheme.",
     actionHistoryModalTitle: "History",
@@ -318,10 +318,12 @@ export const idStringsEN = {
     closeAdvancedSetupButton: "Done",
     instructionsModalText9: "You can get detailed player information by tapping their name.",
     playerInfoTotalText: "Total cards",
-    playerInfoYesText: "Confirmed cards <span class=\"material-symbols-outlined\">done</span>",
-    playerInfoMaybeText: "Confirmed cards <span class=\"material-symbols-outlined\">done</span> and suspected cards",
+    playerInfoYesText: "Checked cards <span class=\"material-symbols-outlined\">done</span>",
+    playerInfoMaybeText: "Checked cards <span class=\"material-symbols-outlined\">done</span> and suspected cards",
     playerInfoRemainingYesText: "Remaining cards (excl. suspected)",
     playerInfoRemainingMaybeText: "Remaining cards (incl. suspected)",
+    playerInfoNoText: "Crossed out cards <span class=\"material-symbols-outlined\">close</span>",
+    playerInfoMaybeNotText: "Crossed out cards <span class=\"material-symbols-outlined\">close</span> and suspected cards",
 }
 
 export const titleStringsEN = {
