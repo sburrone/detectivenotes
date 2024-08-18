@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/Addons.js'
 import { Canvas, useLoader } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
-import { Button } from '@mui/joy'
+import { Button, useTheme } from '@mui/material'
 
 export const BoardModel: FC<{
     hideUI: boolean
@@ -31,6 +31,8 @@ export const BoardModel: FC<{
         gltf.scene.traverse((c) => (c.castShadow = true))
     }, [gltf.scene])
 
+    const theme = useTheme()
+
     return (
         <>
             <Canvas
@@ -53,6 +55,7 @@ export const BoardModel: FC<{
                     top: 0,
                     left: 0,
                     zIndex: -1,
+                    backgroundColor: theme.palette.background.default,
                 }}
             >
                 <directionalLight

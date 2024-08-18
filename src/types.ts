@@ -12,3 +12,8 @@ export type Board = {
     weapons: string[]
     rooms: string[]
 }
+
+export enum ColorMode {
+    LIGHT = 'light',
+    DARK = 'dark',
+}
