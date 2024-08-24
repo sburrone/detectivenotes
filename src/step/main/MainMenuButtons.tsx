@@ -24,6 +24,7 @@ const MainMenuButtons: FC<{
         <>
             {!hideUI && (
                 <Stack
+                    aria-label={'background'}
                     style={{
                         position: 'fixed',
                         top: 0,
@@ -32,7 +33,11 @@ const MainMenuButtons: FC<{
                     }}
                     onDoubleClick={(e: Event) => {
                         e.preventDefault()
-                        setHideUI(true)
+                        if (
+                            (e.target as HTMLElement).ariaLabel === 'background'
+                        ) {
+                            setHideUI(true)
+                        }
                     }}
                 >
                     <>
@@ -56,6 +61,11 @@ const MainMenuButtons: FC<{
                         <Button
                             startDecorator={<PlayArrow />}
                             variant={'tonal'}
+                            style={{
+                                width: '20rem',
+                                margin: '0 auto',
+                            }}
+                            onClick={() => setStep(Step.SETUP)}
                         >
                             New
                         </Button>

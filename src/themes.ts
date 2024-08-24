@@ -1798,22 +1798,22 @@ export const themes = {
                         style: {
                             boxShadow:
                                 '0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)',
-                            backgroundColor: '#f2f4f0',
-                            color: '#006c4f',
+                            backgroundColor: '#191c1a',
+                            color: '#6fdba9',
                             '&:hover': {
-                                background: '#e0e6e1',
+                                background: '#232a26',
                                 boxShadow:
                                     '0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)',
                             },
                             '&:focus': {
-                                background: '#d8e0d9',
+                                background: '#28312c',
                             },
                             '&:active': {
-                                background: '#d8e0d9',
+                                background: '#28312c',
                             },
                             '&.Mui-disabled': {
-                                backgroundColor: 'rgba(25, 28, 26, 0.12)',
-                                color: 'rgba(25, 28, 26, 0.38)',
+                                backgroundColor: 'rgba(225, 227, 223, 0.12)',
+                                color: 'rgba(225, 227, 223, 0.38)',
                                 boxShadow: 'none',
                             },
                         },
@@ -1823,25 +1823,25 @@ export const themes = {
                             variant: 'filled',
                         },
                         style: {
-                            backgroundColor: '#006c4f',
-                            color: '#ffffff',
+                            backgroundColor: '#6fdba9',
+                            color: '#003824',
                             boxShadow: 'none',
                             '&.Mui-disabled': {
-                                backgroundColor: 'rgba(25, 28, 26, 0.12)',
-                                color: 'rgba(25, 28, 26, 0.38)',
+                                backgroundColor: 'rgba(225, 227, 223, 0.12)',
+                                color: 'rgba(225, 227, 223, 0.38)',
                                 boxShadow: 'none',
                             },
                             '&:hover': {
-                                backgroundColor: '#2a765b',
+                                backgroundColor: '#66cc9d',
                                 boxShadow:
                                     '0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)',
                             },
                             '&:focus': {
-                                backgroundColor: '#367b61',
+                                backgroundColor: '#61c497',
                                 boxShadow: 'none',
                             },
                             '&:active': {
-                                backgroundColor: '#367b61',
+                                backgroundColor: '#61c497',
                                 boxShadow: 'none',
                             },
                         },
@@ -1851,25 +1851,25 @@ export const themes = {
                             variant: 'tonal',
                         },
                         style: {
-                            backgroundColor: '#cfe9da',
-                            color: '#092017',
+                            backgroundColor: '#364b40',
+                            color: '#cfe9d8',
                             boxShadow: 'none',
                             '&.Mui-disabled': {
-                                backgroundColor: 'rgba(25, 28, 26, 0.12)',
-                                color: 'rgba(25, 28, 26, 0.38)',
+                                backgroundColor: 'rgba(225, 227, 223, 0.12)',
+                                color: 'rgba(225, 227, 223, 0.38)',
                                 boxShadow: 'none',
                             },
                             '&:hover': {
-                                backgroundColor: '#bcd5c7',
+                                backgroundColor: '#41564b',
                                 boxShadow:
                                     '0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)',
                             },
                             '&:focus': {
-                                backgroundColor: '#b2ccbe',
+                                backgroundColor: '#465c50',
                                 boxShadow: 'none',
                             },
                             '&:active': {
-                                backgroundColor: '#b2ccbe',
+                                backgroundColor: '#465c50',
                                 boxShadow: 'none',
                             },
                         },
@@ -1879,25 +1879,25 @@ export const themes = {
                             variant: 'outlined',
                         },
                         style: {
-                            color: '#006c4f',
-                            borderColor: '#707974',
+                            color: '#6fdba9',
+                            borderColor: '#8a938c',
                             borderWidth: '1px',
                             boxShadow: 'none',
                             '&.Mui-disabled': {
-                                borderColor: 'rgba(25, 28, 26, 0.12)',
-                                color: 'rgba(25, 28, 26, 0.38)',
+                                borderColor: 'rgba(225, 227, 223, 0.12)',
+                                color: 'rgba(225, 227, 223, 0.38)',
                             },
                             '&:hover': {
-                                backgroundColor: '#e6ece6',
-                                borderColor: '#6b7871',
+                                backgroundColor: '#1c231f',
+                                borderColor: '#8b988f',
                             },
                             '&:focus': {
-                                backgroundColor: '#dce5de',
-                                borderColor: '#006c4f',
+                                backgroundColor: '#222a25',
+                                borderColor: '#6fdba9',
                             },
                             '&:active': {
-                                backgroundColor: '#dce5de',
-                                borderColor: '#697770',
+                                backgroundColor: '#222a25',
+                                borderColor: '#8b9b90',
                             },
                         },
                     },
@@ -1907,20 +1907,20 @@ export const themes = {
                         },
                         style: {
                             backgroundColor: 'transparent',
-                            color: '#006c4f',
+                            color: '#6fdba9',
                             boxShadow: 'none',
                             padding: '5px 15px',
                             '&.Mui-disabled': {
-                                color: 'rgba(25, 28, 26, 0.38)',
+                                color: 'rgba(225, 227, 223, 0.38)',
                             },
                             '&:hover': {
-                                backgroundColor: '#e6ece6',
+                                backgroundColor: '#1c231f',
                             },
                             '&:focus': {
-                                backgroundColor: '#dce5de',
+                                backgroundColor: '#222a25',
                             },
                             '&:active': {
-                                backgroundColor: '#dce5de',
+                                backgroundColor: '#222a25',
                             },
                         },
                     },

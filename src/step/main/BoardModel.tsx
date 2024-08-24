@@ -77,10 +77,15 @@ export const BoardModel: FC<{
             </Canvas>
             {hideUI && (
                 <Button
-                    style={{ position: 'absolute', bottom: 0, width: '100vw' }}
+                    style={{
+                        position: 'absolute',
+                        bottom: 0,
+                        width: '100vw',
+                        borderRadius: 0,
+                    }}
                     onClick={() => setHideUI(false)}
                 >
-                    Return to main menu
+                    TBD Return to main menu
                 </Button>
             )}
         </>

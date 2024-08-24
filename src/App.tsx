@@ -18,7 +18,7 @@ function App() {
         () => createTheme(themes[colorMode] as unknown as ThemeOptions),
         [colorMode]
     )
-    console.log('bg', theme.palette.background.default)
+
     return (
         <ThemeProvider theme={theme}>
             <IntlProvider locale={'en-US'} messages={{ AA: 'BB' }}>
