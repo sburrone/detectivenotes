@@ -5,6 +5,7 @@ import MainMenu from './step/main/MainMenu.tsx'
 import { IntlProvider } from 'react-intl'
 import { createTheme, ThemeOptions, ThemeProvider } from '@mui/material'
 import { themes } from './themes.ts'
+import Setup from './step/setup/Setup.tsx'
 
 function App() {
     const [step, setStep] = useState<Step>(Step.MAIN)
@@ -34,6 +35,7 @@ function App() {
                             setColorMode={setColorMode}
                         />
                     )}
+                    {step === Step.SETUP && <Setup setStep={setStep} />}
                 </div>
             </IntlProvider>
         </ThemeProvider>

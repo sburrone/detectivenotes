@@ -13,6 +13,12 @@ export type Board = {
     rooms: string[]
 }
 
+export enum Item {
+    SUSPECT = 'characters',
+    WEAPON = 'weapons',
+    ROOM = 'rooms',
+}
+
 export enum ColorMode {
     LIGHT = 'light',
     DARK = 'dark',

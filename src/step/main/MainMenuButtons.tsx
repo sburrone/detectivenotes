@@ -67,7 +67,7 @@ const MainMenuButtons: FC<{
                             }}
                             onClick={() => setStep(Step.SETUP)}
                         >
-                            New
+                            TBD New
                         </Button>
                         <div
                             style={{
