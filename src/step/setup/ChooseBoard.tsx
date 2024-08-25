@@ -18,6 +18,7 @@ const ChooseBoard: FC<IChooseBoardProps> = (props) => {
                 display: 'flex',
                 flexWrap: 'wrap',
                 justifyContent: 'center',
+                height: '100%',
             }}
         >
             {boards.map((board, index) => (

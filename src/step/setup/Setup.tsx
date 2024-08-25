@@ -12,6 +12,7 @@ import {
 import UpperBar from '../../components/UpperBar.tsx'
 import { ArrowBack, Settings } from '@mui/icons-material'
 import ChooseBoard from './ChooseBoard.tsx'
+import ChoosePlayers from './ChoosePlayers.tsx'
 
 interface ISetupProps {
     setStep: (step: Step) => any
@@ -23,7 +24,14 @@ const Setup: FC<ISetupProps> = (props) => {
     const [activeStep, setActiveStep] = useState(0)
     const [skipped, setSkipped] = useState(new Set<number>())
 
+    //Step 1: Board
     const [selectedBoard, setSelectedBoard] = useState<Board>()
+
+    //Step 2: Players
+    const [players, setPlayers] = useState<string[]>(Array(3).fill(''))
+    const [shelvedNames, setShelvedNames] = useState<string[]>(
+        Array(6).fill('')
+    )
 
     const steps = useMemo(
         () => ['TBD Select board', 'TBD Who is playing?', 'TBD Advanced Setup'],
@@ -69,7 +77,7 @@ const Setup: FC<ISetupProps> = (props) => {
     }
 
     return (
-        <div style={{ height: '100vh', width: '100vw' }}>
+        <div>
             <UpperBar>
                 <IconButton variant={'text'} onClick={() => setStep(Step.MAIN)}>
                     <ArrowBack />
@@ -85,7 +93,7 @@ const Setup: FC<ISetupProps> = (props) => {
                     <Settings />
                 </IconButton>
             </UpperBar>
-            <Box sx={{ margin: '2em' }}>
+            <Box sx={{ padding: '1em' }}>
                 <Stepper
                     alternativeLabel
                     activeStep={activeStep}
@@ -119,7 +127,14 @@ const Setup: FC<ISetupProps> = (props) => {
                         activeBoard={selectedBoard}
                     />
                 )}
-                {activeStep === 1 && <Typography>Step1</Typography>}
+                {activeStep === 1 && (
+                    <ChoosePlayers
+                        setPlayers={setPlayers}
+                        board={selectedBoard}
+                        shelvedNames={shelvedNames}
+                        setShelvedNames={setShelvedNames}
+                    />
+                )}
                 {activeStep === 2 && <Typography>Step2</Typography>}
                 <Typography sx={{ mt: 2, mb: 1 }}>
                     Step {activeStep + 1}

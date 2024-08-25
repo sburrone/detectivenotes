@@ -60,8 +60,11 @@ const BoardElement: FC<CardProps & IBoardElementProps> = (props) => {
                 onClick={() => onClick(board)}
             />
             <CardContent style={{ paddingBottom: 16 }}>
-                <Stack direction={'row'}>
-                    <Chip icon={<Person />} label={`${board.minPlayers}-6`} />
+                <Stack direction={'row'} flexWrap={'wrap'}>
+                    <Chip
+                        icon={<Person />}
+                        label={`${board.minPlayers}-${board.maxPlayers ?? 6} players`}
+                    />
                     <Chip
                         onClick={() => handleChipClick(Item.SUSPECT)}
                         icon={<PersonSearchOutlined />}

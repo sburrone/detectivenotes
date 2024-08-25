@@ -8,6 +8,7 @@ export type Board = {
     id: number
     name: string
     minPlayers: number
+    maxPlayers?: number
     characters: string[]
     weapons: string[]
     rooms: string[]

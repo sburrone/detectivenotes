@@ -969,6 +969,14 @@ export const themes = {
                     },
                 },
             },
+            MuiTextField: {
+                styleOverrides: {
+                    root: {
+                        backgroundColor: '#cfe9da',
+                        color: '#092017',
+                    },
+                },
+            },
             MuiToggleButton: {
                 styleOverrides: {
                     root: {
@@ -2433,6 +2441,14 @@ export const themes = {
                             opacity: 1,
                             transition: 'background .2s',
                         },
+                    },
+                },
+            },
+            MuiTextField: {
+                styleOverrides: {
+                    root: {
+                        backgroundColor: '#364b40',
+                        color: '#cfe9d8',
                     },
                 },
             },

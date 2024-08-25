@@ -5,7 +5,7 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "ES2021.String"],
     "target": "ESNext",
     "module": "ESNext"
   },
