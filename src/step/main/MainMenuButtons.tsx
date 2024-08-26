@@ -1,13 +1,6 @@
 import { FC } from 'react'
 import { Button, Stack, Typography, useTheme } from '@mui/material'
-import {
-    AddToHomeScreen,
-    DarkMode,
-    Info,
-    Language,
-    LightMode,
-    PlayArrow,
-} from '@mui/icons-material'
+import { AddToHomeScreen, DarkMode, Info, Language, LightMode, PlayArrow } from '@mui/icons-material'
 import CustomIconButton from '../../components/CustomIconButton.tsx'
 import { ColorMode, Step } from '../../types.ts'
 
@@ -33,9 +26,7 @@ const MainMenuButtons: FC<{
                     }}
                     onDoubleClick={(e: Event) => {
                         e.preventDefault()
-                        if (
-                            (e.target as HTMLElement).ariaLabel === 'background'
-                        ) {
+                        if ((e.target as HTMLElement).ariaLabel === 'background') {
                             setHideUI(true)
                         }
                     }}
@@ -48,10 +39,8 @@ const MainMenuButtons: FC<{
                                 margin: '24px auto',
                                 textAlign: 'center',
                                 color: theme.palette.primary.main,
-                                textShadow: (theme.palette as any)
-                                    .onPrimaryContainer.main,
-                                webkitTextStroke: (theme.palette as any)
-                                    .onPrimary.contrastText,
+                                textShadow: (theme.palette as any).onPrimaryContainer.main,
+                                webkitTextStroke: (theme.palette as any).onPrimary.contrastText,
                             }}
                         >
                             detective
@@ -95,18 +84,10 @@ const MainMenuButtons: FC<{
                             </CustomIconButton>
                             <CustomIconButton
                                 onClick={() =>
-                                    setColorMode(
-                                        colorMode === ColorMode.LIGHT
-                                            ? ColorMode.DARK
-                                            : ColorMode.LIGHT
-                                    )
+                                    setColorMode(colorMode === ColorMode.LIGHT ? ColorMode.DARK : ColorMode.LIGHT)
                                 }
                             >
-                                {colorMode === ColorMode.LIGHT ? (
-                                    <DarkMode />
-                                ) : (
-                                    <LightMode />
-                                )}
+                                {colorMode === ColorMode.LIGHT ? <DarkMode /> : <LightMode />}
                             </CustomIconButton>
                             <CustomIconButton>
                                 <Info />

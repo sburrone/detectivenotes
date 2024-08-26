@@ -10,15 +10,10 @@ import Setup from './step/setup/Setup.tsx'
 function App() {
     const [step, setStep] = useState<Step>(Step.MAIN)
     const [colorMode, setColorMode] = useState<ColorMode>(
-        window.matchMedia('(prefers-color-scheme: dark)').matches
-            ? ColorMode.DARK
-            : ColorMode.LIGHT
+        window.matchMedia('(prefers-color-scheme: dark)').matches ? ColorMode.DARK : ColorMode.LIGHT
     )
 
-    const theme = useMemo(
-        () => createTheme(themes[colorMode] as unknown as ThemeOptions),
-        [colorMode]
-    )
+    const theme = useMemo(() => createTheme(themes[colorMode] as unknown as ThemeOptions), [colorMode])
 
     return (
         <ThemeProvider theme={theme}>
@@ -26,15 +21,11 @@ function App() {
                 <div
                     style={{
                         backgroundColor: theme.palette.background.default,
-                        minHeight: '100vh',
+                        minHeight: step === Step.MAIN ? undefined : '100vh',
                     }}
                 >
                     {step === Step.MAIN && (
-                        <MainMenu
-                            setStep={setStep}
-                            colorMode={colorMode}
-                            setColorMode={setColorMode}
-                        />
+                        <MainMenu setStep={setStep} colorMode={colorMode} setColorMode={setColorMode} />
                     )}
                     {step === Step.SETUP && <Setup setStep={setStep} />}
                 </div>

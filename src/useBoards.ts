@@ -15,14 +15,7 @@ export const useBoards = (): Board[] => {
                 'Colonel Mustard',
                 'Mrs. White',
             ],
-            weapons: [
-                'Candlestick',
-                'Dagger',
-                'Lead Pipe',
-                'Revolver',
-                'Rope',
-                'Spanner',
-            ],
+            weapons: ['Candlestick', 'Dagger', 'Lead Pipe', 'Revolver', 'Rope', 'Spanner'],
             rooms: [
                 'Kitchen',
                 'Ballroom',
@@ -40,22 +33,8 @@ export const useBoards = (): Board[] => {
             name: 'Meereen',
             minPlayers: 2,
             //maxPlayers: 6 sempre
-            characters: [
-                'Daenerys',
-                'Daario',
-                'Missandei',
-                'Grey Worm',
-                'Loraq',
-                'Jorah',
-            ],
-            weapons: [
-                'Poison Vial',
-                'Battle Axe',
-                'Arokh',
-                'Faceless Man',
-                'Crossbow',
-                'Assassin Dagger',
-            ],
+            characters: ['Daenerys', 'Daario', 'Missandei', 'Grey Worm', 'Loraq', 'Jorah'],
+            weapons: ['Poison Vial', 'Battle Axe', 'Arokh', 'Faceless Man', 'Crossbow', 'Assassin Dagger'],
             rooms: [
                 'Brothel',
                 'Pyramid',
@@ -73,22 +52,8 @@ export const useBoards = (): Board[] => {
             name: 'Red Keep',
             minPlayers: 2,
             //maxPlayers: 6 sempre
-            characters: [
-                'Cersei',
-                'Tyrion',
-                'Jaime',
-                'Margaery',
-                'Petyr',
-                'Sansa',
-            ],
-            weapons: [
-                'Poison Vial',
-                'Battle Axe',
-                'Arokh',
-                'Faceless Man',
-                'Crossbow',
-                'Assassin Dagger',
-            ],
+            characters: ['Cersei', 'Tyrion', 'Jaime', 'Margaery', 'Petyr', 'Sansa'],
+            weapons: ['Poison Vial', 'Battle Axe', 'Arokh', 'Faceless Man', 'Crossbow', 'Assassin Dagger'],
             rooms: [
                 'Council Chamber',
                 "Cyburn's Laboratory",
@@ -108,22 +73,8 @@ export const useBoards = (): Board[] => {
             name: 'Zelda',
             minPlayers: 2,
             //maxPlayers: 6 sempre
-            characters: [
-                'Nabooru',
-                'Darunia',
-                'Zelda',
-                'Link',
-                'Rauru',
-                'Impa',
-            ],
-            weapons: [
-                'Master Sword',
-                'Fairy Bow',
-                'Megaton Hammer',
-                'Boomerang',
-                'Hookshot',
-                'Bombuchu',
-            ],
+            characters: ['Nabooru', 'Darunia', 'Zelda', 'Link', 'Rauru', 'Impa'],
+            weapons: ['Master Sword', 'Fairy Bow', 'Megaton Hammer', 'Boomerang', 'Hookshot', 'Bombuchu'],
             rooms: [
                 'Death Mountain',
                 'Kakariko Village',
@@ -141,22 +92,8 @@ export const useBoards = (): Board[] => {
             name: 'Star Wars',
             minPlayers: 2,
             //maxPlayers: 6 sempre
-            characters: [
-                'Alderaan',
-                'Bespin',
-                'Dagobah',
-                'Endor',
-                'Tatooine',
-                'Yavin 4',
-            ],
-            weapons: [
-                'X-Wing',
-                'Y-Wing',
-                'TIE Fighter',
-                'TIE Bomber',
-                'Millenium Falcon',
-                'Escape Pod',
-            ],
+            characters: ['Alderaan', 'Bespin', 'Dagobah', 'Endor', 'Tatooine', 'Yavin 4'],
+            weapons: ['X-Wing', 'Y-Wing', 'TIE Fighter', 'TIE Bomber', 'Millenium Falcon', 'Escape Pod'],
             rooms: [
                 'War Room',
                 'Throne Room',
@@ -182,14 +119,7 @@ export const useBoards = (): Board[] => {
                 'Snatcher',
                 'Bellatrix Lastrange',
             ],
-            weapons: [
-                'Jinxed Broomstick',
-                'Cursed Necklace',
-                'Love Potion',
-                'Poisoned Mead',
-                'Incedio',
-                'Stupefy',
-            ],
+            weapons: ['Jinxed Broomstick', 'Cursed Necklace', 'Love Potion', 'Poisoned Mead', 'Incedio', 'Stupefy'],
             rooms: [
                 'Malfoy Manor',
                 "The Hog's Head",

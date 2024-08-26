@@ -16,10 +16,7 @@ const UpperBar: FC<IUpperBarProps> = (props) => {
                 flexGrow: 1,
             }}
         >
-            <AppBar
-                position={'static'}
-                sx={{ backgroundColor: theme.palette.primary.contrastText }}
-            >
+            <AppBar position={'static'} sx={{ backgroundColor: theme.palette.primary.contrastText }}>
                 <Toolbar>{children}</Toolbar>
             </AppBar>
         </Box>

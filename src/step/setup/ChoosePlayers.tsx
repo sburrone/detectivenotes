@@ -1,22 +1,10 @@
 import { ChangeEvent, FC, useMemo, useState } from 'react'
-import {
-    InputAdornment,
-    Slider,
-    Stack,
-    TextField,
-    Typography,
-} from '@mui/material'
+import { InputAdornment, Slider, Stack, TextField, Typography } from '@mui/material'
 import { Board } from '../../types.ts'
-import {
-    Face2TwoTone,
-    Face3TwoTone,
-    Face4TwoTone,
-    Face5TwoTone,
-    Face6TwoTone,
-    FaceTwoTone,
-} from '@mui/icons-material'
+import { Face2TwoTone, Face3TwoTone, Face4TwoTone, Face5TwoTone, Face6TwoTone, FaceTwoTone } from '@mui/icons-material'
 
 interface IChoosePlayersProps {
+    players: string[]
     setPlayers: (players: string[]) => void
     board: Board | undefined
     shelvedNames: string[]
@@ -52,6 +40,16 @@ const ChoosePlayers: FC<IChoosePlayersProps> = (props) => {
         []
     )
 
+    const validateField = (value: string, index: number): string | undefined => {
+        if (playerNum < index || value === '') {
+            return undefined
+        }
+        if (shelvedNames.slice(0, playerNum).filter((name) => name === value).length > 1) {
+            return 'TBD This name is taken'
+        }
+        return undefined
+    }
+
     return (
         <div>
             {board && (
@@ -63,12 +61,7 @@ const ChoosePlayers: FC<IChoosePlayersProps> = (props) => {
                         flexDirection: 'column',
                     }}
                 >
-                    <Typography
-                        sx={{ marginTop: '2em' }}
-                        color={'primary'}
-                        align={'center'}
-                        variant={'h5'}
-                    >
+                    <Typography sx={{ marginTop: '2em' }} color={'primary'} align={'center'} variant={'h5'}>
                         TBD How many people are playing?
                     </Typography>
                     <Slider
@@ -76,6 +69,7 @@ const ChoosePlayers: FC<IChoosePlayersProps> = (props) => {
                         sx={{
                             margin: '1em auto 2em auto',
                             width: '30em',
+                            maxWidth: 'calc(100vw - 64px)',
                             display: 'block',
                         }}
                         color={'tertiary'}
@@ -98,29 +92,31 @@ const ChoosePlayers: FC<IChoosePlayersProps> = (props) => {
                     component={'div'}
                     justifyContent={'center'}
                     margin={'auto'}
+                    align={'center'}
                     sx={{ marginBottom: '1em' }}
                 >
                     TBD Write them clockwise starting from your left.
                 </Typography>
-                {shelvedNames.map((pl, index) => {
+                {shelvedNames.map((_pl, index) => {
                     return (
                         <TextField
+                            required={playerNum < index}
                             sx={{
                                 margin: '0.25em auto',
                                 width: '30em',
+                                maxWidth: 'calc(100vw - 64px)',
                                 display: playerNum > index ? undefined : 'none',
                             }}
+                            error={!!validateField(shelvedNames[index], index)}
+                            helperText={validateField(shelvedNames[index], index)}
                             variant={'outlined'}
                             key={index}
                             value={shelvedNames[index]}
-                            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                                handleInputChange(index, e.target.value)
-                            }
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange(index, e.target.value)}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position={'start'}>
-                                        {faces[index] ??
-                                            faces[index % faces.length]}
+                                        {faces[index] ?? faces[index % faces.length]}
                                     </InputAdornment>
                                 ),
                             }}

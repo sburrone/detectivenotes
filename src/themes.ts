@@ -203,10 +203,9 @@ export const themes = {
                             color: '#2e312f',
                             border: '0px solid #bfc9c2',
                         },
-                        '& .MuiAccordionSummary-root > .MuiAccordionSummary-expandIconWrapper ':
-                            {
-                                color: '#191c1a',
-                            },
+                        '& .MuiAccordionSummary-root > .MuiAccordionSummary-expandIconWrapper ': {
+                            color: '#191c1a',
+                        },
                     },
                 },
             },
@@ -1678,10 +1677,9 @@ export const themes = {
                             color: '#e1e3df',
                             border: '0px solid #404943',
                         },
-                        '& .MuiAccordionSummary-root > .MuiAccordionSummary-expandIconWrapper ':
-                            {
-                                color: '#e1e3df',
-                            },
+                        '& .MuiAccordionSummary-root > .MuiAccordionSummary-expandIconWrapper ': {
+                            color: '#e1e3df',
+                        },
                     },
                 },
             },

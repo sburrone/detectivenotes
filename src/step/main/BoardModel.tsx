@@ -20,9 +20,7 @@ export const BoardModel: FC<{
     ]
 
     function getCameraPosition() {
-        return cameraPositions[
-            Math.floor(Math.random() * cameraPositions.length)
-        ]
+        return cameraPositions[Math.floor(Math.random() * cameraPositions.length)]
     }
 
     const gltf = useLoader(GLTFLoader, './3d/scene.gltf')
@@ -58,12 +56,7 @@ export const BoardModel: FC<{
                     backgroundColor: theme.palette.background.default,
                 }}
             >
-                <directionalLight
-                    color={0xffffff}
-                    position={[20, 100, 10]}
-                    castShadow
-                    intensity={5}
-                />
+                <directionalLight color={0xffffff} position={[20, 100, 10]} castShadow intensity={5} />
                 <ambientLight color={0xffffff} />
                 <OrbitControls
                     target={[0, 10, 0]}

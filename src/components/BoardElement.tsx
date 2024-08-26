@@ -12,12 +12,7 @@ import {
     useTheme,
 } from '@mui/material'
 import { Board, Item } from '../types.ts'
-import {
-    HouseTwoTone,
-    Person,
-    PersonSearchOutlined,
-    VaccinesTwoTone,
-} from '@mui/icons-material'
+import { HouseTwoTone, Person, PersonSearchOutlined, VaccinesTwoTone } from '@mui/icons-material'
 
 interface IBoardElementProps {
     board: Board
@@ -47,11 +42,7 @@ const BoardElement: FC<CardProps & IBoardElementProps> = (props) => {
             }}
         >
             <CardHeader
-                title={
-                    <Typography style={{ fontSize: '1.25rem' }}>
-                        {board.name}
-                    </Typography>
-                }
+                title={<Typography style={{ fontSize: '1.25rem' }}>{board.name}</Typography>}
                 sx={{
                     backgroundColor: selected
                         ? (theme.palette as any).primaryContainer.main
@@ -62,32 +53,30 @@ const BoardElement: FC<CardProps & IBoardElementProps> = (props) => {
             <CardContent style={{ paddingBottom: 16 }}>
                 <Stack direction={'row'} flexWrap={'wrap'}>
                     <Chip
+                        sx={{ margin: '0.25em' }}
                         icon={<Person />}
                         label={`${board.minPlayers}-${board.maxPlayers ?? 6} players`}
                     />
                     <Chip
+                        sx={{ margin: '0.25em' }}
                         onClick={() => handleChipClick(Item.SUSPECT)}
                         icon={<PersonSearchOutlined />}
                         label={`${board.characters.length} TBD suspects`}
-                        variant={
-                            expanded === Item.SUSPECT ? 'outlined' : undefined
-                        }
+                        variant={expanded === Item.SUSPECT ? 'outlined' : undefined}
                     />
                     <Chip
+                        sx={{ margin: '0.25em' }}
                         onClick={() => handleChipClick(Item.WEAPON)}
                         icon={<VaccinesTwoTone />}
                         label={`${board.weapons.length} TBD weapons`}
-                        variant={
-                            expanded === Item.WEAPON ? 'outlined' : undefined
-                        }
+                        variant={expanded === Item.WEAPON ? 'outlined' : undefined}
                     />
                     <Chip
+                        sx={{ margin: '0.25em' }}
                         onClick={() => handleChipClick(Item.ROOM)}
                         icon={<HouseTwoTone />}
                         label={`${board.rooms.length} TBD rooms`}
-                        variant={
-                            expanded === Item.ROOM ? 'outlined' : undefined
-                        }
+                        variant={expanded === Item.ROOM ? 'outlined' : undefined}
                     />
                 </Stack>
                 {expanded && (
@@ -96,11 +85,7 @@ const BoardElement: FC<CardProps & IBoardElementProps> = (props) => {
                     </Typography>
                 )}
                 <CardActions style={{ paddingBottom: 0 }}>
-                    <Button
-                        size={'small'}
-                        variant={'text'}
-                        onClick={() => onClick(board)}
-                    >
+                    <Button size={'small'} variant={'text'} onClick={() => onClick(board)}>
                         TBD Play this!
                     </Button>
                 </CardActions>

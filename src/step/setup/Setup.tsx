@@ -1,14 +1,6 @@
 import { FC, ReactNode, useMemo, useState } from 'react'
 import { Board, Step } from '../../types.ts'
-import {
-    Box,
-    IconButton,
-    StepLabel,
-    Stepper,
-    Typography,
-    Step as MUIStep,
-    Button,
-} from '@mui/material'
+import { Box, IconButton, StepLabel, Stepper, Typography, Step as MUIStep, Button } from '@mui/material'
 import UpperBar from '../../components/UpperBar.tsx'
 import { ArrowBack, Settings } from '@mui/icons-material'
 import ChooseBoard from './ChooseBoard.tsx'
@@ -29,14 +21,9 @@ const Setup: FC<ISetupProps> = (props) => {
 
     //Step 2: Players
     const [players, setPlayers] = useState<string[]>(Array(3).fill(''))
-    const [shelvedNames, setShelvedNames] = useState<string[]>(
-        Array(6).fill('')
-    )
+    const [shelvedNames, setShelvedNames] = useState<string[]>(Array(6).fill(''))
 
-    const steps = useMemo(
-        () => ['TBD Select board', 'TBD Who is playing?', 'TBD Advanced Setup'],
-        []
-    )
+    const steps = useMemo(() => ['TBD Select board', 'TBD Who is playing?', 'TBD Advanced Setup'], [])
 
     const isStepOptional = (step: number) => {
         return step === 2
@@ -45,6 +32,8 @@ const Setup: FC<ISetupProps> = (props) => {
     const isStepSkipped = (step: number) => {
         return skipped.has(step)
     }
+
+    const isNextDisabled = activeStep === 1 && (players.includes('') || new Set(players).size !== players.length)
 
     const handleNext = () => {
         let newSkipped = skipped
@@ -82,11 +71,7 @@ const Setup: FC<ISetupProps> = (props) => {
                 <IconButton variant={'text'} onClick={() => setStep(Step.MAIN)}>
                     <ArrowBack />
                 </IconButton>
-                <Typography
-                    variant={'h6'}
-                    ccomponent={'div'}
-                    sx={{ flexGrow: 1 }}
-                >
+                <Typography variant={'h6'} ccomponent={'div'} sx={{ flexGrow: 1 }}>
                     TBD Setup
                 </Typography>
                 <IconButton variant={'text'} onClick={() => setStep(Step.MAIN)}>
@@ -94,22 +79,14 @@ const Setup: FC<ISetupProps> = (props) => {
                 </IconButton>
             </UpperBar>
             <Box sx={{ padding: '1em' }}>
-                <Stepper
-                    alternativeLabel
-                    activeStep={activeStep}
-                    sx={{ maxWidth: '50em', margin: 'auto' }}
-                >
+                <Stepper alternativeLabel activeStep={activeStep} sx={{ maxWidth: '50em', margin: 'auto' }}>
                     {steps.map((label, index) => {
                         const stepProps: { completed?: boolean } = {}
                         const labelProps: {
                             optional?: ReactNode
                         } = {}
                         if (isStepOptional(index)) {
-                            labelProps.optional = (
-                                <Typography variant="caption">
-                                    TBD Optional
-                                </Typography>
-                            )
+                            labelProps.optional = <Typography variant="caption">TBD Optional</Typography>
                         }
                         if (isStepSkipped(index)) {
                             stepProps.completed = false
@@ -121,14 +98,10 @@ const Setup: FC<ISetupProps> = (props) => {
                         )
                     })}
                 </Stepper>
-                {activeStep === 0 && (
-                    <ChooseBoard
-                        handleChange={setSelectedBoard}
-                        activeBoard={selectedBoard}
-                    />
-                )}
+                {activeStep === 0 && <ChooseBoard handleChange={setSelectedBoard} activeBoard={selectedBoard} />}
                 {activeStep === 1 && (
                     <ChoosePlayers
+                        players={players}
                         setPlayers={setPlayers}
                         board={selectedBoard}
                         shelvedNames={shelvedNames}
@@ -136,10 +109,13 @@ const Setup: FC<ISetupProps> = (props) => {
                     />
                 )}
                 {activeStep === 2 && <Typography>Step2</Typography>}
-                <Typography sx={{ mt: 2, mb: 1 }}>
-                    Step {activeStep + 1}
-                </Typography>
-                <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        marginTop: 16,
+                    }}
+                >
                     <Button
                         color="inherit"
                         variant={'text'}
@@ -151,19 +127,12 @@ const Setup: FC<ISetupProps> = (props) => {
                     </Button>
                     <Box sx={{ flex: '1 1 auto' }} />
                     {isStepOptional(activeStep) && (
-                        <Button
-                            variant={'text'}
-                            color="inherit"
-                            onClick={handleSkip}
-                            sx={{ mr: 1 }}
-                        >
+                        <Button variant={'text'} color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
                             TBD Skip
                         </Button>
                     )}
-                    <Button variant={'elevated'} onClick={handleNext}>
-                        {activeStep === steps.length - 1
-                            ? 'TBD Finish'
-                            : 'TBD Next'}
+                    <Button variant={'elevated'} onClick={handleNext} disabled={isNextDisabled}>
+                        {activeStep === steps.length - 1 ? 'TBD Finish' : 'TBD Next'}
                     </Button>
                 </Box>
             </Box>
