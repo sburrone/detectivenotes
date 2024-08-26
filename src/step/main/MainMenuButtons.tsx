@@ -48,7 +48,7 @@ const MainMenuButtons: FC<{
                             notes
                         </Typography>
                         <Button
-                            startDecorator={<PlayArrow />}
+                            startIcon={<PlayArrow />}
                             variant={'tonal'}
                             style={{
                                 width: '20rem',

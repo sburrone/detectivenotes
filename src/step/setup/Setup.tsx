@@ -5,6 +5,7 @@ import UpperBar from '../../components/UpperBar.tsx'
 import { ArrowBack, Settings } from '@mui/icons-material'
 import ChooseBoard from './ChooseBoard.tsx'
 import ChoosePlayers from './ChoosePlayers.tsx'
+import AdvancedSetup from './AdvancedSetup.tsx'
 
 interface ISetupProps {
     setStep: (step: Step) => any
@@ -108,7 +109,7 @@ const Setup: FC<ISetupProps> = (props) => {
                         setShelvedNames={setShelvedNames}
                     />
                 )}
-                {activeStep === 2 && <Typography>Step2</Typography>}
+                {activeStep === 2 && selectedBoard && <AdvancedSetup players={players} board={selectedBoard} />}
                 <Box
                     sx={{
                         display: 'flex',
