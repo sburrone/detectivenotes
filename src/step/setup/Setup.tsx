@@ -1,11 +1,12 @@
-import { FC, ReactNode, useMemo, useState } from 'react'
-import { Board, Step } from '../../types.ts'
-import { Box, IconButton, StepLabel, Stepper, Typography, Step as MUIStep, Button } from '@mui/material'
+import { FC, ReactNode, useEffect, useMemo, useState } from 'react'
+import { AdvancedCard, Board, Step } from '../../types.ts'
+import { Box, Button, IconButton, Step as MUIStep, StepLabel, Stepper, Typography } from '@mui/material'
 import UpperBar from '../../components/UpperBar.tsx'
 import { ArrowBack, Settings } from '@mui/icons-material'
 import ChooseBoard from './ChooseBoard.tsx'
 import ChoosePlayers from './ChoosePlayers.tsx'
 import AdvancedSetup from './AdvancedSetup.tsx'
+import _ from 'lodash'
 
 interface ISetupProps {
     setStep: (step: Step) => any
@@ -24,6 +25,22 @@ const Setup: FC<ISetupProps> = (props) => {
     const [players, setPlayers] = useState<string[]>(Array(3).fill(''))
     const [shelvedNames, setShelvedNames] = useState<string[]>(Array(6).fill(''))
 
+    //Step 3: Advanced
+    const [choice, setChoice] = useState<AdvancedCard>(AdvancedCard.UNDEFINED)
+    const [assignedCards, setAssignedCards] = useState<number[]>(Array(players.length).fill(0))
+
+    const numCards =
+        selectedBoard && selectedBoard.characters.length + selectedBoard.weapons.length + selectedBoard.rooms.length
+    const numPlayers = players.length
+    const numEach = numCards && Math.floor(numCards / numPlayers)
+    const numLeftover = numCards && numCards % numPlayers
+    const numToAssign = _.sum(assignedCards)
+
+    useEffect(() => {
+        setAssignedCards(Array(players.length).fill(0))
+        numLeftover === 0 && setChoice(AdvancedCard.NOT_NEEDED)
+    }, [players.length, selectedBoard?.id])
+
     const steps = useMemo(() => ['TBD Select board', 'TBD Who is playing?', 'TBD Advanced Setup'], [])
 
     const isStepOptional = (step: number) => {
@@ -34,7 +51,10 @@ const Setup: FC<ISetupProps> = (props) => {
         return skipped.has(step)
     }
 
-    const isNextDisabled = activeStep === 1 && (players.includes('') || new Set(players).size !== players.length)
+    const isNextDisabled =
+        (activeStep === 1 && (players.includes('') || new Set(players).size !== players.length)) ||
+        (activeStep === 2 &&
+            (choice === AdvancedCard.UNDEFINED || (choice === AdvancedCard.ASSIGN && numToAssign !== 0)))
 
     const handleNext = () => {
         let newSkipped = skipped
@@ -45,6 +65,8 @@ const Setup: FC<ISetupProps> = (props) => {
 
         setActiveStep((prevActiveStep) => prevActiveStep + 1)
         setSkipped(newSkipped)
+
+        setStep(Step.GAME)
     }
 
     const handleBack = () => {
@@ -64,6 +86,7 @@ const Setup: FC<ISetupProps> = (props) => {
             newSkipped.add(activeStep)
             return newSkipped
         })
+        setChoice(AdvancedCard.UNDEFINED)
     }
 
     return (
@@ -113,7 +136,20 @@ const Setup: FC<ISetupProps> = (props) => {
                         setShelvedNames={setShelvedNames}
                     />
                 )}
-                {activeStep === 2 && selectedBoard && <AdvancedSetup players={players} board={selectedBoard} />}
+                {activeStep === 2 && selectedBoard && (
+                    <AdvancedSetup
+                        players={players}
+                        assignedCards={assignedCards}
+                        choice={choice}
+                        setAssignedCards={setAssignedCards}
+                        numCards={numCards}
+                        numEach={numEach}
+                        numToAssign={numToAssign}
+                        numLeftover={numLeftover}
+                        setChoice={setChoice}
+                        numPlayers={numPlayers}
+                    />
+                )}
                 <Box
                     sx={{
                         display: 'flex',
@@ -131,7 +167,7 @@ const Setup: FC<ISetupProps> = (props) => {
                         TBD Back
                     </Button>
                     <Box sx={{ flex: '1 1 auto' }} />
-                    {isStepOptional(activeStep) && (
+                    {isStepOptional(activeStep) && numLeftover !== 0 && (
                         <Button variant={'text'} color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
                             TBD Skip
                         </Button>

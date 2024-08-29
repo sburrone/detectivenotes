@@ -28,6 +28,7 @@ export enum AdvancedCard {
     PUBLIC,
     ASSIGN,
     UNDEFINED,
+    NOT_NEEDED,
 }
 
 export type AdvancedCardSetup = {
