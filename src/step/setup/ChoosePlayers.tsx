@@ -1,7 +1,7 @@
-import { ChangeEvent, FC, useMemo, useState } from 'react'
+import { ChangeEvent, FC, useState } from 'react'
 import { InputAdornment, Slider, Stack, TextField, Typography } from '@mui/material'
 import { Board } from '../../types.ts'
-import { Face2TwoTone, Face3TwoTone, Face4TwoTone, Face5TwoTone, Face6TwoTone, FaceTwoTone } from '@mui/icons-material'
+import { faces } from '../../utils.tsx'
 
 interface IChoosePlayersProps {
     players: string[]
@@ -28,18 +28,6 @@ const ChoosePlayers: FC<IChoosePlayersProps> = (props) => {
         setPlayers(shelvedNames.slice(0, playerNum))
     }
 
-    const faces = useMemo(
-        () => [
-            <FaceTwoTone color={'secondary'} />,
-            <Face2TwoTone color={'secondary'} />,
-            <Face3TwoTone color={'secondary'} />,
-            <Face4TwoTone color={'secondary'} />,
-            <Face5TwoTone color={'secondary'} />,
-            <Face6TwoTone color={'secondary'} />,
-        ],
-        []
-    )
-
     const validateField = (value: string, index: number): string | undefined => {
         if (playerNum < index || value === '') {
             return undefined
@@ -61,7 +49,7 @@ const ChoosePlayers: FC<IChoosePlayersProps> = (props) => {
                         flexDirection: 'column',
                     }}
                 >
-                    <Typography sx={{ marginTop: '2em' }} color={'primary'} align={'center'} variant={'h5'}>
+                    <Typography color={'primary'} align={'center'} variant={'h5'}>
                         TBD How many people are playing?
                     </Typography>
                     <Slider

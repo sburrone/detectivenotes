@@ -80,7 +80,11 @@ const Setup: FC<ISetupProps> = (props) => {
                 </IconButton>
             </UpperBar>
             <Box sx={{ padding: '1em' }}>
-                <Stepper alternativeLabel activeStep={activeStep} sx={{ maxWidth: '50em', margin: 'auto' }}>
+                <Stepper
+                    alternativeLabel
+                    activeStep={activeStep}
+                    sx={{ maxWidth: '50em', margin: 'auto', marginBottom: '2em' }}
+                >
                     {steps.map((label, index) => {
                         const stepProps: { completed?: boolean } = {}
                         const labelProps: {

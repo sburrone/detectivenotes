@@ -478,6 +478,30 @@ export const themes = {
                 variants: [
                     {
                         props: {
+                            color: 'tertiary',
+                        },
+                        style: {
+                            backgroundColor: '#c2e8fd',
+                            color: '#001f2a',
+                            '&:hover': {
+                                background: '#afd4e8',
+                                boxShadow:
+                                    '0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)',
+                            },
+                            '&:focus': {
+                                background: '#a6cbde',
+                                boxShadow:
+                                    '0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)',
+                            },
+                            '&:active': {
+                                background: '#a6cbde',
+                                boxShadow:
+                                    '0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)',
+                            },
+                        },
+                    },
+                    {
+                        props: {
                             variant: 'elevated',
                         },
                         style: {
@@ -1797,6 +1821,30 @@ export const themes = {
                     },
                 },
                 variants: [
+                    {
+                        props: {
+                            color: 'tertiary',
+                        },
+                        style: {
+                            backgroundColor: '#244c5a',
+                            color: '#c0e9fb',
+                            '&:hover': {
+                                background: '#305765',
+                                boxShadow:
+                                    '0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)',
+                            },
+                            '&:focus': {
+                                background: '#355d6b',
+                                boxShadow:
+                                    '0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)',
+                            },
+                            '&:active': {
+                                background: '#355d6b',
+                                boxShadow:
+                                    '0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)',
+                            },
+                        },
+                    },
                     {
                         props: {
                             variant: 'elevated',
