@@ -1,5 +1,5 @@
-import { FC, ReactNode, useEffect, useMemo, useState } from 'react'
-import { AdvancedCard, Board, Step } from '../../types.ts'
+import { FC, ReactNode, useEffect, useState } from 'react'
+import { AdvancedCard, Board, Game, Step } from '../../types.ts'
 import { Box, Button, IconButton, Step as MUIStep, StepLabel, Stepper, Typography } from '@mui/material'
 import UpperBar from '../../components/UpperBar.tsx'
 import { ArrowBack, Settings } from '@mui/icons-material'
@@ -7,13 +7,15 @@ import ChooseBoard from './ChooseBoard.tsx'
 import ChoosePlayers from './ChoosePlayers.tsx'
 import AdvancedSetup from './AdvancedSetup.tsx'
 import _ from 'lodash'
+import { initializeBoard } from '../../utils.tsx'
 
 interface ISetupProps {
     setStep: (step: Step) => any
+    setGame: (game: Game) => any
 }
 
 const Setup: FC<ISetupProps> = (props) => {
-    const { setStep } = props
+    const { setStep, setGame } = props
 
     const [activeStep, setActiveStep] = useState(0)
     const [skipped, setSkipped] = useState(new Set<number>())
@@ -41,7 +43,7 @@ const Setup: FC<ISetupProps> = (props) => {
         numLeftover === 0 && setChoice(AdvancedCard.NOT_NEEDED)
     }, [players.length, selectedBoard?.id])
 
-    const steps = useMemo(() => ['TBD Select board', 'TBD Who is playing?', 'TBD Advanced Setup'], [])
+    const steps = ['TBD Select board', 'TBD Who is playing?', 'TBD Advanced Setup']
 
     const isStepOptional = (step: number) => {
         return step === 2
@@ -66,7 +68,18 @@ const Setup: FC<ISetupProps> = (props) => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1)
         setSkipped(newSkipped)
 
-        setStep(Step.GAME)
+        if (activeStep === steps.length - 1 && selectedBoard) {
+            const game: Game = {
+                advancedCards: { type: choice, players: assignedCards },
+                board: selectedBoard!,
+                gameBoard: initializeBoard(selectedBoard!, players),
+                locked: false,
+                players: players,
+                ts: new Date(),
+            }
+            setGame(game)
+            setStep(Step.GAME)
+        }
     }
 
     const handleBack = () => {

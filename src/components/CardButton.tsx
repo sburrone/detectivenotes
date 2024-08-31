@@ -1,0 +1,36 @@
+import { FC, ReactElement } from 'react'
+import { Card, CardActionArea, CardContent, CardHeader, useTheme } from '@mui/material'
+
+interface ICardButtonProps {
+    header: string | ReactElement
+    content?: string | ReactElement
+    onClick: () => void
+    headerColor?: string
+}
+
+const CardButton: FC<ICardButtonProps> = (props: ICardButtonProps) => {
+    const { header, content, onClick, headerColor } = props
+    const theme = useTheme()
+    return (
+        <Card
+            style={{
+                padding: 0,
+                width: '40em',
+                height: 'fit-content',
+            }}
+            onClick={onClick}
+        >
+            <CardActionArea>
+                <CardHeader
+                    title={header}
+                    sx={{
+                        backgroundColor: headerColor ?? (theme.palette as any).primaryContainer.main,
+                    }}
+                />
+                {content && <CardContent style={{ paddingBottom: 16 }}>{content}</CardContent>}
+            </CardActionArea>
+        </Card>
+    )
+}
+
+export default CardButton

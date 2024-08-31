@@ -6,6 +6,15 @@ export enum Step {
 
 export enum Symbol {
     CHECK = 'check',
+    RESET = 'reset',
+    MAYBE = 'maybe',
+    CROSS = 'cross',
+    MAYBE_NOT = 'maybeNot',
+    STAR = 'star',
+    QUESTION = 'question',
+    EXCLAMATION = 'exclamation',
+    FLAG = 'flag',
+    SKIP = 'skip',
 }
 
 export type Board = {
@@ -19,7 +28,7 @@ export type Board = {
 }
 
 export type GameBoardRow = {
-    item: string[]
+    item: string
     locked: boolean
     values: Symbol[]
 }

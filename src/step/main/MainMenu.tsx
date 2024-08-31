@@ -1,13 +1,14 @@
 import { FC, useState } from 'react'
 import { BoardModel } from './BoardModel.tsx'
 import MainMenuButtons from './MainMenuButtons.tsx'
-import { ColorMode, Step } from '../../types.ts'
+import { ColorMode, Game, Step } from '../../types.ts'
 
 const MainMenu: FC<{
     setStep: (step: Step) => any
     setColorMode: (colorMode: ColorMode) => any
     colorMode: ColorMode
-}> = ({ setStep, setColorMode, colorMode }) => {
+    game: Game | null
+}> = ({ setStep, setColorMode, colorMode, game }) => {
     const [hideUI, setHideUI] = useState(false)
     return (
         <>
@@ -18,6 +19,7 @@ const MainMenu: FC<{
                 setHideUI={setHideUI}
                 colorMode={colorMode}
                 setColorMode={setColorMode}
+                game={game}
             />
         </>
     )

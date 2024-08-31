@@ -1,4 +1,5 @@
 import { Face2TwoTone, Face3TwoTone, Face4TwoTone, Face5TwoTone, Face6TwoTone, FaceTwoTone } from '@mui/icons-material'
+import { Board, GameBoardRow, Symbol } from './types.ts'
 
 export const faces = [
     <FaceTwoTone color={'secondary'} />,
@@ -8,3 +9,15 @@ export const faces = [
     <Face5TwoTone color={'secondary'} />,
     <Face6TwoTone color={'secondary'} />,
 ]
+
+export const getBoardItems = (board: Board) => {
+    return board.characters.concat(board.weapons).concat(board.rooms)
+}
+
+export const initializeBoard = (board: Board, players: string[]): GameBoardRow[] => {
+    return getBoardItems(board).map((item) => ({
+        item: item,
+        locked: false,
+        values: Array(players.length).fill(Symbol.RESET),
+    }))
+}

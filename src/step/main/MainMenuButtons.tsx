@@ -2,7 +2,8 @@ import { FC } from 'react'
 import { Button, Stack, Typography, useTheme } from '@mui/material'
 import { AddToHomeScreen, DarkMode, Info, Language, LightMode, PlayArrow } from '@mui/icons-material'
 import CustomIconButton from '../../components/CustomIconButton.tsx'
-import { ColorMode, Step } from '../../types.ts'
+import { ColorMode, Game, Step } from '../../types.ts'
+import CardButton from '../../components/CardButton.tsx'
 
 const MainMenuButtons: FC<{
     setStep: (step: Step) => any
@@ -10,7 +11,8 @@ const MainMenuButtons: FC<{
     setHideUI: (hideUI: boolean) => any
     setColorMode: (colorMode: ColorMode) => any
     colorMode: ColorMode
-}> = ({ setStep, hideUI, setHideUI, colorMode, setColorMode }) => {
+    game: Game | null
+}> = ({ setStep, hideUI, setHideUI, colorMode, setColorMode, game }) => {
     const theme = useTheme()
 
     return (
@@ -58,6 +60,25 @@ const MainMenuButtons: FC<{
                         >
                             TBD New
                         </Button>
+                        <CardButton
+                            header={'TBD New'}
+                            content={'TBD Begin Setup'}
+                            onClick={() => setStep(Step.SETUP)}
+                            headerColor={(theme.palette as any).secondaryContainer.main}
+                        />
+                        {game && (
+                            <Button
+                                startIcon={<PlayArrow />}
+                                variant={'tonal'}
+                                style={{
+                                    width: '20rem',
+                                    margin: '1em auto',
+                                }}
+                                onClick={() => setStep(Step.GAME)}
+                            >
+                                TBD Continue
+                            </Button>
+                        )}
                         <div
                             style={{
                                 bottom: 0,
