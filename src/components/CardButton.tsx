@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react'
+import { CSSProperties, FC, ReactElement } from 'react'
 import { Card, CardActionArea, CardContent, CardHeader, useTheme } from '@mui/material'
 
 interface ICardButtonProps {
@@ -6,10 +6,11 @@ interface ICardButtonProps {
     content?: string | ReactElement
     onClick: () => void
     headerColor?: string
+    style?: CSSProperties
 }
 
 const CardButton: FC<ICardButtonProps> = (props: ICardButtonProps) => {
-    const { header, content, onClick, headerColor } = props
+    const { header, content, onClick, headerColor, style } = props
     const theme = useTheme()
     return (
         <Card
@@ -17,6 +18,8 @@ const CardButton: FC<ICardButtonProps> = (props: ICardButtonProps) => {
                 padding: 0,
                 width: '40em',
                 height: 'fit-content',
+                maxWidth: 'calc(100dvw - 1em)',
+                ...style,
             }}
             onClick={onClick}
         >

@@ -57,7 +57,7 @@ const ChoosePlayers: FC<IChoosePlayersProps> = (props) => {
                         sx={{
                             margin: '1em auto 2em auto',
                             width: '30em',
-                            maxWidth: 'calc(100vw - 64px)',
+                            maxWidth: 'calc(100dvw - 64px)',
                             display: 'block',
                         }}
                         color={'tertiary'}
@@ -92,7 +92,7 @@ const ChoosePlayers: FC<IChoosePlayersProps> = (props) => {
                             sx={{
                                 margin: '0.25em auto',
                                 width: '30em',
-                                maxWidth: 'calc(100vw - 64px)',
+                                maxWidth: 'calc(100dvw - 64px)',
                                 display: playerNum > index ? undefined : 'none',
                             }}
                             error={!!validateField(shelvedNames[index], index)}

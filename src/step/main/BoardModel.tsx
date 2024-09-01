@@ -47,8 +47,8 @@ export const BoardModel: FC<{
                     position: new THREE.Vector3(...getCameraPosition()),
                 }}
                 style={{
-                    height: '100vh',
-                    width: '100vw',
+                    height: '100dvh',
+                    width: '100dvw',
                     position: 'fixed',
                     top: 0,
                     left: 0,
@@ -73,7 +73,7 @@ export const BoardModel: FC<{
                     style={{
                         position: 'absolute',
                         bottom: 0,
-                        width: '100vw',
+                        width: '100dvw',
                         borderRadius: 0,
                     }}
                     onClick={() => setHideUI(false)}

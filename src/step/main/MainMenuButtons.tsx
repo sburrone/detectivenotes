@@ -1,9 +1,21 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { Button, Stack, Typography, useTheme } from '@mui/material'
-import { AddToHomeScreen, DarkMode, Info, Language, LightMode, PlayArrow } from '@mui/icons-material'
+import {
+    AddToHomeScreen,
+    CasinoOutlined,
+    DarkMode,
+    Info,
+    Language,
+    LightMode,
+    PersonOutlined,
+    PlayArrow,
+    Save,
+    Schedule,
+} from '@mui/icons-material'
 import CustomIconButton from '../../components/CustomIconButton.tsx'
 import { ColorMode, Game, Step } from '../../types.ts'
 import CardButton from '../../components/CardButton.tsx'
+import TextWithIcon from '../../components/TextWithIcon.tsx'
 
 const MainMenuButtons: FC<{
     setStep: (step: Step) => any
@@ -15,6 +27,13 @@ const MainMenuButtons: FC<{
 }> = ({ setStep, hideUI, setHideUI, colorMode, setColorMode, game }) => {
     const theme = useTheme()
 
+    const [languageExtended, setLanguageExtended] = useState(window.innerWidth >= 500)
+
+    useEffect(() => {
+        const handleResize = () => setLanguageExtended(window.innerWidth >= 500)
+        window.addEventListener('resize', handleResize)
+    }, [])
+
     return (
         <>
             {!hideUI && (
@@ -23,8 +42,8 @@ const MainMenuButtons: FC<{
                     style={{
                         position: 'fixed',
                         top: 0,
-                        height: '100vh',
-                        width: '100vw',
+                        height: '100dvh',
+                        width: '100dvw',
                     }}
                     onDoubleClick={(e: Event) => {
                         e.preventDefault()
@@ -37,7 +56,7 @@ const MainMenuButtons: FC<{
                         <Typography
                             sx={{
                                 fontFamily: 'Dela Gothic One',
-                                fontSize: '5rem',
+                                fontSize: '4rem',
                                 margin: '24px auto',
                                 textAlign: 'center',
                                 color: theme.palette.primary.main,
@@ -49,35 +68,57 @@ const MainMenuButtons: FC<{
                             <br />
                             notes
                         </Typography>
-                        <Button
-                            startIcon={<PlayArrow />}
-                            variant={'tonal'}
-                            style={{
-                                width: '20rem',
-                                margin: '0 auto',
-                            }}
-                            onClick={() => setStep(Step.SETUP)}
-                        >
-                            TBD New
-                        </Button>
                         <CardButton
-                            header={'TBD New'}
-                            content={'TBD Begin Setup'}
+                            header={
+                                <TextWithIcon
+                                    icon={<PlayArrow />}
+                                    text={'TBD New'}
+                                    textProps={{
+                                        fontSize: '1.25rem',
+                                        margin: 'auto 0 auto 0.5rem',
+                                    }}
+                                />
+                            }
                             onClick={() => setStep(Step.SETUP)}
-                            headerColor={(theme.palette as any).secondaryContainer.main}
+                            headerColor={(theme.palette as any).primaryContainer.main}
+                            style={{ margin: '0 auto' }}
                         />
                         {game && (
-                            <Button
-                                startIcon={<PlayArrow />}
-                                variant={'tonal'}
-                                style={{
-                                    width: '20rem',
-                                    margin: '1em auto',
-                                }}
+                            <CardButton
+                                header={
+                                    <TextWithIcon
+                                        icon={<Save />}
+                                        text={'TBD Continue'}
+                                        textProps={{
+                                            fontSize: '1.25rem',
+                                            margin: 'auto 0 auto 0.5rem',
+                                        }}
+                                    />
+                                }
+                                content={
+                                    <Stack direction={'row'} justifyContent={'space-between'}>
+                                        <TextWithIcon
+                                            icon={<Schedule />}
+                                            text={new Date(game.ts).toLocaleDateString(undefined, {
+                                                weekday: 'short',
+                                                day: 'numeric',
+                                                month: 'short',
+                                                year: '2-digit',
+                                                hour: 'numeric',
+                                                minute: 'numeric',
+                                            })}
+                                        />
+                                        <TextWithIcon icon={<CasinoOutlined />} text={game.board.name} />
+                                        <TextWithIcon
+                                            icon={<PersonOutlined />}
+                                            text={game.players.toLocaleString().replaceAll(',', ', ')}
+                                        />
+                                    </Stack>
+                                }
                                 onClick={() => setStep(Step.GAME)}
-                            >
-                                TBD Continue
-                            </Button>
+                                headerColor={(theme.palette as any).secondaryContainer.main}
+                                style={{ margin: '1em auto' }}
+                            />
                         )}
                         <div
                             style={{
@@ -87,19 +128,25 @@ const MainMenuButtons: FC<{
                                 margin: 16,
                             }}
                         >
-                            <Button
-                                startIcon={
-                                    <Language
-                                        style={{
-                                            fontSize: '2rem',
-                                        }}
-                                    />
-                                }
-                                sx={{ margin: '4px' }}
-                                variant={'filled'}
-                            >
-                                TBD Language
-                            </Button>
+                            {languageExtended ? (
+                                <Button
+                                    startIcon={
+                                        <Language
+                                            style={{
+                                                fontSize: '2rem',
+                                            }}
+                                        />
+                                    }
+                                    sx={{ margin: '4px' }}
+                                    variant={'filled'}
+                                >
+                                    TBD Language
+                                </Button>
+                            ) : (
+                                <CustomIconButton>
+                                    <Language />
+                                </CustomIconButton>
+                            )}
                             <CustomIconButton>
                                 <AddToHomeScreen />
                             </CustomIconButton>

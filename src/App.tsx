@@ -28,7 +28,7 @@ function App() {
                 <div
                     style={{
                         backgroundColor: theme.palette.background.default,
-                        minHeight: step === Step.MAIN ? undefined : '100vh',
+                        minHeight: step === Step.MAIN ? undefined : '100dvh',
                     }}
                 >
                     {step === Step.MAIN && (
