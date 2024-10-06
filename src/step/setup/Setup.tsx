@@ -1,5 +1,5 @@
 import { FC, ReactNode, useEffect, useState } from 'react'
-import { AdvancedCard, Board, Game, Step } from '../../types.ts'
+import { AdvancedCard, Board, Step } from '../../types.ts'
 import { Box, Button, IconButton, Step as MUIStep, StepLabel, Stepper, Typography } from '@mui/material'
 import UpperBar from '../../components/UpperBar.tsx'
 import { ArrowBack, Settings } from '@mui/icons-material'
@@ -12,7 +12,6 @@ import { useDispatch } from 'react-redux'
 import {
     setAdvancedCardSetup,
     setBoard,
-    setGame,
     setGameBoard,
     setOrToggleLocked,
     setPlayers as setPlayersR,

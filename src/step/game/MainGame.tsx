@@ -15,7 +15,7 @@ import {
 } from '@mui/icons-material'
 import '../../App.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectGame, selectLocked, setOrToggleLocked } from '../../store/gameSlice.ts'
+import { selectLocked, setOrToggleLocked } from '../../store/gameSlice.ts'
 
 interface IGameProps {
     setStep: (step: Step) => void
