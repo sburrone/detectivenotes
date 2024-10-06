@@ -46,12 +46,12 @@ export type AdvancedCardSetup = {
 }
 
 export type Game = {
-    ts: Date
-    players: string[]
-    board: Board
-    locked: boolean
-    gameBoard: GameBoardRow[]
-    advancedCards: AdvancedCardSetup
+    ts?: number
+    players?: string[]
+    board?: Board
+    locked?: boolean
+    gameBoard?: GameBoardRow[]
+    advancedCards?: AdvancedCardSetup
 }
 
 export enum Item {

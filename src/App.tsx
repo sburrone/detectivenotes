@@ -9,6 +9,8 @@ import Setup from './step/setup/Setup.tsx'
 import { usePersistedState } from './usePersistedState.ts'
 import MainGame from './step/game/MainGame.tsx'
 import _ from 'lodash'
+import { store } from './store/store.ts'
+import { Provider } from 'react-redux'
 
 function App() {
     const [step, setStep] = useState<Step>(Step.MAIN)
@@ -25,7 +27,7 @@ function App() {
         if (game) {
             const newObject = _.clone(game)
             newObject[prop] = newValue
-            if ((newObject as any).ts) (newObject as any).ts = new Date()
+            if ((newObject as any).ts) (newObject as any).ts = Date.now()
             setGame(newObject)
         }
     }, [])
@@ -33,24 +35,26 @@ function App() {
     const theme = useMemo(() => createTheme(themes[colorMode] as unknown as ThemeOptions), [colorMode])
 
     return (
-        <ThemeProvider theme={theme}>
-            <IntlProvider locale={'en-US'} messages={{ AA: 'BB' }}>
-                <div
-                    style={{
-                        backgroundColor: theme.palette.background.default,
-                        minHeight: step === Step.MAIN ? undefined : '100dvh',
-                    }}
-                >
-                    {step === Step.MAIN && (
-                        <MainMenu setStep={setStep} colorMode={colorMode} setColorMode={setColorMode} game={game} />
-                    )}
-                    {step === Step.SETUP && <Setup setStep={setStep} setGame={setGame} />}
-                    {step === Step.GAME && (
-                        <MainGame setGame={setGame} game={game!} setStep={setStep} updateGame={updateGame} />
-                    )}
-                </div>
-            </IntlProvider>
-        </ThemeProvider>
+        <Provider store={store}>
+            <ThemeProvider theme={theme}>
+                <IntlProvider locale={'en-US'} messages={{ AA: 'BB' }}>
+                    <div
+                        style={{
+                            backgroundColor: theme.palette.background.default,
+                            minHeight: step === Step.MAIN ? undefined : '100dvh',
+                        }}
+                    >
+                        {step === Step.MAIN && (
+                            <MainMenu setStep={setStep} colorMode={colorMode} setColorMode={setColorMode} game={game} />
+                        )}
+                        {step === Step.SETUP && <Setup setStep={setStep} setGame={setGame} />}
+                        {step === Step.GAME && (
+                            <MainGame setGame={setGame} game={game!} setStep={setStep} updateGame={updateGame} />
+                        )}
+                    </div>
+                </IntlProvider>
+            </ThemeProvider>
+        </Provider>
     )
 }
 

@@ -14,16 +14,20 @@ import {
     Undo,
 } from '@mui/icons-material'
 import '../../App.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectGame, selectLocked, setOrToggleLocked } from '../../store/gameSlice.ts'
 
 interface IGameProps {
-    game: Game
-    setGame: (game: Game) => void
     setStep: (step: Step) => void
     updateGame: (prop: keyof Game, value: any) => void
 }
 
 const MainGame: FC<IGameProps> = (props) => {
-    const { game, setGame, updateGame, setStep } = props
+    const { setStep } = props
+
+    const dispatch = useDispatch()
+
+    const locked = useSelector(selectLocked)
 
     return (
         <div>
@@ -40,9 +44,9 @@ const MainGame: FC<IGameProps> = (props) => {
                 <IconButton
                     className={'normal-margin'}
                     variant={'elevated'}
-                    onClick={() => updateGame('locked', !game.locked)}
+                    onClick={() => dispatch(setOrToggleLocked())}
                 >
-                    {game.locked ? <Lock /> : <LockOpen />}
+                    {locked ? <Lock /> : <LockOpen />}
                 </IconButton>
                 <IconButton className={'normal-margin'} variant={'elevated'}>
                     <AutoFixHigh />

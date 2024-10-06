@@ -8,14 +8,24 @@ import ChoosePlayers from './ChoosePlayers.tsx'
 import AdvancedSetup from './AdvancedSetup.tsx'
 import _ from 'lodash'
 import { initializeBoard } from '../../utils.tsx'
+import { useDispatch } from 'react-redux'
+import {
+    setAdvancedCardSetup,
+    setBoard,
+    setGame,
+    setGameBoard,
+    setOrToggleLocked,
+    setPlayers as setPlayersR,
+} from '../../store/gameSlice.ts'
 
 interface ISetupProps {
     setStep: (step: Step) => any
-    setGame: (game: Game) => any
 }
 
 const Setup: FC<ISetupProps> = (props) => {
-    const { setStep, setGame } = props
+    const { setStep } = props
+
+    const dispatch = useDispatch()
 
     const [activeStep, setActiveStep] = useState(0)
     const [skipped, setSkipped] = useState(new Set<number>())
@@ -69,15 +79,11 @@ const Setup: FC<ISetupProps> = (props) => {
         setSkipped(newSkipped)
 
         if (activeStep === steps.length - 1 && selectedBoard) {
-            const game: Game = {
-                advancedCards: { type: choice, players: assignedCards },
-                board: selectedBoard!,
-                gameBoard: initializeBoard(selectedBoard!, players),
-                locked: false,
-                players: players,
-                ts: new Date(),
-            }
-            setGame(game)
+            dispatch(setAdvancedCardSetup({ type: choice, players: assignedCards }))
+            dispatch(setBoard(selectedBoard))
+            dispatch(setGameBoard(initializeBoard(selectedBoard!, players)))
+            dispatch(setOrToggleLocked(false))
+            dispatch(setPlayersR(players))
             setStep(Step.GAME)
         }
     }

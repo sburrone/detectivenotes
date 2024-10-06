@@ -1,5 +1,5 @@
 import { Face2TwoTone, Face3TwoTone, Face4TwoTone, Face5TwoTone, Face6TwoTone, FaceTwoTone } from '@mui/icons-material'
-import { Board, GameBoardRow, Symbol } from './types.ts'
+import { Board, Game, GameBoardRow, Symbol } from './types.ts'
 
 export const faces = [
     <FaceTwoTone color={'secondary'} />,
@@ -20,4 +20,8 @@ export const initializeBoard = (board: Board, players: string[]): GameBoardRow[]
         locked: false,
         values: Array(players.length).fill(Symbol.RESET),
     }))
+}
+
+export const saveGame = (game: Game) => {
+    localStorage.setItem('game', JSON.stringify(game))
 }
