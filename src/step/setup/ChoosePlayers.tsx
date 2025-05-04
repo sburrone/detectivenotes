@@ -12,9 +12,9 @@ interface IChoosePlayersProps {
 }
 
 const ChoosePlayers: FC<IChoosePlayersProps> = (props) => {
-    const { setPlayers, board, shelvedNames, setShelvedNames } = props
+    const { players, setPlayers, board, shelvedNames, setShelvedNames } = props
 
-    const [playerNum, setPlayerNum] = useState(board?.minPlayers ?? 3)
+    const [playerNum, setPlayerNum] = useState(players?.filter(el => el.length).length ?? board?.minPlayers ?? 3)
 
     const handleSliderChange = (_e: Event, newLength: number) => {
         setPlayerNum(newLength)
@@ -60,7 +60,7 @@ const ChoosePlayers: FC<IChoosePlayersProps> = (props) => {
                             maxWidth: 'calc(100dvw - 64px)',
                             display: 'block',
                         }}
-                        color={'tertiary'}
+                        color={'tertiary' as "primary"}
                         onChange={handleSliderChange}
                         defaultValue={board.minPlayers}
                         step={1}

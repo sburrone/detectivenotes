@@ -42,7 +42,7 @@ export const getBoardIcon = (boardIcon: BoardIcon): ReactElement=> {
             return <Stars sx={{fill: "#eecc48"}}/>
         case BoardIcon.RESET:
         default:
-            return <PanoramaFishEye sx={{fill: "#a5cdde"}} />
+            return <PanoramaFishEye sx={{fill: "#c6e6d4"}} />
     }
 }
 

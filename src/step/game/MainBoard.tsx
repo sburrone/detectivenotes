@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import { BoardIcon } from '../../types.ts'
 import { BoardButton } from '../../components/BoardButton.tsx'
-import { Box, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material'
+import { Box, Table, TableBody, TableCell, TableHead, TableRow, useTheme } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectGame, selectGameBoard, updateItem } from '../../store/gameSlice.ts'
 import { IconButton } from '../../components/CustomButtons.tsx'
@@ -16,19 +16,27 @@ export const MainBoard: FC = () => {
     const gameBoard = useSelector(selectGameBoard)
 
     const dispatch = useDispatch()
+    const theme = useTheme()
 
     const handleUpdate = (newIcon: BoardIcon, newNumber: number, item: string, index: number) => {
         dispatch(updateItem({ item, badge: newNumber, value: newIcon, playerIndex: index }))
     }
 
     return (
-        <Box sx={{ padding: '1em' }}>
+        <Box sx={{ py: '1em' }}>
             <Table size={'small'} stickyHeader={true}>
-                <TableHead>
+                <TableHead
+                    sx={{
+                        '& .MuiTableCell-root': {
+                            backgroundColor: (theme.palette as any).secondaryContainer.main,
+                            color: (theme.palette as any).secondaryContainer.contrastText,
+                        },
+                    }}
+                >
                     <TableCell />
                     {game.players?.map((player, index) => {
                         return (
-                            <TableCell sx={{ fontSize: '1.25rem', padding: '6x 16px' }} align={'center'} key={index}>
+                            <TableCell sx={{ fontSize: '1.25rem', padding: '16px' }} align={'center'} key={index}>
                                 {player}
                             </TableCell>
                         )
@@ -36,7 +44,18 @@ export const MainBoard: FC = () => {
                 </TableHead>
                 <TableBody>
                     {/*Sospettati*/}
-                    <TableRow>
+                    <TableRow
+                        sx={
+                            openSuspects
+                                ? {
+                                      '& .MuiTableCell-root': {
+                                          backgroundColor: (theme.palette as any).tertiaryContainer.main,
+                                          color: (theme.palette as any).tertiaryContainer.contrastText,
+                                      },
+                                  }
+                                : undefined
+                        }
+                    >
                         <TableCell
                             sx={{ fontSize: '1.25rem' }}
                             align={'center'}
@@ -50,9 +69,19 @@ export const MainBoard: FC = () => {
                                 onClick={() => setOpenSuspects(!openSuspects)}
                             >
                                 {openSuspects ? (
-                                    <KeyboardArrowUp sx={{ fontSize: '1.5rem' }} />
+                                    <KeyboardArrowUp
+                                        sx={{
+                                            fontSize: '1.5rem',
+                                            fill: (theme.palette as any).tertiaryContainer.contrastText,
+                                        }}
+                                    />
                                 ) : (
-                                    <KeyboardArrowDown sx={{ fontSize: '1.5rem' }} />
+                                    <KeyboardArrowDown
+                                        sx={{
+                                            fontSize: '1.5rem',
+                                            fill: (theme.palette as any).tertiaryContainer.contrastText,
+                                        }}
+                                    />
                                 )}
                             </IconButton>
                             TBD Suspects
@@ -64,9 +93,19 @@ export const MainBoard: FC = () => {
                                 onClick={() => setOpenSuspects(!openSuspects)}
                             >
                                 {openSuspects ? (
-                                    <KeyboardArrowUp sx={{ fontSize: '1.5rem' }} />
+                                    <KeyboardArrowUp
+                                        sx={{
+                                            fontSize: '1.5rem',
+                                            fill: (theme.palette as any).tertiaryContainer.contrastText,
+                                        }}
+                                    />
                                 ) : (
-                                    <KeyboardArrowDown sx={{ fontSize: '1.5rem' }} />
+                                    <KeyboardArrowDown
+                                        sx={{
+                                            fontSize: '1.5rem',
+                                            fill: (theme.palette as any).tertiaryContainer.contrastText,
+                                        }}
+                                    />
                                 )}
                             </IconButton>
                         </TableCell>
@@ -94,7 +133,18 @@ export const MainBoard: FC = () => {
                             })}
 
                     {/*Armi*/}
-                    <TableRow>
+                    <TableRow
+                        sx={
+                            openWeapons
+                                ? {
+                                      '& .MuiTableCell-root': {
+                                          backgroundColor: (theme.palette as any).tertiaryContainer.main,
+                                          color: (theme.palette as any).tertiaryContainer.contrastText,
+                                      },
+                                  }
+                                : undefined
+                        }
+                    >
                         <TableCell
                             sx={{ fontSize: '1.25rem' }}
                             align={'center'}
@@ -108,23 +158,42 @@ export const MainBoard: FC = () => {
                                 onClick={() => setOpenWeapons(!openWeapons)}
                             >
                                 {openWeapons ? (
-                                    <KeyboardArrowUp sx={{ fontSize: '1.5rem' }} />
+                                    <KeyboardArrowUp
+                                        sx={{
+                                            fontSize: '1.5rem',
+                                            fill: (theme.palette as any).tertiaryContainer.contrastText,
+                                        }}
+                                    />
                                 ) : (
-                                    <KeyboardArrowDown sx={{ fontSize: '1.5rem' }} />
+                                    <KeyboardArrowDown
+                                        sx={{
+                                            fontSize: '1.5rem',
+                                            fill: (theme.palette as any).tertiaryContainer.contrastText,
+                                        }}
+                                    />
                                 )}
                             </IconButton>
                             TBD Weapons
                             <IconButton
-                                disableRipple={true}
                                 aria-label="expand suspects section"
                                 size="small"
                                 variant={'text'}
                                 onClick={() => setOpenWeapons(!openWeapons)}
                             >
                                 {openWeapons ? (
-                                    <KeyboardArrowUp sx={{ fontSize: '1.5rem' }} />
+                                    <KeyboardArrowUp
+                                        sx={{
+                                            fontSize: '1.5rem',
+                                            fill: (theme.palette as any).tertiaryContainer.contrastText,
+                                        }}
+                                    />
                                 ) : (
-                                    <KeyboardArrowDown sx={{ fontSize: '1.5rem' }} />
+                                    <KeyboardArrowDown
+                                        sx={{
+                                            fontSize: '1.5rem',
+                                            fill: (theme.palette as any).tertiaryContainer.contrastText,
+                                        }}
+                                    />
                                 )}
                             </IconButton>
                         </TableCell>
@@ -152,7 +221,18 @@ export const MainBoard: FC = () => {
                             })}
 
                     {/*Stanze*/}
-                    <TableRow>
+                    <TableRow
+                        sx={
+                            openRooms
+                                ? {
+                                      '& .MuiTableCell-root': {
+                                          backgroundColor: (theme.palette as any).tertiaryContainer.main,
+                                          color: (theme.palette as any).tertiaryContainer.contrastText,
+                                      },
+                                  }
+                                : undefined
+                        }
+                    >
                         <TableCell
                             sx={{ fontSize: '1.25rem' }}
                             align={'center'}
@@ -210,14 +290,6 @@ export const MainBoard: FC = () => {
                             })}
                 </TableBody>
             </Table>
-            {Object.values(BoardIcon).map((key) => (
-                <BoardButton
-                    disabled={false}
-                    icon={key}
-                    number={Math.round(Math.random() * 5)}
-                    onUpdate={console.log}
-                />
-            ))}
         </Box>
     )
 }

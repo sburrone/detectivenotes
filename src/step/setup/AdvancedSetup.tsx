@@ -1,6 +1,17 @@
 import { FC } from 'react'
 import { AdvancedCard } from '../../types.ts'
-import { Card, CardContent, CardHeader, InputAdornment, Stack, TextField, Typography, useTheme } from '@mui/material'
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    InputAdornment,
+    Stack,
+    SxProps,
+    TextField,
+    Theme,
+    Typography,
+    useTheme,
+} from '@mui/material'
 import { Add, CelebrationTwoTone, Remove } from '@mui/icons-material'
 import _ from 'lodash'
 import { faces } from '../../utils.tsx'
@@ -43,7 +54,7 @@ const AdvancedSetup: FC<IAdvancedSetupProps> = (props) => {
             {choice !== AdvancedCard.NOT_NEEDED ? (
                 <>
                     <Typography color={'secondary'} align={'center'}>
-                        TBD You can skip this, but you will lose access to the advanced player info panel.
+                        TBD Feel free to skip this.
                     </Typography>
 
                     <Typography color={'primary'} align={'center'} variant={'h6'}>
@@ -134,7 +145,7 @@ const AdvancedSetup: FC<IAdvancedSetupProps> = (props) => {
                                                                                 (variant) =>
                                                                                     (variant.props as any).color ===
                                                                                     'tertiary'
-                                                                            )!.style
+                                                                            )!.style as SxProps<Theme>
                                                                         }
                                                                         disabled={assignedCards[i] === 0}
                                                                         onClick={() => {
@@ -162,7 +173,7 @@ const AdvancedSetup: FC<IAdvancedSetupProps> = (props) => {
                                                                                 (variant) =>
                                                                                     (variant.props as any).color ===
                                                                                     'tertiary'
-                                                                            )!.style
+                                                                            )!.style as SxProps<Theme>
                                                                         }
                                                                         color={'tertiary'}
                                                                         disabled={numLeftover === numToAssign}
@@ -190,10 +201,8 @@ const AdvancedSetup: FC<IAdvancedSetupProps> = (props) => {
                     </div>
                 </>
             ) : (
-                <Stack direction={'column'} align={'center'} margin={'2em auto'}>
-                    <div>
-                        <CelebrationTwoTone color={'info'} sx={{ height: '3em', width: '3em' }} />
-                    </div>
+                <Stack direction={'column'} margin={'2em auto'}>
+                    <CelebrationTwoTone color={'info'} sx={{ height: '3em', width: '3em', margin: 'auto' }} />
                     <Typography color={'textPrimary'} padding={'1em'} align={'center'} variant={'h5'}>
                         TBD There are no cards leftover, so Advanced Setup is not needed. You already have access to
                         detailed player info.
