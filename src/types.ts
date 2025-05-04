@@ -4,7 +4,7 @@ export enum Step {
     GAME = 'game',
 }
 
-export enum Symbol {
+export enum BoardIcon {
     CHECK = 'check',
     RESET = 'reset',
     MAYBE = 'maybe',
@@ -30,7 +30,7 @@ export type Board = {
 export type GameBoardRow = {
     item: string
     locked: boolean
-    values: Symbol[]
+    values: { icon: BoardIcon, badge: number }[]
 }
 
 export enum AdvancedCard {
@@ -64,3 +64,16 @@ export enum ColorMode {
     LIGHT = 'light',
     DARK = 'dark',
 }
+
+export type ButtonVariant = 'elevated' | 'filled' | 'tonal' | 'outlined' | 'text'
+
+export type ButtonColor =
+    | 'primary'
+    | 'info'
+    | 'secondary'
+    | 'success'
+    | 'error'
+    | 'warning'
+    | 'inherit'
+    | 'default'
+    | 'tertiary'

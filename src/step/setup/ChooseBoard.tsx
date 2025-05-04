@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Board } from '../../types.ts'
-import BoardElement from '../../components/BoardElement.tsx'
+import SetupBoardElement from '../../components/SetupBoardElement.tsx'
 import { useBoards } from '../../useBoards.ts'
 
 interface IChooseBoardProps {
@@ -10,7 +10,9 @@ interface IChooseBoardProps {
 }
 
 const ChooseBoard: FC<IChooseBoardProps> = (props) => {
-    const { activeBoard, handleChange, boards = useBoards() } = props
+    const { activeBoard, handleChange, boards } = props
+
+    const boardHook = useBoards()
 
     return (
         <div
@@ -21,8 +23,8 @@ const ChooseBoard: FC<IChooseBoardProps> = (props) => {
                 height: '100%',
             }}
         >
-            {boards.map((board, index) => (
-                <BoardElement
+            {(boards || boardHook).map((board, index) => (
+                <SetupBoardElement
                     board={board}
                     key={index}
                     style={{ margin: '1em' }}

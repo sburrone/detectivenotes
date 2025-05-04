@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { Game, Step } from '../../types.ts'
 import UpperBar from '../../components/UpperBar.tsx'
-import { Box, IconButton } from '@mui/material'
 import {
     ArrowBack,
     AutoFixHigh,
@@ -16,6 +15,8 @@ import {
 import '../../App.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectLocked, setOrToggleLocked } from '../../store/gameSlice.ts'
+import { IconButton } from '../../components/CustomButtons.tsx'
+import { MainBoard } from './MainBoard.tsx'
 
 interface IGameProps {
     setStep: (step: Step) => void
@@ -61,7 +62,7 @@ const MainGame: FC<IGameProps> = (props) => {
                     <Settings />
                 </IconButton>
             </UpperBar>
-            <Box sx={{ padding: '1em' }}></Box>
+            <MainBoard />
         </div>
     )
 }

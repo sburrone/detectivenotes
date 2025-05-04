@@ -47,9 +47,9 @@ function App() {
                         {step === Step.MAIN && (
                             <MainMenu setStep={setStep} colorMode={colorMode} setColorMode={setColorMode} game={game} />
                         )}
-                        {step === Step.SETUP && <Setup setStep={setStep} setGame={setGame} />}
+                        {step === Step.SETUP && <Setup setStep={setStep} />}
                         {step === Step.GAME && (
-                            <MainGame setGame={setGame} game={game!} setStep={setStep} updateGame={updateGame} />
+                            <MainGame setStep={setStep} updateGame={updateGame} />
                         )}
                     </div>
                 </IntlProvider>

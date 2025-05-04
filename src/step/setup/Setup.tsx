@@ -1,6 +1,6 @@
 import { FC, ReactNode, useEffect, useState } from 'react'
 import { AdvancedCard, Board, Step } from '../../types.ts'
-import { Box, Button, IconButton, Step as MUIStep, StepLabel, Stepper, Typography } from '@mui/material'
+import { Box, Step as MUIStep, StepLabel, Stepper, Typography } from '@mui/material'
 import UpperBar from '../../components/UpperBar.tsx'
 import { ArrowBack, Settings } from '@mui/icons-material'
 import ChooseBoard from './ChooseBoard.tsx'
@@ -16,6 +16,7 @@ import {
     setOrToggleLocked,
     setPlayers as setPlayersR,
 } from '../../store/gameSlice.ts'
+import { Button, IconButton } from '../../components/CustomButtons.tsx'
 
 interface ISetupProps {
     setStep: (step: Step) => any
@@ -50,7 +51,7 @@ const Setup: FC<ISetupProps> = (props) => {
     useEffect(() => {
         setAssignedCards(Array(players.length).fill(0))
         numLeftover === 0 && setChoice(AdvancedCard.NOT_NEEDED)
-    }, [players.length, selectedBoard?.id])
+    }, [players.length, selectedBoard?.id, numLeftover])
 
     const steps = ['TBD Select board', 'TBD Who is playing?', 'TBD Advanced Setup']
 
@@ -113,7 +114,7 @@ const Setup: FC<ISetupProps> = (props) => {
                 <IconButton variant={'text'} onClick={() => setStep(Step.MAIN)}>
                     <ArrowBack />
                 </IconButton>
-                <Typography variant={'h6'} ccomponent={'div'} sx={{ flexGrow: 1 }}>
+                <Typography variant={'h6'} sx={{ flexGrow: 1 }}>
                     TBD Setup
                 </Typography>
                 <IconButton variant={'text'} onClick={() => setStep(Step.MAIN)}>

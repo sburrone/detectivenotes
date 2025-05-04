@@ -1201,10 +1201,10 @@ export const themes = {
             },
             inversePrimary: {
                 main: '#68dbb0',
-                contrastText: '',
+                contrastText: '#68dbb0', // todo auto
             },
             inverseOnPrimary: {
-                main: '',
+                main: '#68dbb0', // todo auto
                 contrastText: '#68dbb0',
             },
             inverseSurface: {
@@ -2699,10 +2699,10 @@ export const themes = {
             },
             inversePrimary: {
                 main: '#006c4a',
-                contrastText: '',
+                contrastText: '#006c4a', // todo auto
             },
             inverseOnPrimary: {
-                main: '',
+                main: '#006c4a', // todo auto
                 contrastText: '#006c4a',
             },
             inverseSurface: {

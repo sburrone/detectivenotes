@@ -20,7 +20,7 @@ interface IBoardElementProps {
     onClick: (board: Board) => void
 }
 
-const BoardElement: FC<CardProps & IBoardElementProps> = (props) => {
+const SetupBoardElement: FC<CardProps & IBoardElementProps> = (props) => {
     const { board, selected, onClick, ...rest } = props
 
     const theme = useTheme()
@@ -94,4 +94,4 @@ const BoardElement: FC<CardProps & IBoardElementProps> = (props) => {
     )
 }
 
-export default BoardElement
+export default SetupBoardElement

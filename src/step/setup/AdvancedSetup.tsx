@@ -1,19 +1,10 @@
 import { FC } from 'react'
 import { AdvancedCard } from '../../types.ts'
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    IconButton,
-    InputAdornment,
-    Stack,
-    TextField,
-    Typography,
-    useTheme,
-} from '@mui/material'
+import { Card, CardContent, CardHeader, InputAdornment, Stack, TextField, Typography, useTheme } from '@mui/material'
 import { Add, CelebrationTwoTone, Remove } from '@mui/icons-material'
 import _ from 'lodash'
 import { faces } from '../../utils.tsx'
+import { IconButton } from '../../components/CustomButtons.tsx'
 
 interface IAdvancedSetupProps {
     players: string[]
@@ -127,63 +118,67 @@ const AdvancedSetup: FC<IAdvancedSetupProps> = (props) => {
                                                         margin: '0.25em 0',
                                                         width: '100%',
                                                     }}
-                                                    inputProps={{ disabled: true }}
-                                                    InputProps={{
-                                                        startAdornment: (
-                                                            <InputAdornment position={'start'}>
-                                                                {faces[i]}
-                                                            </InputAdornment>
-                                                        ),
-                                                        endAdornment: (
-                                                            <InputAdornment position={'end'}>
-                                                                <IconButton
-                                                                    sx={
-                                                                        theme.components!.MuiFab!.variants!.find(
-                                                                            (variant) =>
-                                                                                (variant.props as any).color ===
-                                                                                'tertiary'
-                                                                        )!.style
-                                                                    }
-                                                                    disabled={assignedCards[i] === 0}
-                                                                    onClick={() => {
-                                                                        setChoice(AdvancedCard.ASSIGN)
-                                                                        const newAssignedCards = _.clone(assignedCards)
-                                                                        newAssignedCards[i]--
-                                                                        setAssignedCards(newAssignedCards)
-                                                                    }}
-                                                                >
-                                                                    <Remove sx={{ fontSize: '0.75em' }} />
-                                                                </IconButton>
-                                                                <Typography
-                                                                    sx={{
-                                                                        width: '2.5em',
-                                                                        color: theme.palette.secondary.main,
-                                                                    }}
-                                                                    align={'center'}
-                                                                >
-                                                                    {assignedCards[i]}
-                                                                </Typography>
-                                                                <IconButton
-                                                                    sx={
-                                                                        theme.components!.MuiFab!.variants!.find(
-                                                                            (variant) =>
-                                                                                (variant.props as any).color ===
-                                                                                'tertiary'
-                                                                        )!.style
-                                                                    }
-                                                                    color={'tertiary'}
-                                                                    disabled={numLeftover === numToAssign}
-                                                                    onClick={() => {
-                                                                        setChoice(AdvancedCard.ASSIGN)
-                                                                        const newAssignedCards = _.clone(assignedCards)
-                                                                        newAssignedCards[i]++
-                                                                        setAssignedCards(newAssignedCards)
-                                                                    }}
-                                                                >
-                                                                    <Add sx={{ fontSize: '0.75em' }} />
-                                                                </IconButton>
-                                                            </InputAdornment>
-                                                        ),
+                                                    slotProps={{
+                                                        htmlInput: { disabled: true },
+                                                        input: {
+                                                            startAdornment: (
+                                                                <InputAdornment position={'start'}>
+                                                                    {faces[i]}
+                                                                </InputAdornment>
+                                                            ),
+                                                            endAdornment: (
+                                                                <InputAdornment position={'end'}>
+                                                                    <IconButton
+                                                                        sx={
+                                                                            theme.components!.MuiFab!.variants!.find(
+                                                                                (variant) =>
+                                                                                    (variant.props as any).color ===
+                                                                                    'tertiary'
+                                                                            )!.style
+                                                                        }
+                                                                        disabled={assignedCards[i] === 0}
+                                                                        onClick={() => {
+                                                                            setChoice(AdvancedCard.ASSIGN)
+                                                                            const newAssignedCards =
+                                                                                _.clone(assignedCards)
+                                                                            newAssignedCards[i]--
+                                                                            setAssignedCards(newAssignedCards)
+                                                                        }}
+                                                                    >
+                                                                        <Remove sx={{ fontSize: '0.75em' }} />
+                                                                    </IconButton>
+                                                                    <Typography
+                                                                        sx={{
+                                                                            width: '2.5em',
+                                                                            color: theme.palette.secondary.main,
+                                                                        }}
+                                                                        align={'center'}
+                                                                    >
+                                                                        {assignedCards[i]}
+                                                                    </Typography>
+                                                                    <IconButton
+                                                                        sx={
+                                                                            theme.components!.MuiFab!.variants!.find(
+                                                                                (variant) =>
+                                                                                    (variant.props as any).color ===
+                                                                                    'tertiary'
+                                                                            )!.style
+                                                                        }
+                                                                        color={'tertiary'}
+                                                                        disabled={numLeftover === numToAssign}
+                                                                        onClick={() => {
+                                                                            setChoice(AdvancedCard.ASSIGN)
+                                                                            const newAssignedCards =
+                                                                                _.clone(assignedCards)
+                                                                            newAssignedCards[i]++
+                                                                            setAssignedCards(newAssignedCards)
+                                                                        }}
+                                                                    >
+                                                                        <Add sx={{ fontSize: '0.75em' }} />
+                                                                    </IconButton>
+                                                                </InputAdornment>
+                                                            ),
+                                                        },
                                                     }}
                                                 />
                                             </Stack>

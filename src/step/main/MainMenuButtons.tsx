@@ -12,19 +12,19 @@ import {
     Save,
     Schedule,
 } from '@mui/icons-material'
-import CustomIconButton from '../../components/CustomIconButton.tsx'
+import { IconMenuButton } from '../../components/CustomButtons.tsx'
 import { ColorMode, Game, Step } from '../../types.ts'
 import CardButton from '../../components/CardButton.tsx'
 import TextWithIcon from '../../components/TextWithIcon.tsx'
 
 const MainMenuButtons: FC<{
-    setStep: (step: Step) => any
+    setStep: (step: Step) => void
     hideUI: boolean
-    setHideUI: (hideUI: boolean) => any
-    setColorMode: (colorMode: ColorMode) => any
+    setHideUI: (hideUI: boolean) => void
+    setColorMode: (colorMode: ColorMode) => void
     colorMode: ColorMode
     game: Game | null
-}> = ({ setStep, hideUI, setHideUI, colorMode, setColorMode, game }) => {
+}> = ({ setStep, hideUI, colorMode, setColorMode, game }) => {
     const theme = useTheme()
 
     const [languageExtended, setLanguageExtended] = useState(window.innerWidth >= 500)
@@ -38,6 +38,7 @@ const MainMenuButtons: FC<{
         <>
             {!hideUI && (
                 <Stack
+                    component={"div"}
                     aria-label={'background'}
                     style={{
                         position: 'fixed',
@@ -45,12 +46,12 @@ const MainMenuButtons: FC<{
                         height: '100dvh',
                         width: '100dvw',
                     }}
-                    onDoubleClick={(e: Event) => {
-                        e.preventDefault()
-                        if ((e.target as HTMLElement).ariaLabel === 'background') {
-                            setHideUI(true)
-                        }
-                    }}
+                    // onDoubleClick={(e: Event) => {
+                    //     e.preventDefault()
+                    //     if ((e.target as HTMLElement).ariaLabel === 'background') {
+                    //         setHideUI(true)
+                    //     }
+                    // }}
                 >
                     <>
                         <Typography
@@ -99,7 +100,7 @@ const MainMenuButtons: FC<{
                                     <Stack direction={'row'} justifyContent={'space-between'}>
                                         <TextWithIcon
                                             icon={<Schedule />}
-                                            text={new Date(game.ts).toLocaleDateString(undefined, {
+                                            text={new Date(game.ts!).toLocaleDateString(undefined, {
                                                 weekday: 'short',
                                                 day: 'numeric',
                                                 month: 'short',
@@ -108,10 +109,10 @@ const MainMenuButtons: FC<{
                                                 minute: 'numeric',
                                             })}
                                         />
-                                        <TextWithIcon icon={<CasinoOutlined />} text={game.board.name} />
+                                        <TextWithIcon icon={<CasinoOutlined />} text={game.board!.name} />
                                         <TextWithIcon
                                             icon={<PersonOutlined />}
-                                            text={game.players.toLocaleString().replaceAll(',', ', ')}
+                                            text={game.players!.toLocaleString().replaceAll(',', ', ')}
                                         />
                                     </Stack>
                                 }
@@ -138,28 +139,27 @@ const MainMenuButtons: FC<{
                                         />
                                     }
                                     sx={{ margin: '4px' }}
-                                    variant={'filled'}
                                 >
                                     TBD Language
                                 </Button>
                             ) : (
-                                <CustomIconButton>
+                                <IconMenuButton>
                                     <Language />
-                                </CustomIconButton>
+                                </IconMenuButton>
                             )}
-                            <CustomIconButton>
+                            <IconMenuButton>
                                 <AddToHomeScreen />
-                            </CustomIconButton>
-                            <CustomIconButton
+                            </IconMenuButton>
+                            <IconMenuButton
                                 onClick={() =>
                                     setColorMode(colorMode === ColorMode.LIGHT ? ColorMode.DARK : ColorMode.LIGHT)
                                 }
                             >
                                 {colorMode === ColorMode.LIGHT ? <DarkMode /> : <LightMode />}
-                            </CustomIconButton>
-                            <CustomIconButton>
+                            </IconMenuButton>
+                            <IconMenuButton>
                                 <Info />
-                            </CustomIconButton>
+                            </IconMenuButton>
                         </div>
                     </>
                 </Stack>
