@@ -30,7 +30,7 @@ export type Board = {
 export type GameBoardRow = {
     item: string
     locked: boolean
-    values: { icon: BoardIcon, badge: number }[]
+    values: { icon: BoardIcon; badge: number }[]
 }
 
 export enum AdvancedCard {

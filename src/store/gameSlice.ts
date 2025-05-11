@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AdvancedCardSetup, Board, Game, GameBoardRow, BoardIcon } from '../types'
+import { AdvancedCardSetup, Board, BoardIcon, Game, GameBoardRow } from '../types'
 import { RootState } from './store'
 import { saveGame } from '../utils'
 
@@ -67,7 +67,7 @@ const lockItemReducer = (state: GameState, action: PayloadAction<string>) => {
 
 const updateItemReducer = (
     state: GameState,
-    action: PayloadAction<{ item: string; playerIndex: number; value: BoardIcon, badge: number }>
+    action: PayloadAction<{ item: string; playerIndex: number; value: BoardIcon; badge: number }>
 ) => {
     if (state.gameBoard) {
         const found = state.gameBoard.find((row) => row.item === action.payload.item)

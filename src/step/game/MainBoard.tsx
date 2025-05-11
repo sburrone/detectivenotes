@@ -30,9 +30,17 @@ export const MainBoard: FC = () => {
     }
 
     const RowRenderer = (row: GameBoardRow, index: number) => (
-        <TableRow key={index} sx={{ backgroundColor: row.locked ? (theme.palette as any).errorContainer.main : undefined }}>
+        <TableRow
+            key={index}
+            sx={{ backgroundColor: row.locked ? (theme.palette as any).errorContainer.main : undefined }}
+        >
             <TableCell padding={'checkbox'} sx={{ fontSize: '1.25rem' }}>
-                <Checkbox color={"error"} disabled={globalLocked} checked={row.locked} onChange={() => handleLockedUpdate(row.item)} />
+                <Checkbox
+                    color={'error'}
+                    disabled={globalLocked}
+                    checked={row.locked}
+                    onChange={() => handleLockedUpdate(row.item)}
+                />
             </TableCell>
             <TableCell sx={{ fontSize: '1.25rem' }}>{row.item}</TableCell>
             {row.values.map((value, index) => (

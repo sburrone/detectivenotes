@@ -44,7 +44,7 @@ const MainGame: FC<IGameProps> = (props) => {
                 </IconButton>
                 <IconButton
                     className={'normal-margin'}
-                    variant={'elevated'}
+                    variant={locked ? 'filled' : 'elevated'}
                     onClick={() => dispatch(setOrToggleLocked())}
                 >
                     {locked ? <Lock /> : <LockOpen />}

@@ -21,6 +21,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-intl": "^7.1.11",
+    "redux-undo": "^1.1.0",
     "three": "^0.176.0"
   },
   "devDependencies": {

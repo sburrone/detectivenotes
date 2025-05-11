@@ -38,7 +38,7 @@ const MainMenuButtons: FC<{
         <>
             {!hideUI && (
                 <Stack
-                    component={"div"}
+                    component={'div'}
                     aria-label={'background'}
                     style={{
                         position: 'fixed',

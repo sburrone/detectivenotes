@@ -42,7 +42,7 @@ const Setup: FC<ISetupProps> = (props) => {
     const [assignedCards, setAssignedCards] = useState<number[]>(Array(players.length).fill(0))
 
     const numCards =
-        selectedBoard && selectedBoard.characters.length + selectedBoard.weapons.length + selectedBoard.rooms.length -3
+        selectedBoard && selectedBoard.characters.length + selectedBoard.weapons.length + selectedBoard.rooms.length - 3
     const numPlayers = players.length
     const numEach = numCards && Math.floor(numCards / numPlayers)
     const numLeftover = numCards && numCards % numPlayers
@@ -94,7 +94,7 @@ const Setup: FC<ISetupProps> = (props) => {
         // }
         setActiveStep((prevActiveStep) => prevActiveStep - 1)
     }
-console.log({players})
+    console.log({ players })
     const handleSkip = () => {
         if (!isStepOptional(activeStep)) {
             // You probably want to guard against something like this,
