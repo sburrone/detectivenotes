@@ -1,11 +1,13 @@
 import { FC, useState } from 'react'
-import { BoardIcon } from '../../types.ts'
+import { BoardIcon, GameBoardRow } from '../../types.ts'
 import { BoardButton } from '../../components/BoardButton.tsx'
-import { Box, Table, TableBody, TableCell, TableHead, TableRow, useTheme } from '@mui/material'
+import { Box, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, useTheme } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectGame, selectGameBoard, updateItem } from '../../store/gameSlice.ts'
+import { lockItem, selectGame, selectGameBoard, selectLocked, updateItem } from '../../store/gameSlice.ts'
 import { IconButton } from '../../components/CustomButtons.tsx'
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material'
+
+const COL_EXTRA = 2
 
 export const MainBoard: FC = () => {
     const [openSuspects, setOpenSuspects] = useState(true)
@@ -14,6 +16,7 @@ export const MainBoard: FC = () => {
 
     const game = useSelector(selectGame)
     const gameBoard = useSelector(selectGameBoard)
+    const globalLocked = useSelector(selectLocked)
 
     const dispatch = useDispatch()
     const theme = useTheme()
@@ -21,6 +24,30 @@ export const MainBoard: FC = () => {
     const handleUpdate = (newIcon: BoardIcon, newNumber: number, item: string, index: number) => {
         dispatch(updateItem({ item, badge: newNumber, value: newIcon, playerIndex: index }))
     }
+
+    const handleLockedUpdate = (item: string) => {
+        dispatch(lockItem(item))
+    }
+
+    const RowRenderer = (row: GameBoardRow, index: number) => (
+        <TableRow key={index} sx={{ backgroundColor: row.locked ? (theme.palette as any).errorContainer.main : undefined }}>
+            <TableCell padding={'checkbox'} sx={{ fontSize: '1.25rem' }}>
+                <Checkbox color={"error"} disabled={globalLocked} checked={row.locked} onChange={() => handleLockedUpdate(row.item)} />
+            </TableCell>
+            <TableCell sx={{ fontSize: '1.25rem' }}>{row.item}</TableCell>
+            {row.values.map((value, index) => (
+                <TableCell key={index} align={'center'}>
+                    <BoardButton
+                        key={index}
+                        disabled={row.locked}
+                        icon={row.locked ? BoardIcon.CROSS : value.icon}
+                        number={value.badge}
+                        onUpdate={(i, n) => handleUpdate(i, n, row.item, index)}
+                    />
+                </TableCell>
+            ))}
+        </TableRow>
+    )
 
     return (
         <Box sx={{ py: '1em' }}>
@@ -33,6 +60,7 @@ export const MainBoard: FC = () => {
                         },
                     }}
                 >
+                    <TableCell padding={'checkbox'} />
                     <TableCell />
                     {game.players?.map((player, index) => {
                         return (
@@ -59,7 +87,7 @@ export const MainBoard: FC = () => {
                         <TableCell
                             sx={{ fontSize: '1.25rem' }}
                             align={'center'}
-                            colSpan={(game.players?.length ?? 0) + 1}
+                            colSpan={(game.players?.length ?? 0) + COL_EXTRA}
                         >
                             <IconButton
                                 disableRipple={true}
@@ -111,26 +139,7 @@ export const MainBoard: FC = () => {
                         </TableCell>
                     </TableRow>
                     {openSuspects &&
-                        gameBoard
-                            ?.filter((el) => game.board?.characters?.includes(el.item))
-                            .map((character, index) => {
-                                return (
-                                    <TableRow key={index}>
-                                        <TableCell sx={{ fontSize: '1.25rem' }}>{character.item}</TableCell>
-                                        {character.values.map((value, index) => (
-                                            <TableCell key={index} align={'center'}>
-                                                <BoardButton
-                                                    key={index}
-                                                    disabled={character.locked}
-                                                    icon={value.icon}
-                                                    number={value.badge}
-                                                    onUpdate={(i, n) => handleUpdate(i, n, character.item, index)}
-                                                />
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                )
-                            })}
+                        gameBoard?.filter((el) => game.board?.characters?.includes(el.item)).map(RowRenderer)}
 
                     {/*Armi*/}
                     <TableRow
@@ -148,7 +157,7 @@ export const MainBoard: FC = () => {
                         <TableCell
                             sx={{ fontSize: '1.25rem' }}
                             align={'center'}
-                            colSpan={(game.players?.length ?? 0) + 1}
+                            colSpan={(game.players?.length ?? 0) + COL_EXTRA}
                         >
                             <IconButton
                                 disableRipple={true}
@@ -198,27 +207,7 @@ export const MainBoard: FC = () => {
                             </IconButton>
                         </TableCell>
                     </TableRow>
-                    {openWeapons &&
-                        gameBoard
-                            ?.filter((el) => game.board?.weapons?.includes(el.item))
-                            .map((character, index) => {
-                                return (
-                                    <TableRow key={index}>
-                                        <TableCell sx={{ fontSize: '1.25rem' }}>{character.item}</TableCell>
-                                        {character.values.map((value, index) => (
-                                            <TableCell key={index} align={'center'}>
-                                                <BoardButton
-                                                    key={index}
-                                                    disabled={character.locked}
-                                                    icon={value.icon}
-                                                    number={value.badge}
-                                                    onUpdate={(i, n) => handleUpdate(i, n, character.item, index)}
-                                                />
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                )
-                            })}
+                    {openWeapons && gameBoard?.filter((el) => game.board?.weapons?.includes(el.item)).map(RowRenderer)}
 
                     {/*Stanze*/}
                     <TableRow
@@ -236,7 +225,7 @@ export const MainBoard: FC = () => {
                         <TableCell
                             sx={{ fontSize: '1.25rem' }}
                             align={'center'}
-                            colSpan={(game.players?.length ?? 0) + 1}
+                            colSpan={(game.players?.length ?? 0) + COL_EXTRA}
                         >
                             <IconButton
                                 disableRipple={true}
@@ -267,27 +256,7 @@ export const MainBoard: FC = () => {
                             </IconButton>
                         </TableCell>
                     </TableRow>
-                    {openRooms &&
-                        gameBoard
-                            ?.filter((el) => game.board?.rooms?.includes(el.item))
-                            .map((character, index) => {
-                                return (
-                                    <TableRow key={index}>
-                                        <TableCell sx={{ fontSize: '1.25rem' }}>{character.item}</TableCell>
-                                        {character.values.map((value, index) => (
-                                            <TableCell key={index} align={'center'}>
-                                                <BoardButton
-                                                    key={index}
-                                                    disabled={character.locked}
-                                                    icon={value.icon}
-                                                    number={value.badge}
-                                                    onUpdate={(i, n) => handleUpdate(i, n, character.item, index)}
-                                                />
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                )
-                            })}
+                    {openRooms && gameBoard?.filter((el) => game.board?.rooms?.includes(el.item)).map(RowRenderer)}
                 </TableBody>
             </Table>
         </Box>
