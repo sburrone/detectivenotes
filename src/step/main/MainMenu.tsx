@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import { BoardModel } from './BoardModel.tsx'
 import MainMenuButtons from './MainMenuButtons.tsx'
-import { ColorMode, Game, Step } from '../../types.ts'
+import { Game, Step } from '../../types.ts'
 
 const MainMenu: FC<{
     setStep: (step: Step) => any
@@ -11,12 +11,7 @@ const MainMenu: FC<{
     return (
         <>
             <BoardModel hideUI={hideUI} setHideUI={setHideUI} />
-            <MainMenuButtons
-                setStep={setStep}
-                hideUI={hideUI}
-                setHideUI={setHideUI}
-                game={game}
-            />
+            <MainMenuButtons setStep={setStep} hideUI={hideUI} setHideUI={setHideUI} game={game} />
         </>
     )
 }
