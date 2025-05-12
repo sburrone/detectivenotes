@@ -14,7 +14,7 @@ import {
     PanoramaFishEye,
     Stars,
 } from '@mui/icons-material'
-import { Board, BoardIcon, Game, GameBoardRow } from './types.ts'
+import { Board, BoardIcon, Game, GameBoardRow, Settings } from './types.ts'
 import { ReactElement } from 'react'
 
 export const faces = [
@@ -66,4 +66,8 @@ export const initializeBoard = (board: Board, players: string[]): GameBoardRow[]
 
 export const saveGame = (game: Game) => {
     localStorage.setItem('game', JSON.stringify(game))
+}
+
+export const saveSettings = (settings: Settings) => {
+    localStorage.setItem('settings', JSON.stringify(settings))
 }
