@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { ColorMode, Game, Step } from '../../types.ts'
 import UpperBar from '../../components/UpperBar.tsx'
 import {
@@ -19,6 +19,7 @@ import { selectLocked, setOrToggleLocked } from '../../store/gameSlice.ts'
 import { IconButton } from '../../components/CustomButtons.tsx'
 import { MainBoard } from './MainBoard.tsx'
 import { selectColorMode, toggleColorMode } from '../../store/settingsSlice.ts'
+import { SettingsMenu } from '../SettingsMenu.tsx'
 
 interface IGameProps {
     setStep: (step: Step) => void
@@ -27,6 +28,8 @@ interface IGameProps {
 
 const MainGame: FC<IGameProps> = (props) => {
     const { setStep } = props
+
+    const [settingsOpen, setSettingsOpen] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -65,11 +68,13 @@ const MainGame: FC<IGameProps> = (props) => {
                 <IconButton className={'normal-margin'} variant={'elevated'}>
                     <Redo />
                 </IconButton>
-                <IconButton className={'normal-margin'} variant={'elevated'}>
+                <IconButton className={'normal-margin'} variant={'elevated'} onClick={() => setSettingsOpen(!settingsOpen)}>
                     <Settings />
                 </IconButton>
             </UpperBar>
             <MainBoard />
+
+            <SettingsMenu open={settingsOpen} setOpen={setSettingsOpen} />
         </div>
     )
 }
