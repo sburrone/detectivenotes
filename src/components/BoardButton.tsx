@@ -5,6 +5,8 @@ import { getBoardIcon } from '../utils.tsx'
 import { Button, IconButton } from './CustomButtons.tsx'
 import { Counter } from './Counter.tsx'
 import { Close } from '@mui/icons-material'
+import { useSelector } from 'react-redux'
+import { selectColorMode } from '../store/settingsSlice.ts'
 
 export interface IBoardButtonProps {
     icon: BoardIcon
@@ -35,6 +37,8 @@ export const BoardButton: FC<IBoardButtonProps> = (props) => {
 
     const theme = useTheme()
 
+    const colorMode = useSelector(selectColorMode)
+
     const handleUpdate = (toUpdate: BoardIcon | number) => {
         const newIcon = typeof toUpdate === 'number' ? icon : toUpdate
         const newNumber = typeof toUpdate === 'number' ? toUpdate : number
@@ -51,7 +55,7 @@ export const BoardButton: FC<IBoardButtonProps> = (props) => {
                     anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                     badgeContent={number}
                 >
-                    {getBoardIcon(icon)}
+                    {getBoardIcon(icon, colorMode)}
                 </Badge>
             </IconButton>
 

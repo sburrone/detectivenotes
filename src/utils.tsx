@@ -14,7 +14,7 @@ import {
     PanoramaFishEye,
     Stars,
 } from '@mui/icons-material'
-import { Board, BoardIcon, Game, GameBoardRow, Settings } from './types.ts'
+import { Board, BoardIcon, ColorMode, Game, GameBoardRow, Settings } from './types.ts'
 import { ReactElement } from 'react'
 
 export const faces = [
@@ -26,7 +26,7 @@ export const faces = [
     <Face6TwoTone color={'secondary'} />,
 ]
 
-export const getBoardIcon = (boardIcon: BoardIcon): ReactElement => {
+export const getBoardIcon = (boardIcon: BoardIcon, colorMode?: ColorMode): ReactElement => {
     switch (boardIcon) {
         case BoardIcon.CHECK:
             return <CheckCircle sx={{ fill: '#36a655' }} />
@@ -48,7 +48,7 @@ export const getBoardIcon = (boardIcon: BoardIcon): ReactElement => {
             return <Stars sx={{ fill: '#eecc48' }} />
         case BoardIcon.RESET:
         default:
-            return <PanoramaFishEye sx={{ fill: '#c6e6d4' }} />
+            return <PanoramaFishEye sx={{ fill: colorMode === ColorMode.DARK ? '#c6e6d4' : "#406175" }} />
     }
 }
 

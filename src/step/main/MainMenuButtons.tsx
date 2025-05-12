@@ -16,16 +16,19 @@ import { IconMenuButton } from '../../components/CustomButtons.tsx'
 import { ColorMode, Game, Step } from '../../types.ts'
 import CardButton from '../../components/CardButton.tsx'
 import TextWithIcon from '../../components/TextWithIcon.tsx'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectColorMode, setColorMode } from '../../store/settingsSlice.ts'
 
 const MainMenuButtons: FC<{
     setStep: (step: Step) => void
     hideUI: boolean
     setHideUI: (hideUI: boolean) => void
-    setColorMode: (colorMode: ColorMode) => void
-    colorMode: ColorMode
     game: Game | null
-}> = ({ setStep, hideUI, colorMode, setColorMode, game }) => {
+}> = ({ setStep, hideUI, game }) => {
     const theme = useTheme()
+    const dispatch = useDispatch()
+
+    const colorMode = useSelector(selectColorMode)
 
     const [languageExtended, setLanguageExtended] = useState(window.innerWidth >= 500)
 
@@ -152,7 +155,7 @@ const MainMenuButtons: FC<{
                             </IconMenuButton>
                             <IconMenuButton
                                 onClick={() =>
-                                    setColorMode(colorMode === ColorMode.LIGHT ? ColorMode.DARK : ColorMode.LIGHT)
+                                    dispatch(setColorMode(colorMode === ColorMode.LIGHT ? ColorMode.DARK : ColorMode.LIGHT))
                                 }
                             >
                                 {colorMode === ColorMode.LIGHT ? <DarkMode /> : <LightMode />}

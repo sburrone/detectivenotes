@@ -80,9 +80,9 @@ export type ButtonColor =
 
 export type ToolbarPosition = 'bottom' | 'top'
 
-export type PlayerNamesPosition = "default" | "vertical"
+export type PlayerNamesPosition = 'default' | 'vertical'
 
-export type SelectionModalOptions = "minimal" | "no_numbers" | "full"
+export type SelectionModalOptions = 'minimal' | 'no_numbers' | 'full'
 
 export type Settings = {
     toolbarPosition: ToolbarPosition
@@ -91,4 +91,5 @@ export type Settings = {
     hideDustCounter: boolean
     playerNamesPosition: PlayerNamesPosition
     selectionModalOptions: SelectionModalOptions
+    colorMode: ColorMode
 }

@@ -5,10 +5,8 @@ import { ColorMode, Game, Step } from '../../types.ts'
 
 const MainMenu: FC<{
     setStep: (step: Step) => any
-    setColorMode: (colorMode: ColorMode) => any
-    colorMode: ColorMode
     game: Game | null
-}> = ({ setStep, setColorMode, colorMode, game }) => {
+}> = ({ setStep, game }) => {
     const [hideUI, setHideUI] = useState(false)
     return (
         <>
@@ -17,8 +15,6 @@ const MainMenu: FC<{
                 setStep={setStep}
                 hideUI={hideUI}
                 setHideUI={setHideUI}
-                colorMode={colorMode}
-                setColorMode={setColorMode}
                 game={game}
             />
         </>

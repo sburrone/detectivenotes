@@ -1,9 +1,10 @@
 import { FC } from 'react'
-import { Game, Step } from '../../types.ts'
+import { ColorMode, Game, Step } from '../../types.ts'
 import UpperBar from '../../components/UpperBar.tsx'
 import {
     ArrowBack,
     AutoFixHigh,
+    DarkMode,
     InfoRounded,
     LightMode,
     Lock,
@@ -17,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectLocked, setOrToggleLocked } from '../../store/gameSlice.ts'
 import { IconButton } from '../../components/CustomButtons.tsx'
 import { MainBoard } from './MainBoard.tsx'
+import { selectColorMode, toggleColorMode } from '../../store/settingsSlice.ts'
 
 interface IGameProps {
     setStep: (step: Step) => void
@@ -28,6 +30,7 @@ const MainGame: FC<IGameProps> = (props) => {
 
     const dispatch = useDispatch()
 
+    const colorMode = useSelector(selectColorMode)
     const locked = useSelector(selectLocked)
 
     return (
@@ -39,8 +42,12 @@ const MainGame: FC<IGameProps> = (props) => {
                 <IconButton className={'normal-margin'} variant={'elevated'}>
                     <InfoRounded />
                 </IconButton>
-                <IconButton className={'normal-margin'} variant={'elevated'}>
-                    <LightMode />
+                <IconButton
+                    className={'normal-margin'}
+                    variant={'elevated'}
+                    onClick={() => dispatch(toggleColorMode())}
+                >
+                    {colorMode === ColorMode.DARK ? <LightMode /> : <DarkMode />}
                 </IconButton>
                 <IconButton
                     className={'normal-margin'}
