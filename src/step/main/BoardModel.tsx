@@ -70,7 +70,7 @@ export const BoardModel: FC<{
             </Canvas>
             {hideUI && (
                 <Button
-                    style={{
+                    sx={{
                         position: 'absolute',
                         bottom: 0,
                         width: '100dvw',

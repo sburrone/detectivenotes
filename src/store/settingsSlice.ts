@@ -1,4 +1,4 @@
-import { ColorMode, PlayerNamesPosition, SelectionModalOptions, Settings, ToolbarPosition } from '../types.ts'
+import { ColorMode, PlayerNamesPosition, SelectionModalOption, Settings, ToolbarPosition } from '../types.ts'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { saveSettings } from '../utils.tsx'
 import { RootState } from './store.ts'
@@ -40,7 +40,7 @@ const setPlayerNamesPositionReducer = (state: SettingsState, action: PayloadActi
     saveSettings(state)
 }
 
-const setSelectionModalOptionsReducer = (state: SettingsState, action: PayloadAction<SelectionModalOptions>) => {
+const setSelectionModalOptionsReducer = (state: SettingsState, action: PayloadAction<SelectionModalOption>) => {
     state.selectionModalOptions = action.payload
     saveSettings(state)
 }
@@ -93,5 +93,7 @@ export const selectPlayerNamesPosition = (state: RootState) => state.settings.pl
 export const selectSelectionModalOptions = (state: RootState) => state.settings.selectionModalOptions
 
 export const selectColorMode = (state: RootState) => state.settings.colorMode
+
+export const selectSettings = (state: RootState) => state.settings
 
 export default settingsSlice.reducer

@@ -34,7 +34,7 @@ const SetupBoardElement: FC<CardProps & IBoardElementProps> = (props) => {
     return (
         <Card
             {...rest}
-            style={{
+            sx={{
                 padding: 0,
                 width: '40em',
                 height: 'fit-content',
@@ -42,7 +42,7 @@ const SetupBoardElement: FC<CardProps & IBoardElementProps> = (props) => {
             }}
         >
             <CardHeader
-                title={<Typography style={{ fontSize: '1.25rem' }}>{board.name}</Typography>}
+                title={<Typography sx={{ fontSize: '1.25rem' }}>{board.name}</Typography>}
                 sx={{
                     backgroundColor: selected
                         ? (theme.palette as any).primaryContainer.main
@@ -50,7 +50,7 @@ const SetupBoardElement: FC<CardProps & IBoardElementProps> = (props) => {
                 }}
                 onClick={() => onClick(board)}
             />
-            <CardContent style={{ paddingBottom: 16 }}>
+            <CardContent sx={{ paddingBottom: 16 }}>
                 <Stack direction={'row'} flexWrap={'wrap'}>
                     <Chip
                         sx={{ margin: '0.25em' }}
@@ -84,7 +84,7 @@ const SetupBoardElement: FC<CardProps & IBoardElementProps> = (props) => {
                         {board[expanded].toString().replaceAll(',', ', ')}
                     </Typography>
                 )}
-                <CardActions style={{ paddingBottom: 0 }}>
+                <CardActions sx={{ paddingBottom: 0 }}>
                     <Button size={'small'} variant={'text'} onClick={() => onClick(board)}>
                         TBD Play this!
                     </Button>

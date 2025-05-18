@@ -19,7 +19,7 @@ import { selectLocked, setOrToggleLocked } from '../../store/gameSlice.ts'
 import { IconButton } from '../../components/CustomButtons.tsx'
 import { MainBoard } from './MainBoard.tsx'
 import { selectColorMode, toggleColorMode } from '../../store/settingsSlice.ts'
-import { SettingsMenu } from '../SettingsMenu.tsx'
+import { SettingsMenu } from '../../settings/SettingsMenu.tsx'
 
 interface IGameProps {
     setStep: (step: Step) => void
@@ -38,11 +38,11 @@ const MainGame: FC<IGameProps> = (props) => {
 
     return (
         <div>
-            <UpperBar style={{ margin: 'auto' }}>
-                <IconButton className={'normal-margin'} variant={'elevated'} onClick={() => setStep(Step.MAIN)}>
+            <UpperBar sx={{ margin: 'auto', gap: 2 }}>
+                <IconButton variant={'elevated'} onClick={() => setStep(Step.MAIN)}>
                     <ArrowBack />
                 </IconButton>
-                <IconButton className={'normal-margin'} variant={'elevated'}>
+                <IconButton variant={'elevated'}>
                     <InfoRounded />
                 </IconButton>
                 <IconButton
@@ -59,16 +59,16 @@ const MainGame: FC<IGameProps> = (props) => {
                 >
                     {locked ? <Lock /> : <LockOpen />}
                 </IconButton>
-                <IconButton className={'normal-margin'} variant={'elevated'}>
+                <IconButton variant={'elevated'}>
                     <AutoFixHigh />
                 </IconButton>
-                <IconButton className={'normal-margin'} variant={'elevated'}>
+                <IconButton variant={'elevated'}>
                     <Undo />
                 </IconButton>
-                <IconButton className={'normal-margin'} variant={'elevated'}>
+                <IconButton variant={'elevated'}>
                     <Redo />
                 </IconButton>
-                <IconButton className={'normal-margin'} variant={'elevated'} onClick={() => setSettingsOpen(!settingsOpen)}>
+                <IconButton variant={'elevated'} onClick={() => setSettingsOpen(!settingsOpen)}>
                     <Settings />
                 </IconButton>
             </UpperBar>

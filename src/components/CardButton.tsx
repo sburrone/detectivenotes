@@ -14,7 +14,7 @@ const CardButton: FC<ICardButtonProps> = (props: ICardButtonProps) => {
     const theme = useTheme()
     return (
         <Card
-            style={{
+            sx={{
                 padding: 0,
                 width: '40em',
                 height: 'fit-content',
@@ -30,7 +30,7 @@ const CardButton: FC<ICardButtonProps> = (props: ICardButtonProps) => {
                         backgroundColor: headerColor ?? (theme.palette as any).primaryContainer.main,
                     }}
                 />
-                {content && <CardContent style={{ paddingBottom: 16 }}>{content}</CardContent>}
+                {content && <CardContent sx={{ paddingBottom: 16 }}>{content}</CardContent>}
             </CardActionArea>
         </Card>
     )

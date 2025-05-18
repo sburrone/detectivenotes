@@ -78,11 +78,21 @@ export type ButtonColor =
     | 'default'
     | 'tertiary'
 
-export type ToolbarPosition = 'bottom' | 'top'
+export enum ToolbarPosition {
+    bottom = 'bottom',
+    top = 'top',
+}
 
-export type PlayerNamesPosition = 'default' | 'vertical'
+export enum PlayerNamesPosition {
+    default = 'default',
+    vertical = 'vertical',
+}
 
-export type SelectionModalOptions = 'minimal' | 'no_numbers' | 'full'
+export enum SelectionModalOption {
+    minimal = 'minimal',
+    noNumbers = 'no_numbers',
+    full = 'full',
+}
 
 export type Settings = {
     toolbarPosition: ToolbarPosition
@@ -90,6 +100,6 @@ export type Settings = {
     forceAssistantUpdate: boolean
     hideDustCounter: boolean
     playerNamesPosition: PlayerNamesPosition
-    selectionModalOptions: SelectionModalOptions
+    selectionModalOptions: SelectionModalOption
     colorMode: ColorMode
 }

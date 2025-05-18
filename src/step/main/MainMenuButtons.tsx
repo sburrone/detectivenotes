@@ -43,7 +43,7 @@ const MainMenuButtons: FC<{
                 <Stack
                     component={'div'}
                     aria-label={'background'}
-                    style={{
+                    sx={{
                         position: 'fixed',
                         top: 0,
                         height: '100dvh',

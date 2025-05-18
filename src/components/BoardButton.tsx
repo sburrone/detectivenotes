@@ -17,8 +17,7 @@ export interface IBoardButtonProps {
 
 const buttonBaseProps = {
     variant: 'text' as const,
-    size: 'large' as const,
-    sx: { textAlign: 'center', color: 'inherit' },
+    sx: { textAlign: 'center', color: 'inherit', padding: 0 },
 }
 
 const buttonProps = {

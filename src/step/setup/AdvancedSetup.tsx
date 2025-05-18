@@ -71,7 +71,7 @@ const AdvancedSetup: FC<IAdvancedSetupProps> = (props) => {
                         }}
                     >
                         <Card
-                            style={{
+                            sx={{
                                 padding: 0,
                                 margin: '1em',
                                 width: '40em',
@@ -79,7 +79,7 @@ const AdvancedSetup: FC<IAdvancedSetupProps> = (props) => {
                             }}
                         >
                             <CardHeader
-                                title={<Typography style={{ fontSize: '1.25rem' }}>TBD Public</Typography>}
+                                title={<Typography sx={{ fontSize: '1.25rem' }}>TBD Public</Typography>}
                                 sx={{
                                     backgroundColor:
                                         choice === AdvancedCard.PUBLIC
@@ -88,7 +88,7 @@ const AdvancedSetup: FC<IAdvancedSetupProps> = (props) => {
                                 }}
                                 onClick={() => setChoice(AdvancedCard.PUBLIC)}
                             />
-                            <CardContent style={{ paddingBottom: 16 }}>
+                            <CardContent sx={{ paddingBottom: 16 }}>
                                 <Typography>
                                     TBD Make them public. Remember to check them in your table as if they were your
                                     cards.
@@ -97,7 +97,7 @@ const AdvancedSetup: FC<IAdvancedSetupProps> = (props) => {
                         </Card>
 
                         <Card
-                            style={{
+                            sx={{
                                 padding: 0,
                                 margin: '1em',
                                 width: '40em',
@@ -105,7 +105,7 @@ const AdvancedSetup: FC<IAdvancedSetupProps> = (props) => {
                             }}
                         >
                             <CardHeader
-                                title={<Typography style={{ fontSize: '1.25rem' }}>TBD Assign</Typography>}
+                                title={<Typography sx={{ fontSize: '1.25rem' }}>TBD Assign</Typography>}
                                 sx={{
                                     backgroundColor:
                                         choice === AdvancedCard.ASSIGN
@@ -114,7 +114,7 @@ const AdvancedSetup: FC<IAdvancedSetupProps> = (props) => {
                                 }}
                                 onClick={() => setChoice(AdvancedCard.ASSIGN)}
                             />
-                            <CardContent style={{ paddingBottom: 16 }}>
+                            <CardContent sx={{ paddingBottom: 16 }}>
                                 <Typography>TBD Give the cards out. Choose which players get them.</Typography>
                                 {choice === AdvancedCard.ASSIGN && (
                                     <>

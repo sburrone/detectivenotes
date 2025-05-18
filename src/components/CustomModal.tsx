@@ -26,20 +26,22 @@ export const CustomModal = ({ open, setOpen, color, title, children }: ICustomMo
             }}
         >
             <Card
-                style={{
+                sx={{
                     padding: 0,
                     position: 'absolute',
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
                     width: '40em',
+                    maxWidth: 'calc(100vw - 30px)',
+                    maxHeight: 'calc(100vh - 30px)',
                     height: 'fit-content',
                 }}
             >
                 <CardHeader
                     title={
                         <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
-                            <Typography style={{ fontSize: '1.25rem', marginInlineStart: 10 }}>{title}</Typography>
+                            <Typography sx={{ fontSize: '1.25rem', marginInlineStart: 10 }}>{title}</Typography>
                             <IconButton
                                 variant={'text'}
                                 sx={{ padding: '0 !important', color: 'inherit' }}
@@ -54,7 +56,7 @@ export const CustomModal = ({ open, setOpen, color, title, children }: ICustomMo
                     }}
                     onClick={() => setOpen(false)}
                 />
-                <CardContent style={{ paddingBottom: 16 }}>{children}</CardContent>
+                <CardContent sx={{ paddingBottom: 16 }}>{children}</CardContent>
             </Card>
         </Modal>
     )

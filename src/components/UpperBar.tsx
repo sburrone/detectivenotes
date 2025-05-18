@@ -1,5 +1,5 @@
 import { CSSProperties, FC, ReactElement } from 'react'
-import { AppBar, Box, Toolbar, useTheme } from '@mui/material'
+import { AppBar, Box, TableContainer, Toolbar, useTheme } from '@mui/material'
 
 interface IUpperBarProps {
     children: ReactElement | ReactElement[]
@@ -22,7 +22,9 @@ const UpperBar: FC<IUpperBarProps> = (props) => {
                 position={'static'}
                 sx={{ maxWidth: '100dvw', backgroundColor: theme.palette.primary.contrastText }}
             >
-                <Toolbar style={{ maxWidth: '100dvw', overflowX: 'auto', ...style }}>{children}</Toolbar>
+                <TableContainer sx={{ display: 'flex' }}>
+                    <Toolbar sx={{ maxWidth: '100dvw', overflowX: 'auto', ...style }}>{children}</Toolbar>
+                </TableContainer>
             </AppBar>
         </Box>
     )
