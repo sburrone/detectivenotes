@@ -67,11 +67,15 @@ const lockItemReducer = (state: GameState, action: PayloadAction<string>) => {
 
 const updateItemReducer = (
     state: GameState,
-    action: PayloadAction<{ item: string; playerIndex: number; value: BoardIcon; badge: number }>
+    action: PayloadAction<{ item: string; playerIndex: number; value: BoardIcon; badge: number; autocomplete: boolean }>
 ) => {
     if (state.gameBoard) {
         const found = state.gameBoard.find((row) => row.item === action.payload.item)
         if (found) {
+            if (action.payload.autocomplete && action.payload.value === BoardIcon.CHECK) {
+                found.values = found.values.map((v) => ({ ...v, icon: BoardIcon.CROSS }))
+            }
+
             found.values[action.payload.playerIndex] = { icon: action.payload.value, badge: action.payload.badge }
         }
     }

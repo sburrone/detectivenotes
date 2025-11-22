@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { lockItem, selectGame, selectGameBoard, selectLocked, updateItem } from '../../store/gameSlice.ts'
 import { IconButton } from '../../components/CustomButtons.tsx'
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material'
+import { selectAutocomplete } from '../../store/settingsSlice.ts'
 
 const COL_EXTRA = 2
 
@@ -27,12 +28,13 @@ export const MainBoard: FC = () => {
     const game = useSelector(selectGame)
     const gameBoard = useSelector(selectGameBoard)
     const globalLocked = useSelector(selectLocked)
+    const autocomplete = useSelector(selectAutocomplete)
 
     const dispatch = useDispatch()
     const theme = useTheme()
 
     const handleUpdate = (newIcon: BoardIcon, newNumber: number, item: string, index: number) => {
-        dispatch(updateItem({ item, badge: newNumber, value: newIcon, playerIndex: index }))
+        dispatch(updateItem({ item, badge: newNumber, value: newIcon, playerIndex: index, autocomplete }))
     }
 
     const handleLockedUpdate = (item: string) => {
