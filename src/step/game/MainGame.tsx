@@ -19,6 +19,7 @@ import { MainBoard } from './MainBoard.tsx'
 import { SettingsMenu } from '../../settings/SettingsMenu.tsx'
 import { useSettingsStore } from '../../store/useSettingsStore.ts'
 import { useGameStore } from '../../store/useGameStore.ts'
+import { Box } from '@mui/material'
 
 interface IGameProps {
     setStep: (step: Step) => void
@@ -31,9 +32,10 @@ const MainGame: FC<IGameProps> = (props) => {
 
     const { colorMode, toggleColorMode } = useSettingsStore()
     const { setOrToggleLocked, locked } = useGameStore()
+    const { undo, redo } = useGameStore.temporal.getState()
 
     return (
-        <div>
+        <Box sx={{ display: 'flex', maxHeight: '100dvh', flexDirection: 'column' }}>
             <UpperBar style={{ margin: 'auto', gap: 2 }}>
                 <IconButton variant={'elevated'} onClick={() => setStep(Step.MAIN)}>
                     <ArrowBack />
@@ -54,20 +56,23 @@ const MainGame: FC<IGameProps> = (props) => {
                 <IconButton variant={'elevated'}>
                     <AutoFixHigh />
                 </IconButton>
-                <IconButton variant={'elevated'}>
+                <IconButton variant={'elevated'} onClick={() => undo()}>
                     <Undo />
                 </IconButton>
-                <IconButton variant={'elevated'}>
+                <IconButton variant={'elevated'} onClick={() => redo()}>
                     <Redo />
                 </IconButton>
                 <IconButton variant={'elevated'} onClick={() => setSettingsOpen(!settingsOpen)}>
                     <Settings />
                 </IconButton>
             </UpperBar>
-            <MainBoard />
+
+            <Box sx={{ overflow: 'auto', flex: 1 }}>
+                <MainBoard />
+            </Box>
 
             <SettingsMenu open={settingsOpen} setOpen={setSettingsOpen} />
-        </div>
+        </Box>
     )
 }
 
