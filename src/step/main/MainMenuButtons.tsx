@@ -13,22 +13,21 @@ import {
     Schedule,
 } from '@mui/icons-material'
 import { IconMenuButton } from '../../components/CustomButtons.tsx'
-import { ColorMode, Game, Step } from '../../types.ts'
+import { ColorMode, Step } from '../../types.ts'
 import CardButton from '../../components/CardButton.tsx'
 import TextWithIcon from '../../components/TextWithIcon.tsx'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectColorMode, setColorMode } from '../../store/settingsSlice.ts'
+import { useSettingsStore } from '../../store/useSettingsStore.ts'
+import { useGameStore } from '../../store/useGameStore.ts'
 
 const MainMenuButtons: FC<{
     setStep: (step: Step) => void
     hideUI: boolean
     setHideUI: (hideUI: boolean) => void
-    game: Game | null
-}> = ({ setStep, hideUI, game }) => {
+}> = ({ setStep, hideUI }) => {
     const theme = useTheme()
-    const dispatch = useDispatch()
 
-    const colorMode = useSelector(selectColorMode)
+    const { ts, board, players } = useGameStore()
+    const { colorMode, setColorMode } = useSettingsStore()
 
     const [languageExtended, setLanguageExtended] = useState(window.innerWidth >= 500)
 
@@ -64,8 +63,8 @@ const MainMenuButtons: FC<{
                                 margin: '24px auto',
                                 textAlign: 'center',
                                 color: theme.palette.primary.main,
-                                textShadow: (theme.palette as any).onPrimaryContainer.main,
-                                webkitTextStroke: (theme.palette as any).onPrimary.contrastText,
+                                textShadow: (theme.palette as any).onPrimaryContainer?.main,
+                                webkitTextStroke: (theme.palette as any).onPrimary?.contrastText,
                             }}
                         >
                             detective
@@ -84,10 +83,10 @@ const MainMenuButtons: FC<{
                                 />
                             }
                             onClick={() => setStep(Step.SETUP)}
-                            headerColor={(theme.palette as any).primaryContainer.main}
+                            headerColor={(theme.palette as any).primaryContainer?.main}
                             style={{ margin: '0 auto' }}
                         />
-                        {game && (
+                        {ts && (
                             <CardButton
                                 header={
                                     <TextWithIcon
@@ -103,7 +102,7 @@ const MainMenuButtons: FC<{
                                     <Stack direction={'row'} justifyContent={'space-between'}>
                                         <TextWithIcon
                                             icon={<Schedule />}
-                                            text={new Date(game.ts!).toLocaleDateString(undefined, {
+                                            text={new Date(ts!).toLocaleDateString(undefined, {
                                                 weekday: 'short',
                                                 day: 'numeric',
                                                 month: 'short',
@@ -112,15 +111,15 @@ const MainMenuButtons: FC<{
                                                 minute: 'numeric',
                                             })}
                                         />
-                                        <TextWithIcon icon={<CasinoOutlined />} text={game.board!.name} />
+                                        <TextWithIcon icon={<CasinoOutlined />} text={board!.name} />
                                         <TextWithIcon
                                             icon={<PersonOutlined />}
-                                            text={game.players!.toLocaleString().replaceAll(',', ', ')}
+                                            text={players!.toLocaleString().replaceAll(',', ', ')}
                                         />
                                     </Stack>
                                 }
                                 onClick={() => setStep(Step.GAME)}
-                                headerColor={(theme.palette as any).secondaryContainer.main}
+                                headerColor={(theme.palette as any).secondaryContainer?.main}
                                 style={{ margin: '1em auto' }}
                             />
                         )}
@@ -155,7 +154,7 @@ const MainMenuButtons: FC<{
                             </IconMenuButton>
                             <IconMenuButton
                                 onClick={() =>
-                                    dispatch(setColorMode(colorMode === ColorMode.LIGHT ? ColorMode.DARK : ColorMode.LIGHT))
+                                    setColorMode(colorMode === ColorMode.LIGHT ? ColorMode.DARK : ColorMode.LIGHT)
                                 }
                             >
                                 {colorMode === ColorMode.LIGHT ? <DarkMode /> : <LightMode />}

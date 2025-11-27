@@ -8,15 +8,8 @@ import ChoosePlayers from './ChoosePlayers.tsx'
 import AdvancedSetup from './AdvancedSetup.tsx'
 import _ from 'lodash'
 import { initializeBoard } from '../../utils.tsx'
-import { useDispatch } from 'react-redux'
-import {
-    setAdvancedCardSetup,
-    setBoard,
-    setGameBoard,
-    setOrToggleLocked,
-    setPlayers as setPlayersR,
-} from '../../store/gameSlice.ts'
 import { Button, IconButton } from '../../components/CustomButtons.tsx'
+import { useGameStore } from '../../store/useGameStore.ts'
 
 interface ISetupProps {
     setStep: (step: Step) => any
@@ -25,7 +18,7 @@ interface ISetupProps {
 const Setup: FC<ISetupProps> = (props) => {
     const { setStep } = props
 
-    const dispatch = useDispatch()
+    const { setPlayers: setPlayersR, setOrToggleLocked, setBoard, setGameBoard, setAdvancedCardSetup } = useGameStore()
 
     const [activeStep, setActiveStep] = useState(0)
     const [skipped, setSkipped] = useState(new Set<number>())
@@ -79,11 +72,11 @@ const Setup: FC<ISetupProps> = (props) => {
         setSkipped(newSkipped)
 
         if (activeStep === steps.length - 1 && selectedBoard) {
-            dispatch(setAdvancedCardSetup({ type: choice, players: assignedCards }))
-            dispatch(setBoard(selectedBoard))
-            dispatch(setGameBoard(initializeBoard(selectedBoard!, players)))
-            dispatch(setOrToggleLocked(false))
-            dispatch(setPlayersR(players))
+            setAdvancedCardSetup({ type: choice, players: assignedCards })
+            setBoard(selectedBoard)
+            setGameBoard(initializeBoard(selectedBoard!, players))
+            setOrToggleLocked(false)
+            setPlayersR(players)
             setStep(Step.GAME)
         }
     }
@@ -94,7 +87,7 @@ const Setup: FC<ISetupProps> = (props) => {
         // }
         setActiveStep((prevActiveStep) => prevActiveStep - 1)
     }
-    console.log({ players })
+
     const handleSkip = () => {
         if (!isStepOptional(activeStep)) {
             // You probably want to guard against something like this,

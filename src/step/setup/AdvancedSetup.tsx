@@ -83,8 +83,8 @@ const AdvancedSetup: FC<IAdvancedSetupProps> = (props) => {
                                 sx={{
                                     backgroundColor:
                                         choice === AdvancedCard.PUBLIC
-                                            ? (theme.palette as any).primaryContainer.main
-                                            : (theme.palette as any).secondaryContainer.main,
+                                            ? (theme.palette as any).primaryContainer?.main
+                                            : (theme.palette as any).secondaryContainer?.main,
                                 }}
                                 onClick={() => setChoice(AdvancedCard.PUBLIC)}
                             />

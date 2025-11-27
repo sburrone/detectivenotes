@@ -45,8 +45,8 @@ const SetupBoardElement: FC<CardProps & IBoardElementProps> = (props) => {
                 title={<Typography sx={{ fontSize: '1.25rem' }}>{board.name}</Typography>}
                 sx={{
                     backgroundColor: selected
-                        ? (theme.palette as any).primaryContainer.main
-                        : (theme.palette as any).secondaryContainer.main,
+                        ? (theme.palette as any).primaryContainer?.main
+                        : (theme.palette as any).secondaryContainer?.main,
                 }}
                 onClick={() => onClick(board)}
             />

@@ -12,11 +12,10 @@ import {
     TableRow,
     useTheme,
 } from '@mui/material'
-import { useDispatch, useSelector } from 'react-redux'
-import { lockItem, selectGame, selectGameBoard, selectLocked, updateItem } from '../../store/gameSlice.ts'
 import { IconButton } from '../../components/CustomButtons.tsx'
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material'
-import { selectAutocomplete } from '../../store/settingsSlice.ts'
+import { useGameStore } from '../../store/useGameStore.ts'
+import { useSettingsStore } from '../../store/useSettingsStore.ts'
 
 const COL_EXTRA = 2
 
@@ -25,20 +24,17 @@ export const MainBoard: FC = () => {
     const [openWeapons, setOpenWeapons] = useState(true)
     const [openRooms, setOpenRooms] = useState(true)
 
-    const game = useSelector(selectGame)
-    const gameBoard = useSelector(selectGameBoard)
-    const globalLocked = useSelector(selectLocked)
-    const autocomplete = useSelector(selectAutocomplete)
+    const { gameBoard, locked: globalLocked, board, players, updateItem, lockItem } = useGameStore()
+    const { autocomplete } = useSettingsStore()
 
-    const dispatch = useDispatch()
     const theme = useTheme()
 
     const handleUpdate = (newIcon: BoardIcon, newNumber: number, item: string, index: number) => {
-        dispatch(updateItem({ item, badge: newNumber, value: newIcon, playerIndex: index, autocomplete }))
+        updateItem({ item, badge: newNumber, value: newIcon, playerIndex: index, autocomplete })
     }
 
     const handleLockedUpdate = (item: string) => {
-        dispatch(lockItem(item))
+        lockItem(item)
     }
 
     const RowRenderer = (row: GameBoardRow, index: number) => (
@@ -85,7 +81,7 @@ export const MainBoard: FC = () => {
                     >
                         <TableCell />
                         <TableCell />
-                        {game.players?.map((player, index) => {
+                        {players?.map((player, index) => {
                             return (
                                 <TableCell sx={{ fontSize: '1rem', padding: '16px 0' }} align={'center'} key={index}>
                                     {player}
@@ -110,7 +106,7 @@ export const MainBoard: FC = () => {
                             <TableCell
                                 sx={{ fontSize: '1rem' }}
                                 align={'center'}
-                                colSpan={(game.players?.length ?? 0) + COL_EXTRA}
+                                colSpan={(players?.length ?? 0) + COL_EXTRA}
                             >
                                 <IconButton
                                     disableRipple={true}
@@ -162,7 +158,7 @@ export const MainBoard: FC = () => {
                             </TableCell>
                         </TableRow>
                         {openSuspects &&
-                            gameBoard?.filter((el) => game.board?.characters?.includes(el.item)).map(RowRenderer)}
+                            gameBoard?.filter((el) => board?.characters?.includes(el.item)).map(RowRenderer)}
 
                         {/*Armi*/}
                         <TableRow
@@ -180,7 +176,7 @@ export const MainBoard: FC = () => {
                             <TableCell
                                 sx={{ fontSize: '1rem' }}
                                 align={'center'}
-                                colSpan={(game.players?.length ?? 0) + COL_EXTRA}
+                                colSpan={(players?.length ?? 0) + COL_EXTRA}
                             >
                                 <IconButton
                                     disableRipple={true}
@@ -230,8 +226,7 @@ export const MainBoard: FC = () => {
                                 </IconButton>
                             </TableCell>
                         </TableRow>
-                        {openWeapons &&
-                            gameBoard?.filter((el) => game.board?.weapons?.includes(el.item)).map(RowRenderer)}
+                        {openWeapons && gameBoard?.filter((el) => board?.weapons?.includes(el.item)).map(RowRenderer)}
 
                         {/*Stanze*/}
                         <TableRow
@@ -249,7 +244,7 @@ export const MainBoard: FC = () => {
                             <TableCell
                                 sx={{ fontSize: '1rem' }}
                                 align={'center'}
-                                colSpan={(game.players?.length ?? 0) + COL_EXTRA}
+                                colSpan={(players?.length ?? 0) + COL_EXTRA}
                             >
                                 <IconButton
                                     disableRipple={true}
@@ -280,7 +275,7 @@ export const MainBoard: FC = () => {
                                 </IconButton>
                             </TableCell>
                         </TableRow>
-                        {openRooms && gameBoard?.filter((el) => game.board?.rooms?.includes(el.item)).map(RowRenderer)}
+                        {openRooms && gameBoard?.filter((el) => board?.rooms?.includes(el.item)).map(RowRenderer)}
                     </TableBody>
                 </Table>
             </TableContainer>

@@ -27,7 +27,7 @@ const CardButton: FC<ICardButtonProps> = (props: ICardButtonProps) => {
                 <CardHeader
                     title={header}
                     sx={{
-                        backgroundColor: headerColor ?? (theme.palette as any).primaryContainer.main,
+                        backgroundColor: headerColor ?? (theme.palette as any).primaryContainer?.main,
                     }}
                 />
                 {content && <CardContent sx={{ paddingBottom: 16 }}>{content}</CardContent>}

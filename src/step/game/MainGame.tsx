@@ -1,5 +1,5 @@
 import { FC, useState } from 'react'
-import { ColorMode, Game, Step } from '../../types.ts'
+import { ColorMode, Step } from '../../types.ts'
 import UpperBar from '../../components/UpperBar.tsx'
 import {
     ArrowBack,
@@ -14,16 +14,14 @@ import {
     Undo,
 } from '@mui/icons-material'
 import '../../App.css'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectLocked, setOrToggleLocked } from '../../store/gameSlice.ts'
 import { IconButton } from '../../components/CustomButtons.tsx'
 import { MainBoard } from './MainBoard.tsx'
-import { selectColorMode, toggleColorMode } from '../../store/settingsSlice.ts'
 import { SettingsMenu } from '../../settings/SettingsMenu.tsx'
+import { useSettingsStore } from '../../store/useSettingsStore.ts'
+import { useGameStore } from '../../store/useGameStore.ts'
 
 interface IGameProps {
     setStep: (step: Step) => void
-    updateGame: (prop: keyof Game, value: any) => void
 }
 
 const MainGame: FC<IGameProps> = (props) => {
@@ -31,31 +29,25 @@ const MainGame: FC<IGameProps> = (props) => {
 
     const [settingsOpen, setSettingsOpen] = useState(false)
 
-    const dispatch = useDispatch()
-
-    const colorMode = useSelector(selectColorMode)
-    const locked = useSelector(selectLocked)
+    const { colorMode, toggleColorMode } = useSettingsStore()
+    const { setOrToggleLocked, locked } = useGameStore()
 
     return (
         <div>
-            <UpperBar sx={{ margin: 'auto', gap: 2 }}>
+            <UpperBar style={{ margin: 'auto', gap: 2 }}>
                 <IconButton variant={'elevated'} onClick={() => setStep(Step.MAIN)}>
                     <ArrowBack />
                 </IconButton>
                 <IconButton variant={'elevated'}>
                     <InfoRounded />
                 </IconButton>
-                <IconButton
-                    className={'normal-margin'}
-                    variant={'elevated'}
-                    onClick={() => dispatch(toggleColorMode())}
-                >
+                <IconButton className={'normal-margin'} variant={'elevated'} onClick={() => toggleColorMode()}>
                     {colorMode === ColorMode.DARK ? <LightMode /> : <DarkMode />}
                 </IconButton>
                 <IconButton
                     className={'normal-margin'}
                     variant={locked ? 'filled' : 'elevated'}
-                    onClick={() => dispatch(setOrToggleLocked())}
+                    onClick={() => setOrToggleLocked()}
                 >
                     {locked ? <Lock /> : <LockOpen />}
                 </IconButton>
