@@ -79,15 +79,21 @@ export const MainBoard: FC = () => {
                             },
                         }}
                     >
-                        <TableCell />
-                        <TableCell />
-                        {players?.map((player, index) => {
-                            return (
-                                <TableCell sx={{ fontSize: '1rem', padding: '16px 0' }} align={'center'} key={index}>
-                                    {player}
-                                </TableCell>
-                            )
-                        })}
+                        <TableRow>
+                            <TableCell />
+                            <TableCell />
+                            {players?.map((player, index) => {
+                                return (
+                                    <TableCell
+                                        sx={{ fontSize: '1rem', padding: '16px 0' }}
+                                        align={'center'}
+                                        key={index}
+                                    >
+                                        {player}
+                                    </TableCell>
+                                )
+                            })}
+                        </TableRow>
                     </TableHead>
                     <TableBody>
                         {/*Sospettati*/}
