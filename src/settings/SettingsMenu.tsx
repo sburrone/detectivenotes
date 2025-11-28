@@ -1,10 +1,9 @@
 import { CustomModal } from '../components/CustomModal.tsx'
-import { TextRotationNoneTwoTone, VerifiedTwoTone } from '@mui/icons-material'
 import { Grid } from '@mui/material'
 import SettingsMenuEntry from './SettingsMenuEntry.tsx'
 import { PlayerNamesPosition, ToolbarPosition } from '../types.ts'
 import { useSettingsStore } from '../store/useSettingsStore.ts'
-import { ShelfAutoHide } from '@nine-thirty-five/material-symbols-react/sharp'
+import { DarkMode, ShelfAutoHide, TextRotationNone, Verified } from '@nine-thirty-five/material-symbols-react/sharp'
 
 export interface ISettingsMenuProps {
     open: boolean
@@ -19,22 +18,32 @@ export const SettingsMenu = ({ open, setOpen }: ISettingsMenuProps) => {
         setAutocomplete,
         setPlayerNamesPosition,
         setToolbarPosition,
+        colorMode,
+        toggleColorMode,
     } = useSettingsStore()
 
     return (
         <CustomModal open={open} setOpen={setOpen} title={'TBD Settings'} color={'tertiary'}>
             <Grid container spacing={2}>
                 <SettingsMenuEntry
+                    title={'TBD Dark mode'}
+                    description={'TBD Switch to dark theme'}
+                    enabled={colorMode === 'dark'}
+                    icon={<DarkMode style={{ height: 32, width: 32 }} />}
+                    type={'checkbox'}
+                    onChange={toggleColorMode}
+                />
+                <SettingsMenuEntry
                     title={'TBD Autocomplete'}
                     description={'TBD Autocomplete description'}
                     enabled={autocomplete}
-                    icon={<VerifiedTwoTone style={{ height: 32, width: 32 }} />}
+                    icon={<Verified style={{ height: 32, width: 32 }} />}
                     type={'checkbox'}
-                    onChange={(opt) => setAutocomplete(opt)}
+                    onChange={setAutocomplete}
                 />
                 <SettingsMenuEntry
                     description={'TBD Long names compatibility mode description'}
-                    icon={<TextRotationNoneTwoTone style={{ height: 32, width: 32 }} />}
+                    icon={<TextRotationNone style={{ height: 32, width: 32 }} />}
                     onChange={(opt) => setPlayerNamesPosition(opt as PlayerNamesPosition)}
                     title={'TBD Player names position'}
                     type={'select'}

@@ -1,6 +1,6 @@
 import { Checkbox } from '../components/CustomButtons.tsx'
 import { PlayerNamesPosition, SelectionModalOption, ToolbarPosition } from '../types.ts'
-import { Grid, MenuItem, Select, Typography, useTheme } from '@mui/material'
+import { Grid, ListItem, ListItemIcon, ListItemText, MenuItem, Select, useTheme } from '@mui/material'
 
 interface ISettingsMenuEntryBaseProps {
     title: string
@@ -61,18 +61,16 @@ const SettingsMenuEntry = (props: ISettingsMenuEntryProps) => {
     const isCheckbox = type === 'checkbox'
 
     return (
-        <Grid container spacing={2} width={'100%'}>
-            <Grid size={1} display={'flex'} alignItems={'center'} justifyContent={'center'}>
-                {icon}
-            </Grid>
-            <Grid
-                size={isCheckbox ? 10 : { lg: 7, md: 11 }}
-                sx={{ flexDirection: 'column' }}
-                display={'flex'}
-                justifyContent={'center'}
-            >
-                <Typography sx={{ fontSize: '1.25rem' }}>{title}</Typography>
-                <Typography sx={{ fontSize: '0.75rem' }}>{description}</Typography>
+        <Grid container spacing={2} width={'100%'} justifyContent={'space-between'}>
+            <Grid size={isCheckbox ? 11 : { lg: 8, md: 12 }}>
+                <ListItem sx={{ padding: 0 }}>
+                    <ListItemIcon sx={{ paddingInlineEnd: 12 }}>{icon}</ListItemIcon>
+                    <ListItemText
+                        slotProps={{ primary: { fontSize: '1.125rem' }, secondary: { fontSize: '0.75rem' } }}
+                        primary={title}
+                        secondary={description}
+                    />
+                </ListItem>
             </Grid>
             <Grid
                 size={isCheckbox ? 1 : { lg: 4, md: 12 }}

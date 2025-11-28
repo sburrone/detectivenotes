@@ -103,3 +103,13 @@ export type Settings = {
     selectionModalOptions: SelectionModalOption
     colorMode: ColorMode
 }
+
+export enum MAIN_GAME_BUTTON {
+    BACK,
+    INFO,
+    LOCK,
+    ASSISTANT,
+    UNDO,
+    REDO,
+    SETTINGS,
+}

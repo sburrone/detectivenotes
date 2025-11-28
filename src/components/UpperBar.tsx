@@ -1,8 +1,8 @@
-import { FC, ReactElement } from 'react'
+import { FC, ReactNode } from 'react'
 import { AppBar, Box, SxProps, TableContainer, Theme, Toolbar, useTheme } from '@mui/material'
 
 interface IUpperBarProps {
-    children: ReactElement | ReactElement[]
+    children: ReactNode
     style?: SxProps<Theme>
 }
 
