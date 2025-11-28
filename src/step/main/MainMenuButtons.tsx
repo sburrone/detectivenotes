@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react'
-import { Button, Stack, Typography, useTheme } from '@mui/material'
+import { Button, Grid, Stack, Typography, useTheme } from '@mui/material'
 import {
     AddToHomeScreen,
     CasinoOutlined,
@@ -99,24 +99,30 @@ const MainMenuButtons: FC<{
                                     />
                                 }
                                 content={
-                                    <Stack direction={'row'} justifyContent={'space-between'}>
-                                        <TextWithIcon
-                                            icon={<Schedule />}
-                                            text={new Date(ts!).toLocaleDateString(undefined, {
-                                                weekday: 'short',
-                                                day: 'numeric',
-                                                month: 'short',
-                                                year: '2-digit',
-                                                hour: 'numeric',
-                                                minute: 'numeric',
-                                            })}
-                                        />
-                                        <TextWithIcon icon={<CasinoOutlined />} text={board!.name} />
-                                        <TextWithIcon
-                                            icon={<PersonOutlined />}
-                                            text={players!.toLocaleString().replaceAll(',', ', ')}
-                                        />
-                                    </Stack>
+                                    <Grid container spacing={4}>
+                                        <Grid size={{ lg: 4, md: 12 }}>
+                                            <TextWithIcon
+                                                icon={<Schedule />}
+                                                text={new Date(ts!).toLocaleDateString(undefined, {
+                                                    weekday: 'short',
+                                                    day: 'numeric',
+                                                    month: 'short',
+                                                    year: '2-digit',
+                                                    hour: 'numeric',
+                                                    minute: 'numeric',
+                                                })}
+                                            />
+                                        </Grid>
+                                        <Grid size={{ lg: 4, md: 12 }}>
+                                            <TextWithIcon icon={<CasinoOutlined />} text={board!.name} />
+                                        </Grid>
+                                        <Grid size={{ lg: 4, md: 12 }}>
+                                            <TextWithIcon
+                                                icon={<PersonOutlined />}
+                                                text={players!.toLocaleString().replaceAll(',', ', ')}
+                                            />
+                                        </Grid>
+                                    </Grid>
                                 }
                                 onClick={() => setStep(Step.GAME)}
                                 headerColor={(theme.palette as any).secondaryContainer?.main}

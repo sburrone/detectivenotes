@@ -36,21 +36,23 @@ const CheckboxEntry = ({ enabled, onChange }: ISettingsMenuEntryCheckboxOwnProps
 const SelectEntry = ({ value, options, onChange }: ISettingsMenuEntrySelectOwnProps) => {
     const theme = useTheme()
 
-    return (<Select
-        sx={{
-            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                borderColor: (theme.palette as any).tertiary.main,
-            },
-        }}
-        value={value}
-        onChange={(e) => onChange(e.target.value as ToolbarPosition | PlayerNamesPosition | SelectionModalOption)}
-    >
-        {options.map((value, key) => (
-            <MenuItem value={value} key={key}>
-                TBD Translated {value}
-            </MenuItem>
-        ))}
-    </Select>)
+    return (
+        <Select
+            sx={{
+                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    borderColor: (theme.palette as any).tertiary.main,
+                },
+            }}
+            value={value}
+            onChange={(e) => onChange(e.target.value as ToolbarPosition | PlayerNamesPosition | SelectionModalOption)}
+        >
+            {options.map((value, key) => (
+                <MenuItem value={value} key={key}>
+                    TBD Translated {value}
+                </MenuItem>
+            ))}
+        </Select>
+    )
 }
 
 const SettingsMenuEntry = (props: ISettingsMenuEntryProps) => {
@@ -59,12 +61,12 @@ const SettingsMenuEntry = (props: ISettingsMenuEntryProps) => {
     const isCheckbox = type === 'checkbox'
 
     return (
-        <>
+        <Grid container spacing={2} width={'100%'}>
             <Grid size={1} display={'flex'} alignItems={'center'} justifyContent={'center'}>
                 {icon}
             </Grid>
             <Grid
-                size={isCheckbox ? 10 : 7}
+                size={isCheckbox ? 10 : { lg: 7, md: 11 }}
                 sx={{ flexDirection: 'column' }}
                 display={'flex'}
                 justifyContent={'center'}
@@ -72,14 +74,19 @@ const SettingsMenuEntry = (props: ISettingsMenuEntryProps) => {
                 <Typography sx={{ fontSize: '1.25rem' }}>{title}</Typography>
                 <Typography sx={{ fontSize: '0.75rem' }}>{description}</Typography>
             </Grid>
-            <Grid size={isCheckbox ? 1 : 4} display={'flex'} alignItems={'center'} justifyContent={'end'}>
+            <Grid
+                size={isCheckbox ? 1 : { lg: 4, md: 12 }}
+                display={'flex'}
+                alignItems={'center'}
+                justifyContent={'end'}
+            >
                 {isCheckbox ? (
                     <CheckboxEntry {...(rest as ISettingsMenuEntryCheckboxOwnProps)} />
                 ) : (
                     <SelectEntry {...(rest as ISettingsMenuEntrySelectOwnProps)} />
                 )}
             </Grid>
-        </>
+        </Grid>
     )
 }
 

@@ -1,9 +1,10 @@
 import { CustomModal } from '../components/CustomModal.tsx'
-import { VerifiedTwoTone } from '@mui/icons-material'
+import { TextRotationNoneTwoTone, VerifiedTwoTone } from '@mui/icons-material'
 import { Grid } from '@mui/material'
 import SettingsMenuEntry from './SettingsMenuEntry.tsx'
 import { PlayerNamesPosition, ToolbarPosition } from '../types.ts'
 import { useSettingsStore } from '../store/useSettingsStore.ts'
+import { ShelfAutoHide } from '@nine-thirty-five/material-symbols-react/sharp'
 
 export interface ISettingsMenuProps {
     open: boolean
@@ -27,13 +28,13 @@ export const SettingsMenu = ({ open, setOpen }: ISettingsMenuProps) => {
                     title={'TBD Autocomplete'}
                     description={'TBD Autocomplete description'}
                     enabled={autocomplete}
-                    icon={<VerifiedTwoTone />}
+                    icon={<VerifiedTwoTone style={{ height: 32, width: 32 }} />}
                     type={'checkbox'}
                     onChange={(opt) => setAutocomplete(opt)}
                 />
                 <SettingsMenuEntry
                     description={'TBD Long names compatibility mode description'}
-                    icon={<>TBD Icon</>}
+                    icon={<TextRotationNoneTwoTone style={{ height: 32, width: 32 }} />}
                     onChange={(opt) => setPlayerNamesPosition(opt as PlayerNamesPosition)}
                     title={'TBD Player names position'}
                     type={'select'}
@@ -42,7 +43,7 @@ export const SettingsMenu = ({ open, setOpen }: ISettingsMenuProps) => {
                 />
                 <SettingsMenuEntry
                     description={'TBD Toolbar position'}
-                    icon={<>TBD Icon</>}
+                    icon={<ShelfAutoHide style={{ transform: 'rotate(180deg)', height: 32, width: 32 }} />}
                     onChange={(opt) => setToolbarPosition(opt as ToolbarPosition)}
                     title={'TBD Toolbar position'}
                     type={'select'}

@@ -1,9 +1,9 @@
-import { CSSProperties, FC, ReactElement } from 'react'
-import { AppBar, Box, TableContainer, Toolbar, useTheme } from '@mui/material'
+import { FC, ReactElement } from 'react'
+import { AppBar, Box, SxProps, TableContainer, Theme, Toolbar, useTheme } from '@mui/material'
 
 interface IUpperBarProps {
     children: ReactElement | ReactElement[]
-    style?: CSSProperties
+    style?: SxProps<Theme>
 }
 
 const UpperBar: FC<IUpperBarProps> = (props) => {

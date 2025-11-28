@@ -18,7 +18,7 @@ const CardButton: FC<ICardButtonProps> = (props: ICardButtonProps) => {
                 padding: 0,
                 width: '40em',
                 height: 'fit-content',
-                maxWidth: 'calc(100dvw - 1em)',
+                maxWidth: 'calc(100dvw - 2rem)',
                 ...style,
             }}
             onClick={onClick}

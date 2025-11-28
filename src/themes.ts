@@ -1604,7 +1604,7 @@ export const themes = {
             button: {
                 fontFamily: '"Bai Jamjuree", sans-serif',
                 fontWeight: 500,
-                fontSize: '1.5rem',
+                fontSize: '1rem',
                 lineHeight: 1.75,
                 letterSpacing: '0.02857em',
                 textTransform: 'uppercase',

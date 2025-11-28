@@ -36,21 +36,17 @@ const MainGame: FC<IGameProps> = (props) => {
 
     return (
         <Box sx={{ display: 'flex', maxHeight: '100dvh', flexDirection: 'column' }}>
-            <UpperBar style={{ margin: 'auto', gap: 2 }}>
+            <UpperBar style={{ margin: 'auto', gap: 4, py: 4 }}>
                 <IconButton variant={'elevated'} onClick={() => setStep(Step.MAIN)}>
                     <ArrowBack />
                 </IconButton>
                 <IconButton variant={'elevated'}>
                     <InfoRounded />
                 </IconButton>
-                <IconButton className={'normal-margin'} variant={'elevated'} onClick={() => toggleColorMode()}>
+                <IconButton variant={'elevated'} onClick={() => toggleColorMode()}>
                     {colorMode === ColorMode.DARK ? <LightMode /> : <DarkMode />}
                 </IconButton>
-                <IconButton
-                    className={'normal-margin'}
-                    variant={locked ? 'filled' : 'elevated'}
-                    onClick={() => setOrToggleLocked()}
-                >
+                <IconButton variant={locked ? 'filled' : 'elevated'} onClick={() => setOrToggleLocked()}>
                     {locked ? <Lock /> : <LockOpen />}
                 </IconButton>
                 <IconButton variant={'elevated'}>
