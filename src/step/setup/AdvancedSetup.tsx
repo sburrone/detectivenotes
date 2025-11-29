@@ -16,6 +16,7 @@ import { Add, CelebrationTwoTone, Remove } from '@mui/icons-material'
 import _ from 'lodash'
 import { faces } from '../../utils.tsx'
 import { IconButton } from '../../components/CustomButtons.tsx'
+import { useIntl } from 'react-intl'
 
 interface IAdvancedSetupProps {
     players: string[]
@@ -45,21 +46,24 @@ const AdvancedSetup: FC<IAdvancedSetupProps> = (props) => {
     } = props
 
     const theme = useTheme()
+    const { formatMessage } = useIntl()
 
     return (
         <>
             <Typography color={'primary'} align={'center'} variant={'h5'}>
-                TBD Advanced Setup
+                {formatMessage({ id: 'advancedSetup' })}
             </Typography>
             {choice !== AdvancedCard.NOT_NEEDED ? (
                 <>
                     <Typography color={'secondary'} align={'center'}>
-                        TBD Feel free to skip this.
+                        {formatMessage({ id: 'advancedSetup.skipPrompt' })}
                     </Typography>
 
                     <Typography color={'primary'} align={'center'} variant={'h6'}>
-                        TBD There are {numCards} total cards. With {numPlayers} players, everyone will receive {numEach}{' '}
-                        cards. What should we do with the remaining {numLeftover} cards?
+                        {formatMessage({ id: 'advancedSetup.count' }, { numCards, numPlayers, numEach })}
+                    </Typography>
+                    <Typography color={'primary'} align={'center'} variant={'h6'}>
+                        {formatMessage({ id: 'advancedSetup.count2' }, { numLeftover })}
                     </Typography>
 
                     <div
@@ -79,7 +83,11 @@ const AdvancedSetup: FC<IAdvancedSetupProps> = (props) => {
                             }}
                         >
                             <CardHeader
-                                title={<Typography sx={{ fontSize: '1.25rem' }}>TBD Public</Typography>}
+                                title={
+                                    <Typography sx={{ fontSize: '1.25rem' }}>
+                                        {formatMessage({ id: 'advancedSetup.public' })}
+                                    </Typography>
+                                }
                                 sx={{
                                     backgroundColor:
                                         choice === AdvancedCard.PUBLIC
@@ -89,10 +97,7 @@ const AdvancedSetup: FC<IAdvancedSetupProps> = (props) => {
                                 onClick={() => setChoice(AdvancedCard.PUBLIC)}
                             />
                             <CardContent sx={{ paddingBottom: 16 }}>
-                                <Typography>
-                                    TBD Make them public. Remember to check them in your table as if they were your
-                                    cards.
-                                </Typography>
+                                <Typography>{formatMessage({ id: 'advancedSetup.public.description' })}</Typography>
                             </CardContent>
                         </Card>
 
@@ -105,7 +110,11 @@ const AdvancedSetup: FC<IAdvancedSetupProps> = (props) => {
                             }}
                         >
                             <CardHeader
-                                title={<Typography sx={{ fontSize: '1.25rem' }}>TBD Assign</Typography>}
+                                title={
+                                    <Typography sx={{ fontSize: '1.25rem' }}>
+                                        {formatMessage({ id: 'advancedSetup.assign' })}
+                                    </Typography>
+                                }
                                 sx={{
                                     backgroundColor:
                                         choice === AdvancedCard.ASSIGN
@@ -115,11 +124,12 @@ const AdvancedSetup: FC<IAdvancedSetupProps> = (props) => {
                                 onClick={() => setChoice(AdvancedCard.ASSIGN)}
                             />
                             <CardContent sx={{ paddingBottom: 16 }}>
-                                <Typography>TBD Give the cards out. Choose which players get them.</Typography>
+                                <Typography>{formatMessage({ id: 'advancedSetup.assign.description' })}</Typography>
                                 {choice === AdvancedCard.ASSIGN && (
                                     <>
                                         <Typography fontSize={'large'} paddingTop={'0.5em'}>
-                                            Cards to assign: {numLeftover ?? 0 - numToAssign}
+                                            {formatMessage({ id: 'advancedSetup.assign.toAssign' })}:{' '}
+                                            {numLeftover ?? 0 - numToAssign}
                                         </Typography>
                                         {players.map((player, i) => (
                                             <Stack direction={'row'} key={player}>
@@ -204,8 +214,7 @@ const AdvancedSetup: FC<IAdvancedSetupProps> = (props) => {
                 <Stack direction={'column'} margin={'2em auto'}>
                     <CelebrationTwoTone color={'info'} sx={{ height: '3em', width: '3em', margin: 'auto' }} />
                     <Typography color={'textPrimary'} padding={'1em'} align={'center'} variant={'h5'}>
-                        TBD There are no cards leftover, so Advanced Setup is not needed. You already have access to
-                        detailed player info.
+                        {formatMessage({ id: 'advancedSetup.notNeeded' })}
                     </Typography>
                 </Stack>
             )}

@@ -1,5 +1,5 @@
 import { create } from 'zustand/react'
-import { ColorMode, PlayerNamesPosition, SelectionModalOption, ToolbarPosition, Settings } from '../types.ts'
+import { ColorMode, Language, PlayerNamesPosition, SelectionModalOption, Settings, ToolbarPosition } from '../types.ts'
 import { devtools, persist } from 'zustand/middleware'
 
 export interface SettingsStore extends Settings {
@@ -11,6 +11,7 @@ export interface SettingsStore extends Settings {
     setSelectionModalOptions: (selectionModalOptions: SelectionModalOption) => void
     setColorMode: (colorMode: ColorMode) => void
     toggleColorMode: () => void
+    setLanguage: (lang: Language) => void
 }
 
 export const useSettingsStore = create<SettingsStore>()(
@@ -24,6 +25,7 @@ export const useSettingsStore = create<SettingsStore>()(
                 playerNamesPosition: PlayerNamesPosition.default,
                 selectionModalOptions: SelectionModalOption.minimal,
                 colorMode: window.matchMedia('(prefers-color-scheme: dark)').matches ? ColorMode.DARK : ColorMode.LIGHT,
+                lang: navigator.language.includes('it') ? Language.IT : Language.EN,
                 setToolbarPosition: (position: ToolbarPosition) => set({ toolbarPosition: position }),
                 setAutocomplete: (autocomplete: boolean) => set({ autocomplete: autocomplete }),
                 setForceAssistantUpdate: (forceAssistantUpdate: boolean) =>
@@ -36,6 +38,7 @@ export const useSettingsStore = create<SettingsStore>()(
                 setColorMode: (colorMode: ColorMode) => set({ colorMode: colorMode }),
                 toggleColorMode: () =>
                     set({ colorMode: get().colorMode === ColorMode.DARK ? ColorMode.LIGHT : ColorMode.DARK }),
+                setLanguage: (lang: Language) => set({ lang }),
             }),
             {
                 name: 'settings',

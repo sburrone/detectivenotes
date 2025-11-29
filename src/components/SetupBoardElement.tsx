@@ -13,6 +13,7 @@ import {
 } from '@mui/material'
 import { Board, Item } from '../types.ts'
 import { HouseTwoTone, Person, PersonSearchOutlined, VaccinesTwoTone } from '@mui/icons-material'
+import { useIntl } from 'react-intl'
 
 interface IBoardElementProps {
     board: Board
@@ -24,6 +25,7 @@ const SetupBoardElement: FC<CardProps & IBoardElementProps> = (props) => {
     const { board, selected, onClick, ...rest } = props
 
     const theme = useTheme()
+    const { formatMessage } = useIntl()
 
     const [expanded, setExpanded] = useState<Item>()
 
@@ -61,21 +63,21 @@ const SetupBoardElement: FC<CardProps & IBoardElementProps> = (props) => {
                         sx={{ margin: '0.25em' }}
                         onClick={() => handleChipClick(Item.SUSPECT)}
                         icon={<PersonSearchOutlined />}
-                        label={`${board.characters.length} TBD suspects`}
+                        label={`${board.characters.length} ${formatMessage({ id: 'players' }).toLowerCase()}`}
                         variant={expanded === Item.SUSPECT ? 'outlined' : undefined}
                     />
                     <Chip
                         sx={{ margin: '0.25em' }}
                         onClick={() => handleChipClick(Item.WEAPON)}
                         icon={<VaccinesTwoTone />}
-                        label={`${board.weapons.length} TBD weapons`}
+                        label={`${board.weapons.length} ${formatMessage({ id: 'weapons' }).toLowerCase()}`}
                         variant={expanded === Item.WEAPON ? 'outlined' : undefined}
                     />
                     <Chip
                         sx={{ margin: '0.25em' }}
                         onClick={() => handleChipClick(Item.ROOM)}
                         icon={<HouseTwoTone />}
-                        label={`${board.rooms.length} TBD rooms`}
+                        label={`${board.rooms.length} ${formatMessage({ id: 'rooms' }).toLowerCase()}`}
                         variant={expanded === Item.ROOM ? 'outlined' : undefined}
                     />
                 </Stack>
@@ -86,7 +88,7 @@ const SetupBoardElement: FC<CardProps & IBoardElementProps> = (props) => {
                 )}
                 <CardActions sx={{ paddingBottom: 0 }}>
                     <Button size={'small'} variant={'text'} onClick={() => onClick(board)}>
-                        TBD Play this!
+                        {formatMessage({ id: 'useThisBoard' })}
                     </Button>
                 </CardActions>
             </CardContent>

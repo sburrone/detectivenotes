@@ -18,6 +18,7 @@ import CardButton from '../../components/CardButton.tsx'
 import TextWithIcon from '../../components/TextWithIcon.tsx'
 import { useSettingsStore } from '../../store/useSettingsStore.ts'
 import { useGameStore } from '../../store/useGameStore.ts'
+import { useIntl } from 'react-intl'
 
 const MainMenuButtons: FC<{
     setStep: (step: Step) => void
@@ -25,6 +26,7 @@ const MainMenuButtons: FC<{
     setHideUI: (hideUI: boolean) => void
 }> = ({ setStep, hideUI }) => {
     const theme = useTheme()
+    const { formatMessage } = useIntl()
 
     const { ts, board, players } = useGameStore()
     const { colorMode, setColorMode } = useSettingsStore()
@@ -75,7 +77,7 @@ const MainMenuButtons: FC<{
                             header={
                                 <TextWithIcon
                                     icon={<PlayArrow />}
-                                    text={'TBD New'}
+                                    text={formatMessage({ id: 'new' })}
                                     textProps={{
                                         fontSize: '1.25rem',
                                         margin: 'auto 0 auto 0.5rem',
@@ -91,7 +93,7 @@ const MainMenuButtons: FC<{
                                 header={
                                     <TextWithIcon
                                         icon={<Save />}
-                                        text={'TBD Continue'}
+                                        text={formatMessage({ id: 'continue' })}
                                         textProps={{
                                             fontSize: '1.25rem',
                                             margin: 'auto 0 auto 0.5rem',
@@ -148,7 +150,7 @@ const MainMenuButtons: FC<{
                                     }
                                     sx={{ margin: '4px' }}
                                 >
-                                    TBD Language
+                                    {formatMessage({ id: 'language' })}
                                 </Button>
                             ) : (
                                 <IconMenuButton>

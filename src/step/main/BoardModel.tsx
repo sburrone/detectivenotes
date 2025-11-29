@@ -78,7 +78,7 @@ export const BoardModel: FC<{
                     }}
                     onClick={() => setHideUI(false)}
                 >
-                    TBD Return to main menu
+                    {formatMessage({ id: 'returnToMainMenu' })}
                 </Button>
             )}
         </>

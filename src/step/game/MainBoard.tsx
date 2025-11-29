@@ -16,6 +16,7 @@ import { IconButton } from '../../components/CustomButtons.tsx'
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material'
 import { useGameStore } from '../../store/useGameStore.ts'
 import { useSettingsStore } from '../../store/useSettingsStore.ts'
+import { useIntl } from 'react-intl'
 
 const COL_EXTRA = 2
 
@@ -28,6 +29,7 @@ export const MainBoard: FC = () => {
     const { autocomplete } = useSettingsStore()
 
     const theme = useTheme()
+    const { formatMessage } = useIntl()
 
     const handleUpdate = (newIcon: BoardIcon, newNumber: number, item: string, index: number) => {
         updateItem({ item, badge: newNumber, value: newIcon, playerIndex: index, autocomplete })
@@ -137,7 +139,7 @@ export const MainBoard: FC = () => {
                                         />
                                     )}
                                 </IconButton>
-                                TBD Suspects
+                                {formatMessage({ id: 'suspects' })}
                                 <IconButton
                                     disableRipple={true}
                                     aria-label="expand suspects section"
@@ -207,7 +209,7 @@ export const MainBoard: FC = () => {
                                         />
                                     )}
                                 </IconButton>
-                                TBD Weapons
+                                {formatMessage({ id: 'weapons' })}
                                 <IconButton
                                     aria-label="expand suspects section"
                                     size="small"
@@ -265,7 +267,7 @@ export const MainBoard: FC = () => {
                                         <KeyboardArrowDown sx={{ fontSize: '1.5rem' }} />
                                     )}
                                 </IconButton>
-                                TBD Rooms
+                                {formatMessage({ id: 'rooms' })}
                                 <IconButton
                                     disableRipple={true}
                                     aria-label="expand suspects section"

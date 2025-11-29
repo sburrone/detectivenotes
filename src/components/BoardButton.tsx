@@ -6,6 +6,7 @@ import { Button, IconButton } from './CustomButtons.tsx'
 import { Counter } from './Counter.tsx'
 import { CustomModal } from './CustomModal.tsx'
 import { useSettingsStore } from '../store/useSettingsStore.ts'
+import { useIntl } from 'react-intl'
 
 export interface IBoardButtonProps {
     icon: BoardIcon
@@ -34,6 +35,7 @@ export const BoardButton: FC<IBoardButtonProps> = (props) => {
     const [open, setOpen] = useState(false)
 
     const { colorMode } = useSettingsStore()
+    const { formatMessage } = useIntl()
 
     const handleUpdate = (toUpdate: BoardIcon | number) => {
         const newIcon = typeof toUpdate === 'number' ? icon : toUpdate
@@ -55,7 +57,7 @@ export const BoardButton: FC<IBoardButtonProps> = (props) => {
                 </Badge>
             </IconButton>
 
-            <CustomModal color={'primary'} open={open} setOpen={setOpen} title={'TBD Editing'}>
+            <CustomModal color={'primary'} open={open} setOpen={setOpen} title={formatMessage({ id: 'editing' })}>
                 <Grid container spacing={2} marginBottom={12}>
                     <Grid size={12} display={'flex'} alignItems={'center'} justifyContent={'center'}>
                         <Button
@@ -63,7 +65,7 @@ export const BoardButton: FC<IBoardButtonProps> = (props) => {
                             onClick={() => handleUpdate(BoardIcon.RESET)}
                             startIcon={getBoardIcon(BoardIcon.RESET, colorMode)}
                         >
-                            TBD Reset
+                            {formatMessage({ id: 'reset' })}
                         </Button>
                     </Grid>
                     <Grid size={6} display={'flex'} alignItems={'center'} justifyContent={'center'}>
@@ -72,7 +74,7 @@ export const BoardButton: FC<IBoardButtonProps> = (props) => {
                             onClick={() => handleUpdate(BoardIcon.CHECK)}
                             startIcon={getBoardIcon(BoardIcon.CHECK)}
                         >
-                            TBD Yes
+                            {formatMessage({ id: 'yes' })}
                         </Button>
                     </Grid>
                     <Grid size={6} display={'flex'} alignItems={'center'} justifyContent={'center'}>
@@ -81,7 +83,7 @@ export const BoardButton: FC<IBoardButtonProps> = (props) => {
                             onClick={() => handleUpdate(BoardIcon.MAYBE)}
                             startIcon={getBoardIcon(BoardIcon.MAYBE)}
                         >
-                            TBD Maybe
+                            {formatMessage({ id: 'maybe' })}
                         </Button>
                     </Grid>
                     <Grid size={6} display={'flex'} alignItems={'center'} justifyContent={'center'}>
@@ -90,7 +92,7 @@ export const BoardButton: FC<IBoardButtonProps> = (props) => {
                             onClick={() => handleUpdate(BoardIcon.CROSS)}
                             startIcon={getBoardIcon(BoardIcon.CROSS)}
                         >
-                            TBD No
+                            {formatMessage({ id: 'no' })}
                         </Button>
                     </Grid>
                     <Grid size={6} display={'flex'} alignItems={'center'} justifyContent={'center'}>
@@ -99,7 +101,7 @@ export const BoardButton: FC<IBoardButtonProps> = (props) => {
                             onClick={() => handleUpdate(BoardIcon.MAYBE_NOT)}
                             startIcon={getBoardIcon(BoardIcon.MAYBE_NOT)}
                         >
-                            TBD Maybe not
+                            {formatMessage({ id: 'maybeNot' })}
                         </Button>
                     </Grid>
                     <Grid size={4} display={'flex'} alignItems={'center'} justifyContent={'center'}>
@@ -108,7 +110,7 @@ export const BoardButton: FC<IBoardButtonProps> = (props) => {
                             onClick={() => handleUpdate(BoardIcon.STAR)}
                             startIcon={getBoardIcon(BoardIcon.STAR)}
                         >
-                            TBD Star
+                            {formatMessage({ id: 'star' })}
                         </Button>
                     </Grid>
                     <Grid size={4} display={'flex'} alignItems={'center'} justifyContent={'center'}>
@@ -117,7 +119,7 @@ export const BoardButton: FC<IBoardButtonProps> = (props) => {
                             onClick={() => handleUpdate(BoardIcon.QUESTION)}
                             startIcon={getBoardIcon(BoardIcon.QUESTION)}
                         >
-                            TBD Question
+                            {formatMessage({ id: 'question' })}
                         </Button>
                     </Grid>
                     <Grid size={4} display={'flex'} alignItems={'center'} justifyContent={'center'}>
@@ -126,7 +128,7 @@ export const BoardButton: FC<IBoardButtonProps> = (props) => {
                             onClick={() => handleUpdate(BoardIcon.EXCLAMATION)}
                             startIcon={getBoardIcon(BoardIcon.EXCLAMATION)}
                         >
-                            TBD Warning
+                            {formatMessage({ id: 'warning' })}
                         </Button>
                     </Grid>
                     <Grid size={6} display={'flex'} alignItems={'center'} justifyContent={'center'}>
@@ -135,7 +137,7 @@ export const BoardButton: FC<IBoardButtonProps> = (props) => {
                             onClick={() => handleUpdate(BoardIcon.FLAG)}
                             startIcon={getBoardIcon(BoardIcon.FLAG)}
                         >
-                            TBD Marker
+                            {formatMessage({ id: 'marker' })}
                         </Button>
                     </Grid>
                     <Grid size={6} display={'flex'} alignItems={'center'} justifyContent={'center'}>
@@ -144,7 +146,7 @@ export const BoardButton: FC<IBoardButtonProps> = (props) => {
                             onClick={() => handleUpdate(BoardIcon.SKIP)}
                             startIcon={getBoardIcon(BoardIcon.SKIP)}
                         >
-                            TBD Skip
+                            {formatMessage({ id: 'skip' })}
                         </Button>
                     </Grid>
 

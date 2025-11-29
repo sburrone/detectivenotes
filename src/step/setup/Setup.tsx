@@ -10,6 +10,7 @@ import _ from 'lodash'
 import { initializeBoard } from '../../utils.tsx'
 import { Button, IconButton } from '../../components/CustomButtons.tsx'
 import { useGameStore } from '../../store/useGameStore.ts'
+import { useIntl } from 'react-intl'
 
 interface ISetupProps {
     setStep: (step: Step) => any
@@ -34,6 +35,8 @@ const Setup: FC<ISetupProps> = (props) => {
     const [choice, setChoice] = useState<AdvancedCard>(AdvancedCard.UNDEFINED)
     const [assignedCards, setAssignedCards] = useState<number[]>(Array(players.length).fill(0))
 
+    const { formatMessage } = useIntl()
+
     const numCards =
         selectedBoard && selectedBoard.characters.length + selectedBoard.weapons.length + selectedBoard.rooms.length - 3
     const numPlayers = players.length
@@ -46,7 +49,11 @@ const Setup: FC<ISetupProps> = (props) => {
         setChoice(numLeftover ? AdvancedCard.UNDEFINED : AdvancedCard.NOT_NEEDED)
     }, [players.length, selectedBoard?.id, numLeftover])
 
-    const steps = ['TBD Select board', 'TBD Who is playing?', 'TBD Advanced Setup']
+    const steps = [
+        formatMessage({ id: 'selectBoard' }),
+        formatMessage({ id: 'whoIsPlaying' }),
+        formatMessage({ id: 'advancedSetup' }),
+    ]
 
     const isStepOptional = (step: number) => {
         return step === 2
@@ -111,7 +118,7 @@ const Setup: FC<ISetupProps> = (props) => {
                     <ArrowBack />
                 </IconButton>
                 <Typography variant={'h6'} sx={{ flexGrow: 1 }}>
-                    TBD Setup
+                    {formatMessage({ id: 'newGame' })}
                 </Typography>
                 <IconButton variant={'text'} onClick={() => setStep(Step.MAIN)}>
                     <Settings />
@@ -129,7 +136,9 @@ const Setup: FC<ISetupProps> = (props) => {
                             optional?: ReactNode
                         } = {}
                         if (isStepOptional(index)) {
-                            labelProps.optional = <Typography variant="caption">TBD Optional</Typography>
+                            labelProps.optional = (
+                                <Typography variant="caption">{formatMessage({ id: 'optional' })}</Typography>
+                            )
                         }
                         if (isStepSkipped(index)) {
                             stepProps.completed = false
@@ -179,16 +188,16 @@ const Setup: FC<ISetupProps> = (props) => {
                         onClick={handleBack}
                         sx={{ mr: 1 }}
                     >
-                        TBD Back
+                        {formatMessage({ id: 'back' })}
                     </Button>
                     <Box sx={{ flex: '1 1 auto' }} />
                     {isStepOptional(activeStep) && numLeftover !== 0 && (
                         <Button variant={'text'} color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-                            TBD Skip
+                            {formatMessage({ id: 'skip' })}
                         </Button>
                     )}
                     <Button variant={'elevated'} onClick={handleNext} disabled={isNextDisabled}>
-                        {activeStep === steps.length - 1 ? 'TBD Finish' : 'TBD Next'}
+                        {formatMessage({ id: activeStep === steps.length - 1 ? 'finish' : 'next' })}
                     </Button>
                 </Box>
             </Box>

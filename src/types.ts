@@ -102,6 +102,7 @@ export type Settings = {
     playerNamesPosition: PlayerNamesPosition
     selectionModalOptions: SelectionModalOption
     colorMode: ColorMode
+    lang: Language
 }
 
 export enum MAIN_GAME_BUTTON {
@@ -112,4 +113,9 @@ export enum MAIN_GAME_BUTTON {
     UNDO,
     REDO,
     SETTINGS,
+}
+
+export enum Language {
+    IT = 'it',
+    EN = 'en',
 }

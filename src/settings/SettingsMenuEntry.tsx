@@ -1,6 +1,7 @@
 import { Checkbox } from '../components/CustomButtons.tsx'
 import { PlayerNamesPosition, SelectionModalOption, ToolbarPosition } from '../types.ts'
 import { Grid, ListItem, ListItemIcon, ListItemText, MenuItem, Select, useTheme } from '@mui/material'
+import { useIntl } from 'react-intl'
 
 interface ISettingsMenuEntryBaseProps {
     title: string
@@ -35,10 +36,17 @@ const CheckboxEntry = ({ enabled, onChange }: ISettingsMenuEntryCheckboxOwnProps
 
 const SelectEntry = ({ value, options, onChange }: ISettingsMenuEntrySelectOwnProps) => {
     const theme = useTheme()
+    const { formatMessage } = useIntl()
 
     return (
         <Select
             sx={{
+                '.MuiSelect-icon': {
+                    fill: theme.palette.text.primary,
+                },
+                '.MuiOutlinedInput-notchedOutline': {
+                    borderColor: (theme.palette as any).secondary.main,
+                },
                 '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                     borderColor: (theme.palette as any).tertiary.main,
                 },
@@ -48,7 +56,7 @@ const SelectEntry = ({ value, options, onChange }: ISettingsMenuEntrySelectOwnPr
         >
             {options.map((value, key) => (
                 <MenuItem value={value} key={key}>
-                    TBD Translated {value}
+                    {formatMessage({ id: `option.${value}` })}
                 </MenuItem>
             ))}
         </Select>

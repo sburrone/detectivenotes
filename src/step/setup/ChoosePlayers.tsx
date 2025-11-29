@@ -2,6 +2,7 @@ import { ChangeEvent, FC, useState } from 'react'
 import { InputAdornment, Slider, Stack, TextField, Typography } from '@mui/material'
 import { Board } from '../../types.ts'
 import { faces } from '../../utils.tsx'
+import { useIntl } from 'react-intl'
 
 interface IChoosePlayersProps {
     players: string[]
@@ -15,6 +16,8 @@ const ChoosePlayers: FC<IChoosePlayersProps> = (props) => {
     const { players, setPlayers, board, shelvedNames, setShelvedNames } = props
 
     const [playerNum, setPlayerNum] = useState(players?.filter((el) => el.length).length ?? board?.minPlayers ?? 3)
+
+    const { formatMessage } = useIntl()
 
     const handleSliderChange = (_e: Event, newLength: number) => {
         setPlayerNum(newLength)
@@ -33,7 +36,7 @@ const ChoosePlayers: FC<IChoosePlayersProps> = (props) => {
             return undefined
         }
         if (shelvedNames.slice(0, playerNum).filter((name) => name === value).length > 1) {
-            return 'TBD This name is taken'
+            return formatMessage({ id: 'nameTaken' })
         }
         return undefined
     }
@@ -50,7 +53,7 @@ const ChoosePlayers: FC<IChoosePlayersProps> = (props) => {
                     }}
                 >
                     <Typography color={'primary'} align={'center'} variant={'h5'}>
-                        TBD How many people are playing?
+                        {formatMessage({ id: 'players.howMany' })}
                     </Typography>
                     <Slider
                         value={playerNum}
@@ -72,7 +75,7 @@ const ChoosePlayers: FC<IChoosePlayersProps> = (props) => {
             )}
             <Stack direction={'column'}>
                 <Typography color={'primary'} align={'center'} variant={'h5'}>
-                    TBD What are their names?
+                    {formatMessage({ id: 'players.names' })}
                 </Typography>
                 <Typography
                     color={'secondary'}
@@ -83,7 +86,7 @@ const ChoosePlayers: FC<IChoosePlayersProps> = (props) => {
                     align={'center'}
                     sx={{ marginBottom: '1em' }}
                 >
-                    TBD Write them clockwise starting from your left.
+                    {formatMessage({ id: 'players.names.description' })}
                 </Typography>
                 {shelvedNames.map((_pl, index) => {
                     return (

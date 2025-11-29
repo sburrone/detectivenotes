@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import './App.css'
-import { Step } from './types'
+import { Language, Step } from './types'
 import MainMenu from './step/main/MainMenu.tsx'
 import { IntlProvider } from 'react-intl'
 import { createTheme, ThemeOptions, ThemeProvider } from '@mui/material'
@@ -8,6 +8,8 @@ import { themes } from './themes.ts'
 import Setup from './step/setup/Setup.tsx'
 import MainGame from './step/game/MainGame.tsx'
 import { useSettingsStore } from './store/useSettingsStore.ts'
+import it from './lang/it.json'
+import en from './lang/en.json'
 
 function App() {
     return <AppContent />
@@ -15,13 +17,13 @@ function App() {
 
 function AppContent() {
     const [step, setStep] = useState<Step>(Step.MAIN)
-    const { colorMode } = useSettingsStore()
+    const { colorMode, lang } = useSettingsStore()
 
     const theme = useMemo(() => createTheme(themes[colorMode] as unknown as ThemeOptions), [colorMode])
 
     return (
         <ThemeProvider theme={theme}>
-            <IntlProvider locale={'en-US'} messages={{ AA: 'BB' }}>
+            <IntlProvider locale={lang} messages={lang === Language.IT ? it : en}>
                 <div
                     style={{
                         backgroundColor: theme.palette.background.default,
