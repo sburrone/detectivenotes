@@ -42,6 +42,9 @@ const SelectEntry = ({ value, options, onChange }: ISettingsMenuEntrySelectOwnPr
         <Select
             sx={{
                 '.MuiSelect-icon': {
+                    top: 'unset',
+                    right: 0,
+                    transition: 'transform 0.1s linear',
                     fill: theme.palette.text.primary,
                 },
                 '.MuiOutlinedInput-notchedOutline': {
