@@ -1,7 +1,8 @@
 import { Checkbox } from '../components/CustomButtons.tsx'
 import { PlayerNamesPosition, SelectionModalOption, ToolbarPosition } from '../types.ts'
-import { Grid, ListItem, ListItemIcon, ListItemText, MenuItem, Select, useTheme } from '@mui/material'
+import { Grid, ListItem, ListItemIcon, ListItemText, MenuItem } from '@mui/material'
 import { useIntl } from 'react-intl'
+import { CustomSelect } from '../components/CustomSelect.tsx'
 
 interface ISettingsMenuEntryBaseProps {
     title: string
@@ -35,25 +36,10 @@ const CheckboxEntry = ({ enabled, onChange }: ISettingsMenuEntryCheckboxOwnProps
 )
 
 const SelectEntry = ({ value, options, onChange }: ISettingsMenuEntrySelectOwnProps) => {
-    const theme = useTheme()
     const { formatMessage } = useIntl()
 
     return (
-        <Select
-            sx={{
-                '.MuiSelect-icon': {
-                    top: 'unset',
-                    right: 0,
-                    transition: 'transform 0.1s linear',
-                    fill: theme.palette.text.primary,
-                },
-                '.MuiOutlinedInput-notchedOutline': {
-                    borderColor: (theme.palette as any).secondary.main,
-                },
-                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                    borderColor: (theme.palette as any).tertiary.main,
-                },
-            }}
+        <CustomSelect
             value={value}
             onChange={(e) => onChange(e.target.value as ToolbarPosition | PlayerNamesPosition | SelectionModalOption)}
         >
@@ -62,7 +48,7 @@ const SelectEntry = ({ value, options, onChange }: ISettingsMenuEntrySelectOwnPr
                     {formatMessage({ id: `option.${value}` })}
                 </MenuItem>
             ))}
-        </Select>
+        </CustomSelect>
     )
 }
 

@@ -1,5 +1,5 @@
 import { create } from 'zustand/react'
-import { AdvancedCardSetup, Board, BoardIcon, Game, GameBoardRow } from '../types.ts'
+import { AdvancedCardSetup, Board, BoardIcon, Game, GameBoardRow, UpdateItemPayload } from '../types.ts'
 import { temporal } from 'zundo'
 import { devtools, persist } from 'zustand/middleware'
 import _ from 'lodash'
@@ -13,19 +13,7 @@ export interface GameStore extends Game {
     setAdvancedCardSetup: (advancedCards: AdvancedCardSetup) => void
     updateGameBoardRow: (gameBoardRow: GameBoardRow) => void
     lockItem: (item: string) => void
-    updateItem: ({
-        item,
-        playerIndex,
-        value,
-        badge,
-        autocomplete,
-    }: {
-        item: string
-        playerIndex: number
-        value: BoardIcon
-        badge: number
-        autocomplete: boolean
-    }) => void
+    updateItem: (payload: UpdateItemPayload | UpdateItemPayload[]) => void
 }
 
 export const useGameStore = create<GameStore>()(
@@ -47,6 +35,7 @@ export const useGameStore = create<GameStore>()(
                     setGameBoard: (gameBoard: GameBoardRow[]) => set({ gameBoard, ts: Date.now() }),
                     setAdvancedCardSetup: (advancedCards: AdvancedCardSetup) => set({ advancedCards, ts: Date.now() }),
                     updateGameBoardRow: (gameBoardRow: GameBoardRow) => {
+                        const gameBoard = _.cloneDeep(get().gameBoard)!
                         if (get().gameBoard) {
                             const foundIndex = get().gameBoard?.findIndex((row) => row.item === gameBoardRow.item)
                             if (foundIndex !== undefined && foundIndex !== -1) {
@@ -56,10 +45,9 @@ export const useGameStore = create<GameStore>()(
                                     locked: gameBoardRow.locked,
                                     values: gameBoardRow.values,
                                 })
-                                return set({ gameBoard, ts: Date.now() })
                             }
                         }
-                        return set({ ts: Date.now() })
+                        return set({ gameBoard, ts: Date.now() })
                     },
                     lockItem: (item: string) =>
                         set({
@@ -69,38 +57,32 @@ export const useGameStore = create<GameStore>()(
                             })),
                             ts: Date.now(),
                         }),
-                    updateItem: ({
-                        item,
-                        playerIndex,
-                        value,
-                        badge,
-                        autocomplete,
-                    }: {
-                        item: string
-                        playerIndex: number
-                        value: BoardIcon
-                        badge: number
-                        autocomplete: boolean
-                    }) => {
-                        if (get().gameBoard) {
-                            const foundIndex = get().gameBoard?.findIndex((row) => row.item === item)
-                            if (foundIndex !== undefined && foundIndex !== -1) {
-                                const gameBoard = _.cloneDeep(get().gameBoard)!
-                                if (autocomplete && value === BoardIcon.CHECK) {
-                                    _.set(
-                                        gameBoard,
-                                        `[${foundIndex}].values`,
-                                        gameBoard[foundIndex].values.map((v) => ({
-                                            badge: v.badge,
-                                            icon: BoardIcon.CROSS,
-                                        }))
-                                    )
+                    updateItem: (payload: UpdateItemPayload | UpdateItemPayload[]) => {
+                        const gameBoard = _.cloneDeep(get().gameBoard)!
+                        ;(Array.isArray(payload) ? payload : [payload]).forEach(
+                            ({ item, value, badge, autocomplete, playerIndex }) => {
+                                if (get().gameBoard) {
+                                    const foundIndex = get().gameBoard?.findIndex((row) => row.item === item)
+                                    if (foundIndex !== undefined && foundIndex !== -1) {
+                                        if (autocomplete && value === BoardIcon.CHECK) {
+                                            _.set(
+                                                gameBoard,
+                                                `[${foundIndex}].values`,
+                                                gameBoard[foundIndex].values.map((v) => ({
+                                                    badge: v.badge,
+                                                    icon: BoardIcon.CROSS,
+                                                }))
+                                            )
+                                        }
+                                        _.set(gameBoard, `[${foundIndex}].values[${playerIndex}]`, {
+                                            icon: value,
+                                            badge,
+                                        })
+                                    }
                                 }
-                                _.set(gameBoard, `[${foundIndex}].values[${playerIndex}]`, { icon: value, badge })
-                                return set({ gameBoard, ts: Date.now() })
                             }
-                        }
-                        return set({ ts: Date.now() })
+                        )
+                        return set({ gameBoard, ts: Date.now() })
                     },
                 }),
                 {

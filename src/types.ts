@@ -105,6 +105,14 @@ export type Settings = {
     lang: Language
 }
 
+export interface UpdateItemPayload {
+    item: string
+    playerIndex: number
+    value: BoardIcon
+    badge: number
+    autocomplete: boolean
+}
+
 export enum MAIN_GAME_BUTTON {
     BACK,
     INFO,

@@ -19,7 +19,8 @@ const buttonHierarchy: MAIN_GAME_BUTTON[] = [
 
 export const useMainGameButtons = (
     setStep: (step: Step) => void,
-    setSettingsOpen: Dispatch<SetStateAction<boolean>>
+    setSettingsOpen: Dispatch<SetStateAction<boolean>>,
+    setAssistantOpen: Dispatch<SetStateAction<boolean>>
 ) => {
     const [maxButtons, setMaxButtons] = useState(Math.floor(window.innerWidth / ICON_BUTTON_WIDTH) - 1)
 
@@ -63,7 +64,7 @@ export const useMainGameButtons = (
         {
             id: MAIN_GAME_BUTTON.ASSISTANT,
             el: (
-                <IconButton variant={'elevated'}>
+                <IconButton variant={'elevated'} onClick={() => setAssistantOpen((assistantOpen) => !assistantOpen)}>
                     <AutoFixHigh />
                 </IconButton>
             ),

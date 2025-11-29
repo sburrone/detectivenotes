@@ -8,6 +8,7 @@ import { MainBoard } from './MainBoard.tsx'
 import { SettingsMenu } from '../../settings/SettingsMenu.tsx'
 import { Box, Menu } from '@mui/material'
 import { useMainGameButtons } from './useMainGameButtons.tsx'
+import { AssistantMenu } from './AssistantMenu.tsx'
 
 interface IGameProps {
     setStep: (step: Step) => void
@@ -17,9 +18,10 @@ const MainGame: FC<IGameProps> = (props) => {
     const { setStep } = props
 
     const [settingsOpen, setSettingsOpen] = useState(false)
+    const [assistantOpen, setAssistantOpen] = useState(false)
     const [moreAnchorEl, setMoreAnchorEl] = useState<HTMLButtonElement | null>(null)
 
-    const { shownButtons, hiddenButtons } = useMainGameButtons(setStep, setSettingsOpen)
+    const { shownButtons, hiddenButtons } = useMainGameButtons(setStep, setSettingsOpen, setAssistantOpen)
 
     return (
         <Box sx={{ display: 'flex', maxHeight: '100dvh', flexDirection: 'column' }}>
@@ -49,6 +51,7 @@ const MainGame: FC<IGameProps> = (props) => {
             </Menu>
 
             <SettingsMenu open={settingsOpen} setOpen={setSettingsOpen} />
+            <AssistantMenu open={assistantOpen} setOpen={setAssistantOpen} />
         </Box>
     )
 }

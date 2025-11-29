@@ -49,6 +49,17 @@
     "nameTaken": "This name is already in use",
     "selectBoard": "Choose a board",
     "whoIsPlaying": "Who is playing?",
+    "settings": "Settings",
     "finish": "Finish",
-    "next": "Next"
+    "next": "Next",
+    "assistant": "Assistant",
+    "assistant.whoAsked": "Who made a guess?",
+    "assistant.whoAnswered": "Did anyone show a card to them?",
+    "assistant.whatAsked": "What guess was it?",
+    "nobody": "No one",
+    "player": "Player",
+    "suspect": "Suspect",
+    "weapon": "Weapon",
+    "room": "Room",
+    "confirm": "Confirm"
 }
