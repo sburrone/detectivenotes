@@ -13,9 +13,9 @@ interface IChoosePlayersProps {
 }
 
 const ChoosePlayers: FC<IChoosePlayersProps> = (props) => {
-    const { players, setPlayers, board, shelvedNames, setShelvedNames } = props
+    const { setPlayers, board, shelvedNames, setShelvedNames } = props
 
-    const [playerNum, setPlayerNum] = useState(players?.filter((el) => el.length).length ?? board?.minPlayers ?? 3)
+    const [playerNum, setPlayerNum] = useState(board?.minPlayers ?? 3)
 
     const { formatMessage } = useIntl()
 
@@ -35,8 +35,11 @@ const ChoosePlayers: FC<IChoosePlayersProps> = (props) => {
         if (playerNum < index || value === '') {
             return undefined
         }
+        if (/[,:'"%]/.test(value)) {
+            return formatMessage({ id: 'error.invalidCharacters' })
+        }
         if (shelvedNames.slice(0, playerNum).filter((name) => name === value).length > 1) {
-            return formatMessage({ id: 'nameTaken' })
+            return formatMessage({ id: 'error.nameTaken' })
         }
         return undefined
     }
@@ -54,6 +57,17 @@ const ChoosePlayers: FC<IChoosePlayersProps> = (props) => {
                 >
                     <Typography color={'primary'} align={'center'} variant={'h5'}>
                         {formatMessage({ id: 'players.howMany' })}
+                    </Typography>
+                    <Typography
+                        color={'secondary'}
+                        variant={'h6'}
+                        component={'div'}
+                        justifyContent={'center'}
+                        margin={'auto'}
+                        align={'center'}
+                        sx={{ marginBottom: '1em' }}
+                    >
+                        {playerNum} {formatMessage({ id: 'players' }).toLowerCase()}
                     </Typography>
                     <Slider
                         value={playerNum}

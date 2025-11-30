@@ -51,40 +51,49 @@ export const AssistantMenu = ({ open, setOpen }: IAssistantMenuProps) => {
     }) => {
         if (!players || players.length === 0) return
 
-        const askedIndex = players.indexOf(whoAsked)
-        if (askedIndex === -1) return
-
         let playersToUpdate: string[] = []
 
-        if (whoAnswered === 'nobody') {
-            // tutti i giocatori tranne chi ha chiesto
-            playersToUpdate = players.filter((p) => p !== whoAsked)
-        } else {
-            const answeredIndex = players.indexOf(whoAnswered)
-            if (answeredIndex === -1) return
-
-            const n = players.length
-            const result: string[] = []
-
-            // partiamo dall'elemento successivo a whoAsked,
-            // e procediamo in senso orario (con wrapping) fino a PRIMA di whoAnswered
-            let i = (askedIndex + 1) % n
-
-            // se il primo è già whoAnswered, l'intervallo è vuoto
-            while (i !== answeredIndex) {
-                result.push(players[i])
-                i = (i + 1) % n
-
-                // sicurezza: evitiamo loop infiniti in caso di dati incoerenti
-                if (i === askedIndex) break
+        if (whoAsked === '%myself%') {
+            if (whoAnswered === '%nobody%') {
+                playersToUpdate = [...players]
+            } else {
+                const answeredIndex = players.indexOf(whoAnswered)
+                if (answeredIndex === -1) return
+                playersToUpdate = players.slice(0, answeredIndex + 1)
             }
+        } else if (whoAnswered === '%myself%') {
+            const askedIndex = players.indexOf(whoAsked)
+            if (askedIndex === -1) return
+            playersToUpdate = players.slice(askedIndex)
+        } else {
+            const askedIndex = players.indexOf(whoAsked)
+            if (askedIndex === -1) return
 
-            playersToUpdate = result
+            if (whoAnswered === '%nobody%') {
+                playersToUpdate = players.filter((p) => p !== whoAsked)
+            } else {
+                const answeredIndex = players.indexOf(whoAnswered)
+                if (answeredIndex === -1) return
+
+                const n = players.length
+                const result: string[] = []
+
+                let i = (askedIndex + 1) % n
+
+                while (i !== answeredIndex) {
+                    result.push(players[i])
+                    i = (i + 1) % n
+
+                    if (i === askedIndex) break
+                }
+
+                playersToUpdate = result
+            }
         }
 
         const guesses = [suspectAsked, weaponAsked, roomAsked]
         const payload: UpdateItemPayload[] = []
-        console.log('AAA', { guesses, playersToUpdate })
+
         guesses.map((guess) => {
             const row = gameBoard?.find((row) => row.item === guess)
             if (row?.locked) return
@@ -98,8 +107,8 @@ export const AssistantMenu = ({ open, setOpen }: IAssistantMenuProps) => {
                 }
             })
 
-            if (whoAnswered !== 'nobody') {
-                const whoAnsweredIndex = players.indexOf(whoAnswered)
+            const whoAnsweredIndex = players.indexOf(whoAnswered)
+            if (whoAnsweredIndex !== -1) {
                 const badge = row?.values[whoAnsweredIndex].badge ?? 0
                 const icon = row?.values[whoAnsweredIndex].icon
                 if (icon !== BoardIcon.CROSS && icon !== BoardIcon.CHECK) {
@@ -133,6 +142,7 @@ export const AssistantMenu = ({ open, setOpen }: IAssistantMenuProps) => {
                         {formatMessage({ id: 'assistant.whoAsked' })}
                     </Typography>
                     <CustomSelect value={whoAsked} onChange={(e) => setWhoAsked(e.target.value as string)}>
+                        <MenuItem value={'%myself%'}>{formatMessage({ id: 'myself' })}</MenuItem>
                         {players?.map((value, key) => (
                             <MenuItem value={value} key={key}>
                                 {value}
@@ -186,12 +196,13 @@ export const AssistantMenu = ({ open, setOpen }: IAssistantMenuProps) => {
                         {formatMessage({ id: 'assistant.whoAnswered' })}
                     </Typography>
                     <CustomSelect value={whoAnswered} onChange={(e) => setWhoAnswered(e.target.value as string)}>
+                        <MenuItem value={'%myself%'}>{formatMessage({ id: 'myself' })}</MenuItem>
                         {players?.map((value, key) => (
                             <MenuItem value={value} key={key}>
                                 {value}
                             </MenuItem>
                         ))}
-                        <MenuItem value={'nobody'}>{formatMessage({ id: 'nobody' })}</MenuItem>
+                        <MenuItem value={'%nobody%'}>{formatMessage({ id: 'nobody' })}</MenuItem>
                     </CustomSelect>
                 </Stack>
                 <Button

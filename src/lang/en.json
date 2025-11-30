@@ -46,7 +46,8 @@
     "toolbarPosition.description": "Move the buttons to the bottom",
     "new": "New",
     "continue": "Continue",
-    "nameTaken": "This name is already in use",
+    "error.invalidCharacters": "This name containes invalid characters",
+    "error.nameTaken": "This name is already in use",
     "selectBoard": "Choose a board",
     "whoIsPlaying": "Who is playing?",
     "settings": "Settings",
@@ -58,8 +59,10 @@
     "assistant.whatAsked": "What guess was it?",
     "nobody": "No one",
     "player": "Player",
+    "players": "Players",
     "suspect": "Suspect",
     "weapon": "Weapon",
     "room": "Room",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "myself": "Myself"
 }

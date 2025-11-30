@@ -33,7 +33,7 @@
     "players.howMany": "In quanti giocano?",
     "players.names": "Come si chiamano?",
     "players.names.description": "Scrivili in senso orario partendo dal giocatore alla tua sinistra.",
-    "newGame": "Nuova partita,",
+    "newGame": "Nuova partita",
     "optional": "Opzionale",
     "back": "Indietro",
     "editing": "Modifica",
@@ -47,7 +47,8 @@
     "toolbarPosition.description": "Sposta i pulsanti in basso",
     "new": "Nuovo",
     "continue": "Continua",
-    "nameTaken": "Questo nome è già in uso",
+    "error.invalidCharacters": "Questo nome contiene caratteri non validi",
+    "error.nameTaken": "Questo nome è già in uso",
     "selectBoard": "Scegli un tavolo",
     "whoIsPlaying": "Chi sta giocando?",
     "finish": "Fine",
@@ -60,8 +61,10 @@
     "assistant.description2": "Puoi sempre annullare le mie operazioni.",
     "nobody": "Nessuno",
     "player": "Giocatore",
+    "players": "Giocatori",
     "suspect": "Sospettato",
     "weapon": "Arma",
     "room": "Stanza",
-    "confirm": "Conferma"
+    "confirm": "Conferma",
+    "myself": "Me stessə"
 }
