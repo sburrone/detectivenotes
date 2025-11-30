@@ -23,7 +23,7 @@ const UpperBar: FC<IUpperBarProps> = (props) => {
                 sx={{ maxWidth: '100dvw', backgroundColor: theme.palette.primary.contrastText }}
             >
                 <TableContainer sx={{ display: 'flex' }}>
-                    <Toolbar sx={{ maxWidth: '100dvw', overflowX: 'auto', ...style }}>{children}</Toolbar>
+                    <Toolbar sx={{ width: '100dvw', overflowX: 'auto', ...style }}>{children}</Toolbar>
                 </TableContainer>
             </AppBar>
         </Box>

@@ -64,5 +64,6 @@
     "weapon": "Weapon",
     "room": "Room",
     "confirm": "Confirm",
-    "myself": "Myself"
+    "myself": "Myself",
+    "newGame.warning": "The saved game will be deleted"
 }

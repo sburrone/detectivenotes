@@ -11,6 +11,7 @@ import { initializeBoard } from '../../utils.tsx'
 import { Button, IconButton } from '../../components/CustomButtons.tsx'
 import { useGameStore } from '../../store/useGameStore.ts'
 import { useIntl } from 'react-intl'
+import { SettingsMenu } from '../../settings/SettingsMenu.tsx'
 
 interface ISetupProps {
     setStep: (step: Step) => any
@@ -21,6 +22,7 @@ const Setup: FC<ISetupProps> = (props) => {
 
     const { setPlayers: setPlayersR, setOrToggleLocked, setBoard, setGameBoard, setAdvancedCardSetup } = useGameStore()
 
+    const [settingsOpen, setSettingsOpen] = useState(false)
     const [activeStep, setActiveStep] = useState(0)
     const [skipped, setSkipped] = useState(new Set<number>())
 
@@ -120,7 +122,7 @@ const Setup: FC<ISetupProps> = (props) => {
                 <Typography variant={'h6'} sx={{ flexGrow: 1 }}>
                     {formatMessage({ id: 'newGame' })}
                 </Typography>
-                <IconButton variant={'text'} onClick={() => setStep(Step.MAIN)}>
+                <IconButton variant={'text'} onClick={() => setSettingsOpen(true)}>
                     <Settings />
                 </IconButton>
             </UpperBar>
@@ -201,6 +203,8 @@ const Setup: FC<ISetupProps> = (props) => {
                     </Button>
                 </Box>
             </Box>
+
+            <SettingsMenu open={settingsOpen} setOpen={setSettingsOpen} />
         </div>
     )
 }

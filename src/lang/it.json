@@ -66,5 +66,6 @@
     "weapon": "Arma",
     "room": "Stanza",
     "confirm": "Conferma",
-    "myself": "Me stessə"
+    "myself": "Me stessə",
+    "newGame.warning": "La partita salvata verrà eliminata"
 }

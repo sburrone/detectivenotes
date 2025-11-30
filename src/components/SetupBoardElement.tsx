@@ -12,8 +12,9 @@ import {
     useTheme,
 } from '@mui/material'
 import { Board, Item } from '../types.ts'
-import { HouseTwoTone, Person, PersonSearchOutlined, VaccinesTwoTone } from '@mui/icons-material'
+import { HouseTwoTone, Person, PersonSearchOutlined } from '@mui/icons-material'
 import { useIntl } from 'react-intl'
+import { Swords } from '@nine-thirty-five/material-symbols-react/sharp'
 
 interface IBoardElementProps {
     board: Board
@@ -69,7 +70,7 @@ const SetupBoardElement: FC<CardProps & IBoardElementProps> = (props) => {
                     <Chip
                         sx={{ margin: '0.25em' }}
                         onClick={() => handleChipClick(Item.WEAPON)}
-                        icon={<VaccinesTwoTone />}
+                        icon={<Swords />}
                         label={`${board.weapons.length} ${formatMessage({ id: 'weapons' }).toLowerCase()}`}
                         variant={expanded === Item.WEAPON ? 'outlined' : undefined}
                     />

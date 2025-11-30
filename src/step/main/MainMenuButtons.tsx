@@ -17,7 +17,7 @@ import { ColorMode, Step } from '../../types.ts'
 import CardButton from '../../components/CardButton.tsx'
 import TextWithIcon from '../../components/TextWithIcon.tsx'
 import { useSettingsStore } from '../../store/useSettingsStore.ts'
-import { useGameStore } from '../../store/useGameStore.ts'
+import { blankGame, useGameStore } from '../../store/useGameStore.ts'
 import { useIntl } from 'react-intl'
 
 const MainMenuButtons: FC<{
@@ -28,8 +28,9 @@ const MainMenuButtons: FC<{
     const theme = useTheme()
     const { formatMessage } = useIntl()
 
-    const { ts, board, players } = useGameStore()
+    const { ts, board, players, setGame } = useGameStore()
     const { colorMode, setColorMode } = useSettingsStore()
+    const { clear } = useGameStore.temporal.getState()
 
     const [languageExtended, setLanguageExtended] = useState(window.innerWidth >= 500)
 
@@ -84,7 +85,16 @@ const MainMenuButtons: FC<{
                                     }}
                                 />
                             }
-                            onClick={() => setStep(Step.SETUP)}
+                            content={
+                                ts && (
+                                    <Typography align={'center'}>{formatMessage({ id: 'newGame.warning' })}</Typography>
+                                )
+                            }
+                            onClick={() => {
+                                setStep(Step.SETUP)
+                                setGame(blankGame)
+                                clear()
+                            }}
                             headerColor={(theme.palette as any).primaryContainer?.main}
                             style={{ margin: '0 auto' }}
                         />

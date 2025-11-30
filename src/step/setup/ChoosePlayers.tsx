@@ -118,12 +118,14 @@ const ChoosePlayers: FC<IChoosePlayersProps> = (props) => {
                             key={index}
                             value={shelvedNames[index]}
                             onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange(index, e.target.value)}
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position={'start'}>
-                                        {faces[index] ?? faces[index % faces.length]}
-                                    </InputAdornment>
-                                ),
+                            slotProps={{
+                                input: {
+                                    startAdornment: (
+                                        <InputAdornment position={'start'}>
+                                            {faces[index] ?? faces[index % faces.length]}
+                                        </InputAdornment>
+                                    ),
+                                },
                             }}
                         />
                     )

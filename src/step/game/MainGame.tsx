@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, Fragment, useState } from 'react'
 import { Step } from '../../types.ts'
 import UpperBar from '../../components/UpperBar.tsx'
 import { MoreVert } from '@mui/icons-material'
@@ -28,7 +28,9 @@ const MainGame: FC<IGameProps> = (props) => {
             <UpperBar
                 style={{ margin: 'auto', gap: 4, paddingTop: 4, paddingBottom: 4, width: '100dw', overflow: 'hidden' }}
             >
-                {shownButtons.map((b) => b.el)}
+                {shownButtons.map((b) => (
+                    <Fragment key={b.id}>{b.el}</Fragment>
+                ))}
                 {!!hiddenButtons.length && (
                     <IconButton variant={'elevated'} onClick={(e) => setMoreAnchorEl(e.target as HTMLButtonElement)}>
                         <MoreVert />
@@ -47,7 +49,9 @@ const MainGame: FC<IGameProps> = (props) => {
                 anchorEl={moreAnchorEl}
                 onClose={() => setMoreAnchorEl(null)}
             >
-                {hiddenButtons.map((b) => b.el)}
+                {hiddenButtons.map((b) => (
+                    <Fragment key={b.id}>{b.el}</Fragment>
+                ))}
             </Menu>
 
             <SettingsMenu open={settingsOpen} setOpen={setSettingsOpen} />

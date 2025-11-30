@@ -16,17 +16,21 @@ export interface GameStore extends Game {
     updateItem: (payload: UpdateItemPayload | UpdateItemPayload[]) => void
 }
 
+export const blankGame = {
+    ts: undefined,
+    players: undefined,
+    board: undefined,
+    locked: undefined,
+    gameBoard: undefined,
+    advancedCards: undefined,
+}
+
 export const useGameStore = create<GameStore>()(
     devtools(
         persist(
             temporal(
                 (set, get) => ({
-                    ts: undefined,
-                    players: undefined,
-                    board: undefined,
-                    locked: undefined,
-                    gameBoard: undefined,
-                    advancedCards: undefined,
+                    ...blankGame,
                     setGame: (game: Game) => set(game),
                     setBoard: (board: Board) => set({ board, ts: Date.now() }),
                     setPlayers: (players: string[]) => set({ players, ts: Date.now() }),

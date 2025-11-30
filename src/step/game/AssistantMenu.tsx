@@ -5,7 +5,7 @@ import { useGameStore } from '../../store/useGameStore.ts'
 import { CustomSelect } from '../../components/CustomSelect.tsx'
 import { useState } from 'react'
 import TextWithIcon from '../../components/TextWithIcon.tsx'
-import { Check, House, Person, Swords } from '@nine-thirty-five/material-symbols-react/sharp'
+import { Check, House, PersonSearch, Swords } from '@nine-thirty-five/material-symbols-react/sharp'
 import { Button } from '../../components/CustomButtons.tsx'
 import { BoardIcon, UpdateItemPayload } from '../../types.ts'
 
@@ -155,7 +155,7 @@ export const AssistantMenu = ({ open, setOpen }: IAssistantMenuProps) => {
                         {formatMessage({ id: 'assistant.whatAsked' })}
                     </Typography>
                     <TextWithIcon
-                        icon={<Person />}
+                        icon={<PersonSearch />}
                         text={formatMessage({ id: 'suspect' })}
                         textProps={{ fontSize: '1.125rem', marginInlineStart: 4 }}
                     />

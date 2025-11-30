@@ -1,9 +1,9 @@
-import { CSSProperties, FC, ReactElement } from 'react'
+import { CSSProperties, FC, ReactNode } from 'react'
 import { Card, CardActionArea, CardContent, CardHeader, useTheme } from '@mui/material'
 
 interface ICardButtonProps {
-    header: string | ReactElement
-    content?: string | ReactElement
+    header: ReactNode
+    content?: ReactNode
     onClick: () => void
     headerColor?: string
     style?: CSSProperties
