@@ -34,10 +34,10 @@ export type GameBoardRow = {
 }
 
 export enum AdvancedCard {
-    PUBLIC,
-    ASSIGN,
-    UNDEFINED,
-    NOT_NEEDED,
+    PUBLIC = 'PUBLIC',
+    ASSIGN = 'ASSIGN',
+    UNDEFINED = 'UNDEFINED',
+    NOT_NEEDED = 'NOT_NEEDED',
 }
 
 export type AdvancedCardSetup = {

@@ -24,7 +24,7 @@
     "advancedSetup.count": "This board has {numCards} cards. With {numPlayers} players, each player will receive {numEach} cards.",
     "advancedSetup.count2": "What do we do with the {numLeftover} leftover cards?",
     "advancedSetup.public": "Public",
-    "advancedSetup.public.description": "Make them public. Remember to tick the corresponding rows in your sheet as if they were your own cards.",
+    "advancedSetup.public.description": "Make them public. Use these cards as your own. Select your public cards.",
     "advancedSetup.assign": "Assign",
     "advancedSetup.assign.description": "Assign the cards. Select the players who will receive the cards.",
     "advancedSetup.assign.toAssign": "Cards to assign",

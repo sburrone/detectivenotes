@@ -20,7 +20,14 @@ interface ISetupProps {
 const Setup: FC<ISetupProps> = (props) => {
     const { setStep } = props
 
-    const { setPlayers: setPlayersR, setOrToggleLocked, setBoard, setGameBoard, setAdvancedCardSetup } = useGameStore()
+    const {
+        setPlayers: setPlayersR,
+        setOrToggleLocked,
+        setBoard,
+        setGameBoard,
+        setAdvancedCardSetup,
+        lockItem,
+    } = useGameStore()
 
     const [settingsOpen, setSettingsOpen] = useState(false)
     const [activeStep, setActiveStep] = useState(0)
@@ -36,6 +43,7 @@ const Setup: FC<ISetupProps> = (props) => {
     //Step 3: Advanced
     const [choice, setChoice] = useState<AdvancedCard>(AdvancedCard.UNDEFINED)
     const [assignedCards, setAssignedCards] = useState<number[]>(Array(players.length).fill(0))
+    const [publicCards, setPublicCards] = useState<string[]>([])
 
     const { formatMessage } = useIntl()
 
@@ -68,7 +76,9 @@ const Setup: FC<ISetupProps> = (props) => {
     const isNextDisabled =
         (activeStep === 1 && (players.includes('') || new Set(players).size !== players.length)) ||
         (activeStep === 2 &&
-            (choice === AdvancedCard.UNDEFINED || (choice === AdvancedCard.ASSIGN && numToAssign !== 0)))
+            (choice === AdvancedCard.UNDEFINED ||
+                (choice === AdvancedCard.ASSIGN && numToAssign !== 0) ||
+                (choice === AdvancedCard.PUBLIC && publicCards.length !== numLeftover)))
 
     const handleNext = () => {
         let newSkipped = skipped
@@ -81,11 +91,14 @@ const Setup: FC<ISetupProps> = (props) => {
         setSkipped(newSkipped)
 
         if (activeStep === steps.length - 1 && selectedBoard) {
-            setAdvancedCardSetup({ type: choice, players: assignedCards })
             setBoard(selectedBoard)
             setGameBoard(initializeBoard(selectedBoard!, players))
             setOrToggleLocked(false)
             setPlayersR(players)
+            if (choice === AdvancedCard.ASSIGN) setAdvancedCardSetup({ type: choice, players: assignedCards })
+            if (choice === AdvancedCard.PUBLIC) {
+                lockItem(publicCards)
+            }
             setStep(Step.GAME)
         }
     }
@@ -164,6 +177,7 @@ const Setup: FC<ISetupProps> = (props) => {
                 )}
                 {activeStep === 2 && selectedBoard && (
                     <AdvancedSetup
+                        board={selectedBoard}
                         players={players}
                         assignedCards={assignedCards}
                         choice={choice}
@@ -174,6 +188,8 @@ const Setup: FC<ISetupProps> = (props) => {
                         numLeftover={numLeftover}
                         setChoice={setChoice}
                         numPlayers={numPlayers}
+                        publicCards={publicCards}
+                        setPublicCards={setPublicCards}
                     />
                 )}
                 <Box

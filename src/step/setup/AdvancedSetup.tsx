@@ -1,9 +1,12 @@
-import { FC } from 'react'
-import { AdvancedCard } from '../../types.ts'
+import { Dispatch, FC, SetStateAction } from 'react'
+import { AdvancedCard, Board } from '../../types.ts'
 import {
     Card,
     CardContent,
     CardHeader,
+    Checkbox,
+    FormControlLabel,
+    Grid,
     InputAdornment,
     Stack,
     SxProps,
@@ -17,6 +20,8 @@ import _ from 'lodash'
 import { faces } from '../../utils.tsx'
 import { IconButton } from '../../components/CustomButtons.tsx'
 import { useIntl } from 'react-intl'
+import { House, PersonSearch, Swords } from '@nine-thirty-five/material-symbols-react/sharp'
+import TextWithIcon from '../../components/TextWithIcon.tsx'
 
 interface IAdvancedSetupProps {
     players: string[]
@@ -27,8 +32,11 @@ interface IAdvancedSetupProps {
     setChoice: (choice: AdvancedCard) => void
     numToAssign: number
     assignedCards: number[]
-    setAssignedCards: (assignedCards: number[]) => void
+    setAssignedCards: Dispatch<SetStateAction<number[]>>
+    publicCards: string[]
+    setPublicCards: Dispatch<SetStateAction<string[]>>
     numPlayers: number
+    board?: Board
 }
 
 const AdvancedSetup: FC<IAdvancedSetupProps> = (props) => {
@@ -43,6 +51,9 @@ const AdvancedSetup: FC<IAdvancedSetupProps> = (props) => {
         numToAssign,
         assignedCards,
         setAssignedCards,
+        board,
+        publicCards,
+        setPublicCards,
     } = props
 
     const theme = useTheme()
@@ -98,6 +109,94 @@ const AdvancedSetup: FC<IAdvancedSetupProps> = (props) => {
                             />
                             <CardContent sx={{ paddingBottom: 16 }}>
                                 <Typography>{formatMessage({ id: 'advancedSetup.public.description' })}</Typography>
+                                {choice === AdvancedCard.PUBLIC && board && (
+                                    <Stack direction={'column'} spacing={2} marginTop={8}>
+                                        <TextWithIcon
+                                            icon={<PersonSearch />}
+                                            text={formatMessage({ id: 'suspects' })}
+                                            textProps={{ fontSize: '1.125rem', marginInlineStart: 4 }}
+                                        />
+                                        <Grid container>
+                                            {board?.characters.map((c) => (
+                                                <Grid key={c} size={6}>
+                                                    <FormControlLabel
+                                                        value={publicCards.includes(c)}
+                                                        disabled={
+                                                            publicCards.includes(c)
+                                                                ? false
+                                                                : (numLeftover ?? 0) <= publicCards.length
+                                                        }
+                                                        onChange={(e) => {
+                                                            if ((e.target as HTMLInputElement).checked) {
+                                                                setPublicCards((prev) => [...prev, c])
+                                                            } else {
+                                                                setPublicCards((prev) => prev.filter((el) => el !== c))
+                                                            }
+                                                        }}
+                                                        control={<Checkbox sx={{ padding: 0 }} />}
+                                                        label={<Typography>{c}</Typography>}
+                                                    />
+                                                </Grid>
+                                            ))}
+                                        </Grid>
+                                        <TextWithIcon
+                                            icon={<Swords />}
+                                            text={formatMessage({ id: 'weapons' })}
+                                            textProps={{ fontSize: '1.125rem', marginInlineStart: 4 }}
+                                        />
+                                        <Grid container>
+                                            {board?.weapons.map((c) => (
+                                                <Grid key={c} size={6}>
+                                                    <FormControlLabel
+                                                        value={publicCards.includes(c)}
+                                                        disabled={
+                                                            publicCards.includes(c)
+                                                                ? false
+                                                                : (numLeftover ?? 0) <= publicCards.length
+                                                        }
+                                                        onChange={(e) => {
+                                                            if ((e.target as HTMLInputElement).checked) {
+                                                                setPublicCards((prev) => [...prev, c])
+                                                            } else {
+                                                                setPublicCards((prev) => prev.filter((el) => el !== c))
+                                                            }
+                                                        }}
+                                                        control={<Checkbox sx={{ padding: 0 }} />}
+                                                        label={<Typography>{c}</Typography>}
+                                                    />
+                                                </Grid>
+                                            ))}
+                                        </Grid>
+                                        <TextWithIcon
+                                            icon={<House />}
+                                            text={formatMessage({ id: 'rooms' })}
+                                            textProps={{ fontSize: '1.125rem', marginInlineStart: 4 }}
+                                        />
+                                        <Grid container>
+                                            {board?.rooms.map((c) => (
+                                                <Grid key={c} size={6}>
+                                                    <FormControlLabel
+                                                        value={publicCards.includes(c)}
+                                                        disabled={
+                                                            publicCards.includes(c)
+                                                                ? false
+                                                                : (numLeftover ?? 0) <= publicCards.length
+                                                        }
+                                                        onChange={(e) => {
+                                                            if ((e.target as HTMLInputElement).checked) {
+                                                                setPublicCards((prev) => [...prev, c])
+                                                            } else {
+                                                                setPublicCards((prev) => prev.filter((el) => el !== c))
+                                                            }
+                                                        }}
+                                                        control={<Checkbox sx={{ padding: 0 }} />}
+                                                        label={<Typography>{c}</Typography>}
+                                                    />
+                                                </Grid>
+                                            ))}
+                                        </Grid>
+                                    </Stack>
+                                )}
                             </CardContent>
                         </Card>
 

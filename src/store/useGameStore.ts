@@ -12,7 +12,7 @@ export interface GameStore extends Game {
     setGameBoard: (gameBoard: GameBoardRow[]) => void
     setAdvancedCardSetup: (advancedCards: AdvancedCardSetup) => void
     updateGameBoardRow: (gameBoardRow: GameBoardRow) => void
-    lockItem: (item: string) => void
+    lockItem: (item: string | string[]) => void
     updateItem: (payload: UpdateItemPayload | UpdateItemPayload[]) => void
 }
 
@@ -53,14 +53,16 @@ export const useGameStore = create<GameStore>()(
                         }
                         return set({ gameBoard, ts: Date.now() })
                     },
-                    lockItem: (item: string) =>
+                    lockItem: (item: string | string[]) => {
+                        const itemArray = Array.isArray(item) ? item : [item]
                         set({
                             gameBoard: get().gameBoard?.map((row) => ({
                                 ...row,
-                                locked: row.item === item ? !row.locked : row.locked,
+                                locked: itemArray.includes(row.item) ? !row.locked : row.locked,
                             })),
                             ts: Date.now(),
-                        }),
+                        })
+                    },
                     updateItem: (payload: UpdateItemPayload | UpdateItemPayload[]) => {
                         const gameBoard = _.cloneDeep(get().gameBoard)!
                         ;(Array.isArray(payload) ? payload : [payload]).forEach(

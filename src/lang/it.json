@@ -25,7 +25,7 @@
     "advancedSetup.count": "Questo tavolo ha {numCards} carte. Con {numPlayers} giocatori, ogni giocatore riceverà {numEach} carte.",
     "advancedSetup.count2": "Cosa facciamo con le {numLeftover} carte che avanzano?",
     "advancedSetup.public": "Pubbliche",
-    "advancedSetup.public.description": "Rendile pubbliche. Ricorda di spuntare le righe corrispondenti nella tua tabella come se fossero le tue carte.",
+    "advancedSetup.public.description": "Rendile pubbliche. Considera queste carte come se le avessi pescate te. Seleziona le carte che saranno pubbliche.",
     "advancedSetup.assign": "Assegna",
     "advancedSetup.assign.description": "Assegna le carte. Seleziona i giocatori che riceveranno le carte.",
     "advancedSetup.assign.toAssign": "Carte da assegnare",
