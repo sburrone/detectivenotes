@@ -1,8 +1,9 @@
 import { FC, useState } from 'react'
-import { BoardIcon, GameBoardRow } from '../../types.ts'
+import { AdvancedCard, BoardIcon, GameBoardRow } from '../../types.ts'
 import { BoardButton } from '../../components/BoardButton.tsx'
 import {
     Box,
+    ButtonBase,
     Checkbox,
     Table,
     TableBody,
@@ -17,6 +18,7 @@ import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material'
 import { useGameStore } from '../../store/useGameStore.ts'
 import { useSettingsStore } from '../../store/useSettingsStore.ts'
 import { useIntl } from 'react-intl'
+import { InfoPanel } from './InfoPanel.tsx'
 
 const COL_EXTRA = 2
 
@@ -25,7 +27,9 @@ export const MainBoard: FC = () => {
     const [openWeapons, setOpenWeapons] = useState(true)
     const [openRooms, setOpenRooms] = useState(true)
 
-    const { gameBoard, locked: globalLocked, board, players, updateItem, lockItem } = useGameStore()
+    const [infoPanelPlayer, setInfoPanelPlayer] = useState<string | null>(null)
+
+    const { gameBoard, locked: globalLocked, board, players, updateItem, lockItem, advancedCards } = useGameStore()
     const { autocomplete } = useSettingsStore()
 
     const theme = useTheme()
@@ -86,12 +90,14 @@ export const MainBoard: FC = () => {
                             <TableCell />
                             {players?.map((player, index) => {
                                 return (
-                                    <TableCell
-                                        sx={{ fontSize: '1rem', padding: '16px 0' }}
-                                        align={'center'}
-                                        key={index}
-                                    >
-                                        {player}
+                                    <TableCell sx={{ padding: 0 }} key={index}>
+                                        <ButtonBase
+                                            sx={{ fontSize: '1rem', padding: '16px 0', display: 'flex', width: '100%' }}
+                                            onClick={() => setInfoPanelPlayer(player)}
+                                            disabled={advancedCards?.type === AdvancedCard.UNDEFINED}
+                                        >
+                                            {player}
+                                        </ButtonBase>
                                     </TableCell>
                                 )
                             })}
@@ -287,6 +293,12 @@ export const MainBoard: FC = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
+
+            <InfoPanel
+                open={!!infoPanelPlayer}
+                setOpen={(open) => setInfoPanelPlayer(open ? infoPanelPlayer : null)}
+                player={infoPanelPlayer}
+            />
         </Box>
     )
 }

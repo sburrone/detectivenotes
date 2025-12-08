@@ -52,7 +52,7 @@ const Setup: FC<ISetupProps> = (props) => {
     const numPlayers = players.length
     const numEach = numCards && Math.floor(numCards / numPlayers)
     const numLeftover = numCards && numCards % numPlayers
-    const numToAssign = _.sum(assignedCards)
+    const numAssigned = _.sum(assignedCards)
 
     useEffect(() => {
         setAssignedCards(Array(players.length).fill(0))
@@ -77,7 +77,7 @@ const Setup: FC<ISetupProps> = (props) => {
         (activeStep === 1 && (players.includes('') || new Set(players).size !== players.length)) ||
         (activeStep === 2 &&
             (choice === AdvancedCard.UNDEFINED ||
-                (choice === AdvancedCard.ASSIGN && numToAssign !== 0) ||
+                (choice === AdvancedCard.ASSIGN && numAssigned === 0) ||
                 (choice === AdvancedCard.PUBLIC && publicCards.length !== numLeftover)))
 
     const handleNext = () => {
@@ -184,7 +184,7 @@ const Setup: FC<ISetupProps> = (props) => {
                         setAssignedCards={setAssignedCards}
                         numCards={numCards}
                         numEach={numEach}
-                        numToAssign={numToAssign}
+                        numToAssign={numAssigned}
                         numLeftover={numLeftover}
                         setChoice={setChoice}
                         numPlayers={numPlayers}

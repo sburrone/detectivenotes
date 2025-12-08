@@ -20,7 +20,8 @@ const buttonHierarchy: MAIN_GAME_BUTTON[] = [
 export const useMainGameButtons = (
     setStep: (step: Step) => void,
     setSettingsOpen: Dispatch<SetStateAction<boolean>>,
-    setAssistantOpen: Dispatch<SetStateAction<boolean>>
+    setAssistantOpen: Dispatch<SetStateAction<boolean>>,
+    setTutorialOpen: Dispatch<SetStateAction<boolean>>
 ) => {
     const [maxButtons, setMaxButtons] = useState(Math.floor(window.innerWidth / ICON_BUTTON_WIDTH) - 1)
 
@@ -48,7 +49,7 @@ export const useMainGameButtons = (
         {
             id: MAIN_GAME_BUTTON.INFO,
             el: (
-                <IconButton variant={'elevated'}>
+                <IconButton variant={'elevated'} onClick={() => setTutorialOpen((tutorialOpen) => !tutorialOpen)}>
                     <InfoRounded />
                 </IconButton>
             ),
