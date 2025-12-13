@@ -14,6 +14,7 @@ export interface GameStore extends Game {
     updateGameBoardRow: (gameBoardRow: GameBoardRow) => void
     lockItem: (item: string | string[]) => void
     updateItem: (payload: UpdateItemPayload | UpdateItemPayload[]) => void
+    updateDustCounter: (num: number) => void
 }
 
 export const blankGame = {
@@ -23,6 +24,7 @@ export const blankGame = {
     locked: undefined,
     gameBoard: undefined,
     advancedCards: undefined,
+    dustCounter: 12,
 }
 
 export const useGameStore = create<GameStore>()(
@@ -89,6 +91,9 @@ export const useGameStore = create<GameStore>()(
                             }
                         )
                         return set({ gameBoard, ts: Date.now() })
+                    },
+                    updateDustCounter: (payload) => {
+                        set({ dustCounter: payload, ts: Date.now() })
                     },
                 }),
                 {

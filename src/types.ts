@@ -52,6 +52,7 @@ export type Game = {
     locked?: boolean
     gameBoard?: GameBoardRow[]
     advancedCards?: AdvancedCardSetup
+    dustCounter?: number
 }
 
 export enum Item {

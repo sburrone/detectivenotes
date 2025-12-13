@@ -1,10 +1,11 @@
 import { CustomModal } from '../components/CustomModal.tsx'
-import { Grid } from '@mui/material'
+import { Avatar, Grid, useTheme } from '@mui/material'
 import SettingsMenuEntry from './SettingsMenuEntry.tsx'
 import { PlayerNamesPosition, ToolbarPosition } from '../types.ts'
 import { useSettingsStore } from '../store/useSettingsStore.ts'
 import { DarkMode, ShelfAutoHide, TextRotationNone, Verified } from '@nine-thirty-five/material-symbols-react/sharp'
 import { useIntl } from 'react-intl'
+import { useGameStore } from '../store/useGameStore.ts'
 
 export interface ISettingsMenuProps {
     open: boolean
@@ -21,9 +22,14 @@ export const SettingsMenu = ({ open, setOpen }: ISettingsMenuProps) => {
         setToolbarPosition,
         colorMode,
         toggleColorMode,
+        hideDustCounter,
+        setHideDustCounter,
     } = useSettingsStore()
 
+    const { board } = useGameStore()
+
     const { formatMessage } = useIntl()
+    const theme = useTheme()
 
     return (
         <CustomModal open={open} setOpen={setOpen} title={formatMessage({ id: 'settings' })} color={'tertiary'}>
@@ -44,6 +50,20 @@ export const SettingsMenu = ({ open, setOpen }: ISettingsMenuProps) => {
                     type={'checkbox'}
                     onChange={setAutocomplete}
                 />
+                {board?.id === 5 && (
+                    <SettingsMenuEntry
+                        title={formatMessage({ id: 'hideDustCounter' })}
+                        description={formatMessage({ id: 'hideDustCounter.description' })}
+                        enabled={hideDustCounter}
+                        icon={
+                            <Avatar color={theme.palette.text.primary} style={{ height: 32, width: 32 }}>
+                                12
+                            </Avatar>
+                        }
+                        type={'checkbox'}
+                        onChange={setHideDustCounter}
+                    />
+                )}
                 <SettingsMenuEntry
                     title={formatMessage({ id: 'playerNamesPosition' })}
                     description={formatMessage({ id: 'playerNamesPosition.description' })}

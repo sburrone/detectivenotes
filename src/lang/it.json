@@ -82,13 +82,16 @@
     "infoPanel.total": "Carte totali in mano a {player}",
     "infoPanel.yes.short": "Confermate",
     "infoPanel.yes": "Carte confermate in mano a {player}",
-    "infoPanel.maybe.short": "Possibili",
+    "infoPanel.maybe.short": "Forse sì",
     "infoPanel.maybe": "Carte possibili in mano a {player}",
     "infoPanel.no.short": "Impossibili",
     "infoPanel.no": "Carte confermate non in mano a {player}",
     "infoPanel.left.short": "Rimaste",
-    "infoPanel.left": "Carte rimaste in mano a {player}",
+    "infoPanel.left": "Carte ancora da confermare in mano a {player}",
     "infoPanel.remaining.short": "Residue",
     "infoPanel.remaining": "Carte residue che potrebbero essere in mano a {player}: {numPossible}",
-    "infoPanel.noCardsLeft": "Tutte le carte di questo giocatore sono state confermate."
+    "infoPanel.noCardsLeft": "Tutte le carte di questo giocatore sono state confermate.",
+    "dustCounter": "Contatore polveri",
+    "hideDustCounter": "Nascondi contatore polveri",
+    "hideDustCounter.description": "Non tenere traccia delle polveri nel tavolo di Harry Potter"
 }

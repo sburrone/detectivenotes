@@ -127,7 +127,7 @@ export const InfoPanel = ({ open, setOpen, player }: IInfoPanelProps) => {
                     <List component={'div'} disablePadding={true}>
                         <ListSubheader>{formatMessage({ id: 'suspects' })}</ListSubheader>
                         {possibleCharacters?.map((item) => (
-                            <ListItem>
+                            <ListItem key={item.item}>
                                 <ListItemText primary={item.item} />
                                 {item.values[playerIndex]?.icon && getBoardIcon(item.values[playerIndex]?.icon)}
                                 {item.values[playerIndex]?.badge && (
@@ -139,7 +139,7 @@ export const InfoPanel = ({ open, setOpen, player }: IInfoPanelProps) => {
                         ))}
                         <ListSubheader>{formatMessage({ id: 'weapons' })}</ListSubheader>
                         {possibleWeapons?.map((item) => (
-                            <ListItem>
+                            <ListItem key={item.item}>
                                 <ListItemText primary={item.item} />
                                 {item.values[playerIndex]?.icon && getBoardIcon(item.values[playerIndex]?.icon)}
                                 {item.values[playerIndex]?.badge && (
@@ -151,7 +151,7 @@ export const InfoPanel = ({ open, setOpen, player }: IInfoPanelProps) => {
                         ))}
                         <ListSubheader>{formatMessage({ id: 'rooms' })}</ListSubheader>
                         {possibleRooms?.map((item) => (
-                            <ListItem>
+                            <ListItem key={item.item}>
                                 <ListItemText primary={item.item} />
                                 {item.values[playerIndex]?.icon && getBoardIcon(item.values[playerIndex]?.icon)}
                                 {item.values[playerIndex]?.badge && (

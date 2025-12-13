@@ -4,10 +4,11 @@ import { AppBar, Box, SxProps, TableContainer, Theme, Toolbar, useTheme } from '
 interface IUpperBarProps {
     children: ReactNode
     style?: SxProps<Theme>
+    bgColor?: string
 }
 
 const UpperBar: FC<IUpperBarProps> = (props) => {
-    const { children, style } = props
+    const { children, style, bgColor } = props
 
     const theme = useTheme()
 
@@ -20,7 +21,7 @@ const UpperBar: FC<IUpperBarProps> = (props) => {
         >
             <AppBar
                 position={'static'}
-                sx={{ maxWidth: '100dvw', backgroundColor: theme.palette.primary.contrastText }}
+                sx={{ maxWidth: '100dvw', backgroundColor: bgColor ?? theme.palette.primary.contrastText }}
             >
                 <TableContainer sx={{ display: 'flex' }}>
                     <Toolbar sx={{ width: '100dvw', overflowX: 'auto', ...style }}>{children}</Toolbar>

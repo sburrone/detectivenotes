@@ -80,13 +80,16 @@
     "infoPanel.total": "Total cards in {player}'s hand",
     "infoPanel.yes.short": "Confirmed",
     "infoPanel.yes": "Cards confirmed in {player}'s hand",
-    "infoPanel.maybe.short": "Possible",
-    "infoPanel.maybe": "Possible cards in {player}'s hand",
+    "infoPanel.maybe.short": "Maybe",
+    "infoPanel.maybe": "Cards that might be {player}'s hand",
     "infoPanel.no.short": "Impossible",
     "infoPanel.no": "Cards confirmed not in {player}'s hand",
     "infoPanel.left.short": "Left",
-    "infoPanel.left": "Cards left in {player}'s hand",
+    "infoPanel.left": "Cards still to confirm in {player}'s hand",
     "infoPanel.remaining.short": "Remaining",
     "infoPanel.remaining": "Remaining cards that could be in {player}'s hand: {numPossible}",
-    "infoPanel.noCardsLeft": "All of this player's cards have been confirmed."
+    "infoPanel.noCardsLeft": "All of this player's cards have been confirmed.",
+    "dustCounter": "Dust counter",
+    "hideDustCounter": "Hide dust counter",
+    "hideDustCounter.description": "Do not keep track of dust in the Harry Potter table"
 }
