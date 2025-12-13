@@ -131,7 +131,7 @@ export const InfoPanel = ({ open, setOpen, player }: IInfoPanelProps) => {
                                 <ListItemText primary={item.item} />
                                 {item.values[playerIndex]?.icon && getBoardIcon(item.values[playerIndex]?.icon)}
                                 {item.values[playerIndex]?.badge && (
-                                    <Avatar sx={{ width: 26, height: 26, fontSize: '1rem' }}>
+                                    <Avatar sx={{ width: 26, height: 26, fontSize: '1rem', marginInlineEnd: 6 }}>
                                         {item.values[playerIndex]?.badge}
                                     </Avatar>
                                 )}
@@ -143,7 +143,7 @@ export const InfoPanel = ({ open, setOpen, player }: IInfoPanelProps) => {
                                 <ListItemText primary={item.item} />
                                 {item.values[playerIndex]?.icon && getBoardIcon(item.values[playerIndex]?.icon)}
                                 {item.values[playerIndex]?.badge && (
-                                    <Avatar sx={{ width: 26, height: 26, fontSize: '1rem' }}>
+                                    <Avatar sx={{ width: 26, height: 26, fontSize: '1rem', marginInlineEnd: 6 }}>
                                         {item.values[playerIndex]?.badge}
                                     </Avatar>
                                 )}
@@ -155,7 +155,7 @@ export const InfoPanel = ({ open, setOpen, player }: IInfoPanelProps) => {
                                 <ListItemText primary={item.item} />
                                 {item.values[playerIndex]?.icon && getBoardIcon(item.values[playerIndex]?.icon)}
                                 {item.values[playerIndex]?.badge && (
-                                    <Avatar sx={{ width: 26, height: 26, fontSize: '1rem' }}>
+                                    <Avatar sx={{ width: 26, height: 26, fontSize: '1rem', marginInlineEnd: 6 }}>
                                         {item.values[playerIndex]?.badge}
                                     </Avatar>
                                 )}

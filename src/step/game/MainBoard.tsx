@@ -11,9 +11,9 @@ import {
     TableContainer,
     TableHead,
     TableRow,
+    Typography,
     useTheme,
 } from '@mui/material'
-import { IconButton } from '../../components/CustomButtons.tsx'
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material'
 import { useGameStore } from '../../store/useGameStore.ts'
 import { useSettingsStore } from '../../store/useSettingsStore.ts'
@@ -117,18 +117,8 @@ export const MainBoard: FC = () => {
                                     : undefined
                             }
                         >
-                            <TableCell
-                                sx={{ fontSize: '1rem' }}
-                                align={'center'}
-                                colSpan={(players?.length ?? 0) + COL_EXTRA}
-                            >
-                                <IconButton
-                                    disableRipple={true}
-                                    aria-label="expand suspects section"
-                                    size="small"
-                                    variant={'text'}
-                                    onClick={() => setOpenSuspects(!openSuspects)}
-                                >
+                            <TableCell colSpan={(players?.length ?? 0) + COL_EXTRA}>
+                                <ButtonBase sx={{ width: '100%' }} onClick={() => setOpenSuspects(!openSuspects)}>
                                     {openSuspects ? (
                                         <KeyboardArrowUp
                                             sx={{
@@ -144,15 +134,7 @@ export const MainBoard: FC = () => {
                                             }}
                                         />
                                     )}
-                                </IconButton>
-                                {formatMessage({ id: 'suspects' })}
-                                <IconButton
-                                    disableRipple={true}
-                                    aria-label="expand suspects section"
-                                    size="small"
-                                    variant={'text'}
-                                    onClick={() => setOpenSuspects(!openSuspects)}
-                                >
+                                    <Typography>{formatMessage({ id: 'suspects' })}</Typography>
                                     {openSuspects ? (
                                         <KeyboardArrowUp
                                             sx={{
@@ -168,7 +150,7 @@ export const MainBoard: FC = () => {
                                             }}
                                         />
                                     )}
-                                </IconButton>
+                                </ButtonBase>
                             </TableCell>
                         </TableRow>
                         {openSuspects &&
@@ -187,19 +169,9 @@ export const MainBoard: FC = () => {
                                     : undefined
                             }
                         >
-                            <TableCell
-                                sx={{ fontSize: '1rem' }}
-                                align={'center'}
-                                colSpan={(players?.length ?? 0) + COL_EXTRA}
-                            >
-                                <IconButton
-                                    disableRipple={true}
-                                    aria-label="expand suspects section"
-                                    size="small"
-                                    variant={'text'}
-                                    onClick={() => setOpenWeapons(!openWeapons)}
-                                >
-                                    {openWeapons ? (
+                            <TableCell colSpan={(players?.length ?? 0) + COL_EXTRA}>
+                                <ButtonBase sx={{ width: '100%' }} onClick={() => setOpenWeapons(!openWeapons)}>
+                                    {openSuspects ? (
                                         <KeyboardArrowUp
                                             sx={{
                                                 fontSize: '1.5rem',
@@ -214,15 +186,8 @@ export const MainBoard: FC = () => {
                                             }}
                                         />
                                     )}
-                                </IconButton>
-                                {formatMessage({ id: 'weapons' })}
-                                <IconButton
-                                    aria-label="expand suspects section"
-                                    size="small"
-                                    variant={'text'}
-                                    onClick={() => setOpenWeapons(!openWeapons)}
-                                >
-                                    {openWeapons ? (
+                                    <Typography>{formatMessage({ id: 'weapons' })}</Typography>
+                                    {openSuspects ? (
                                         <KeyboardArrowUp
                                             sx={{
                                                 fontSize: '1.5rem',
@@ -237,7 +202,7 @@ export const MainBoard: FC = () => {
                                             }}
                                         />
                                     )}
-                                </IconButton>
+                                </ButtonBase>
                             </TableCell>
                         </TableRow>
                         {openWeapons && gameBoard?.filter((el) => board?.weapons?.includes(el.item)).map(RowRenderer)}
@@ -255,38 +220,40 @@ export const MainBoard: FC = () => {
                                     : undefined
                             }
                         >
-                            <TableCell
-                                sx={{ fontSize: '1rem' }}
-                                align={'center'}
-                                colSpan={(players?.length ?? 0) + COL_EXTRA}
-                            >
-                                <IconButton
-                                    disableRipple={true}
-                                    aria-label="expand suspects section"
-                                    size="small"
-                                    variant={'text'}
-                                    onClick={() => setOpenRooms(!openRooms)}
-                                >
-                                    {openRooms ? (
-                                        <KeyboardArrowUp sx={{ fontSize: '1.5rem' }} />
+                            <TableCell colSpan={(players?.length ?? 0) + COL_EXTRA}>
+                                <ButtonBase sx={{ width: '100%' }} onClick={() => setOpenRooms(!openRooms)}>
+                                    {openSuspects ? (
+                                        <KeyboardArrowUp
+                                            sx={{
+                                                fontSize: '1.5rem',
+                                                fill: (theme.palette as any).tertiaryContainer.contrastText,
+                                            }}
+                                        />
                                     ) : (
-                                        <KeyboardArrowDown sx={{ fontSize: '1.5rem' }} />
+                                        <KeyboardArrowDown
+                                            sx={{
+                                                fontSize: '1.5rem',
+                                                fill: (theme.palette as any).tertiaryContainer.contrastText,
+                                            }}
+                                        />
                                     )}
-                                </IconButton>
-                                {formatMessage({ id: 'rooms' })}
-                                <IconButton
-                                    disableRipple={true}
-                                    aria-label="expand suspects section"
-                                    size="small"
-                                    variant={'text'}
-                                    onClick={() => setOpenRooms(!openRooms)}
-                                >
-                                    {openRooms ? (
-                                        <KeyboardArrowUp sx={{ fontSize: '1.5rem' }} />
+                                    <Typography>{formatMessage({ id: 'rooms' })}</Typography>
+                                    {openSuspects ? (
+                                        <KeyboardArrowUp
+                                            sx={{
+                                                fontSize: '1.5rem',
+                                                fill: (theme.palette as any).tertiaryContainer.contrastText,
+                                            }}
+                                        />
                                     ) : (
-                                        <KeyboardArrowDown sx={{ fontSize: '1.5rem' }} />
+                                        <KeyboardArrowDown
+                                            sx={{
+                                                fontSize: '1.5rem',
+                                                fill: (theme.palette as any).tertiaryContainer.contrastText,
+                                            }}
+                                        />
                                     )}
-                                </IconButton>
+                                </ButtonBase>
                             </TableCell>
                         </TableRow>
                         {openRooms && gameBoard?.filter((el) => board?.rooms?.includes(el.item)).map(RowRenderer)}
