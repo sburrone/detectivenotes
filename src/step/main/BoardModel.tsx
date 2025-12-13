@@ -4,6 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/Addons.js'
 import { Canvas, useLoader } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { Button, useTheme } from '@mui/material'
+import { useIntl } from 'react-intl'
 
 export const BoardModel: FC<{
     hideUI: boolean
@@ -30,6 +31,7 @@ export const BoardModel: FC<{
     }, [gltf.scene])
 
     const theme = useTheme()
+    const { formatMessage } = useIntl()
 
     return (
         <>
