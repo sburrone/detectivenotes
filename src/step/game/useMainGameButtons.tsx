@@ -2,8 +2,9 @@ import { Dispatch, ReactElement, SetStateAction, useEffect, useState } from 'rea
 import { MAIN_GAME_BUTTON, Step } from '../../types.ts'
 import { useGameStore } from '../../store/useGameStore.ts'
 import _ from 'lodash'
-import { ArrowBack, InfoRounded, LockOpen, Lock, AutoFixHigh, Undo, Redo, Settings } from '@mui/icons-material'
+import { ArrowBack, InfoRounded, Lock, LockOpen, Redo, Settings, Undo } from '@mui/icons-material'
 import { IconButton } from '../../components/CustomButtons.tsx'
+import { WandStars } from '@nine-thirty-five/material-symbols-react/sharp'
 
 const ICON_BUTTON_WIDTH = 56
 
@@ -65,8 +66,12 @@ export const useMainGameButtons = (
         {
             id: MAIN_GAME_BUTTON.ASSISTANT,
             el: (
-                <IconButton variant={'elevated'} onClick={() => setAssistantOpen((assistantOpen) => !assistantOpen)}>
-                    <AutoFixHigh />
+                <IconButton
+                    variant={'elevated'}
+                    onClick={() => setAssistantOpen((assistantOpen) => !assistantOpen)}
+                    style={{ width: 56, height: 56, padding: 8 }}
+                >
+                    <WandStars style={{ width: 36, height: 36 }} />
                 </IconButton>
             ),
         },

@@ -56,7 +56,7 @@ export const CustomModal = ({ open, setOpen, color, title, children }: ICustomMo
                     }}
                     onClick={() => setOpen(false)}
                 />
-                <CardContent sx={{ paddingBottom: 16 }}>{children}</CardContent>
+                <CardContent sx={{ paddingBottom: 16, overflow: 'auto' }}>{children}</CardContent>
             </Card>
         </Modal>
     )
