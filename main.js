@@ -23,6 +23,13 @@ let locked = false
 $(document).ready(function() {
     "use strict"
 
+    /*
+        Passa alla versione nuova
+     */
+    if (!new URLSearchParams(window.location.search).get("old")) {
+        window.location.replace("https://detectivenotes.vercel.app/")
+    }
+
     const cameraPositions = [
         [0, 60, 0],
         [10, 15, 10],
