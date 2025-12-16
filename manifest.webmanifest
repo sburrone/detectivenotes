@@ -19,16 +19,9 @@
     "start_url": "?source=pwa",
     "background_color": "#57dcb9",
     "display": "standalone",
-    "scope": "/detectivenotes",
     "theme_color": "#00382c",
     "orientation": "portrait",
     "categories": [
         "entertainment"
     ],
-    "related_applications": [
-        {
-            "platform": "webapp",
-            "url": "https://detectivenotes.vercel.app/manifest.webmanifest"
-        }
-    ]
 }
