@@ -15,8 +15,8 @@
             "purpose": "any"
         }
     ],
-    "id": "?source=pwa",
-    "start_url": "?source=pwa",
+    "id": "https://detectivenotes.vercel.app?source=pwa",
+    "start_url": "https://detectivenotes.vercel.app?source=pwa",
     "background_color": "#57dcb9",
     "display": "standalone",
     "theme_color": "#00382c",
