@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from 'react'
-import { Button, Grid, Stack, Typography, useTheme } from '@mui/material'
+import { Button, Grid, Menu, MenuItem, Stack, Typography, useTheme } from '@mui/material'
 import {
-    AddToHomeScreen,
     CasinoOutlined,
     DarkMode,
     Info,
@@ -19,6 +18,9 @@ import TextWithIcon from '../../components/TextWithIcon.tsx'
 import { useSettingsStore } from '../../store/useSettingsStore.ts'
 import { blankGame, useGameStore } from '../../store/useGameStore.ts'
 import { useIntl } from 'react-intl'
+import { Language as SupportedLanguage } from '../../types.ts'
+import { CustomModal } from '../../components/CustomModal.tsx'
+import { version } from '../../../package.json'
 
 const MainMenuButtons: FC<{
     setStep: (step: Step) => void
@@ -29,10 +31,12 @@ const MainMenuButtons: FC<{
     const { formatMessage } = useIntl()
 
     const { ts, board, players, setGame } = useGameStore()
-    const { colorMode, setColorMode } = useSettingsStore()
+    const { colorMode, setColorMode, lang, setLanguage } = useSettingsStore()
     const { clear } = useGameStore.temporal.getState()
 
     const [languageExtended, setLanguageExtended] = useState(window.innerWidth >= 500)
+    const [languageMenuAnchorEl, setLanguageMenuAnchorEl] = useState<HTMLButtonElement | null>(null)
+    const [infoModalOpen, setInfoModalOpen] = useState(false)
 
     useEffect(() => {
         const handleResize = () => setLanguageExtended(window.innerWidth >= 500)
@@ -159,17 +163,35 @@ const MainMenuButtons: FC<{
                                         />
                                     }
                                     sx={{ margin: '4px' }}
+                                    onClick={(e) => setLanguageMenuAnchorEl(e.currentTarget)}
                                 >
                                     {formatMessage({ id: 'language' })}
                                 </Button>
                             ) : (
-                                <IconMenuButton>
+                                <IconMenuButton onClick={(e) => setLanguageMenuAnchorEl(e.currentTarget)}>
                                     <Language />
                                 </IconMenuButton>
                             )}
-                            <IconMenuButton>
-                                <AddToHomeScreen />
-                            </IconMenuButton>
+                            <Menu
+                                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                                transformOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                                open={!!languageMenuAnchorEl}
+                                anchorEl={languageMenuAnchorEl}
+                                onClick={() => setLanguageMenuAnchorEl(null)}
+                            >
+                                {Object.values(SupportedLanguage).map((opt) => (
+                                    <MenuItem
+                                        disabled={lang === opt}
+                                        key={opt}
+                                        onClick={() => {
+                                            setLanguageMenuAnchorEl(null)
+                                            setLanguage(opt)
+                                        }}
+                                    >
+                                        {new Intl.DisplayNames([opt], { type: 'language' }).of(opt)}
+                                    </MenuItem>
+                                ))}
+                            </Menu>
                             <IconMenuButton
                                 onClick={() =>
                                     setColorMode(colorMode === ColorMode.LIGHT ? ColorMode.DARK : ColorMode.LIGHT)
@@ -177,13 +199,48 @@ const MainMenuButtons: FC<{
                             >
                                 {colorMode === ColorMode.LIGHT ? <DarkMode /> : <LightMode />}
                             </IconMenuButton>
-                            <IconMenuButton>
+                            <IconMenuButton onClick={() => setInfoModalOpen(true)}>
                                 <Info />
                             </IconMenuButton>
                         </div>
                     </>
                 </Stack>
             )}
+
+            <CustomModal
+                open={infoModalOpen}
+                setOpen={() => setInfoModalOpen(false)}
+                color={'primary'}
+                title={'Detective Notes'}
+            >
+                <Typography align={'center'}>{formatMessage({ id: 'credits.version' }, { version })}</Typography>
+                <Typography align={'center'}>{formatMessage({ id: 'credits.madeWith' })}</Typography>
+                <Typography align={'center'} sx={{ '& a': { color: theme.palette.text.primary } }}>
+                    {formatMessage(
+                        { id: 'credits.license' },
+                        {
+                            model: (
+                                <a
+                                    href="https://sketchfab.com/3d-models/clue-board-game-843af04381cc495ca5f0a4bebadb1752"
+                                    target="_blank"
+                                >
+                                    "Clue (Board Game)"
+                                </a>
+                            ),
+                            author: (
+                                <a href="https://sketchfab.com/paulyanez" target="_blank">
+                                    Anthony Yanez
+                                </a>
+                            ),
+                            license: (
+                                <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">
+                                    CC-BY-4.0
+                                </a>
+                            ),
+                        }
+                    )}
+                </Typography>
+            </CustomModal>
         </>
     )
 }

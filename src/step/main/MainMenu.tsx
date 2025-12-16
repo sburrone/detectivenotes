@@ -7,6 +7,7 @@ const MainMenu: FC<{
     setStep: (step: Step) => any
 }> = ({ setStep }) => {
     const [hideUI, setHideUI] = useState(false)
+
     return (
         <>
             <BoardModel hideUI={hideUI} setHideUI={setHideUI} />

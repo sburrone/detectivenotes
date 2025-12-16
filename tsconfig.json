@@ -1,12 +1,9 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ],
-  "compilerOptions": {
-    "lib": ["ESNext", "ES2021.String"],
-    "target": "ESNext",
-    "module": "ESNext",
-  },
+    "files": [],
+    "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
+    "compilerOptions": {
+        "lib": ["ESNext", "ES2024.String"],
+        "target": "ESNext",
+        "module": "ESNext"
+    }
 }

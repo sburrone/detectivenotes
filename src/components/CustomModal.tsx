@@ -33,8 +33,8 @@ export const CustomModal = ({ open, setOpen, color, title, children }: ICustomMo
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
                     width: '40em',
-                    maxWidth: 'calc(100vw - 30px)',
-                    maxHeight: 'calc(100vh - 30px)',
+                    maxWidth: 'calc(100dvw - 30px)',
+                    maxHeight: 'calc(100dvh - 30px)',
                     height: 'fit-content',
                 }}
             >

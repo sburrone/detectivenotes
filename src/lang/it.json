@@ -93,5 +93,8 @@
     "infoPanel.noCardsLeft": "Tutte le carte di questo giocatore sono state confermate.",
     "dustCounter": "Contatore polveri",
     "hideDustCounter": "Nascondi contatore polveri",
-    "hideDustCounter.description": "Non tenere traccia delle polveri nel tavolo di Harry Potter"
+    "hideDustCounter.description": "Non tenere traccia delle polveri nel tavolo di Harry Potter",
+    "credits.version": "Versione {version}",
+    "credits.madeWith": "fatto con 🩷 da Nicholas",
+    "credits.license": "Questo progetto utilizza il modello {model} di {author}, utilizzato sotto licenza {license}."
 }

@@ -40,7 +40,7 @@ export const TutorialMenu = ({ open, setOpen }: ITutorialMenuProps) => {
 
     return (
         <CustomModal open={open} setOpen={setOpen} title={formatMessage({ id: 'tutorial' })} color={'tertiary'}>
-            <Stack direction={'column'} spacing={4} maxHeight={'calc(100vh - 200px)'}>
+            <Stack direction={'column'} spacing={4} maxHeight={'calc(100dvh - 200px)'}>
                 <Stack direction={'column'} spacing={1} justifyContent={'center'} alignItems={'center'}>
                     <GameCardIcon>
                         <Swords />

@@ -91,5 +91,8 @@
     "infoPanel.noCardsLeft": "All of this player's cards have been confirmed.",
     "dustCounter": "Dust counter",
     "hideDustCounter": "Hide dust counter",
-    "hideDustCounter.description": "Do not keep track of dust in the Harry Potter table"
+    "hideDustCounter.description": "Do not keep track of dust in the Harry Potter table",
+    "credits.version": "Version {version}",
+    "credits.madeWith": "made with 🩷 by Nicholas",
+    "credits.license": "This project uses the {model} by {author}, licensed under {license}."
 }
