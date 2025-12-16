@@ -24,4 +24,10 @@
     "categories": [
         "entertainment"
     ],
+    "related_applications": [
+        {
+            "platform": "webapp",
+            "url": "https://detectivenotes.vercel.app/manifest.webmanifest"
+        }
+    ]
 }
