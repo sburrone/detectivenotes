@@ -26,7 +26,7 @@ const MainMenuButtons: FC<{
     setStep: (step: Step) => void
     hideUI: boolean
     setHideUI: (hideUI: boolean) => void
-}> = ({ setStep, hideUI }) => {
+}> = ({ setStep, hideUI, setHideUI }) => {
     const theme = useTheme()
     const { formatMessage } = useIntl()
 
@@ -55,12 +55,12 @@ const MainMenuButtons: FC<{
                         height: '100dvh',
                         width: '100dvw',
                     }}
-                    // onDoubleClick={(e: Event) => {
-                    //     e.preventDefault()
-                    //     if ((e.target as HTMLElement).ariaLabel === 'background') {
-                    //         setHideUI(true)
-                    //     }
-                    // }}
+                    onDoubleClick={(e: React.MouseEvent<HTMLDivElement>) => {
+                        e.preventDefault()
+                        if ((e.target as HTMLElement).ariaLabel === 'background') {
+                            setHideUI(true)
+                        }
+                    }}
                 >
                     <>
                         <Typography
