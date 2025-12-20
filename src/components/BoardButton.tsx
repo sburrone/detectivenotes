@@ -1,5 +1,5 @@
 import { FC, useState } from 'react'
-import { BoardIcon } from '../types.ts'
+import { BoardIcon, SelectionModalOption } from '../types.ts'
 import { Badge, Grid } from '@mui/material'
 import { getBoardIcon } from '../utils.tsx'
 import { Button, IconButton } from './CustomButtons.tsx'
@@ -34,7 +34,7 @@ export const BoardButton: FC<IBoardButtonProps> = (props) => {
 
     const [open, setOpen] = useState(false)
 
-    const { colorMode } = useSettingsStore()
+    const { colorMode, selectionModalOptions } = useSettingsStore()
     const { formatMessage } = useIntl()
 
     const handleUpdate = (toUpdate: BoardIcon | number) => {
@@ -51,7 +51,7 @@ export const BoardButton: FC<IBoardButtonProps> = (props) => {
                     color={'info'}
                     overlap={'circular'}
                     anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                    badgeContent={number}
+                    badgeContent={selectionModalOptions === SelectionModalOption.full ? number : 0}
                 >
                     {getBoardIcon(icon, colorMode)}
                 </Badge>
@@ -104,54 +104,61 @@ export const BoardButton: FC<IBoardButtonProps> = (props) => {
                             {formatMessage({ id: 'maybeNot' })}
                         </Button>
                     </Grid>
-                    <Grid size={4} display={'flex'} alignItems={'center'} justifyContent={'center'}>
-                        <Button
-                            {...buttonProps}
-                            onClick={() => handleUpdate(BoardIcon.STAR)}
-                            startIcon={getBoardIcon(BoardIcon.STAR)}
-                        >
-                            {formatMessage({ id: 'star' })}
-                        </Button>
-                    </Grid>
-                    <Grid size={4} display={'flex'} alignItems={'center'} justifyContent={'center'}>
-                        <Button
-                            {...buttonProps}
-                            onClick={() => handleUpdate(BoardIcon.QUESTION)}
-                            startIcon={getBoardIcon(BoardIcon.QUESTION)}
-                        >
-                            {formatMessage({ id: 'question' })}
-                        </Button>
-                    </Grid>
-                    <Grid size={4} display={'flex'} alignItems={'center'} justifyContent={'center'}>
-                        <Button
-                            {...buttonProps}
-                            onClick={() => handleUpdate(BoardIcon.EXCLAMATION)}
-                            startIcon={getBoardIcon(BoardIcon.EXCLAMATION)}
-                        >
-                            {formatMessage({ id: 'warning' })}
-                        </Button>
-                    </Grid>
-                    <Grid size={6} display={'flex'} alignItems={'center'} justifyContent={'center'}>
-                        <Button
-                            {...buttonProps}
-                            onClick={() => handleUpdate(BoardIcon.FLAG)}
-                            startIcon={getBoardIcon(BoardIcon.FLAG)}
-                        >
-                            {formatMessage({ id: 'marker' })}
-                        </Button>
-                    </Grid>
-                    <Grid size={6} display={'flex'} alignItems={'center'} justifyContent={'center'}>
-                        <Button
-                            {...buttonProps}
-                            onClick={() => handleUpdate(BoardIcon.SKIP)}
-                            startIcon={getBoardIcon(BoardIcon.SKIP)}
-                        >
-                            {formatMessage({ id: 'skip' })}
-                        </Button>
-                    </Grid>
+
+                    {selectionModalOptions !== SelectionModalOption.minimal && (
+                        <>
+                            <Grid size={4} display={'flex'} alignItems={'center'} justifyContent={'center'}>
+                                <Button
+                                    {...buttonProps}
+                                    onClick={() => handleUpdate(BoardIcon.STAR)}
+                                    startIcon={getBoardIcon(BoardIcon.STAR)}
+                                >
+                                    {formatMessage({ id: 'star' })}
+                                </Button>
+                            </Grid>
+                            <Grid size={4} display={'flex'} alignItems={'center'} justifyContent={'center'}>
+                                <Button
+                                    {...buttonProps}
+                                    onClick={() => handleUpdate(BoardIcon.QUESTION)}
+                                    startIcon={getBoardIcon(BoardIcon.QUESTION)}
+                                >
+                                    {formatMessage({ id: 'question' })}
+                                </Button>
+                            </Grid>
+                            <Grid size={4} display={'flex'} alignItems={'center'} justifyContent={'center'}>
+                                <Button
+                                    {...buttonProps}
+                                    onClick={() => handleUpdate(BoardIcon.EXCLAMATION)}
+                                    startIcon={getBoardIcon(BoardIcon.EXCLAMATION)}
+                                >
+                                    {formatMessage({ id: 'warning' })}
+                                </Button>
+                            </Grid>
+                            <Grid size={6} display={'flex'} alignItems={'center'} justifyContent={'center'}>
+                                <Button
+                                    {...buttonProps}
+                                    onClick={() => handleUpdate(BoardIcon.FLAG)}
+                                    startIcon={getBoardIcon(BoardIcon.FLAG)}
+                                >
+                                    {formatMessage({ id: 'marker' })}
+                                </Button>
+                            </Grid>
+                            <Grid size={6} display={'flex'} alignItems={'center'} justifyContent={'center'}>
+                                <Button
+                                    {...buttonProps}
+                                    onClick={() => handleUpdate(BoardIcon.SKIP)}
+                                    startIcon={getBoardIcon(BoardIcon.SKIP)}
+                                >
+                                    {formatMessage({ id: 'skip' })}
+                                </Button>
+                            </Grid>
+                        </>
+                    )}
 
                     {/*Numeri*/}
-                    <Counter onChange={handleUpdate} value={number} />
+                    {selectionModalOptions === SelectionModalOption.full && (
+                        <Counter onChange={handleUpdate} value={number} />
+                    )}
                 </Grid>
             </CustomModal>
         </>

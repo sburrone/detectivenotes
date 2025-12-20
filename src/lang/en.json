@@ -94,5 +94,10 @@
     "hideDustCounter.description": "Do not keep track of dust in the Harry Potter table",
     "credits.version": "Version {version}",
     "credits.madeWith": "made with 🩷 by Nicholas",
-    "credits.license": "This project uses the {model} by {author}, licensed under {license}."
+    "credits.license": "This project uses the {model} by {author}, licensed under {license}.",
+    "selectionModalOptions": "Icons to show",
+    "selectionModalOptions.description": "Choose to show all icons and badge options, or only the most common ones",
+    "option.full": "Complete",
+    "option.minimal": "Minimal",
+    "option.no_numbers": "No badges"
 }

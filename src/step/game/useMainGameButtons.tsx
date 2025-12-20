@@ -27,7 +27,7 @@ export const useMainGameButtons = (
     const [maxButtons, setMaxButtons] = useState(Math.floor(window.innerWidth / ICON_BUTTON_WIDTH) - 1)
 
     const { setOrToggleLocked, locked } = useGameStore()
-    const { undo, redo } = useGameStore.temporal.getState()
+    const { undo, redo, pastStates, futureStates } = useGameStore.temporal.getState()
 
     useEffect(() => {
         window.onresize = (e) => {
@@ -78,7 +78,7 @@ export const useMainGameButtons = (
         {
             id: MAIN_GAME_BUTTON.UNDO,
             el: (
-                <IconButton variant={'elevated'} onClick={() => undo()}>
+                <IconButton variant={'elevated'} onClick={() => undo()} disabled={!pastStates.length}>
                     <Undo />
                 </IconButton>
             ),
@@ -86,7 +86,7 @@ export const useMainGameButtons = (
         {
             id: MAIN_GAME_BUTTON.REDO,
             el: (
-                <IconButton variant={'elevated'} onClick={() => redo()}>
+                <IconButton variant={'elevated'} onClick={() => redo()} disabled={!futureStates.length}>
                     <Redo />
                 </IconButton>
             ),

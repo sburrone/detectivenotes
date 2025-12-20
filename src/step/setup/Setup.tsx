@@ -28,6 +28,7 @@ const Setup: FC<ISetupProps> = (props) => {
         setAdvancedCardSetup,
         lockItem,
     } = useGameStore()
+    const { clear } = useGameStore.temporal.getState()
 
     const [settingsOpen, setSettingsOpen] = useState(false)
     const [activeStep, setActiveStep] = useState(0)
@@ -99,6 +100,8 @@ const Setup: FC<ISetupProps> = (props) => {
             if (choice === AdvancedCard.PUBLIC) {
                 lockItem(publicCards)
             }
+
+            clear()
             setStep(Step.GAME)
         }
     }

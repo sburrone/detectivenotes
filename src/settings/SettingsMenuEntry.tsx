@@ -58,11 +58,12 @@ const SettingsMenuEntry = (props: ISettingsMenuEntryProps) => {
     const isCheckbox = type === 'checkbox'
 
     return (
-        <Grid container spacing={2} width={'100%'} justifyContent={'space-between'}>
+        <Grid container width={'100%'} justifyContent={'space-between'} flexWrap={'nowrap'}>
             <Grid size={isCheckbox ? 11 : { lg: 8, md: 12 }}>
                 <ListItem sx={{ padding: 0 }}>
                     <ListItemIcon sx={{ paddingInlineEnd: 12 }}>{icon}</ListItemIcon>
                     <ListItemText
+                        sx={{ paddingInlineEnd: 8 }}
                         slotProps={{ primary: { fontSize: '1.125rem' }, secondary: { fontSize: '0.75rem' } }}
                         primary={title}
                         secondary={description}

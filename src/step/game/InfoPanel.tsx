@@ -124,7 +124,11 @@ export const InfoPanel = ({ open, setOpen, player }: IInfoPanelProps) => {
                     {showPossible ? <ExpandLess /> : <ExpandMore />}
                 </ListItemButton>
                 <Collapse sx={{ marginTop: '0 !important' }} in={showPossible} timeout={'auto'} unmountOnExit>
-                    <List component={'div'} disablePadding={true}>
+                    <List
+                        component={'div'}
+                        disablePadding={true}
+                        sx={{ overflow: 'auto', maxHeight: 'calc(100dvh - 500px)' }}
+                    >
                         <ListSubheader>{formatMessage({ id: 'suspects' })}</ListSubheader>
                         {possibleCharacters?.map((item) => (
                             <ListItem key={item.item}>

@@ -1,9 +1,15 @@
 import { CustomModal } from '../components/CustomModal.tsx'
 import { Avatar, Grid, useTheme } from '@mui/material'
 import SettingsMenuEntry from './SettingsMenuEntry.tsx'
-import { PlayerNamesPosition, ToolbarPosition } from '../types.ts'
+import { PlayerNamesPosition, SelectionModalOption, ToolbarPosition } from '../types.ts'
 import { useSettingsStore } from '../store/useSettingsStore.ts'
-import { DarkMode, ShelfAutoHide, TextRotationNone, Verified } from '@nine-thirty-five/material-symbols-react/sharp'
+import {
+    DarkMode,
+    ShelfAutoHide,
+    Stars,
+    TextRotationNone,
+    Verified,
+} from '@nine-thirty-five/material-symbols-react/sharp'
 import { useIntl } from 'react-intl'
 import { useGameStore } from '../store/useGameStore.ts'
 
@@ -24,6 +30,8 @@ export const SettingsMenu = ({ open, setOpen }: ISettingsMenuProps) => {
         toggleColorMode,
         hideDustCounter,
         setHideDustCounter,
+        selectionModalOptions,
+        setSelectionModalOptions,
     } = useSettingsStore()
 
     const { board } = useGameStore()
@@ -64,6 +72,15 @@ export const SettingsMenu = ({ open, setOpen }: ISettingsMenuProps) => {
                         onChange={setHideDustCounter}
                     />
                 )}
+                <SettingsMenuEntry
+                    title={formatMessage({ id: 'selectionModalOptions' })}
+                    description={formatMessage({ id: 'selectionModalOptions.description' })}
+                    icon={<Stars style={{ height: 32, width: 32 }} />}
+                    onChange={(opt) => setSelectionModalOptions(opt as SelectionModalOption)}
+                    type={'select'}
+                    options={Object.values(SelectionModalOption)}
+                    value={selectionModalOptions}
+                />
                 <SettingsMenuEntry
                     title={formatMessage({ id: 'playerNamesPosition' })}
                     description={formatMessage({ id: 'playerNamesPosition.description' })}
