@@ -99,5 +99,7 @@
     "selectionModalOptions.description": "Choose to show all icons and badge options, or only the most common ones",
     "option.full": "Complete",
     "option.minimal": "Minimal",
-    "option.no_numbers": "No badges"
+    "option.no_numbers": "No badges",
+    "forceAssistantUpdate": "Force assistant updates",
+    "forceAssistantUpdate.description": "Enable to allow the assistant to overwrite all squares in the table, rather that just the blank ones"
 }

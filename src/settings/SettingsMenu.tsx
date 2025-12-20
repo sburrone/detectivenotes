@@ -9,6 +9,7 @@ import {
     Stars,
     TextRotationNone,
     Verified,
+    WandStars,
 } from '@nine-thirty-five/material-symbols-react/sharp'
 import { useIntl } from 'react-intl'
 import { useGameStore } from '../store/useGameStore.ts'
@@ -32,6 +33,8 @@ export const SettingsMenu = ({ open, setOpen }: ISettingsMenuProps) => {
         setHideDustCounter,
         selectionModalOptions,
         setSelectionModalOptions,
+        forceAssistantUpdate,
+        setForceAssistantUpdate,
     } = useSettingsStore()
 
     const { board } = useGameStore()
@@ -57,6 +60,14 @@ export const SettingsMenu = ({ open, setOpen }: ISettingsMenuProps) => {
                     icon={<Verified style={{ height: 32, width: 32 }} />}
                     type={'checkbox'}
                     onChange={setAutocomplete}
+                />
+                <SettingsMenuEntry
+                    title={formatMessage({ id: 'forceAssistantUpdate' })}
+                    description={formatMessage({ id: 'forceAssistantUpdate.description' })}
+                    enabled={forceAssistantUpdate}
+                    icon={<WandStars style={{ height: 32, width: 32 }} />}
+                    type={'checkbox'}
+                    onChange={setForceAssistantUpdate}
                 />
                 {board?.id === 5 && (
                     <SettingsMenuEntry

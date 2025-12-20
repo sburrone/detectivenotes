@@ -101,5 +101,7 @@
     "selectionModalOptions.description": "Scegli se mostrare tutte le opzioni per icone e numeri, o solo le più comuni",
     "option.full": "Completo",
     "option.minimal": "Minimale",
-    "option.no_numbers": "Senza numeri"
+    "option.no_numbers": "Senza numeri",
+    "forceAssistantUpdate": "Forza aggiornamento da assistente",
+    "forceAssistantUpdate.description": "Attivalo per permettere all'assistente di sovrascrivere tutti i riquadri nella tabella, non solo quelli vuoti"
 }

@@ -8,6 +8,7 @@ import TextWithIcon from '../../components/TextWithIcon.tsx'
 import { Check, House, PersonSearch, Swords } from '@nine-thirty-five/material-symbols-react/sharp'
 import { Button } from '../../components/CustomButtons.tsx'
 import { BoardIcon, UpdateItemPayload } from '../../types.ts'
+import { useSettingsStore } from '../../store/useSettingsStore.ts'
 
 export interface IAssistantMenuProps {
     open: boolean
@@ -16,6 +17,7 @@ export interface IAssistantMenuProps {
 
 export const AssistantMenu = ({ open, setOpen }: IAssistantMenuProps) => {
     const { players, board, updateItem, gameBoard } = useGameStore()
+    const { forceAssistantUpdate } = useSettingsStore()
 
     const { formatMessage } = useIntl()
 
@@ -102,7 +104,7 @@ export const AssistantMenu = ({ open, setOpen }: IAssistantMenuProps) => {
                 const playerIndex = players.indexOf(player)
                 const badge = row?.values[playerIndex].badge ?? 0
                 const icon = row?.values[playerIndex].icon ?? BoardIcon.RESET
-                if (icon === BoardIcon.RESET) {
+                if (icon === BoardIcon.RESET || forceAssistantUpdate) {
                     payload.push({ item: guess, playerIndex, value: BoardIcon.CROSS, badge, autocomplete: false })
                 }
             })
