@@ -1,10 +1,12 @@
 import { FC, useState } from 'react'
-import { AdvancedCard, BoardIcon, GameBoardRow } from '../../types.ts'
+import { AdvancedCard, BoardIcon, GameBoardRow, PlayerNamesPosition } from '../../types.ts'
 import { BoardButton } from '../../components/BoardButton.tsx'
 import {
     Box,
     ButtonBase,
     Checkbox,
+    Collapse,
+    Stack,
     Table,
     TableBody,
     TableCell,
@@ -22,7 +24,7 @@ import { InfoPanel } from './InfoPanel.tsx'
 
 const COL_EXTRA = 2
 
-export const MainBoard: FC = () => {
+export const MainBoard: FC<{ showVerticalName: boolean }> = ({ showVerticalName }) => {
     const [openSuspects, setOpenSuspects] = useState(true)
     const [openWeapons, setOpenWeapons] = useState(true)
     const [openRooms, setOpenRooms] = useState(true)
@@ -30,7 +32,7 @@ export const MainBoard: FC = () => {
     const [infoPanelPlayer, setInfoPanelPlayer] = useState<string | null>(null)
 
     const { gameBoard, locked: globalLocked, board, players, updateItem, lockItem, advancedCards } = useGameStore()
-    const { autocomplete } = useSettingsStore()
+    const { autocomplete, playerNamesPosition } = useSettingsStore()
 
     const theme = useTheme()
     const { formatMessage } = useIntl()
@@ -72,16 +74,22 @@ export const MainBoard: FC = () => {
             ))}
         </TableRow>
     )
-
+    console.log('AAA', showVerticalName)
     return (
         <Box sx={{ py: '1em' }}>
-            <TableContainer>
-                <Table size={'small'} stickyHeader={true} sx={{ '& .MuiTableCell-body': { padding: 2 } }}>
+            <TableContainer sx={{ overflow: 'visible' }}>
+                <Table
+                    size={'small'}
+                    stickyHeader={true}
+                    sx={{ '& .MuiTableCell-body': { padding: 2 }, borderCollapse: 'separate' }}
+                >
                     <TableHead
                         sx={{
                             '& .MuiTableCell-root': {
                                 backgroundColor: (theme.palette as any).secondaryContainer.main,
                                 color: (theme.palette as any).secondaryContainer.contrastText,
+                                top: 0,
+                                zIndex: theme.zIndex.appBar - 1,
                             },
                         }}
                     >
@@ -90,13 +98,35 @@ export const MainBoard: FC = () => {
                             <TableCell />
                             {players?.map((player, index) => {
                                 return (
-                                    <TableCell sx={{ padding: 0 }} key={index}>
+                                    <TableCell sx={{ padding: 0, height: 1 }} key={index}>
                                         <ButtonBase
-                                            sx={{ fontSize: '1rem', padding: '16px 0', display: 'flex', width: '100%' }}
+                                            sx={{
+                                                fontSize: '1rem',
+                                                padding: '16px 0',
+                                                display: 'flex',
+                                                width: '100%',
+                                                height: '100%',
+                                                alignItems: 'stretch',
+                                            }}
                                             onClick={() => setInfoPanelPlayer(player)}
                                             disabled={advancedCards?.type === AdvancedCard.UNDEFINED}
                                         >
-                                            {player}
+                                            {playerNamesPosition === PlayerNamesPosition.vertical ? (
+                                                <Stack direction={'column'} justifyContent={'end'}>
+                                                    <Collapse in={showVerticalName} timeout={'auto'} unmountOnExit>
+                                                        <Typography
+                                                            sx={{
+                                                                writingMode: 'vertical-lr',
+                                                            }}
+                                                        >
+                                                            {player}
+                                                        </Typography>
+                                                    </Collapse>
+                                                    <Typography>{player.charAt(0)}</Typography>
+                                                </Stack>
+                                            ) : (
+                                                player
+                                            )}
                                         </ButtonBase>
                                     </TableCell>
                                 )

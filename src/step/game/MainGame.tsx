@@ -1,4 +1,4 @@
-import { FC, Fragment, useState } from 'react'
+import { FC, Fragment, useRef, useState } from 'react'
 import { Step } from '../../types.ts'
 import UpperBar from '../../components/UpperBar.tsx'
 import { Add, MoreVert, Remove } from '@mui/icons-material'
@@ -25,6 +25,9 @@ const MainGame: FC<IGameProps> = (props) => {
     const [assistantOpen, setAssistantOpen] = useState(false)
     const [tutorialOpen, setTutorialOpen] = useState(false)
     const [moreAnchorEl, setMoreAnchorEl] = useState<HTMLButtonElement | null>(null)
+    const [showVerticalName, setShowVerticalName] = useState(true)
+
+    const boardRef = useRef<HTMLDivElement | null>(null)
 
     const { board, dustCounter, updateDustCounter } = useGameStore()
     const { hideDustCounter } = useSettingsStore()
@@ -78,8 +81,18 @@ const MainGame: FC<IGameProps> = (props) => {
                 </UpperBar>
             )}
 
-            <Box sx={{ overflow: 'auto', flex: 1 }}>
-                <MainBoard />
+            <Box
+                ref={boardRef}
+                sx={{ overflow: 'auto', flex: 1 }}
+                onScroll={() => {
+                    if (!boardRef.current?.scrollTop && !showVerticalName) {
+                        setShowVerticalName(true)
+                    } else if (boardRef.current?.scrollTop && showVerticalName) {
+                        setShowVerticalName(false)
+                    }
+                }}
+            >
+                <MainBoard showVerticalName={showVerticalName} />
             </Box>
 
             <Menu
