@@ -36,7 +36,8 @@ const MainGame: FC<IGameProps> = (props) => {
         setStep,
         setSettingsOpen,
         setAssistantOpen,
-        setTutorialOpen
+        setTutorialOpen,
+        setMoreAnchorEl
     )
 
     return (

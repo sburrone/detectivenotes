@@ -8,8 +8,8 @@ import { themes } from './themes.ts'
 import Setup from './step/setup/Setup.tsx'
 import MainGame from './step/game/MainGame.tsx'
 import { useSettingsStore } from './store/useSettingsStore.ts'
-import it from './lang/it.json'
-import en from './lang/en.json'
+import it from './strings/it.json'
+import en from './strings/en.json'
 
 function App() {
     return <AppContent />

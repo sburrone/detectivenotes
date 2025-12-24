@@ -22,7 +22,8 @@ export const useMainGameButtons = (
     setStep: (step: Step) => void,
     setSettingsOpen: Dispatch<SetStateAction<boolean>>,
     setAssistantOpen: Dispatch<SetStateAction<boolean>>,
-    setTutorialOpen: Dispatch<SetStateAction<boolean>>
+    setTutorialOpen: Dispatch<SetStateAction<boolean>>,
+    setMoreAnchorEl: Dispatch<SetStateAction<HTMLButtonElement | null>>
 ) => {
     const [maxButtons, setMaxButtons] = useState(Math.floor(window.innerWidth / ICON_BUTTON_WIDTH) - 1)
 
@@ -38,11 +39,16 @@ export const useMainGameButtons = (
         }
     }, [])
 
+    const handleClick = (action: () => void) => () => {
+        setMoreAnchorEl(null)
+        action()
+    }
+
     const buttons: { id: MAIN_GAME_BUTTON; el: ReactElement }[] = [
         {
             id: MAIN_GAME_BUTTON.BACK,
             el: (
-                <IconButton variant={'elevated'} onClick={() => setStep(Step.MAIN)}>
+                <IconButton variant={'elevated'} onClick={handleClick(() => setStep(Step.MAIN))}>
                     <ArrowBack />
                 </IconButton>
             ),
@@ -50,7 +56,10 @@ export const useMainGameButtons = (
         {
             id: MAIN_GAME_BUTTON.INFO,
             el: (
-                <IconButton variant={'elevated'} onClick={() => setTutorialOpen((tutorialOpen) => !tutorialOpen)}>
+                <IconButton
+                    variant={'elevated'}
+                    onClick={handleClick(() => setTutorialOpen((tutorialOpen) => !tutorialOpen))}
+                >
                     <InfoRounded />
                 </IconButton>
             ),
@@ -58,7 +67,7 @@ export const useMainGameButtons = (
         {
             id: MAIN_GAME_BUTTON.LOCK,
             el: (
-                <IconButton variant={locked ? 'filled' : 'elevated'} onClick={() => setOrToggleLocked()}>
+                <IconButton variant={locked ? 'filled' : 'elevated'} onClick={handleClick(() => setOrToggleLocked())}>
                     {locked ? <Lock /> : <LockOpen />}
                 </IconButton>
             ),
@@ -68,7 +77,7 @@ export const useMainGameButtons = (
             el: (
                 <IconButton
                     variant={'elevated'}
-                    onClick={() => setAssistantOpen((assistantOpen) => !assistantOpen)}
+                    onClick={handleClick(() => setAssistantOpen((assistantOpen) => !assistantOpen))}
                     style={{ width: 56, height: 56, padding: 8 }}
                 >
                     <WandStars style={{ width: 36, height: 36 }} />
@@ -78,7 +87,7 @@ export const useMainGameButtons = (
         {
             id: MAIN_GAME_BUTTON.UNDO,
             el: (
-                <IconButton variant={'elevated'} onClick={() => undo()} disabled={!pastStates.length}>
+                <IconButton variant={'elevated'} onClick={handleClick(() => undo())} disabled={!pastStates.length}>
                     <Undo />
                 </IconButton>
             ),
@@ -86,7 +95,7 @@ export const useMainGameButtons = (
         {
             id: MAIN_GAME_BUTTON.REDO,
             el: (
-                <IconButton variant={'elevated'} onClick={() => redo()} disabled={!futureStates.length}>
+                <IconButton variant={'elevated'} onClick={handleClick(() => redo())} disabled={!futureStates.length}>
                     <Redo />
                 </IconButton>
             ),
@@ -94,7 +103,10 @@ export const useMainGameButtons = (
         {
             id: MAIN_GAME_BUTTON.SETTINGS,
             el: (
-                <IconButton variant={'elevated'} onClick={() => setSettingsOpen((settingsOpen) => !settingsOpen)}>
+                <IconButton
+                    variant={'elevated'}
+                    onClick={handleClick(() => setSettingsOpen((settingsOpen) => !settingsOpen))}
+                >
                     <Settings />
                 </IconButton>
             ),
