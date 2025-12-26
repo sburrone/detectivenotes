@@ -74,7 +74,7 @@ export const MainBoard: FC<{ showVerticalName: boolean }> = ({ showVerticalName 
             ))}
         </TableRow>
     )
-    console.log('AAA', showVerticalName)
+
     return (
         <Box sx={{ py: '1em' }}>
             <TableContainer sx={{ overflow: 'visible' }}>
