@@ -6,6 +6,7 @@ import {
     Info,
     Language,
     LightMode,
+    OpenInFull,
     PersonOutlined,
     PlayArrow,
     Save,
@@ -52,35 +53,54 @@ const MainMenuButtons: FC<{
                         top: 0,
                         height: '100dvh',
                         width: '100dvw',
-                    }}
-                    onDoubleClick={(e: React.MouseEvent<HTMLDivElement>) => {
-                        e.preventDefault()
-                        if ((e.target as HTMLElement).ariaLabel === 'background') {
-                            setHideUI(true)
-                        }
+                        pointerEvents: 'none',
+                        '& *': { pointerEvents: 'auto' },
                     }}
                 >
-                    <>
-                        <Typography
-                            sx={{
-                                fontFamily: 'Dela Gothic One',
-                                fontSize: '4rem',
-                                margin: '24px auto',
-                                textAlign: 'center',
-                                color: theme.palette.primary.main,
-                                textShadow: (theme.palette as any).onPrimaryContainer?.main,
-                                webkitTextStroke: (theme.palette as any).onPrimary?.contrastText,
-                            }}
-                        >
-                            detective
-                            <br />
-                            notes
-                        </Typography>
+                    <Typography
+                        sx={{
+                            fontFamily: 'Dela Gothic One',
+                            fontSize: '4rem',
+                            margin: '24px auto',
+                            textAlign: 'center',
+                            color: theme.palette.primary.main,
+                            textShadow: (theme.palette as any).onPrimaryContainer?.main,
+                            webkitTextStroke: (theme.palette as any).onPrimary?.contrastText,
+                            pointerEvents: 'none',
+                        }}
+                    >
+                        detective
+                        <br />
+                        notes
+                    </Typography>
+                    <CardButton
+                        header={
+                            <TextWithIcon
+                                icon={<PlayArrow />}
+                                text={formatMessage({ id: 'new' })}
+                                textProps={{
+                                    fontSize: '1.25rem',
+                                    margin: 'auto 0 auto 0.5rem',
+                                }}
+                            />
+                        }
+                        content={
+                            ts && <Typography align={'center'}>{formatMessage({ id: 'newGame.warning' })}</Typography>
+                        }
+                        onClick={() => {
+                            setStep(Step.SETUP)
+                            setGame(blankGame)
+                            clear()
+                        }}
+                        headerColor={(theme.palette as any).primaryContainer?.main}
+                        style={{ margin: '0 auto' }}
+                    />
+                    {ts && (
                         <CardButton
                             header={
                                 <TextWithIcon
-                                    icon={<PlayArrow />}
-                                    text={formatMessage({ id: 'new' })}
+                                    icon={<Save />}
+                                    text={formatMessage({ id: 'continue' })}
                                     textProps={{
                                         fontSize: '1.25rem',
                                         margin: 'auto 0 auto 0.5rem',
@@ -88,120 +108,97 @@ const MainMenuButtons: FC<{
                                 />
                             }
                             content={
-                                ts && (
-                                    <Typography align={'center'}>{formatMessage({ id: 'newGame.warning' })}</Typography>
-                                )
+                                <Grid container spacing={4}>
+                                    <Grid size={{ lg: 4, md: 12 }}>
+                                        <TextWithIcon
+                                            icon={<Schedule />}
+                                            text={new Date(ts!).toLocaleDateString(undefined, {
+                                                weekday: 'short',
+                                                day: 'numeric',
+                                                month: 'short',
+                                                year: '2-digit',
+                                                hour: 'numeric',
+                                                minute: 'numeric',
+                                            })}
+                                        />
+                                    </Grid>
+                                    <Grid size={{ lg: 4, md: 12 }}>
+                                        <TextWithIcon icon={<CasinoOutlined />} text={board!.name} />
+                                    </Grid>
+                                    <Grid size={{ lg: 4, md: 12 }}>
+                                        <TextWithIcon
+                                            icon={<PersonOutlined />}
+                                            text={players!.toLocaleString().replaceAll(',', ', ')}
+                                        />
+                                    </Grid>
+                                </Grid>
                             }
-                            onClick={() => {
-                                setStep(Step.SETUP)
-                                setGame(blankGame)
-                                clear()
-                            }}
-                            headerColor={(theme.palette as any).primaryContainer?.main}
-                            style={{ margin: '0 auto' }}
+                            onClick={() => setStep(Step.GAME)}
+                            headerColor={(theme.palette as any).secondaryContainer?.main}
+                            style={{ margin: '1em auto' }}
                         />
-                        {ts && (
-                            <CardButton
-                                header={
-                                    <TextWithIcon
-                                        icon={<Save />}
-                                        text={formatMessage({ id: 'continue' })}
-                                        textProps={{
-                                            fontSize: '1.25rem',
-                                            margin: 'auto 0 auto 0.5rem',
+                    )}
+                    <div
+                        style={{
+                            bottom: 0,
+                            right: 0,
+                            position: 'absolute',
+                            margin: 16,
+                        }}
+                    >
+                        {languageExtended ? (
+                            <Button
+                                startIcon={
+                                    <Language
+                                        style={{
+                                            fontSize: '2rem',
                                         }}
                                     />
                                 }
-                                content={
-                                    <Grid container spacing={4}>
-                                        <Grid size={{ lg: 4, md: 12 }}>
-                                            <TextWithIcon
-                                                icon={<Schedule />}
-                                                text={new Date(ts!).toLocaleDateString(undefined, {
-                                                    weekday: 'short',
-                                                    day: 'numeric',
-                                                    month: 'short',
-                                                    year: '2-digit',
-                                                    hour: 'numeric',
-                                                    minute: 'numeric',
-                                                })}
-                                            />
-                                        </Grid>
-                                        <Grid size={{ lg: 4, md: 12 }}>
-                                            <TextWithIcon icon={<CasinoOutlined />} text={board!.name} />
-                                        </Grid>
-                                        <Grid size={{ lg: 4, md: 12 }}>
-                                            <TextWithIcon
-                                                icon={<PersonOutlined />}
-                                                text={players!.toLocaleString().replaceAll(',', ', ')}
-                                            />
-                                        </Grid>
-                                    </Grid>
-                                }
-                                onClick={() => setStep(Step.GAME)}
-                                headerColor={(theme.palette as any).secondaryContainer?.main}
-                                style={{ margin: '1em auto' }}
-                            />
+                                sx={{ margin: '4px' }}
+                                onClick={(e) => setLanguageMenuAnchorEl(e.currentTarget)}
+                            >
+                                {formatMessage({ id: 'language' })}
+                            </Button>
+                        ) : (
+                            <IconMenuButton onClick={(e) => setLanguageMenuAnchorEl(e.currentTarget)}>
+                                <Language />
+                            </IconMenuButton>
                         )}
-                        <div
-                            style={{
-                                bottom: 0,
-                                right: 0,
-                                position: 'absolute',
-                                margin: 16,
-                            }}
+                        <Menu
+                            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                            transformOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                            open={!!languageMenuAnchorEl}
+                            anchorEl={languageMenuAnchorEl}
+                            onClick={() => setLanguageMenuAnchorEl(null)}
                         >
-                            {languageExtended ? (
-                                <Button
-                                    startIcon={
-                                        <Language
-                                            style={{
-                                                fontSize: '2rem',
-                                            }}
-                                        />
-                                    }
-                                    sx={{ margin: '4px' }}
-                                    onClick={(e) => setLanguageMenuAnchorEl(e.currentTarget)}
+                            {Object.values(SupportedLanguage).map((opt) => (
+                                <MenuItem
+                                    disabled={lang === opt}
+                                    key={opt}
+                                    onClick={() => {
+                                        setLanguageMenuAnchorEl(null)
+                                        setLanguage(opt)
+                                    }}
                                 >
-                                    {formatMessage({ id: 'language' })}
-                                </Button>
-                            ) : (
-                                <IconMenuButton onClick={(e) => setLanguageMenuAnchorEl(e.currentTarget)}>
-                                    <Language />
-                                </IconMenuButton>
-                            )}
-                            <Menu
-                                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                                transformOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                                open={!!languageMenuAnchorEl}
-                                anchorEl={languageMenuAnchorEl}
-                                onClick={() => setLanguageMenuAnchorEl(null)}
-                            >
-                                {Object.values(SupportedLanguage).map((opt) => (
-                                    <MenuItem
-                                        disabled={lang === opt}
-                                        key={opt}
-                                        onClick={() => {
-                                            setLanguageMenuAnchorEl(null)
-                                            setLanguage(opt)
-                                        }}
-                                    >
-                                        {new Intl.DisplayNames([opt], { type: 'language' }).of(opt)}
-                                    </MenuItem>
-                                ))}
-                            </Menu>
-                            <IconMenuButton
-                                onClick={() =>
-                                    setColorMode(colorMode === ColorMode.LIGHT ? ColorMode.DARK : ColorMode.LIGHT)
-                                }
-                            >
-                                {colorMode === ColorMode.LIGHT ? <DarkMode /> : <LightMode />}
-                            </IconMenuButton>
-                            <IconMenuButton onClick={() => setInfoModalOpen(true)}>
-                                <Info />
-                            </IconMenuButton>
-                        </div>
-                    </>
+                                    {new Intl.DisplayNames([opt], { type: 'language' }).of(opt)}
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                        <IconMenuButton onClick={() => setHideUI(true)}>
+                            <OpenInFull />
+                        </IconMenuButton>
+                        <IconMenuButton
+                            onClick={() =>
+                                setColorMode(colorMode === ColorMode.LIGHT ? ColorMode.DARK : ColorMode.LIGHT)
+                            }
+                        >
+                            {colorMode === ColorMode.LIGHT ? <DarkMode /> : <LightMode />}
+                        </IconMenuButton>
+                        <IconMenuButton onClick={() => setInfoModalOpen(true)}>
+                            <Info />
+                        </IconMenuButton>
+                    </div>
                 </Stack>
             )}
 

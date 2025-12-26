@@ -25,6 +25,7 @@ export const BoardModel: FC<{
     }
 
     const gltf = useLoader(GLTFLoader, './3d/scene.gltf')
+
     useEffect(() => {
         gltf.scene.scale.set(0.05, 0.05, 0.05)
         gltf.scene.traverse((c) => (c.castShadow = true))
