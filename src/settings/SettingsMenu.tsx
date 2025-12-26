@@ -88,7 +88,7 @@ export const SettingsMenu = ({ open, setOpen }: ISettingsMenuProps) => {
                     description={formatMessage({ id: 'selectionModalOptions.description' })}
                     icon={<Stars style={{ height: 32, width: 32 }} />}
                     onChange={(opt) => setSelectionModalOptions(opt as SelectionModalOption)}
-                    type={'select'}
+                    type={'toggleButton'}
                     options={Object.values(SelectionModalOption)}
                     value={selectionModalOptions}
                 />
@@ -97,7 +97,7 @@ export const SettingsMenu = ({ open, setOpen }: ISettingsMenuProps) => {
                     description={formatMessage({ id: 'playerNamesPosition.description' })}
                     icon={<TextRotationNone style={{ height: 32, width: 32 }} />}
                     onChange={(opt) => setPlayerNamesPosition(opt as PlayerNamesPosition)}
-                    type={'select'}
+                    type={'toggleButton'}
                     options={Object.values(PlayerNamesPosition)}
                     value={playerNamesPosition}
                 />
@@ -106,7 +106,7 @@ export const SettingsMenu = ({ open, setOpen }: ISettingsMenuProps) => {
                     description={formatMessage({ id: 'toolbarPosition.description' })}
                     icon={<ShelfAutoHide style={{ transform: 'rotate(180deg)', height: 32, width: 32 }} />}
                     onChange={(opt) => setToolbarPosition(opt as ToolbarPosition)}
-                    type={'select'}
+                    type={'toggleButton'}
                     options={Object.values(ToolbarPosition)}
                     value={toolbarPosition}
                 />

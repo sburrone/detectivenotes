@@ -12,15 +12,13 @@ import {
     Schedule,
 } from '@mui/icons-material'
 import { IconMenuButton } from '../../components/CustomButtons.tsx'
-import { ColorMode, Step } from '../../types.ts'
+import { ColorMode, Language as SupportedLanguage, Step } from '../../types.ts'
 import CardButton from '../../components/CardButton.tsx'
 import TextWithIcon from '../../components/TextWithIcon.tsx'
 import { useSettingsStore } from '../../store/useSettingsStore.ts'
 import { blankGame, useGameStore } from '../../store/useGameStore.ts'
 import { useIntl } from 'react-intl'
-import { Language as SupportedLanguage } from '../../types.ts'
-import { CustomModal } from '../../components/CustomModal.tsx'
-import { version } from '../../../package.json'
+import AboutMenu from './AboutMenu.tsx'
 
 const MainMenuButtons: FC<{
     setStep: (step: Step) => void
@@ -207,40 +205,7 @@ const MainMenuButtons: FC<{
                 </Stack>
             )}
 
-            <CustomModal
-                open={infoModalOpen}
-                setOpen={() => setInfoModalOpen(false)}
-                color={'primary'}
-                title={'Detective Notes'}
-            >
-                <Typography align={'center'}>{formatMessage({ id: 'credits.version' }, { version })}</Typography>
-                <Typography align={'center'}>{formatMessage({ id: 'credits.madeWith' })}</Typography>
-                <Typography align={'center'} sx={{ '& a': { color: theme.palette.text.primary } }}>
-                    {formatMessage(
-                        { id: 'credits.license' },
-                        {
-                            model: (
-                                <a
-                                    href="https://sketchfab.com/3d-models/clue-board-game-843af04381cc495ca5f0a4bebadb1752"
-                                    target="_blank"
-                                >
-                                    "Clue (Board Game)"
-                                </a>
-                            ),
-                            author: (
-                                <a href="https://sketchfab.com/paulyanez" target="_blank">
-                                    Anthony Yanez
-                                </a>
-                            ),
-                            license: (
-                                <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">
-                                    CC-BY-4.0
-                                </a>
-                            ),
-                        }
-                    )}
-                </Typography>
-            </CustomModal>
+            <AboutMenu open={infoModalOpen} setOpen={setInfoModalOpen} />
         </>
     )
 }

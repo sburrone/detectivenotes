@@ -1,6 +1,6 @@
 import { Checkbox } from '../components/CustomButtons.tsx'
 import { PlayerNamesPosition, SelectionModalOption, ToolbarPosition } from '../types.ts'
-import { Grid, ListItem, ListItemIcon, ListItemText, MenuItem } from '@mui/material'
+import { Grid, ListItem, ListItemIcon, ListItemText, MenuItem, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import { useIntl } from 'react-intl'
 import { CustomSelect } from '../components/CustomSelect.tsx'
 
@@ -26,7 +26,7 @@ interface ISettingsMenuEntryCheckboxProps extends ISettingsMenuEntryBaseProps, I
 }
 
 interface ISettingsMenuEntrySelectProps extends ISettingsMenuEntryBaseProps, ISettingsMenuEntrySelectOwnProps {
-    type: 'select'
+    type: 'select' | 'toggleButton'
 }
 
 type ISettingsMenuEntryProps = ISettingsMenuEntryCheckboxProps | ISettingsMenuEntrySelectProps
@@ -52,14 +52,53 @@ const SelectEntry = ({ value, options, onChange }: ISettingsMenuEntrySelectOwnPr
     )
 }
 
+const ToggleButtonEntry = ({ value, options, onChange }: ISettingsMenuEntrySelectOwnProps) => {
+    const { formatMessage } = useIntl()
+
+    return (
+        <ToggleButtonGroup
+            exclusive
+            onChange={(_, value) => onChange(value as ToolbarPosition | PlayerNamesPosition | SelectionModalOption)}
+            value={value}
+            sx={{
+                paddingInlineStart: 44,
+                '& .MuiToggleButtonGroup-firstButton': { borderTopRightRadius: 0, borderBottomRightRadius: 0 },
+                '& .MuiToggleButtonGroup-lastButton': { borderTopLeftRadius: 0, borderBottomLeftRadius: 0 },
+                '& .MuiToggleButtonGroup-middleButton': { borderRadius: 0 },
+            }}
+        >
+            {options.map((value, key) => (
+                <ToggleButton value={value} key={key}>
+                    {formatMessage({ id: `option.${value}` })}
+                </ToggleButton>
+            ))}
+        </ToggleButtonGroup>
+    )
+}
+
 const SettingsMenuEntry = (props: ISettingsMenuEntryProps) => {
     const { title, description, icon, type, ...rest } = props
 
-    const isCheckbox = type === 'checkbox'
+    const sizes: { title?: number | { lg: number; md: number }; option?: number | { lg: number; md: number } } = {}
+
+    switch (type) {
+        case 'checkbox':
+            sizes.title = 11
+            sizes.option = 1
+            break
+        case 'select':
+            sizes.title = { lg: 8, md: 12 }
+            sizes.option = { lg: 4, md: 12 }
+            break
+        case 'toggleButton':
+            sizes.title = 12
+            sizes.option = 12
+            break
+    }
 
     return (
-        <Grid container width={'100%'} justifyContent={'space-between'} flexWrap={'nowrap'}>
-            <Grid size={isCheckbox ? 11 : { lg: 8, md: 12 }}>
+        <Grid container width={'100%'} justifyContent={'space-between'}>
+            <Grid size={sizes.title}>
                 <ListItem sx={{ padding: 0 }}>
                     <ListItemIcon sx={{ paddingInlineEnd: 12 }}>{icon}</ListItemIcon>
                     <ListItemText
@@ -71,16 +110,14 @@ const SettingsMenuEntry = (props: ISettingsMenuEntryProps) => {
                 </ListItem>
             </Grid>
             <Grid
-                size={isCheckbox ? 1 : { lg: 4, md: 12 }}
+                size={sizes.option}
                 display={'flex'}
                 alignItems={'center'}
-                justifyContent={'end'}
+                justifyContent={type === 'toggleButton' ? undefined : 'end'}
             >
-                {isCheckbox ? (
-                    <CheckboxEntry {...(rest as ISettingsMenuEntryCheckboxOwnProps)} />
-                ) : (
-                    <SelectEntry {...(rest as ISettingsMenuEntrySelectOwnProps)} />
-                )}
+                {type === 'checkbox' && <CheckboxEntry {...(rest as ISettingsMenuEntryCheckboxOwnProps)} />}
+                {type === 'select' && <SelectEntry {...(rest as ISettingsMenuEntrySelectOwnProps)} />}
+                {type === 'toggleButton' && <ToggleButtonEntry {...(rest as ISettingsMenuEntrySelectOwnProps)} />}
             </Grid>
         </Grid>
     )
