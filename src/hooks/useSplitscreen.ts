@@ -42,6 +42,10 @@ export const useSplitscreen = () => {
                 setSplitscreen(window.innerHeight > window.innerWidth ? 'vertical' : 'horizontal')
             } else setSplitscreen(false)
         })
+        window.onresize = () => {
+            const newConfig = getSplitscreenConfiguration(splitscreenEnabled)
+            if (newConfig !== splitscreen) setSplitscreen(newConfig)
+        }
     })
 
     useEffect(() => {
