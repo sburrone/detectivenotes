@@ -34,7 +34,7 @@ export const InfoPanel = ({ open, setOpen, player }: IInfoPanelProps) => {
 
     const playerIndex = players?.indexOf(player ?? '') ?? 0
     const numCards = board && board.characters.length + board.weapons.length + board.rooms.length - 3
-    const numPlayers = players?.length
+    const numPlayers = Number(players?.length) + 1
     const numEach = (numCards && numPlayers && Math.floor(numCards / numPlayers)) ?? 0
 
     const numForPlayer =

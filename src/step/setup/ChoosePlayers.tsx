@@ -13,22 +13,22 @@ interface IChoosePlayersProps {
 }
 
 const ChoosePlayers: FC<IChoosePlayersProps> = (props) => {
-    const { setPlayers, board, shelvedNames, setShelvedNames } = props
+    const { setPlayers, board, shelvedNames, setShelvedNames, players } = props
 
-    const [playerNum, setPlayerNum] = useState(board?.minPlayers ?? 3)
+    const [playerNum, setPlayerNum] = useState(board?.minPlayers ? board.minPlayers - 1 : 3)
 
     const { formatMessage } = useIntl()
 
     const handleSliderChange = (_e: Event, newLength: number) => {
         setPlayerNum(newLength)
-        setPlayers(shelvedNames.slice(0, newLength))
+        setPlayers(shelvedNames.slice(0, newLength - 1))
     }
 
     const handleInputChange = (index: number, value: string) => {
         const newArray = shelvedNames
         shelvedNames[index] = value
         setShelvedNames(newArray)
-        setPlayers(shelvedNames.slice(0, playerNum))
+        setPlayers(shelvedNames.slice(0, playerNum - 1))
     }
 
     const validateField = (value: string, index: number): string | undefined => {
@@ -102,7 +102,7 @@ const ChoosePlayers: FC<IChoosePlayersProps> = (props) => {
                 >
                     {formatMessage({ id: 'players.names.description' })}
                 </Typography>
-                {shelvedNames.map((_pl, index) => {
+                {players.map((_pl, index) => {
                     return (
                         <TextField
                             required={playerNum < index}

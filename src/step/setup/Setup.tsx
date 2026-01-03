@@ -50,7 +50,7 @@ const Setup: FC<ISetupProps> = (props) => {
 
     const numCards =
         selectedBoard && selectedBoard.characters.length + selectedBoard.weapons.length + selectedBoard.rooms.length - 3
-    const numPlayers = players.length
+    const numPlayers = players.length + 1
     const numEach = numCards && Math.floor(numCards / numPlayers)
     const numLeftover = numCards && numCards % numPlayers
     const numAssigned = _.sum(assignedCards)
