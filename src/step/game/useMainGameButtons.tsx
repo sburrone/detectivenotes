@@ -2,9 +2,10 @@ import { Dispatch, ReactElement, SetStateAction, useEffect, useState } from 'rea
 import { MAIN_GAME_BUTTON, Step } from '../../types.ts'
 import { useGameStore } from '../../store/useGameStore.ts'
 import _ from 'lodash'
-import { ArrowBack, InfoRounded, Lock, LockOpen, Redo, Settings, Undo } from '@mui/icons-material'
+import { ArrowBack, InfoRounded, Lock, LockOpen, Redo, Settings, Splitscreen, Undo } from '@mui/icons-material'
 import { IconButton } from '../../components/CustomButtons.tsx'
 import { WandStars } from '@nine-thirty-five/material-symbols-react/sharp'
+import { useSettingsStore } from '../../store/useSettingsStore.ts'
 
 const ICON_BUTTON_WIDTH = 56
 
@@ -14,6 +15,7 @@ const buttonHierarchy: MAIN_GAME_BUTTON[] = [
     MAIN_GAME_BUTTON.LOCK,
     MAIN_GAME_BUTTON.ASSISTANT,
     MAIN_GAME_BUTTON.BACK,
+    MAIN_GAME_BUTTON.SPLITSCREEN,
     MAIN_GAME_BUTTON.INFO,
     MAIN_GAME_BUTTON.SETTINGS,
 ]
@@ -28,6 +30,7 @@ export const useMainGameButtons = (
     const [maxButtons, setMaxButtons] = useState(Math.floor(window.innerWidth / ICON_BUTTON_WIDTH) - 1)
 
     const { setOrToggleLocked, locked } = useGameStore()
+    const { splitscreenEnabled, setSplitscreenEnabled } = useSettingsStore()
     const { undo, redo, pastStates, futureStates } = useGameStore.temporal.getState()
 
     useEffect(() => {
@@ -97,6 +100,17 @@ export const useMainGameButtons = (
             el: (
                 <IconButton variant={'elevated'} onClick={handleClick(() => redo())} disabled={!futureStates.length}>
                     <Redo />
+                </IconButton>
+            ),
+        },
+        {
+            id: MAIN_GAME_BUTTON.SPLITSCREEN,
+            el: (
+                <IconButton
+                    variant={'elevated'}
+                    onClick={handleClick(() => setSplitscreenEnabled(!splitscreenEnabled))}
+                >
+                    <Splitscreen />
                 </IconButton>
             ),
         },

@@ -122,6 +122,7 @@ export enum MAIN_GAME_BUTTON {
     ASSISTANT,
     UNDO,
     REDO,
+    SPLITSCREEN,
     SETTINGS,
 }
 

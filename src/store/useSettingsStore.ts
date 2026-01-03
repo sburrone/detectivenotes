@@ -12,7 +12,7 @@ export interface SettingsStore extends Settings {
     setColorMode: (colorMode: ColorMode) => void
     toggleColorMode: () => void
     setLanguage: (lang: Language) => void
-    setSplitscreenEnabled: (splitscreenEnabled: true) => void
+    setSplitscreenEnabled: (splitscreenEnabled: boolean) => void
 }
 
 export const useSettingsStore = create<SettingsStore>()(

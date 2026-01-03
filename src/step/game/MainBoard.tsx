@@ -24,15 +24,17 @@ import { InfoPanel } from './InfoPanel.tsx'
 
 const COL_EXTRA = 2
 
-export const MainBoard: FC<{ showVerticalName: boolean }> = ({ showVerticalName }) => {
+export const MainBoard: FC<{
+    showVerticalName: boolean
+    infoPanelPlayer: string | null
+    setInfoPanelPlayer: (infoPanelPlayer: string | null) => void
+}> = ({ showVerticalName, infoPanelPlayer, setInfoPanelPlayer }) => {
     const [openSuspects, setOpenSuspects] = useState(true)
     const [openWeapons, setOpenWeapons] = useState(true)
     const [openRooms, setOpenRooms] = useState(true)
 
-    const [infoPanelPlayer, setInfoPanelPlayer] = useState<string | null>(null)
-
     const { gameBoard, locked: globalLocked, board, players, updateItem, lockItem, advancedCards } = useGameStore()
-    const { autocomplete, playerNamesPosition } = useSettingsStore()
+    const { autocomplete, playerNamesPosition, splitscreenEnabled } = useSettingsStore()
 
     const theme = useTheme()
     const { formatMessage } = useIntl()
@@ -292,7 +294,7 @@ export const MainBoard: FC<{ showVerticalName: boolean }> = ({ showVerticalName 
             </TableContainer>
 
             <InfoPanel
-                open={!!infoPanelPlayer}
+                open={!!infoPanelPlayer && !splitscreenEnabled}
                 setOpen={(open) => setInfoPanelPlayer(open ? infoPanelPlayer : null)}
                 player={infoPanelPlayer}
             />

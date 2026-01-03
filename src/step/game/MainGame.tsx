@@ -15,6 +15,7 @@ import { useIntl } from 'react-intl'
 import { useSettingsStore } from '../../store/useSettingsStore.ts'
 import { Group, Panel, Separator } from 'react-resizable-panels'
 import { useSplitscreen } from '../../hooks/useSplitscreen.ts'
+import { InfoPanel } from './InfoPanel.tsx'
 
 interface IGameProps {
     setStep: (step: Step) => void
@@ -28,6 +29,8 @@ const MainGame: FC<IGameProps> = (props) => {
     const [tutorialOpen, setTutorialOpen] = useState(false)
     const [moreAnchorEl, setMoreAnchorEl] = useState<HTMLButtonElement | null>(null)
     const [showVerticalName, setShowVerticalName] = useState(true)
+
+    const [infoPanelPlayer, setInfoPanelPlayer] = useState<string | null>(null)
 
     const boardRef = useRef<HTMLDivElement | null>(null)
 
@@ -44,6 +47,47 @@ const MainGame: FC<IGameProps> = (props) => {
         setAssistantOpen,
         setTutorialOpen,
         setMoreAnchorEl
+    )
+
+    const boardBox = (
+        <Box
+            ref={boardRef}
+            sx={{ overflow: 'auto', flex: 1 }}
+            onScroll={() => {
+                if (!boardRef.current?.scrollTop && !showVerticalName) {
+                    setShowVerticalName(true)
+                } else if (boardRef.current?.scrollTop && showVerticalName) {
+                    setShowVerticalName(false)
+                }
+            }}
+        >
+            <MainBoard
+                showVerticalName={showVerticalName}
+                infoPanelPlayer={infoPanelPlayer}
+                setInfoPanelPlayer={setInfoPanelPlayer}
+            />
+        </Box>
+    )
+
+    const secondScreenContent = (
+        <>
+            <Separator className={`separator separator-${colorMode}`} />
+            <Panel>
+                <SettingsMenu open={settingsOpen} setOpen={setSettingsOpen} disableModal />
+                <AssistantMenu
+                    open={assistantOpen || (!settingsOpen && !infoPanelPlayer)}
+                    setOpen={setAssistantOpen}
+                    disableModal
+                />
+                <TutorialMenu open={tutorialOpen} setOpen={setTutorialOpen} disableModal />
+                <InfoPanel
+                    open={!!infoPanelPlayer}
+                    setOpen={(open) => setInfoPanelPlayer(open ? infoPanelPlayer : null)}
+                    player={infoPanelPlayer}
+                    disableModal
+                />
+            </Panel>
+        </>
     )
 
     return (
@@ -96,19 +140,14 @@ const MainGame: FC<IGameProps> = (props) => {
                         </UpperBar>
                     )}
 
-                    <Box
-                        ref={boardRef}
-                        sx={{ overflow: 'auto', flex: 1 }}
-                        onScroll={() => {
-                            if (!boardRef.current?.scrollTop && !showVerticalName) {
-                                setShowVerticalName(true)
-                            } else if (boardRef.current?.scrollTop && showVerticalName) {
-                                setShowVerticalName(false)
-                            }
-                        }}
-                    >
-                        <MainBoard showVerticalName={showVerticalName} />
-                    </Box>
+                    {splitscreenMode === 'horizontal' ? (
+                        <Group style={{ width: '100dvw' }} orientation={splitscreenMode || undefined}>
+                            <Panel>{boardBox}</Panel>
+                            {secondScreenContent}
+                        </Group>
+                    ) : (
+                        boardBox
+                    )}
 
                     <Menu
                         sx={{ marginTop: 20 }}
@@ -128,16 +167,7 @@ const MainGame: FC<IGameProps> = (props) => {
                 </Box>
             </Panel>
 
-            {!!splitscreenMode && (
-                <>
-                    <Separator className={`separator separator-${colorMode}`} />
-                    <Panel>
-                        <SettingsMenu open={settingsOpen} setOpen={setSettingsOpen} disableModal />
-                        <AssistantMenu open={assistantOpen} setOpen={setAssistantOpen} disableModal />
-                        <TutorialMenu open={tutorialOpen} setOpen={setTutorialOpen} disableModal />
-                    </Panel>
-                </>
-            )}
+            {splitscreenMode === 'vertical' && secondScreenContent}
         </Group>
     )
 }

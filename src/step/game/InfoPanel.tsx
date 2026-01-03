@@ -23,9 +23,10 @@ export interface IInfoPanelProps {
     open: boolean
     setOpen: (open: boolean) => void
     player: string | null
+    disableModal?: boolean
 }
 
-export const InfoPanel = ({ open, setOpen, player }: IInfoPanelProps) => {
+export const InfoPanel = ({ open, setOpen, player, disableModal }: IInfoPanelProps) => {
     const [showPossible, setShowPossible] = useState(false)
 
     const { advancedCards, board, players, gameBoard } = useGameStore()
@@ -62,8 +63,9 @@ export const InfoPanel = ({ open, setOpen, player }: IInfoPanelProps) => {
             setOpen={setOpen}
             title={formatMessage({ id: 'infoPanel' }, { player })}
             color={'tertiary'}
+            disabled={disableModal}
         >
-            <Stack direction={'column'} spacing={2}>
+            <Stack direction={'column'} spacing={2} sx={{ flex: 1 }}>
                 <ListItem secondaryAction={<Typography>{numForPlayer}</Typography>}>
                     <ListItemIcon>
                         <PlayingCards />
@@ -124,11 +126,7 @@ export const InfoPanel = ({ open, setOpen, player }: IInfoPanelProps) => {
                     {showPossible ? <ExpandLess /> : <ExpandMore />}
                 </ListItemButton>
                 <Collapse sx={{ marginTop: '0 !important' }} in={showPossible} timeout={'auto'} unmountOnExit>
-                    <List
-                        component={'div'}
-                        disablePadding={true}
-                        sx={{ overflow: 'auto', maxHeight: 'calc(100dvh - 500px)' }}
-                    >
+                    <List component={'div'} disablePadding={true}>
                         <ListSubheader>{formatMessage({ id: 'suspects' })}</ListSubheader>
                         {possibleCharacters?.map((item) => (
                             <ListItem key={item.item}>

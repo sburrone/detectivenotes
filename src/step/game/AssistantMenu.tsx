@@ -144,6 +144,7 @@ export const AssistantMenu = ({ open, setOpen, disableModal }: IAssistantMenuPro
             title={formatMessage({ id: 'assistant' })}
             color={'tertiary'}
             disabled={disableModal}
+            disableClose={disableModal}
         >
             <Stack direction={'column'} spacing={4}>
                 <Stack direction={'column'} spacing={1}>

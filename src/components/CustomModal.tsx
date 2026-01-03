@@ -9,9 +9,10 @@ export interface ICustomModalProps {
     title: string
     children: React.ReactNode
     disabled?: boolean
+    disableClose?: boolean
 }
 
-export const CustomModal = ({ open, setOpen, color, title, children, disabled }: ICustomModalProps) => {
+export const CustomModal = ({ open, setOpen, color, title, children, disabled, disableClose }: ICustomModalProps) => {
     const theme = useTheme()
 
     const content = (
@@ -20,17 +21,21 @@ export const CustomModal = ({ open, setOpen, color, title, children, disabled }:
                 title={
                     <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
                         <Typography sx={{ fontSize: '1.25rem', marginInlineStart: 10 }}>{title}</Typography>
-                        <IconButton
-                            variant={'text'}
-                            sx={{ padding: '0 !important', color: 'inherit' }}
-                            onClick={() => setOpen(false)}
-                        >
-                            <Close />
-                        </IconButton>
+                        {!disableClose && (
+                            <IconButton
+                                variant={'text'}
+                                sx={{ padding: '0 !important', color: 'inherit' }}
+                                onClick={() => setOpen(false)}
+                            >
+                                <Close />
+                            </IconButton>
+                        )}
                     </Stack>
                 }
                 sx={{
                     backgroundColor: (theme.palette as any)[`${color}Container`].main,
+                    height: '72px',
+                    boxSizing: 'border-box',
                 }}
                 onClick={() => setOpen(false)}
             />
@@ -38,7 +43,7 @@ export const CustomModal = ({ open, setOpen, color, title, children, disabled }:
                 sx={{
                     paddingBottom: 16,
                     overflow: 'auto',
-                    maxHeight: 'calc(100dvh - 102px)',
+                    maxHeight: disabled ? 'calc(100% - 110px)' : 'calc(100dvh - 200px)',
                 }}
             >
                 {children}
@@ -48,7 +53,7 @@ export const CustomModal = ({ open, setOpen, color, title, children, disabled }:
 
     return disabled ? (
         open ? (
-            <Card sx={{ padding: 0, borderRadius: 0 }}>{content}</Card>
+            <Card sx={{ padding: 0, borderRadius: 0, height: '100%', width: '100%' }}>{content}</Card>
         ) : undefined
     ) : (
         <Modal
