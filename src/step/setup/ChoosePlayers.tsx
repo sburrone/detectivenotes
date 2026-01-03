@@ -12,10 +12,17 @@ interface IChoosePlayersProps {
     setShelvedNames: (players: string[]) => void
 }
 
+/*
+    PlayerNum comprende l'utente
+    Players non comprende l'utente
+    ShelvedNames sempre 6
+ */
+
 const ChoosePlayers: FC<IChoosePlayersProps> = (props) => {
     const { setPlayers, board, shelvedNames, setShelvedNames, players } = props
-
-    const [playerNum, setPlayerNum] = useState(board?.minPlayers ? board.minPlayers - 1 : 3)
+    const [playerNum, setPlayerNum] = useState(
+        players.length + 1 < (board?.maxPlayers ?? 6) ? players.length + 1 : board?.minPlayers ? board.minPlayers : 3
+    )
 
     const { formatMessage } = useIntl()
 

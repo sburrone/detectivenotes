@@ -81,6 +81,12 @@ const Setup: FC<ISetupProps> = (props) => {
                 (choice === AdvancedCard.ASSIGN && numAssigned === 0) ||
                 (choice === AdvancedCard.PUBLIC && publicCards.length !== numLeftover)))
 
+    const onChooseBoard = (board: Board) => {
+        setSelectedBoard(board)
+        const playerLength = Math.min(board.maxPlayers ?? 6, Math.max(board.minPlayers - 1, players.length))
+        setPlayers(shelvedNames.slice(0, playerLength))
+    }
+
     const handleNext = () => {
         let newSkipped = skipped
         if (isStepSkipped(activeStep)) {
@@ -168,7 +174,7 @@ const Setup: FC<ISetupProps> = (props) => {
                         )
                     })}
                 </Stepper>
-                {activeStep === 0 && <ChooseBoard handleChange={setSelectedBoard} activeBoard={selectedBoard} />}
+                {activeStep === 0 && <ChooseBoard handleChange={onChooseBoard} activeBoard={selectedBoard} />}
                 {activeStep === 1 && (
                     <ChoosePlayers
                         players={players}
