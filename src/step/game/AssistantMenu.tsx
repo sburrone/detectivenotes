@@ -13,9 +13,10 @@ import { useSettingsStore } from '../../store/useSettingsStore.ts'
 export interface IAssistantMenuProps {
     open: boolean
     setOpen: (open: boolean) => void
+    disableModal?: boolean
 }
 
-export const AssistantMenu = ({ open, setOpen }: IAssistantMenuProps) => {
+export const AssistantMenu = ({ open, setOpen, disableModal }: IAssistantMenuProps) => {
     const { players, board, updateItem, gameBoard } = useGameStore()
     const { forceAssistantUpdate } = useSettingsStore()
 
@@ -137,7 +138,13 @@ export const AssistantMenu = ({ open, setOpen }: IAssistantMenuProps) => {
     }
 
     return (
-        <CustomModal open={open} setOpen={handleOpen} title={formatMessage({ id: 'assistant' })} color={'tertiary'}>
+        <CustomModal
+            open={open}
+            setOpen={handleOpen}
+            title={formatMessage({ id: 'assistant' })}
+            color={'tertiary'}
+            disabled={disableModal}
+        >
             <Stack direction={'column'} spacing={4}>
                 <Stack direction={'column'} spacing={1}>
                     <Typography color={'primary'} align={'center'} variant={'h5'}>

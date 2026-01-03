@@ -104,6 +104,7 @@ export type Settings = {
     selectionModalOptions: SelectionModalOption
     colorMode: ColorMode
     lang: Language
+    splitscreenEnabled: boolean
 }
 
 export interface UpdateItemPayload {

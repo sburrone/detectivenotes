@@ -8,12 +8,49 @@ export interface ICustomModalProps {
     color: 'primary' | 'secondary' | 'tertiary'
     title: string
     children: React.ReactNode
+    disabled?: boolean
 }
 
-export const CustomModal = ({ open, setOpen, color, title, children }: ICustomModalProps) => {
+export const CustomModal = ({ open, setOpen, color, title, children, disabled }: ICustomModalProps) => {
     const theme = useTheme()
 
-    return (
+    const content = (
+        <>
+            <CardHeader
+                title={
+                    <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
+                        <Typography sx={{ fontSize: '1.25rem', marginInlineStart: 10 }}>{title}</Typography>
+                        <IconButton
+                            variant={'text'}
+                            sx={{ padding: '0 !important', color: 'inherit' }}
+                            onClick={() => setOpen(false)}
+                        >
+                            <Close />
+                        </IconButton>
+                    </Stack>
+                }
+                sx={{
+                    backgroundColor: (theme.palette as any)[`${color}Container`].main,
+                }}
+                onClick={() => setOpen(false)}
+            />
+            <CardContent
+                sx={{
+                    paddingBottom: 16,
+                    overflow: 'auto',
+                    maxHeight: 'calc(100dvh - 102px)',
+                }}
+            >
+                {children}
+            </CardContent>
+        </>
+    )
+
+    return disabled ? (
+        open ? (
+            <Card sx={{ padding: 0, borderRadius: 0 }}>{content}</Card>
+        ) : undefined
+    ) : (
         <Modal
             open={open}
             onClose={() => setOpen(false)}
@@ -38,33 +75,7 @@ export const CustomModal = ({ open, setOpen, color, title, children }: ICustomMo
                     height: 'fit-content',
                 }}
             >
-                <CardHeader
-                    title={
-                        <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
-                            <Typography sx={{ fontSize: '1.25rem', marginInlineStart: 10 }}>{title}</Typography>
-                            <IconButton
-                                variant={'text'}
-                                sx={{ padding: '0 !important', color: 'inherit' }}
-                                onClick={() => setOpen(false)}
-                            >
-                                <Close />
-                            </IconButton>
-                        </Stack>
-                    }
-                    sx={{
-                        backgroundColor: (theme.palette as any)[`${color}Container`].main,
-                    }}
-                    onClick={() => setOpen(false)}
-                />
-                <CardContent
-                    sx={{
-                        paddingBottom: 16,
-                        overflow: 'auto',
-                        maxHeight: 'calc(100dvh - 102px)',
-                    }}
-                >
-                    {children}
-                </CardContent>
+                {content}
             </Card>
         </Modal>
     )

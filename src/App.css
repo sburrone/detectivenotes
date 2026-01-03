@@ -1,3 +1,35 @@
 .normal-margin {
     margin: 0.25em !important;
 }
+
+.separator {
+    min-width: 10px;
+    min-height: 10px;
+    transition: background-color 0.25s ease-in-out;
+}
+
+.separator-dark {
+    background-color: #063543;
+    color: #a5cdde;
+}
+
+.separator-dark[data-separator='hover'] {
+    background-color: #244c5a;
+}
+
+.separator-dark[data-separator='active'] {
+    background-color: #c0e9fb;
+}
+
+.separator-light {
+    background-color: #c2e8fd;
+    color: #001f2a;
+}
+
+.separator-light[data-separator='hover'] {
+    background-color: #3e6374;
+}
+
+.separator-light[data-separator='active'] {
+    background-color: #001f2a;
+}

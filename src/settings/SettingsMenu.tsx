@@ -17,9 +17,10 @@ import { useGameStore } from '../store/useGameStore.ts'
 export interface ISettingsMenuProps {
     open: boolean
     setOpen: (open: boolean) => void
+    disableModal?: boolean
 }
 
-export const SettingsMenu = ({ open, setOpen }: ISettingsMenuProps) => {
+export const SettingsMenu = ({ open, setOpen, disableModal }: ISettingsMenuProps) => {
     const {
         autocomplete,
         playerNamesPosition,
@@ -43,7 +44,13 @@ export const SettingsMenu = ({ open, setOpen }: ISettingsMenuProps) => {
     const theme = useTheme()
 
     return (
-        <CustomModal open={open} setOpen={setOpen} title={formatMessage({ id: 'settings' })} color={'tertiary'}>
+        <CustomModal
+            open={open}
+            setOpen={setOpen}
+            title={formatMessage({ id: 'settings' })}
+            color={'tertiary'}
+            disabled={disableModal}
+        >
             <Grid container spacing={2}>
                 <SettingsMenuEntry
                     title={formatMessage({ id: 'darkMode' })}

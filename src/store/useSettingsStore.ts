@@ -12,6 +12,7 @@ export interface SettingsStore extends Settings {
     setColorMode: (colorMode: ColorMode) => void
     toggleColorMode: () => void
     setLanguage: (lang: Language) => void
+    setSplitscreenEnabled: (splitscreenEnabled: true) => void
 }
 
 export const useSettingsStore = create<SettingsStore>()(
@@ -26,6 +27,7 @@ export const useSettingsStore = create<SettingsStore>()(
                 selectionModalOptions: SelectionModalOption.minimal,
                 colorMode: window.matchMedia('(prefers-color-scheme: dark)').matches ? ColorMode.DARK : ColorMode.LIGHT,
                 lang: navigator.language.includes('it') ? Language.IT : Language.EN,
+                splitscreenEnabled: false,
                 setToolbarPosition: (position: ToolbarPosition) => set({ toolbarPosition: position }),
                 setAutocomplete: (autocomplete: boolean) => set({ autocomplete: autocomplete }),
                 setForceAssistantUpdate: (forceAssistantUpdate: boolean) =>
@@ -39,6 +41,7 @@ export const useSettingsStore = create<SettingsStore>()(
                 toggleColorMode: () =>
                     set({ colorMode: get().colorMode === ColorMode.DARK ? ColorMode.LIGHT : ColorMode.DARK }),
                 setLanguage: (lang: Language) => set({ lang }),
+                setSplitscreenEnabled: (splitscreenEnabled: boolean) => set({ splitscreenEnabled: splitscreenEnabled }),
             }),
             {
                 name: 'settings',
