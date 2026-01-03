@@ -36,6 +36,7 @@
     "optional": "Optional",
     "back": "Back",
     "editing": "Editing",
+    "editingFor": "Editing {item} for {player}",
     "darkMode": "Dark theme",
     "darkMode.description": "Switch to the dark theme",
     "autocomplete": "Autocomplete",

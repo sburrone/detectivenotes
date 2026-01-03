@@ -10,7 +10,7 @@ export const useSplitscreen = () => {
 
     const { splitscreenEnabled } = useSettingsStore()
 
-    const getSplitscreenConfiguration = () =>
+    const getSplitscreenConfiguration = (splitscreenEnabled: boolean) =>
         splitscreenEnabled
             ? hasVerticalSegments
                 ? 'vertical'
@@ -21,7 +21,9 @@ export const useSplitscreen = () => {
                     : 'horizontal'
             : false
 
-    const [splitscreen, setSplitscreen] = useState<'vertical' | 'horizontal' | false>(getSplitscreenConfiguration())
+    const [splitscreen, setSplitscreen] = useState<'vertical' | 'horizontal' | false>(
+        getSplitscreenConfiguration(splitscreenEnabled)
+    )
 
     useEffect(() => {
         verticalSegmentsQuery.addEventListener('change', (e) => {
@@ -43,9 +45,10 @@ export const useSplitscreen = () => {
     })
 
     useEffect(() => {
-        setSplitscreen(getSplitscreenConfiguration())
-    }, [getSplitscreenConfiguration, splitscreenEnabled])
+        setSplitscreen(getSplitscreenConfiguration(splitscreenEnabled))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [splitscreenEnabled])
 
-    console.log('AAA splitscreen', { hasVerticalSegments, hasHorizontalSegments, splitscreenEnabled, splitscreen })
+    // console.log('AAA splitscreen', { hasVerticalSegments, hasHorizontalSegments, splitscreenEnabled, splitscreen })
     return splitscreen
 }

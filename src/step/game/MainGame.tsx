@@ -16,6 +16,8 @@ import { useSettingsStore } from '../../store/useSettingsStore.ts'
 import { Group, Panel, Separator } from 'react-resizable-panels'
 import { useSplitscreen } from '../../hooks/useSplitscreen.ts'
 import { InfoPanel } from './InfoPanel.tsx'
+import { BoardButtonModal } from '../../components/BoardButtonModal.tsx'
+import { useBoardButtonModalStore } from '../../store/useBoardButtonModalStore.ts'
 
 interface IGameProps {
     setStep: (step: Step) => void
@@ -36,6 +38,7 @@ const MainGame: FC<IGameProps> = (props) => {
 
     const { board, dustCounter, updateDustCounter } = useGameStore()
     const { hideDustCounter, colorMode } = useSettingsStore()
+    const { open: editingOpen } = useBoardButtonModalStore()
     const splitscreenMode = useSplitscreen()
 
     const theme = useTheme()
@@ -75,7 +78,7 @@ const MainGame: FC<IGameProps> = (props) => {
             <Panel>
                 <SettingsMenu open={settingsOpen} setOpen={setSettingsOpen} disableModal />
                 <AssistantMenu
-                    open={assistantOpen || (!settingsOpen && !infoPanelPlayer)}
+                    open={assistantOpen || (!settingsOpen && !infoPanelPlayer && !editingOpen)}
                     setOpen={setAssistantOpen}
                     disableModal
                 />
@@ -86,6 +89,7 @@ const MainGame: FC<IGameProps> = (props) => {
                     player={infoPanelPlayer}
                     disableModal
                 />
+                <BoardButtonModal />
             </Panel>
         </>
     )

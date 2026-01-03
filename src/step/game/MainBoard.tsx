@@ -21,6 +21,7 @@ import { useGameStore } from '../../store/useGameStore.ts'
 import { useSettingsStore } from '../../store/useSettingsStore.ts'
 import { useIntl } from 'react-intl'
 import { InfoPanel } from './InfoPanel.tsx'
+import { BoardButtonModal } from '../../components/BoardButtonModal.tsx'
 
 const COL_EXTRA = 2
 
@@ -33,15 +34,11 @@ export const MainBoard: FC<{
     const [openWeapons, setOpenWeapons] = useState(true)
     const [openRooms, setOpenRooms] = useState(true)
 
-    const { gameBoard, locked: globalLocked, board, players, updateItem, lockItem, advancedCards } = useGameStore()
-    const { autocomplete, playerNamesPosition, splitscreenEnabled } = useSettingsStore()
-
+    const { gameBoard, locked: globalLocked, board, players, lockItem, advancedCards } = useGameStore()
+    const { playerNamesPosition, splitscreenEnabled } = useSettingsStore()
+    console.log('AAA board', gameBoard)
     const theme = useTheme()
     const { formatMessage } = useIntl()
-
-    const handleUpdate = (newIcon: BoardIcon, newNumber: number, item: string, index: number) => {
-        updateItem({ item, badge: newNumber, value: newIcon, playerIndex: index, autocomplete })
-    }
 
     const handleLockedUpdate = (item: string) => {
         lockItem(item)
@@ -70,7 +67,8 @@ export const MainBoard: FC<{
                         disabled={row.locked}
                         icon={row.locked ? BoardIcon.CROSS : value.icon}
                         number={value.badge}
-                        onUpdate={(i, n) => handleUpdate(i, n, row.item, index)}
+                        item={row.item}
+                        player={index}
                     />
                 </TableCell>
             ))}
@@ -79,6 +77,8 @@ export const MainBoard: FC<{
 
     return (
         <Box sx={{ py: '1em' }}>
+            {!splitscreenEnabled && <BoardButtonModal />}
+
             <TableContainer sx={{ overflow: 'visible' }}>
                 <Table
                     size={'small'}

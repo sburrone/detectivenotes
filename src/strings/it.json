@@ -37,6 +37,7 @@
     "optional": "Opzionale",
     "back": "Indietro",
     "editing": "Modifica",
+    "editingFor": "Modifica {item} per {player}",
     "darkMode": "Tema scuro",
     "darkMode.description": "Passa al tema scuro",
     "autocomplete": "Autocompletamento",

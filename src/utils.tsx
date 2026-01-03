@@ -48,7 +48,7 @@ export const getBoardIcon = (boardIcon: BoardIcon, colorMode?: ColorMode): React
             return <Stars sx={{ fill: '#eecc48' }} />
         case BoardIcon.RESET:
         default:
-            return <PanoramaFishEye sx={{ fill: colorMode === ColorMode.DARK ? '#c6e6d4' : "#406175" }} />
+            return <PanoramaFishEye sx={{ fill: colorMode === ColorMode.DARK ? '#c6e6d4' : '#406175' }} />
     }
 }
 
@@ -60,7 +60,7 @@ export const initializeBoard = (board: Board, players: string[]): GameBoardRow[]
     return getBoardItems(board).map((item) => ({
         item: item,
         locked: false,
-        values: Array(players.length).fill(BoardIcon.RESET),
+        values: Array(players.length).fill({ icon: BoardIcon.RESET, badge: 0 }),
     }))
 }
 
