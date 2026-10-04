@@ -15,8 +15,8 @@
             "purpose": "any"
         }
     ],
-    "id": "https://detectivenotes.vercel.app?source=pwa",
-    "start_url": "https://detectivenotes.vercel.app?source=pwa",
+    "id": "https://cluedo.nicholas.party?source=pwa",
+    "start_url": "https://cluedo.nicholas.party?source=pwa",
     "background_color": "#57dcb9",
     "display": "standalone",
     "theme_color": "#00382c",
@@ -27,7 +27,7 @@
     "related_applications": [
         {
             "platform": "webapp",
-            "url": "https://detectivenotes.vercel.app/manifest.webmanifest"
+            "url": "https://cluedo.nicholas.party/manifest.webmanifest"
         }
     ]
 }
