@@ -64,8 +64,8 @@ const MainMenuButtons: FC<{
                             margin: '24px auto',
                             textAlign: 'center',
                             color: theme.palette.primary.main,
-                            textShadow: (theme.palette as any).onPrimaryContainer?.main,
-                            webkitTextStroke: (theme.palette as any).onPrimary?.contrastText,
+                            textShadow: `${(theme.palette as any).onPrimaryContainer?.contrastText} 2px 2px`,
+                            '-webkitTextStroke': `1px ${(theme.palette as any).onPrimaryContainer?.contrastText}`,
                             pointerEvents: 'none',
                         }}
                     >
