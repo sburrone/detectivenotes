@@ -102,5 +102,7 @@
     "option.minimal": "Minimal",
     "option.no_numbers": "No badges",
     "forceAssistantUpdate": "Force assistant updates",
-    "forceAssistantUpdate.description": "Enable to allow the assistant to overwrite all squares in the table, rather that just the blank ones"
+    "forceAssistantUpdate.description": "Enable to allow the assistant to overwrite all squares in the table, rather that just the blank ones",
+    "install": "Install app",
+    "install.manual": "Your browser can't install the app automatically. Open your browser's menu and choose \"Add to Home Screen\" or \"Install app\" to install Detective Notes."
 }

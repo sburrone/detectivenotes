@@ -1,6 +1,7 @@
 {
     "short_name": "Detective Notes",
     "name": "Detective Notes",
+    "description": "Cluedo Detective Notes by nicholas.party",
     "icons": [
         {
             "src": "icon_x192.png",
@@ -19,15 +20,5 @@
     "start_url": "https://cluedo.nicholas.party?source=pwa",
     "background_color": "#57dcb9",
     "display": "standalone",
-    "theme_color": "#00382c",
-    "orientation": "portrait",
-    "categories": [
-        "entertainment"
-    ],
-    "related_applications": [
-        {
-            "platform": "webapp",
-            "url": "https://cluedo.nicholas.party/manifest.webmanifest"
-        }
-    ]
+    "theme_color": "#00382c"
 }

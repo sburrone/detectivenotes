@@ -4,6 +4,8 @@ import {
     CasinoOutlined,
     DarkMode,
     Info,
+    InstallMobile,
+    InstallDesktop,
     Language,
     LightMode,
     OpenInFull,
@@ -18,8 +20,10 @@ import CardButton from '../../components/CardButton.tsx'
 import TextWithIcon from '../../components/TextWithIcon.tsx'
 import { useSettingsStore } from '../../store/useSettingsStore.ts'
 import { blankGame, useGameStore } from '../../store/useGameStore.ts'
+import { usePwaInstall } from '../../hooks/usePwaInstall.ts'
 import { useIntl } from 'react-intl'
 import AboutMenu from './AboutMenu.tsx'
+import { isMobile } from '../../utils.tsx'
 
 const MainMenuButtons: FC<{
     setStep: (step: Step) => void
@@ -36,6 +40,8 @@ const MainMenuButtons: FC<{
     const [languageExtended, setLanguageExtended] = useState(window.innerWidth >= 500)
     const [languageMenuAnchorEl, setLanguageMenuAnchorEl] = useState<HTMLButtonElement | null>(null)
     const [infoModalOpen, setInfoModalOpen] = useState(false)
+
+    const { canInstall, canPrompt, promptInstall } = usePwaInstall()
 
     useEffect(() => {
         const handleResize = () => setLanguageExtended(window.innerWidth >= 500)
@@ -65,7 +71,7 @@ const MainMenuButtons: FC<{
                             textAlign: 'center',
                             color: theme.palette.primary.main,
                             textShadow: `${(theme.palette as any).onPrimaryContainer?.contrastText} 2px 2px`,
-                            '-webkitTextStroke': `1px ${(theme.palette as any).onPrimaryContainer?.contrastText}`,
+                            WebkitTextStroke: `1px ${(theme.palette as any).onPrimaryContainer?.contrastText}`,
                             pointerEvents: 'none',
                         }}
                     >
@@ -195,6 +201,21 @@ const MainMenuButtons: FC<{
                         >
                             {colorMode === ColorMode.LIGHT ? <DarkMode /> : <LightMode />}
                         </IconMenuButton>
+                        {canInstall && (
+                            <IconMenuButton
+                                aria-label={formatMessage({ id: 'install' })}
+                                onClick={() => {
+                                    if (canPrompt) {
+                                        promptInstall()
+                                    } else {
+                                        // Browsers without beforeinstallprompt support (e.g. iOS Safari)
+                                        window.alert(formatMessage({ id: 'install.manual' }))
+                                    }
+                                }}
+                            >
+                                {isMobile() ? <InstallMobile /> : <InstallDesktop />}
+                            </IconMenuButton>
+                        )}
                         <IconMenuButton onClick={() => setInfoModalOpen(true)}>
                             <Info />
                         </IconMenuButton>

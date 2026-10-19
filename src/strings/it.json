@@ -104,5 +104,7 @@
     "option.minimal": "Minimale",
     "option.no_numbers": "Senza numeri",
     "forceAssistantUpdate": "Forza aggiornamento da assistente",
-    "forceAssistantUpdate.description": "Attivalo per permettere all'assistente di sovrascrivere tutti i riquadri nella tabella, non solo quelli vuoti"
+    "forceAssistantUpdate.description": "Attivalo per permettere all'assistente di sovrascrivere tutti i riquadri nella tabella, non solo quelli vuoti",
+    "install": "Installa l'app",
+    "install.manual": "Il tuo browser non può installare l'app automaticamente. Apri il menu del browser e scegli \"Aggiungi a schermata Home\" o \"Installa app\" per installare Detective Notes."
 }
