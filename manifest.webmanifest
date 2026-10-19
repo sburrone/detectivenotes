@@ -16,8 +16,9 @@
             "purpose": "any"
         }
     ],
-    "id": "https://cluedo.nicholas.party?source=pwa",
-    "start_url": "https://cluedo.nicholas.party?source=pwa",
+    "id": "/",
+    "start_url": "/?source=pwa",
+    "scope": "/",
     "background_color": "#57dcb9",
     "display": "standalone",
     "theme_color": "#00382c"
